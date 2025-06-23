@@ -2,6 +2,7 @@ import factory
 from factory.django import DjangoModelFactory
 
 from django.contrib.auth import get_user_model
+from datetime import timezone
 
 from djangocms_stories.settings import PERMALINK_TYPE_FULL_DATE
 from djangocms_stories.cms_appconfig import StoriesConfig
@@ -44,9 +45,9 @@ class PostFactory(DjangoModelFactory):
         PostCategoryFactory,
         size=2,  # Adjust the number of categories as needed
     )
-    date_published = factory.Faker("date_time_this_decade")
-    date_published_end = factory.Faker("date_time_this_decade")
-    date_featured = factory.Faker("date_time_this_decade")
+    date_published = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
+    date_published_end = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
+    date_featured = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
 
 
 class PostContentFactory(DjangoModelFactory):
