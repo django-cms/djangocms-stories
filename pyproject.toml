@@ -80,7 +80,7 @@ target-version = [ "py39" ]
 [tool.ruff]
 target-version = "py39"
 line-length = 119
-exclude = [ "djangocms_stories/migrations", "tests/fixtures" ]
+exclude = [ "djangocms_blog", "djangocms_stories/migrations", "tests/fixtures" ]
 lint.ignore = [  ]
 lint.mccabe.max-complexity = 5
 
