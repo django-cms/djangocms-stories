@@ -80,7 +80,6 @@ class TaggedFilterItem:
 
 
 class SiteQuerySet(models.QuerySet):
-
     def on_site(self, site=None):
         if not site:
             site = Site.objects.get_current()

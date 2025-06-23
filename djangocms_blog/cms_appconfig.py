@@ -1,5 +1,4 @@
 from cms.apphook_pool import apphook_pool
-from django import forms
 from django.db import models
 from django.urls import Resolver404, resolve
 from django.utils.translation import get_language_from_request, gettext_lazy as _, override
