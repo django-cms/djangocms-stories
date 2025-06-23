@@ -80,7 +80,7 @@ target-version = [ "py39" ]
 [tool.ruff]
 target-version = "py39"
 line-length = 119
-exclude = [ "djangocms_stories/migrations" ]
+exclude = [ "djangocms_stories/migrations", "tests/fixtures" ]
 lint.ignore = [  ]
 lint.mccabe.max-complexity = 5
 
@@ -97,4 +97,9 @@ use_parentheses = true
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
+addopts = [
+  "--nomigrations",
+]
+python_files = [ "tests.py", "test_*.py" ]
+testpaths = [ "tests" ]
 pythonpath = [ "." ]

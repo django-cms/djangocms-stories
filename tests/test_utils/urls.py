@@ -10,7 +10,7 @@ from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 from django.views.static import serve
 
-from djangocms_blog.sitemaps import BlogSitemap
+from djangocms_stories.sitemaps import BlogSitemap
 
 admin.autodiscover()
 
@@ -25,7 +25,7 @@ urlpatterns += staticfiles_urlpatterns()
 
 if "server" not in sys.argv:
     urlpatterns += i18n_patterns(
-        path("blog/", include("djangocms_blog.urls")),
+        path("blog/", include("djangocms_stories.urls")),
     )
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),

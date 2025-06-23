@@ -352,6 +352,8 @@ class Post(models.Model):
 
     @admin.display(boolean=True)
     def featured(self):
+        if not self.date_featured:
+            return False
         return bool(self.date_featured >= now())
 
     def get_content(self, language=None, show_draft_content=False):
@@ -375,7 +377,9 @@ class Post(models.Model):
             self._content_cache[key] = qs.first()
             return self._content_cache[key]
 
-    def safe_translation_getter(self, field, default=None, language_code=None, any_language=False):
+    def safe_translation_getter(
+        self, field, default=None, language_code=None, any_language=False, show_draft_content=False
+    ):
         """
         Fetch a content property, and return a default value
         when both the translation and fallback language are missing.
@@ -387,27 +391,23 @@ class Post(models.Model):
         to make this behavior the default for the given field.
         """
 
-        content_obj = self.get_content(language_code, show_draft_content=True)
+        content_obj = self.get_content(language_code, show_draft_content=show_draft_content)
         if content_obj is None and any_language and self.get_available_languages():
-            content_obj = self.get_content(self.get_available_languages()[0], show_draft_content=True)
+            content_obj = self.get_content(self.get_available_languages()[0], show_draft_content=show_draft_content)
         return getattr(content_obj, field, default)
 
     @property
-    def guid(self, language=None):
-        if not language:
-            language = get_language()
-        base_string = "-{0}-{2}-{1}-".format(
-            language,
-            self.app_config.namespace,
-            self.safe_translation_getter("slug", language_code=language, any_language=True),
-        )
+    def guid(self):
+        language = get_language()
+        slug = self.safe_translation_getter("slug", language_code=language, any_language=True)
+        base_string = f"-{language}-{slug}-{self.app_config.namespace}-"
         return hashlib.sha256(force_bytes(base_string)).hexdigest()
 
     @property
     def date(self):
         if self.date_featured:
             return self.date_featured
-        return self.date_published
+        return self.date_published or self.date_created
 
     def get_available_languages(self):
         if not (self._language_cache):
@@ -419,10 +419,7 @@ class Post(models.Model):
         with translation.override(lang):
             category = self.categories.first()
             kwargs = {}
-            if self.date_published:
-                current_date = self.date_published
-            else:
-                current_date = self.date_created
+            current_date = self.date
             urlconf = get_setting("PERMALINK_URLS")[self.app_config.url_patterns]
             if "<int:year>" in urlconf:
                 kwargs["year"] = current_date.year
@@ -571,6 +568,7 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
     def app_config(self):
         return self.post.app_config
 
+    @property
     def categories(self):
         return self.post.categories
 

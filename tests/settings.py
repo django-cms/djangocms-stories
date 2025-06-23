@@ -5,7 +5,6 @@ def gettext(s):
     return s
 
 
-#
 SECRET_KEY = "utterly-secret"
 ROOT_URLCONF = "tests.test_utils.urls"
 INSTALLED_APPS = [
@@ -18,7 +17,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "tests.test_utils",
-    "tests.media_app",
+    # "tests.media_app",
     "filer",
     "easy_thumbnails",
     "parler",
@@ -28,7 +27,7 @@ INSTALLED_APPS = [
     "treebeard",
     "sekizai",
     "djangocms_text",
-    "djangocms_blog",
+    "djangocms_stories",
     "taggit",
     "taggit_autosuggest",
     "djangocms_video",
@@ -36,7 +35,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -114,6 +112,6 @@ BLOG_AUTO_SETUP = False
 DEBUG = False
 CMS_CONFIRM_VERSION4 = True
 
-AUTH_USER_MODEL = "test_utils.CustomUser"
+# AUTH_USER_MODEL = "test_utils.CustomUser"
 
 STATIC_URL = "/static/"
