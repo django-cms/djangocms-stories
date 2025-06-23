@@ -1,10 +1,11 @@
+exclude: 'djangocms_blog/*'
+
 ci:
     autofix_commit_msg: |
         ci: auto fixes from pre-commit hooks
 
         for more information, see https://pre-commit.ci
     autofix_prs: false
-    exclude: djangocms_blog/
     autoupdate_schedule: monthly
 
 repos:
