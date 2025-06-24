@@ -84,20 +84,37 @@ migration is under development). Be sure to backup your database before.
 5. Remove ``"djangocms_blog"`` from your installed apps.
 
 **Custom templates will need manual updating**, since the underlying model structure has changed:
+
 * ``post`` contains the following fields: ``related``, ``main_image``, ``author``, ``date``, ``categories``, ``tags``
 * ``post_content`` contiains the following per-language fields:
   ``title``, ``subtitle``, ``slug``, ``content``, ``media``, and ``post``, the reference
    to the ``Post`` object.
 
 
-************
 Contributing
-************
+============
 
-Contributions to ``djangocms-text`` are welcome! Please read our
-`contributing guidelines <https://docs.django-cms.org/en/stable/contributing/index.html>`_
-to get started.
+Because this is a an open-source project, we welcome everyone to
+`get involved in the project <https://www.django-cms.org/en/contribute/>`_ and
+`receive a reward <https://www.django-cms.org/en/bounty-program/>`_ for their contribution.
+Become part of a fantastic community and help us make django CMS the best CMS in the world.
 
+We'll be delighted to receive your
+feedback in the form of issues and pull requests. Before submitting your
+pull request, please review our `contribution guidelines
+<http://docs.django-cms.org/en/latest/contributing/index.html>`_.
+
+The project makes use of git pre-commit hooks to maintain code quality.
+Please follow the installation steps to get `pre-commit <https://pre-commit.com/#installation>`_
+setup in your development environment.
+
+We're grateful to all contributors who have helped create and maintain
+this package. Contributors are listed at the `contributors
+<https://github.com/fsbraun/djangocms-stories/graphs/contributors>`_
+section.
+
+One of the easiest contributions you can make is helping to translate this addon on
+`Transifex <https://www.transifex.com/divio/djangocms-stories/dashboard/>`_.
 
 .. |PyPiVersion| image:: https://img.shields.io/pypi/v/djangocms-stories.svg?style=flat-square
     :target: https://pypi.python.org/pypi/djangocms-stories
