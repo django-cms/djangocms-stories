@@ -8,6 +8,7 @@ from datetime import timezone
 from djangocms_stories.settings import PERMALINK_TYPE_FULL_DATE
 from djangocms_stories.cms_appconfig import StoriesConfig
 from djangocms_stories.models import Post, PostContent, PostCategory
+import uuid
 
 
 default_site = Site.objects.get(pk=1)  # Assuming you have a default site with pk=1
@@ -36,7 +37,7 @@ class StoriesConfigFactory(DjangoModelFactory):
     class Meta:
         model = StoriesConfig
 
-    namespace = factory.Faker("slug")
+    namespace = factory.LazyFunction(lambda: str(uuid.uuid4()))
     use_placeholder = True  # Assuming default value, adjust as necessary
     url_patterns = PERMALINK_TYPE_FULL_DATE
 

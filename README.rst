@@ -65,13 +65,8 @@ To use taggit's autosuggest feature, add their URLS in ``urls.py``:
 Migrating from djangocms-blog
 *****************************
 
-djangocms-stories is inspired by `Nephila's <https://github.com/nephila>`_ excellent
-`djangocms-blog <https://github.com/nephila/djangocms-blog>`_, with the intent to bring
-to align it with django CMS's new philosophy since version 4: "The design philosophy of
-django CMS is to solve something complex with many simple things."
-
-Embrace django CMS' philosophy and migrate from djangocms-blog by following the steps below
-(at your own risk - the migration is under development). Be sure to backup your database before.
+Migrate from djangocms-blog by following the steps below (at your own risk - the migration is
+under development). Be sure to backup your database before.
 
 1. Uninstall djangocsms-blog: ``pip uninstall djangocms-blog``
 2. Install djangocms-stories ``pip install git+https://github.com/fsbraun/djangocms-stories.git``
@@ -113,6 +108,15 @@ section.
 
 One of the easiest contributions you can make is helping to translate this addon on
 `Transifex <https://www.transifex.com/divio/djangocms-stories/dashboard/>`_.
+
+*******
+Credits
+*******
+
+djangocms-stories is inspired by `Nephila's <https://github.com/nephila>`_ excellent
+`djangocms-blog <https://github.com/nephila/djangocms-blog>`_, with the intent to bring
+to align it with django CMS's new philosophy since version 4: "The design philosophy of
+django CMS is to solve something complex with many simple things."
 
 .. |PyPiVersion| image:: https://img.shields.io/pypi/v/djangocms-stories.svg?style=flat-square
     :target: https://pypi.python.org/pypi/djangocms-stories
