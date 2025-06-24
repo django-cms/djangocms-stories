@@ -8,16 +8,16 @@ from .cms_menus import PostCategoryMenu
 from .models import StoriesConfig
 from .settings import get_setting
 
-# from djangocms_apphook_setup.base import AutoCMSAppMixin
-
 
 @apphook_pool.register
-class ArticlesApp(CMSApp):
-    name = _("Blog")
+class StoriesApp(CMSApp):
+    name = _("Stories")
     app_name = "djangocms_stories"
     app_config = StoriesConfig
+
     _urls = [get_setting("URLCONF")]
     _menus = [PostCategoryMenu]
+
     auto_setup = {
         "enabled": get_setting("AUTO_SETUP"),
         "home title": get_setting("AUTO_HOME_TITLE"),

@@ -49,9 +49,18 @@ else:
 
 def register_extension(klass):
     if issubclass(klass, InlineModelAdmin):
+        if klass in PostAdmin.inlines:
+            raise Exception(f"Can not register {klass} twice.")
         PostAdmin.inlines = type(PostAdmin.inlines)([klass]) + PostAdmin.inlines
         return
     if issubclass(klass, models.Model):
+        import warnings
+
+        warnings.warn(
+            "Registering a model as an extension is deprecated and will be removed in version 1.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         if klass in signal_dict:
             raise Exception(f"Can not register {klass} twice.")
         signal_dict[klass] = create_post_post_save(klass)
@@ -540,18 +549,6 @@ class PostAdmin(
         ]
         urls.extend(super().get_urls())
         return urls
-
-    # def post_add_plugin(self, request, obj1, obj2=None):
-    #     if isinstance(obj1, CMSPlugin):
-    #         plugin = obj1
-    #     elif isinstance(obj2, CMSPlugin):
-    #         plugin = obj2
-    #     if plugin.plugin_type in get_setting("LIVEBLOG_PLUGINS"):
-    #         plugin = plugin.move(plugin.get_siblings().first(), "first-sibling")
-    #     if isinstance(obj1, CMSPlugin):
-    #         return super().post_add_plugin(request, plugin)
-    #     elif isinstance(obj2, CMSPlugin):
-    #         return super().post_add_plugin(request, obj1, plugin)
 
     def has_restricted_sites(self, request):
         """
