@@ -88,7 +88,7 @@ migration is under development). Be sure to backup your database before.
 * ``post`` contains the following fields: ``related``, ``main_image``, ``author``, ``date``, ``categories``, ``tags``
 * ``post_content`` contiains the following per-language fields:
   ``title``, ``subtitle``, ``slug``, ``content``, ``media``, and ``post``, the reference
-   to the ``Post`` object.
+  to the ``Post`` object.
 
 
 Contributing
