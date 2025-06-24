@@ -395,10 +395,14 @@ class PostAdmin(
             None,
             {
                 "fields": [
-                    ["content__title"],
-                    ["content__subtitle"],
-                    ["content__slug"],
-                    ["categories", "app_config", "content__language"],
+                    "content__language",
+                    "content__title",
+                    "content__subtitle",
+                    "content__slug",
+                    [
+                        "categories",
+                        "app_config",
+                    ],
                 ]
             },
         ),

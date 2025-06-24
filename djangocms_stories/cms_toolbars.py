@@ -1,4 +1,4 @@
-from cms.cms_toolbars import ADMIN_MENU_IDENTIFIER, ADMINISTRATION_BREAK, SHORTCUTS_BREAK
+from cms.cms_toolbars import ADMIN_MENU_IDENTIFIER, ADMINISTRATION_BREAK
 from cms.models import PageContent
 from cms.toolbar.items import Break, ButtonList
 from cms.toolbar.utils import get_object_preview_url
@@ -14,7 +14,7 @@ from .utils import is_versioning_enabled
 
 
 @toolbar_pool.register
-class BlogToolbar(CMSToolbar):
+class StoriesToolbar(CMSToolbar):
     def _get_published_post_version(self):
         """Returns a published post if one exists for the toolbar object"""
         language = self.current_lang
@@ -71,7 +71,7 @@ class BlogToolbar(CMSToolbar):
             )
             self.toolbar.add_item(item)
 
-    def add_blog_to_admin_menu(self):
+    def add_stories_to_admin_menu(self):
         admin_menu = self.toolbar.get_or_create_menu(ADMIN_MENU_IDENTIFIER)
         url = admin_reverse("djangocms_stories_post_changelist")
         admin_menu.add_sideframe_item(
@@ -84,7 +84,7 @@ class BlogToolbar(CMSToolbar):
         )
 
     def populate(self):
-        self.add_blog_to_admin_menu()
+        self.add_stories_to_admin_menu()
         # Add on apphook urls and endpoint urls
         is_current_app = self.is_current_app or isinstance(self.toolbar.get_object(), PostContent)
         if (not is_current_app and not get_setting("ENABLE_THROUGH_TOOLBAR_MENU")) or not self.request.user.has_perm(
@@ -99,7 +99,7 @@ class BlogToolbar(CMSToolbar):
             self.request, get_setting("CURRENT_NAMESPACE"), getattr(current_content, "app_config", None)
         )
         with override(self.current_lang):
-            menu_name = _("Blog")
+            menu_name = Post._meta.verbose_name_plural.capitalize()
             if current_config and current_config.app_title:
                 menu_name = current_config.app_title.capitalize()
             admin_menu = self.toolbar.get_or_create_menu("djangocms_stories", menu_name)
@@ -177,31 +177,6 @@ class BlogToolbar(CMSToolbar):
             try:
                 if force_str(item_name.lower()) < force_str(item.name.lower()):  # noqa: E501
                     return idx + 1
-            except AttributeError:
-                # Some item types do not have a 'name' attribute.
-                pass
-        return end.index
-
-    @staticmethod
-    def get_insert_position_for_admin_objectx(admin_menu, item_name):
-        """
-        Ensures that there is a SHORTCUTS_BREAK and returns a position for an
-        alphabetical position against all items between SHORTCUTS_BREAK, and
-        the ADMINISTRATION_BREAK.
-        """
-        start = admin_menu.find_first(Break, identifier=SHORTCUTS_BREAK)
-
-        if not start:
-            end = admin_menu.find_first(Break, identifier=ADMINISTRATION_BREAK)
-            admin_menu.add_break(SHORTCUTS_BREAK, position=end.index)
-            start = admin_menu.find_first(Break, identifier=SHORTCUTS_BREAK)
-        end = admin_menu.find_first(Break, identifier=ADMINISTRATION_BREAK)
-
-        items = admin_menu.get_items()[start.index + 1 : end.index]
-        for idx, item in enumerate(items):
-            try:
-                if force_str(item_name.lower()) < force_str(item.name.lower()):  # noqa: E501
-                    return idx + start.index + 1
             except AttributeError:
                 # Some item types do not have a 'name' attribute.
                 pass

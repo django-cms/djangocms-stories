@@ -11,7 +11,7 @@ from .models import AuthorEntriesPlugin, PostCategory, FeaturedPostsPlugin, Gene
 from .settings import get_setting
 
 
-class BlogPlugin(CMSPluginBase):
+class StoriesPlugin(CMSPluginBase):
     module = get_setting("PLUGIN_MODULE_NAME")
     form = BlogPluginForm
 
@@ -33,7 +33,7 @@ class BlogPlugin(CMSPluginBase):
 
 
 @plugin_pool.register_plugin
-class BlogLatestEntriesPlugin(BlogPlugin):
+class BlogLatestEntriesPlugin(StoriesPlugin):
     """
     Return the latest published posts which bypasses cache,  taking into account the user / toolbar state.
     """
@@ -76,7 +76,7 @@ class BlogLatestEntriesPluginCached(BlogLatestEntriesPlugin):
 
 
 @plugin_pool.register_plugin
-class BlogFeaturedPostsPlugin(BlogPlugin):
+class BlogFeaturedPostsPlugin(StoriesPlugin):
     """
     Return the selected posts which bypasses cache.
     """
@@ -118,7 +118,7 @@ class BlogFeaturedPostsPluginCached(BlogFeaturedPostsPlugin):
 
 
 @plugin_pool.register_plugin
-class BlogAuthorPostsPlugin(BlogPlugin):
+class BlogAuthorPostsPlugin(StoriesPlugin):
     """Render the list of authors."""
 
     module = get_setting("PLUGIN_MODULE_NAME")
@@ -173,7 +173,7 @@ class BlogAuthorPostsListPlugin(BlogAuthorPostsPlugin):
 
 
 @plugin_pool.register_plugin
-class BlogTagsPlugin(BlogPlugin):
+class BlogTagsPlugin(StoriesPlugin):
     """Render the list of post tags."""
 
     module = get_setting("PLUGIN_MODULE_NAME")
@@ -194,7 +194,7 @@ class BlogTagsPlugin(BlogPlugin):
 
 
 @plugin_pool.register_plugin
-class BlogCategoryPlugin(BlogPlugin):
+class BlogCategoryPlugin(StoriesPlugin):
     """Render the list of post categories."""
 
     module = get_setting("PLUGIN_MODULE_NAME")
@@ -223,7 +223,7 @@ class BlogCategoryPlugin(BlogPlugin):
 
 
 @plugin_pool.register_plugin
-class BlogArchivePlugin(BlogPlugin):
+class BlogArchivePlugin(StoriesPlugin):
     """Render the list of months with available posts."""
 
     module = get_setting("PLUGIN_MODULE_NAME")
