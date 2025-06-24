@@ -18,7 +18,7 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = get_user_model()
 
-    username = factory.Faker("user_name")
+    username = factory.LazyFunction(lambda: str(uuid.uuid4()))
     email = factory.Faker("email")
     first_name = factory.Faker("word")
     last_name = factory.Faker("word")
