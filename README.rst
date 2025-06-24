@@ -23,14 +23,12 @@ Features
 ********
 
 * Frontend editing using django CMS frontend editor
-* Placeholder content editing
-* Optional simpler TextField-based content editing
+* Placeholder or optionally simpler TextField-based content editing
 * Multilingual support using django-parler
 * Multisite (posts can be visible in one or more Django sites on the same project)
-* Per-Apphook configuration
-* Configurable permalinks
-* Configurable user navigation
-* Per-Apphook freely designable templates set
+* Hooks into your page tree anywhere
+* Configurable permalinks, user navigation, template sets, ...
+* Multiple instaces per site (e.g., blog, news, stories)
 * Django sitemap framework
 * django CMS Wizard integration
 
