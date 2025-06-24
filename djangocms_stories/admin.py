@@ -450,11 +450,11 @@ class PostAdmin(
         return _("Empty")
 
     def get_search_results(self, request, queryset, search_term):
-        # qs, distinct = super().get_search_results(request, queryset, search_term)
-        content_title = (
-            PostContent.admin_manager.filter(title__icontains=search_term).values("post_id").latest_content()
-        )
-        return queryset.filter(pk__in=content_title), True
+        qs, distinct = super().get_search_results(request, queryset, search_term)
+        if search_term:
+            content_title = PostContent.admin_manager.latest_content(title__icontains=search_term).values("post_id")
+            queryset = queryset.filter(pk__in=content_title), True
+        return queryset, distinct
 
     def get_form(self, request, obj=None, **kwargs):
         """Adds the language from the request to the form class"""
@@ -693,6 +693,8 @@ class PostContentAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
 
 @admin.register(StoriesConfig)
 class ConfigAdmin(TranslatableAdmin):
+    list_display = ("namespace", "app_title", "object_name", "object_type")
+
     @property
     def declared_fieldsets(self):
         return self.get_fieldsets(None)
@@ -787,6 +789,7 @@ class ConfigAdmin(TranslatableAdmin):
         ]
 
     def get_readonly_fields(self, request, obj=None):
+        """Make namespace field readonly if object exists"""
         if obj and obj.pk:
             return tuple(self.readonly_fields) + ("namespace",)
         else:

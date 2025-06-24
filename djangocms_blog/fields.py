@@ -12,7 +12,7 @@ class LanguageSelector(forms.Select):
     class Media:
         js = (
             "admin/js/jquery.init.js",
-            "djangocms_blog/js/language-selector.js",
+            "djangocms_stories/js/language-selector.js",
         )
 
     def __init__(self, *args, **kwargs):

@@ -15,7 +15,7 @@ def simple_w_placeholder(db):
     return StoriesConfig.objects.using(db).create(
         namespace="djangocms_stories",
         app_title="Test Stories",
-
+        object_name="Story",
         url_patterns=PERMALINK_TYPE_FULL_DATE,
         use_placeholder=True,
         template_prefix="",
@@ -28,6 +28,7 @@ def simple_wo_placeholder(db):
     return StoriesConfig.objects.using(db).create(
         namespace="test_ns_wo_placeholder",
         app_title="Test Stories Without Placeholder",
+        object_name="Short story",
         url_patterns=PERMALINK_TYPE_FULL_DATE,
         use_placeholder=False,
         template_prefix="",
