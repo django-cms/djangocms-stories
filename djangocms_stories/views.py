@@ -17,7 +17,7 @@ from .settings import get_setting
 User = get_user_model()
 
 
-class BlogConfigMixin:
+class StoriesConfigMixin:
     def dispatch(self, request, *args, **kwargs):
         """Detect current namespace and config instance. Add both to the view object and
         make namespace avilable to the request."""
@@ -33,7 +33,7 @@ class BlogConfigMixin:
         return super().render_to_response(context, **response_kwargs)
 
 
-class PostDetailView(BlogConfigMixin, DetailView):
+class PostDetailView(StoriesConfigMixin, DetailView):
     model = PostContent
     context_object_name = "post_content"
     base_template_name = "post_detail.html"
@@ -54,10 +54,10 @@ class PostDetailView(BlogConfigMixin, DetailView):
     def get_template_names(self):
         if self.instant_article:
             template_path = (self.config and self.config.template_prefix) or "djangocms_stories"
-            return os.path.join(template_path, "post_instant_article.html")
+            return [os.path.join(template_path, "post_instant_article.html")]
         else:
             template_path = (self.config and self.config.template_prefix) or "djangocms_stories"
-            return os.path.join(template_path, self.base_template_name)
+            return [os.path.join(template_path, self.base_template_name)]
 
     def get_object(self):
         obj = super().get_object()
@@ -89,7 +89,7 @@ class ToolbarDetailView(PostDetailView):
         return content_object
 
 
-class BaseConfigListViewMixin(BlogConfigMixin):
+class BaseConfigListViewMixin(StoriesConfigMixin):
     def optimize(self, qs):
         """
         Apply select_related / prefetch_related to optimize the view queries
@@ -137,11 +137,8 @@ class PostListView(BaseConfigListViewMixin, ListView):
     base_template_name = "post_list.html"
     view_url_name = "djangocms_stories:posts-latest"
 
-    def get_queryset(self):
-        return super().get_queryset()
 
-
-class CategoryListView(BlogConfigMixin, ViewUrlMixin, TranslatableSlugMixin, ListView):
+class CategoryListView(StoriesConfigMixin, ViewUrlMixin, TranslatableSlugMixin, ListView):
     model = PostCategory
     context_object_name = "category_list"
     base_template_name = "category_list.html"
@@ -173,9 +170,9 @@ class PostArchiveView(BaseConfigListViewMixin, ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         if "month" in self.kwargs:
-            qs = qs.filter(**{"%s__month" % self.date_field: self.kwargs["month"]})
+            qs = qs.filter(**{"post__%s__month" % self.date_field: self.kwargs["month"]})
         if "year" in self.kwargs:
-            qs = qs.filter(**{"%s__year" % self.date_field: self.kwargs["year"]})
+            qs = qs.filter(**{"post__%s__year" % self.date_field: self.kwargs["year"]})
         return self.optimize(qs)
 
     def get_context_data(self, **kwargs):

@@ -29,6 +29,10 @@ def post_content(db, post):
         from cms.api import add_plugin
         from cms.models import Placeholder
 
+        Placeholder.objects.using(db).create(
+            slot="media",
+            source=post_content,
+        )
         placeholder = Placeholder.objects.using(db).create(
             slot="content",
             source=post_content,

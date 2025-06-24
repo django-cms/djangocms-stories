@@ -13,9 +13,12 @@ PERMALINK_TYPE_SLUG = "slug"
 @pytest.mark.django_db
 def simple_w_placeholder(db):
     return StoriesConfig.objects.using(db).create(
-        namespace="test_ns",
+        namespace="djangocms_stories",
+        app_title="Test Stories",
+
         url_patterns=PERMALINK_TYPE_FULL_DATE,
         use_placeholder=True,
+        template_prefix="",
     )
 
 
@@ -24,8 +27,10 @@ def simple_w_placeholder(db):
 def simple_wo_placeholder(db):
     return StoriesConfig.objects.using(db).create(
         namespace="test_ns_wo_placeholder",
+        app_title="Test Stories Without Placeholder",
         url_patterns=PERMALINK_TYPE_FULL_DATE,
         use_placeholder=False,
+        template_prefix="",
     )
 
 

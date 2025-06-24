@@ -15,8 +15,8 @@
             {% include "djangocms_stories/includes/blog_meta.html" %}
         {% endblock %}
     </header>
-    {% if not post_content.post.main_image_id %}
-        <div class="blog-visual">{% render_placeholder post_content.media %}</div>
+    {% if not post_content.post.main_image_id and post_content.media %}
+        <div class="blog-visual">{# render_placeholder post_content.media #}</div>
     {% else %}
         <div class="blog-visual">
             {% thumbnail post_content.post.main_image post_content.post.full_image_options.size crop=post_content.post.full_image_options.crop upscale=post_content.post.full_image_options.upscale subject_location=post_content.post.main_image.subject_location as main_image %}
@@ -24,15 +24,15 @@
         </div>
     {% endif %}
     {% endspaceless %}
-    {% if post_content.post.app_config.use_placeholder %}
-        <div class="blog-content">{% render_placeholder post_content.content %}</div>
+    {% if post_content.post.app_config.use_placeholder and post_content.content %}
+        <div class="blog-content">{# render_placeholder post_content.content #}</div>
     {% else %}
         <div class="blog-content">{% render_model post_content "post_text" "post_text" "" "safe" %}</div>
     {% endif %}
-    {% if post_content.related.exists %}
+    {% if post_content.post.related.exists %}
         <section class="post-detail-list">
-        {% for related in post_content.related.all %}
-            {% include "djangocms_stories/includes/blog_item.html" with post_content=related image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+        {% for related in post_content.post.related.all %}
+            {% include "djangocms_stories/includes/blog_item.html" with post_content=related.get_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
         {% endfor %}
         </section>
     {% endif %}

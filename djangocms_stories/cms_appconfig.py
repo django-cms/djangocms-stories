@@ -303,7 +303,7 @@ def get_app_instance(request):
     """
     Return current app instance namespace and config
     """
-    namespace, config = "", None
+    namespace, config = resolve(request.path_info).namespace, None
     if getattr(request, "current_page", None) and request.current_page.application_urls:
         app = apphook_pool.get_apphook(request.current_page.application_urls)
         if app and app.app_config:
@@ -318,4 +318,9 @@ def get_app_instance(request):
                     config = app.get_config(namespace)
             except Resolver404:
                 pass
+    else:
+        try:
+            config = StoriesConfig.objects.get(namespace=namespace)
+        except (StoriesConfig.DoesNotExist, StoriesConfig.MultipleObjectsReturned):
+            pass
     return namespace, config

@@ -7,7 +7,6 @@ from cms.toolbar_pool import toolbar_pool
 from cms.utils.urlutils import admin_reverse
 from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _, override
-from djangocms_versioning.constants import PUBLISHED
 
 from .models import Post, PostContent
 from .settings import get_setting
@@ -23,12 +22,13 @@ class BlogToolbar(CMSToolbar):
         if not isinstance(self.toolbar.obj, PostContent):
             return
 
-        return PostContent.admin_manager.filter(
-            post=self.toolbar.obj.post, language=language, versions__state=PUBLISHED
+        return PostContent.objects.filter(
+            post=self.toolbar.obj.post,
+            language=language,
         ).first()
 
     def add_preview_button(self):
-        if self.is_current_app and self.toolbar.get_object() is None:
+        if self.is_current_app and self.toolbar.get_object() is None and self.request.current_page:
             # TODO: Restrict preview button to root url of blog
             page_content = self.request.current_page.pagecontent_set(manager="admin_manager").latest_content().first()
             url = get_object_preview_url(page_content, language=self.toolbar.request_language)

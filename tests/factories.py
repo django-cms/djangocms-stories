@@ -19,6 +19,8 @@ class UserFactory(DjangoModelFactory):
 
     username = factory.Faker("user_name")
     email = factory.Faker("email")
+    first_name = factory.Faker("word")
+    last_name = factory.Faker("word")
     password = factory.PostGenerationMethodCall("set_password", "defaultpassword")  # Set a default password
 
 
@@ -46,6 +48,7 @@ class PostCategoryFactory(DjangoModelFactory):
     app_config = factory.SubFactory(StoriesConfigFactory)
     name = factory.Faker("word")
     slug = factory.Faker("slug")
+    priority = factory.Faker("random_int", min=1, max=10)
 
 
 class PostFactory(DjangoModelFactory):

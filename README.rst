@@ -9,14 +9,30 @@ django CMS stories application - Tell your story in multilingual posts, using th
 power of django CMS placeholders.
 
 djangocms-stories is inspired by `Nephila's <https://github.com/nephila>`_ excellent
-`djangocms-blog <https://github.com/nephila/djangocms-blog>`_, but has been aligned
-with django CMS's new philosophy since version 4: "The design philosophy of
+`djangocms-blog <https://github.com/nephila/djangocms-blog>`_, with the intent to bring
+to align it with django CMS's new philosophy since version 4: "The design philosophy of
 django CMS is to solve something complex with many simple things." This means
 djangocms-stories focuses on core features and separates out features that can be
 shared between django CMS apps.
 
 djangocms-stories provides a lean foundation for storytelling that can be composed with
 other specialized django CMS applications.
+
+********
+Features
+********
+
+* Frontend editing using django CMS frontend editor
+* Placeholder content editing
+* Optional simpler TextField-based content editing
+* Multilingual support using django-parler
+* Multisite (posts can be visible in one or more Django sites on the same project)
+* Per-Apphook configuration
+* Configurable permalinks
+* Configurable user navigation
+* Per-Apphook freely designable templates set
+* Django sitemap framework
+* django CMS Wizard integration
 
 ************
 Installation
@@ -52,22 +68,6 @@ To use taggit's autosuggest feature, add their URLS in ``urls.py``:
     url_patterns += [path('taggit_autosuggest/', include('taggit_autosuggest.urls'))]
 
 
-********
-Features
-********
-
-* Placeholder content editing
-* Frontend editing using django CMS frontend editor
-* Multilingual support using django-parler
-* Optional simpler TextField-based content editing
-* Multisite (posts can be visible in one or more Django sites on the same project)
-* Per-Apphook configuration
-* Configurable permalinks
-* Configurable user navigation (django CMS menu)
-* Per-Apphook templates set
-* Django sitemap framework
-* django CMS Wizard integration
-* Desktop notifications
 
 *****************************
 Migrating from djangocms-blog
@@ -82,6 +82,13 @@ migration is under development). Be sure to backup your database before.
 4. Run ``./manage.py migrate djangocms_stories``. This in migration 0002 will move existing content
    from djangocms-blog to djangocms-stories and delete djangocms-blogs database tables.
 5. Remove ``"djangocms_blog"`` from your installed apps.
+
+**Custom templates will need manual updating**, since the underlying model structure has changed:
+* ``post`` contains the following fields: ``related``, ``main_image``, ``author``, ``date``, ``categories``, ``tags``
+* ``post_content`` contiains the following per-language fields:
+  ``title``, ``subtitle``, ``slug``, ``content``, ``media``, and ``post``, the reference
+   to the ``Post`` object.
+
 
 ************
 Contributing

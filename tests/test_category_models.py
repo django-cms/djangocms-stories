@@ -47,10 +47,10 @@ def test_post_category_blank_slug():
 def test_post_category_hierarchy():
     from .factories import PostCategoryFactory
 
-    parent = PostCategoryFactory(name="Parent Category", slug="parent")
-    child_1 = PostCategoryFactory(parent=parent)
-    child_2 = PostCategoryFactory(parent=parent)
-    grandchild = PostCategoryFactory(parent=child_1)
+    parent = PostCategoryFactory(name="Parent Category", slug="parent", priority=1)
+    child_1 = PostCategoryFactory(parent=parent, priority=1)
+    child_2 = PostCategoryFactory(parent=parent, priority=1)
+    grandchild = PostCategoryFactory(parent=child_1, priority=1)
 
     expected_descendants = [child_1, child_2, grandchild]
 

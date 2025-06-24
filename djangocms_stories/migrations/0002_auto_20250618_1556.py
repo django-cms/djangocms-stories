@@ -150,9 +150,7 @@ def migrate_from_blog_to_stories(apps, schema_editor):
         target_model = apps.get_model("djangocms_stories", model_name)
         target_ct = ContentType.objects.get_for_model(target_model)
         for model in fields:
-            print(model)
             qs = model.objects.filter(content_type=source_ct)
-            print(qs)
             objs_to_update = []
             for obj in qs:
                 obj.content_type = target_ct
