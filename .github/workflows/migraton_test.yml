@@ -28,12 +28,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m venv .venv
-        source ./.venv/bin/activate
-        python -m pip install --upgrade pip
-        pip install -r ./tests/requirements/${{ matrix.requirements }}
+        python -m pip install --upgrade pip uv
+        uv pip install --system -r ./tests/requirements/${{ matrix.requirements }}
     - name: Test migration from djangocms Blog to djangocms Stories
       run: |
-        source ./.venv/bin/activate
-        python tests/test_migrations/run.py test_migrations --phase1
-        python tests/test_migrations/run.py test_migrations --phase2
+        python tests/test_migrations/run.py --phase1
+        python tests/test_migrations/run.py --phase2

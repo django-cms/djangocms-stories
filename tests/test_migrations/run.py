@@ -54,10 +54,10 @@ if __name__ == "__main__":
     failed = False
     db_path = os.path.join(BASE_DIR, "test_db.sqlite3")
 
-    if len(sys.argv) != 3 or sys.argv[1] != "test_migration" or sys.argv[2] not in ("--phase1", "--phase2"):
-        print(f"This script is meant to be run with '{sys.argv[0]} test_migration --phase<1/2>'")
+    if len(sys.argv) != 2 or sys.argv[2] not in ("--phase1", "--phase2"):
+        print(f"This script is meant to be run with '{sys.argv[0]} --phase<1/2>'")
         sys.exit(1)
-    if sys.argv[2] == "--phase1":
+    if sys.argv[1] == "--phase1":
         os.environ["DJANGO_SETTINGS_MODULE"] = "tests.test_migration.pre"
         django.setup()
         if os.path.exists(db_path):
