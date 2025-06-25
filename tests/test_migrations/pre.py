@@ -9,7 +9,7 @@ INSTALLED_APPS = [app for app in INSTALLED_APPS if app not in UNINSTALL_APPS] + 
     "djangocms_versioning",
 ]
 
-ROOT_URLCONF = "tests.test_migration.urls"
+ROOT_URLCONF = "tests.test_migrations.urls"
 
 DATABASES = {
     "default": {

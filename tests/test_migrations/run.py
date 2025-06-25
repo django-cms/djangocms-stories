@@ -53,13 +53,12 @@ if __name__ == "__main__":
     sys.path.insert(0, BASE_DIR)
     failed = False
     db_path = os.path.join(BASE_DIR, "test_db.sqlite3")
-    print("BASE_DIR:", BASE_DIR)
-    print("PPATH", sys.path)
+
     if len(sys.argv) != 2 or sys.argv[1] not in ("--phase1", "--phase2"):
         print(f"This script is meant to be run with '{sys.argv[0]} --phase<1/2>'")
         sys.exit(1)
     if sys.argv[1] == "--phase1":
-        os.environ["DJANGO_SETTINGS_MODULE"] = "tests.test_migration.pre"
+        os.environ["DJANGO_SETTINGS_MODULE"] = "tests.test_migrations.pre"
         django.setup()
         if os.path.exists(db_path):
             os.remove(db_path)
@@ -67,7 +66,7 @@ if __name__ == "__main__":
         setup_blog_testproj()
         print(80 * "*")
     else:
-        os.environ["DJANGO_SETTINGS_MODULE"] = "tests.test_migration.post"
+        os.environ["DJANGO_SETTINGS_MODULE"] = "tests.test_migrations.post"
         django.setup()
 
         assert django.apps.apps.is_installed("djangocms_stories"), "djangocms_stories is not installed"
