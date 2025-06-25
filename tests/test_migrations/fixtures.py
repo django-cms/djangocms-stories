@@ -2,6 +2,26 @@ from djangocms_blog.cms_appconfig import BlogConfig
 from djangocms_blog.models import Post, PostContent
 
 
+POST_CONTENT_DATA = {
+    "post_en1": {
+        "title": "Test Post 1",
+        "slug": "test-post-1",
+        "meta_description": "Test Post 1 Description",
+        "meta_keywords": "test, post, 1",
+        "meta_title": "Test Post 1 Meta Title",
+        "abstract": "This is a test post 1 abstract.",
+    },
+    "post_fr1": {
+        "title": "Test Post 1 FR",
+        "slug": "test-post-1-fr",
+        "meta_description": "Test Post 1 Description FR",
+        "meta_keywords": "test, post, 1, fr",
+        "meta_title": "Test Post 1 Meta Title FR",
+        "abstract": "<p>Ceci <b>est</b> un résumé de l'article de test 1 en français.</p>",
+    },
+}
+
+
 def increase_pk(model):
     """Generate non-consecutive primary keys for the given model."""
     import random
@@ -18,20 +38,21 @@ def increase_pk(model):
             cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_pk} WHERE name = '{table}'")
 
 
-def generate_blog(config, **wkargs):
+def generate_blog(config, user, **wkargs):
     post = Post.objects.create(
         app_config=config,
         **wkargs,
     )
+    post.sites.add(1)  # Assuming site ID 1 is the default site
     increase_pk(Post)
-    post_en = PostContent.admin_manager.create(
+    post_en = PostContent.admin_manager.with_user(user).create(
         post=post,
         language="en",
         title="Test Post 1",
         slug="test-post-1",
     )
     increase_pk(PostContent)
-    post_fr = PostContent.admin_manager.create(
+    post_fr = PostContent.admin_manager.with_user(user).create(
         post=post,
         language="fr",
         title="Test Post 1 (FR)",

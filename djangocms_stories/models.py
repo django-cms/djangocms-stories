@@ -455,18 +455,18 @@ class Post(models.Model):
             title = self.safe_translation_getter("title", language_code=language, any_language=True) or _("No title")
         return title.strip()
 
-    def get_keywords(self):
+    def get_keywords(self, language=None):
         """
         Returns the list of keywords (as python list)
         :return: list
         """
-        keywords = self.safe_translation_getter("meta_keywords", any_language=True).strip()
+        keywords = self.safe_translation_getter("meta_keywords", language_code=language, any_language=True).strip()
         if "".join(keywords) == "":
             return []
         return [keyword.strip() for keyword in keywords.split(",")]
 
-    def get_description(self):
-        description = self.safe_translation_getter("meta_description", any_language=True)
+    def get_description(self, language=None):
+        description = self.safe_translation_getter("meta_description", language_code=language, any_language=True)
         if not description:
             description = self.safe_translation_getter("abstract", any_language=True)
         return strip_tags(description).strip()

@@ -5,6 +5,8 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.timezone import now
 
+from cms.models.managers import WithUserMixin
+
 
 class TaggedFilterItem:
     def tagged(self, other_model=None, queryset=None):
@@ -106,7 +108,7 @@ class AdminSiteQuerySet(SiteQuerySet):
         return self.filter(**kwargs)
 
 
-class GenericDateTaggedManager(TaggedFilterItem, models.Manager):
+class GenericDateTaggedManager(TaggedFilterItem, WithUserMixin, models.Manager):
     use_for_related_fields = True
 
     queryset_class = SiteQuerySet

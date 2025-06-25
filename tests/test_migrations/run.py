@@ -1,5 +1,5 @@
-import django.conf
 from django.core.management import execute_from_command_line
+from django.utils.translation import activate
 
 
 def test_apphook_migration():
@@ -13,8 +13,41 @@ def test_apphook_migration():
     )
 
     page = Page.objects.get(application_urls="StoriesConfig", application_namespace="blog1")
-
     assert page.get_admin_content("en").title == "Test Page", "The page title should be 'Test Page'"
+
+
+def test_post_content_migration():
+    from djangocms_stories.models import Post
+    from fixtures import POST_CONTENT_DATA
+
+    story1, story2 = Post.objects.all()[:2]
+
+    assert story1.postcontent_set.count() == 1, "The first story should have one published post contents"
+    assert story1.postcontent_set(manager="admin_manager").count() == 2, (
+        "The first story should have two post contents"
+    )
+
+    content1en = POST_CONTENT_DATA["post_en1"]
+    assert story1.get_title("en") == content1en["meta_title"], (
+        f"The first story title should be '{content1en['meta_title']}', not '{story1.get_title('en')}'"
+    )
+    assert story1.get_description("en") == content1en["meta_description"], (
+        f"The first story description should be '{content1en['meta_description']}', not '{story1.get_descrition('en')}'"
+    )
+
+    assert story1.get_content("fr", show_draft_content=True).language == "fr"
+
+    assert story1.get_title("fr") == content1en["meta_title"], (
+        f"The first story title should be '{content1en['meta_title']}', not '{story1.get_title('fr')}'"
+    )
+    assert story1.get_description("fr") == content1en["meta_description"], (
+        f"The first story description should be '{content1en['meta_description']}', not '{story1.get_descrition('fr')}'"
+    )
+
+    assert story2.postcontent_set.count() == 0, "The second story should have onnoe published post contents"
+    assert story2.postcontent_set(manager="admin_manager").count() == 2, (
+        "The second story should have two post contents"
+    )
 
 
 def setup_blog_testproj():
@@ -23,7 +56,7 @@ def setup_blog_testproj():
     from django.contrib.auth import get_user_model
     from django.contrib.auth.models import Group
 
-    from fixtures import generate_config, generate_blog
+    from fixtures import generate_config, generate_blog, POST_CONTENT_DATA
 
     assert apps.is_installed("djangocms_blog"), "djangocms_blog is not installed"
 
@@ -51,8 +84,12 @@ def setup_blog_testproj():
     config1 = generate_config(namespace="blog1", use_placeholder=True)
     config2 = generate_config(namespace="blog2", use_placeholder=False)
 
-    post1, post_en1, post_fr1 = generate_blog(config1, author=user)
-    post2, post_en2, post_fr2 = generate_blog(config2, author=user)
+    post1, post_en1, post_fr1 = generate_blog(config1, user, author=user)
+    post_en1.__dict__.update(POST_CONTENT_DATA["post_en1"])
+    post_fr1.__dict__.update(POST_CONTENT_DATA["post_fr1"])
+    post_en1.save()
+    post_fr1.save()
+    post2, post_en2, post_fr2 = generate_blog(config2, user, author=user)
 
     page = api.create_page(
         title="Test Page",
@@ -67,6 +104,11 @@ def setup_blog_testproj():
     page.application_urls = "BlogApp"
     page.application_namespace = config1.namespace
     page.save()
+
+    execute_from_command_line(["manage.py", "create_versions", "--userid", str(user.id)])
+
+    post_en1.versions.first().publish(user=user)
+
     return config1, config2, post1, post_en1, post_fr1, post2, post_en2, post_fr2
 
 
@@ -92,6 +134,7 @@ if __name__ == "__main__":
         django.setup()
         if os.path.exists(db_path):
             os.remove(db_path)
+        activate("en")
 
         setup_blog_testproj()
     else:
@@ -107,6 +150,7 @@ if __name__ == "__main__":
         execute_from_command_line(["manage.py", "migrate", "--noinput"])
         print(80 * "=")
         print("Running tests...")
+        activate("en")
         current_module = sys.modules[__name__]
         for name in dir(current_module):
             obj = getattr(current_module, name)

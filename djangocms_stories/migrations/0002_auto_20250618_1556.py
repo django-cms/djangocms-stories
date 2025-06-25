@@ -64,7 +64,7 @@ def migrate_from_blog_to_stories(apps, schema_editor):
     table_name = "djangocms_blog_post"
     with schema_editor.connection.cursor() as cursor:
         tables = schema_editor.connection.introspection.table_names(cursor)
-    print(f"Available tables: {tables}")
+
     if table_name not in tables:
         # No migration needed, djangocms_blog Post table does not exist
         return
