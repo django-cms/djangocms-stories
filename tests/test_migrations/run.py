@@ -54,7 +54,7 @@ if __name__ == "__main__":
     failed = False
     db_path = os.path.join(BASE_DIR, "test_db.sqlite3")
 
-    if len(sys.argv) != 2 or sys.argv[2] not in ("--phase1", "--phase2"):
+    if len(sys.argv) != 2 or sys.argv[1] not in ("--phase1", "--phase2"):
         print(f"This script is meant to be run with '{sys.argv[0]} --phase<1/2>'")
         sys.exit(1)
     if sys.argv[1] == "--phase1":
