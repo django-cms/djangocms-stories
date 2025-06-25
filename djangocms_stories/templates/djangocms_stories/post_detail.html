@@ -15,8 +15,8 @@
             {% include "djangocms_stories/includes/blog_meta.html" %}
         {% endblock %}
     </header>
-    {% if not post_content.post.main_image_id and post_content.media %}
-        <div class="blog-visual">{% render_placeholder post_content.media %}</div>
+    {% if post_content.post.app_config.use_placeholder and not post_content.post.main_image_id and post_content.media %}
+        <div class="blog-visual">{% placeholder "media" %}</div>
     {% else %}
         <div class="blog-visual">
             {% thumbnail post_content.post.main_image post_content.post.full_image_options.size crop=post_content.post.full_image_options.crop upscale=post_content.post.full_image_options.upscale subject_location=post_content.post.main_image.subject_location as main_image %}
@@ -25,7 +25,7 @@
     {% endif %}
     {% endspaceless %}
     {% if post_content.post.app_config.use_placeholder and post_content.content %}
-        <div class="blog-content">{% render_placeholder post_content.content %}</div>
+        <div class="blog-content">{% placeholder "content" %}</div>
     {% else %}
         <div class="blog-content">{% render_model post_content "post_text" "post_text" "" "safe" %}</div>
     {% endif %}

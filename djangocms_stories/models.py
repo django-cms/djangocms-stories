@@ -610,11 +610,11 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
         if self.app_config:
             if self.app_config.use_placeholder:
                 if self.app_config and self.app_config.template_prefix:
-                    return f"{self.app_config.template_prefix}/post_structure.html"
-                return "djangocms_stories/post_structure.html"
+                    return f"{self.app_config.template_prefix}/post_detail.html"
+                return "djangocms_stories/post_detail.html"
             else:
                 return "djangocms_stories/no_post_structure.html"
-        return "djangocms_stories/post_structure.html"
+        return "djangocms_stories/post_detail.html"
 
     def __str__(self):
         return self.title or _("Untitled")
