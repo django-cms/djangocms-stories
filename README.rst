@@ -2,8 +2,7 @@
 djangocms-stories
 =================
 
-| |PyPiVersion| |TestCoverage| |License|
-| |PyVersion| |DjVersion| |CmsVersion|
+|PyPiVersion| |TestCoverage| |License| |PyVersion| |DjVersion| |CmsVersion|
 
 **django CMS stories application - Tell your story in multilingual posts, using the full
 power of django CMS placeholders.**
