@@ -2,27 +2,12 @@ import django.conf
 from django.core.management import execute_from_command_line
 
 
-def increase_pk(model):
-    """Generate non-consecutive primary keys for the given model."""
-    import random
-    from django.db import connection
-
-    with connection.cursor() as cursor:
-        table = model._meta.db_table
-        pk_column = model._meta.pk.column
-        cursor.execute(f"SELECT MAX({pk_column}) FROM {table}")
-        max_pk = cursor.fetchone()[0] or 0
-        print(max_pk, "max_pk for", table)
-        increment = random.randint(0, 10)
-        new_pk = max_pk + increment
-        if connection.vendor == "sqlite":
-            cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_pk} WHERE name = '{table}'")
-
-
 def setup_blog_testproj():
     from django.apps import apps
     from django.contrib.auth import get_user_model
     from django.contrib.auth.models import Group
+
+    from fixtures import generate_config, generate_blog
 
     assert apps.is_installed("djangocms_blog"), "djangocms_blog is not installed"
 
@@ -47,45 +32,12 @@ def setup_blog_testproj():
     group, _ = Group.objects.get_or_create(name="Editors")
     group.user_set.add(user)
 
-    from djangocms_blog.cms_appconfig import BlogConfig
-    from djangocms_blog.models import Post, PostContent
+    config1 = generate_config(namespace="blog1", use_placeholder=True)
+    config2 = generate_config(namespace="blog2", use_placeholder=False)
 
-    def generate_blog(config):
-        post = Post.objects.create(
-            app_config=config1,
-            author=user,
-        )
-        increase_pk(Post)
-        post_en = PostContent.admin_manager.create(
-            post=post1,
-            language="en",
-            title="Test Post 1",
-            slug="test-post-1",
-        )
-        increase_pk(PostContent)
-        post_fr = PostContent.admin_manager.create(
-            post=post1,
-            language="fr",
-            title="Test Post 1 (FR)",
-            slug="test-post-1",
-        )
-        increase_pk(PostContent)
-        return post, post_en, post_fr
-
-    config1 = BlogConfig.objects.create(
-        namespace="testblog",
-        app_title="Test Blog",
-        object_name="Article",
-    )
-    increase_pk(BlogConfig)
-    config2 = BlogConfig.objects.create(
-        namespace="textonly",
-        app_title="Test Blog (text only)",
-        object_name="News",
-        use_placeholder=False,
-    )
-    post1, post_en1, post_fr1 = generate_blog(config1)
-    post2, post_en2, post_fr2 = generate_blog(config2)
+    post1, post_en1, post_fr1 = generate_blog(config1, author=user)
+    post2, post_en2, post_fr2 = generate_blog(config2, author=user)
+    return config1, config2, post1, post_en1, post_fr1, post2, post_en2, post_fr2
 
 
 if __name__ == "__main__":
@@ -139,8 +91,8 @@ if __name__ == "__main__":
         print("Done")
         db_path = os.path.join(BASE_DIR, "test_db.sqlite3")
 
-    if os.path.exists(db_path):
-        os.remove(db_path)
+        if os.path.exists(db_path):
+            os.remove(db_path)
 
     if failed:
         sys.exit(1)
