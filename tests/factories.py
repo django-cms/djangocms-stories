@@ -48,7 +48,7 @@ class PostCategoryFactory(DjangoModelFactory):
 
     app_config = factory.SubFactory(StoriesConfigFactory)
     name = factory.Faker("word")
-    slug = factory.Faker("slug")
+    slug = factory.LazyFunction(lambda: str(uuid.uuid4()))
     priority = factory.Faker("random_int", min=1, max=10)
 
 
