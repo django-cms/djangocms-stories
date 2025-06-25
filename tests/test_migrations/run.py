@@ -51,10 +51,10 @@ if __name__ == "__main__":
     # Add repo root to the path
     BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
     sys.path.insert(0, BASE_DIR)
-    print("BASE_DIR:", BASE_DIR)
     failed = False
     db_path = os.path.join(BASE_DIR, "test_db.sqlite3")
-
+    print("BASE_DIR:", BASE_DIR)
+    print("PPATH", sys.path)
     if len(sys.argv) != 2 or sys.argv[1] not in ("--phase1", "--phase2"):
         print(f"This script is meant to be run with '{sys.argv[0]} --phase<1/2>'")
         sys.exit(1)
