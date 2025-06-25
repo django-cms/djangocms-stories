@@ -51,6 +51,7 @@ if __name__ == "__main__":
     # Add repo root to the path
     BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
     sys.path.insert(0, BASE_DIR)
+    print("BASE_DIR:", BASE_DIR)
     failed = False
     db_path = os.path.join(BASE_DIR, "test_db.sqlite3")
 
