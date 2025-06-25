@@ -3,7 +3,11 @@
 <html>
 <head>
     <title>{% block title %}{% page_attribute 'title' %}{% endblock title %}</title>
-    {% include "meta/meta.html" %}
+    {% render_block "head_extra" %}
+    {% render_block "css_extra" %}
+    {% block meta %}
+        {% include "meta/meta.html" %}
+    {% endblock meta %}
     {% render_block "css" %}
     {% block canonical_url %}{% endblock canonical_url %}
 </head>
@@ -20,7 +24,7 @@
 </div>
 {% render_block "js" %}
 {% with_data "js-script" as jsset %}
-        {% for js in jsset %}<script type="text/javascript" src="{% static js %}"></script>{% endfor %}
+    {% for js in jsset %}<script type="text/javascript" src="{% static js %}"></script>{% endfor %}
 {% end_with_data %}
 {% render_block "js_end" %}
 </body>

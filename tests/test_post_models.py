@@ -21,7 +21,7 @@ def test_base_fixture(post_content):
     assert post_content.meta_description == "This is a test post meta description."
     assert "<p>This is a test post content.</p>" in post_content.post_text
     assert str(post_content.post) == "Test Post"
-    assert post_content.get_template() == "djangocms_stories/post_structure.html"
+    assert post_content.get_template() == "djangocms_stories/post_detail.html"
     assert post_content.content.cmsplugin_set.filter(language="en").count() == 1
     assert post_content.media.cmsplugin_set.filter(language="en").count() == 0
 
@@ -185,7 +185,7 @@ def test_get_template(simple_w_placeholder, simple_wo_placeholder):
     post_content_without_config = PostContentFactory(post__app_config=None)
     post_content_with_template_config = PostContentFactory(post__app_config=template_config)
 
-    assert post_content_with_placeholder.get_template() == "djangocms_stories/post_structure.html"
+    assert post_content_with_placeholder.get_template() == "djangocms_stories/post_detail.html"
     assert post_content_without_placeholder.get_template() == "djangocms_stories/no_post_structure.html"
-    assert post_content_without_config.get_template() == "djangocms_stories/post_structure.html"
-    assert post_content_with_template_config.get_template() == "my-tempaltes/post_structure.html"
+    assert post_content_without_config.get_template() == "djangocms_stories/post_detail.html"
+    assert post_content_with_template_config.get_template() == "my-tempaltes/post_detail.html"

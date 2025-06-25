@@ -531,6 +531,9 @@ class Post(models.Model):
 
 
 class PostContent(PostMetaMixin, ModelMeta, models.Model):
+    structure_template = "post_detail.html"
+    no_structure_template = "no_post_structure.html"
+
     class Meta:
         verbose_name = _("post content")
         verbose_name_plural = _("post contents")
@@ -607,14 +610,15 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
 
     def get_template(self):
         # Used for the cms structure endpoint
-        if self.app_config:
-            if self.app_config.use_placeholder:
-                if self.app_config and self.app_config.template_prefix:
-                    return f"{self.app_config.template_prefix}/post_detail.html"
-                return "djangocms_stories/post_detail.html"
-            else:
-                return "djangocms_stories/no_post_structure.html"
-        return "djangocms_stories/post_detail.html"
+        if self.app_config and self.app_config.template_prefix:
+            folder = self.app_config.template_prefix
+        else:
+            folder = self._meta.app_label
+        # Use the structure template if the app_config is not set or if it requests structure mode
+        if not self.app_config or self.app_config.use_placeholder:
+            return f"{folder}/{self.structure_template}"
+        else:
+            return f"{folder}/{self.no_structure_template}"
 
     def __str__(self):
         return self.title or _("Untitled")
