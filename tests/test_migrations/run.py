@@ -2,7 +2,23 @@ import django.conf
 from django.core.management import execute_from_command_line
 
 
+def test_apphook_migration():
+    from cms.models import Page
+
+    assert not Page.objects.filter(application_urls="BlogConfig").exists(), (
+        "BlogConfig apphook should not exist in the database"
+    )
+    assert Page.objects.filter(application_urls="StoriesConfig").exists(), (
+        "StoriesConfig apphook should exist in the database"
+    )
+
+    page = Page.objects.get(application_urls="StoriesConfig", application_namespace="blog1")
+
+    assert page.get_admin_content("en").title == "Test Page", "The page title should be 'Test Page'"
+
+
 def setup_blog_testproj():
+    from cms import api
     from django.apps import apps
     from django.contrib.auth import get_user_model
     from django.contrib.auth.models import Group
@@ -37,6 +53,20 @@ def setup_blog_testproj():
 
     post1, post_en1, post_fr1 = generate_blog(config1, author=user)
     post2, post_en2, post_fr2 = generate_blog(config2, author=user)
+
+    page = api.create_page(
+        title="Test Page",
+        template="base.html",
+        language="en",
+        slug="test-page",
+        created_by=user,
+    )
+    from cms.models import PageContent
+
+    assert PageContent.admin_manager.count() == 1, "There should be one page content created"
+    page.application_urls = "BlogApp"
+    page.application_namespace = config1.namespace
+    page.save()
     return config1, config2, post1, post_en1, post_fr1, post2, post_en2, post_fr2
 
 
@@ -64,15 +94,19 @@ if __name__ == "__main__":
             os.remove(db_path)
 
         setup_blog_testproj()
-        print(80 * "*")
     else:
+        if not os.path.exists(db_path):
+            print(f"Database file {db_path} does not exist. Aborting.")
+            sys.exit(1)
+
         os.environ["DJANGO_SETTINGS_MODULE"] = "tests.test_migrations.post"
         django.setup()
-
+        print("Running migrations...")
         assert django.apps.apps.is_installed("djangocms_stories"), "djangocms_stories is not installed"
         assert django.apps.apps.is_installed("djangocms_blog"), "djangocms_blog is not installed"
         execute_from_command_line(["manage.py", "migrate", "--noinput"])
-
+        print(80 * "=")
+        print("Running tests...")
         current_module = sys.modules[__name__]
         for name in dir(current_module):
             obj = getattr(current_module, name)
