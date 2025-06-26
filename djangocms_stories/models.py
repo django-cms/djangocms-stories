@@ -31,7 +31,7 @@ from taggit_autosuggest.managers import TaggableManager
 
 from .cms_appconfig import StoriesConfig
 from .fields import slugify
-from .managers import AdminDateTaggedManager, GenericDateTaggedManager
+from .managers import AdminManager, GenericDateTaggedManager, SiteManager
 from .settings import get_setting
 
 BLOG_CURRENT_POST_IDENTIFIER = get_setting("CURRENT_POST_IDENTIFIER")
@@ -317,6 +317,8 @@ class Post(models.Model):
 
     related = SortedManyToManyField("self", verbose_name=_("Related Posts"), blank=True, symmetrical=False)
 
+    objects = GenericDateTaggedManager()
+
     _metadata = {
         "title": "get_title",
         "description": "get_description",
@@ -566,8 +568,10 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
     post_text = HTMLField(_("text"), default="", blank=True, configuration="BLOG_POST_TEXT_CKEDITOR")
     placeholders = PlaceholderRelationField()
 
-    objects = GenericDateTaggedManager()
-    admin_manager = AdminDateTaggedManager()
+    objects = SiteManager()
+    admin_manager = AdminManager()
+    # objects = GenericDateTaggedManager()
+    # admin_manager = AdminDateTaggedManager()
 
     @property
     def author(self):
@@ -656,7 +660,7 @@ class BasePostPlugin(CMSPlugin):
             "post__categories", "post__categories__translations", "post__categories__app_config"
         )
 
-    def post_content_queryset(self, request=None):
+    def post_content_queryset(self, request=None, selected_posts=None):
         language = translation.get_language()
         if request and getattr(request, "toolbar", False) and request.toolbar.edit_mode_active:
             post_contents = PostContent.admin_manager.latest_content()
@@ -666,7 +670,9 @@ class BasePostPlugin(CMSPlugin):
             post_contents = post_contents.filter(post__app_config=self.app_config)
         if self.current_site:
             post_contents = post_contents.on_site(get_current_site(request))
-        post_contents = post_contents.filter(language=language)
+        if selected_posts:
+            post_contents = post_contents.filter(post__in=selected_posts)
+        post_contents = post_contents.prefetch_related("post").filter(language=language)
         return self.optimize(post_contents)
 
 
@@ -730,7 +736,7 @@ class AuthorEntriesPlugin(BasePostPlugin):
     def get_authors(self, request):
         authors = self.authors.all()
         for author in authors:
-            qs = self.get_post_contents(request).filter(author=author)
+            qs = self.get_post_contents(request).filter(post__author=author)
             # total nb of posts
             author.count = qs.count()
             # "the number of author posts to be displayed"
@@ -747,9 +753,11 @@ class FeaturedPostsPlugin(BasePostPlugin):
     def copy_relations(self, oldinstance):
         self.posts.set(oldinstance.posts.all())
 
-    def get_posts(self, request, published_only=True):
-        posts = self.post_queryset(request, published_only, selected_posts=self.posts.all())
-        return posts
+    def get_posts(
+        self,
+        request,
+    ):
+        return self.post_content_queryset(request, selected_posts=self.posts.all())
 
 
 class GenericBlogPlugin(BasePostPlugin):

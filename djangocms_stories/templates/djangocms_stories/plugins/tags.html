@@ -7,11 +7,11 @@
         {% for tag in tags %}
             <li><a href="{% namespace_url 'posts-tagged' tag=tag.slug namespace=instance.app_config.namespace %}" class="blog-tag-{{ tag.count }}">
                 {{ tag.name }}
-                <span>(
+                <span>
                     {% if tag.count > 0 %}
-                    {% blocktrans count articles=tag.count %}1 article{% plural %}{{ articles }} articles{% endblocktrans %}
-                    {% else %}{% trans "0 articles" %}{% endif %}
-                )</span>
+                    ({% blocktrans count articles=tag.count %}1 article{% plural %}{{ articles }} articles{% endblocktrans %})
+                    {% else %}({% trans "0 articles" %}){% endif %}
+                </span>
             </a></li>
         {% empty %}
         <li class="blog-empty"><p>{% trans "No article found." %}</p></li>

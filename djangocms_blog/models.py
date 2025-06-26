@@ -687,7 +687,7 @@ class BasePostPlugin(CMSPlugin):
             "post__categories", "post__categories__translations", "post__categories__app_config"
         )
 
-    def post_content_queryset(self, request=None):
+    def post_content_queryset(self, request=None, selected_posts=None):
         language = translation.get_language()
         if request and getattr(request, "toolbar", False) and request.toolbar.edit_mode_active:
             post_contents = PostContent.admin_manager.latest_content()
@@ -779,8 +779,8 @@ class FeaturedPostsPlugin(BasePostPlugin):
     def copy_relations(self, oldinstance):
         self.posts.set(oldinstance.posts.all())
 
-    def get_posts(self, request, published_only=True):
-        posts = self.post_queryset(request, published_only, selected_posts=self.posts.all())
+    def get_posts(self, request):
+        posts = self.post_content_queryset(request, selected_posts=self.posts.all())
         return posts
 
 

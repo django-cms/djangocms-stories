@@ -14,6 +14,19 @@ from .settings import get_setting
 class StoriesPlugin(CMSPluginBase):
     module = get_setting("PLUGIN_MODULE_NAME")
     form = BlogPluginForm
+    field = []
+
+    def get_fields(self, request, obj=None):
+        """
+        Return the fields available when editing the plugin.
+
+        'template_folder' field is added if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains multiple folders.
+
+        """
+        fields = self.fields
+        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1:
+            fields.append("template_folder")
+        return fields
 
     def get_render_template(self, context, instance, placeholder):
         """
@@ -44,18 +57,7 @@ class BlogLatestEntriesPlugin(StoriesPlugin):
     filter_horizontal = ("categories",)
     cache = False
     base_render_template = "latest_entries.html"
-
-    def get_fields(self, request, obj=None):
-        """
-        Return the fields available when editing the plugin.
-
-        'template_folder' field is added if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains multiple folders.
-
-        """
-        fields = ["app_config", "latest_posts", "tags", "categories"]
-        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1:
-            fields.append("template_folder")
-        return fields
+    fields = ["app_config", "latest_posts", "tags", "categories"]
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
@@ -86,18 +88,7 @@ class BlogFeaturedPostsPlugin(StoriesPlugin):
     form = BlogPluginForm
     cache = False
     base_render_template = "featured_posts.html"
-
-    def get_fields(self, request, obj=None):
-        """
-        Return the fields available when editing the plugin.
-
-        'template_folder' field is added if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains multiple folders.
-
-        """
-        fields = ["app_config", "posts"]
-        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1:
-            fields.append("template_folder")
-        return fields
+    fields = ["app_config", "posts"]
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
@@ -127,18 +118,7 @@ class BlogAuthorPostsPlugin(StoriesPlugin):
     form = AuthorPostsForm
     base_render_template = "authors.html"
     filter_horizontal = ["authors"]
-
-    def get_fields(self, request, obj=None):
-        """
-        Return the fields available when editing the plugin.
-
-        'template_folder' field is added if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains multiple folders.
-
-        """
-        fields = ["app_config", "current_site", "authors"]
-        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1:
-            fields.append("template_folder")
-        return fields
+    fields = ["app_config", "current_site", "authors"]
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
@@ -153,23 +133,7 @@ class BlogAuthorPostsListPlugin(BlogAuthorPostsPlugin):
 
     name = get_setting("AUTHOR_POSTS_LIST_PLUGIN_NAME")
     base_render_template = "authors_posts.html"
-    fields = (
-        ["app_config", "current_site", "authors", "latest_posts"] + ["template_folder"]
-        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1
-        else []
-    )
-
-    def get_fields(self, request, obj=None):
-        """
-        Return the fields available when editing the plugin.
-
-        'template_folder' field is added if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains multiple folders.
-
-        """
-        fields = ["app_config", "current_site", "authors", "latest_posts"]
-        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1:
-            fields.append("template_folder")
-        return fields
+    fields = ["app_config", "current_site", "authors", "latest_posts"]
 
 
 @plugin_pool.register_plugin
@@ -181,14 +145,11 @@ class BlogTagsPlugin(StoriesPlugin):
     model = GenericBlogPlugin
     base_render_template = "tags.html"
 
-    def get_exclude(self, request, obj=None):
-        """Exclude 'template_folder' field if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains one folder."""
-        return [] if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1 else ["template_folder"]
-
     def render(self, context, instance, placeholder):
         """Render the plugin."""
         context = super().render(context, instance, placeholder)
-        qs = instance.post_queryset(context["request"])
+        site = get_current_site(context["request"])
+        qs = Post.objects.on_site(site).filter(app_config=instance.app_config)
         context["tags"] = Post.objects.tag_cloud(queryset=qs)
         return context
 
@@ -202,10 +163,6 @@ class BlogCategoryPlugin(StoriesPlugin):
     model = GenericBlogPlugin
     base_render_template = "categories.html"
 
-    def get_exclude(self, request, obj=None):
-        """Exclude 'template_folder' field if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains one folder."""
-        return [] if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1 else ["template_folder"]
-
     def render(self, context, instance, placeholder):
         """Render the plugin."""
         context = super().render(context, instance, placeholder)
@@ -214,10 +171,10 @@ class BlogCategoryPlugin(StoriesPlugin):
             qs = qs.filter(app_config__namespace=instance.app_config.namespace)
         if instance.current_site:
             site = get_current_site(context["request"])
-            qs = qs.filter(models.Q(blog_posts__sites__isnull=True) | models.Q(blog_posts__sites=site.pk))
+            qs = qs.filter(models.Q(posts__sites__isnull=True) | models.Q(posts__sites=site.pk))
         categories = qs.distinct()
         if instance.app_config and not instance.app_config.menu_empty_categories:
-            categories = qs.filter(blog_posts__isnull=False).distinct()
+            categories = qs.filter(posts__isnull=False).distinct()
         context["categories"] = categories
         return context
 
@@ -231,13 +188,10 @@ class BlogArchivePlugin(StoriesPlugin):
     model = GenericBlogPlugin
     base_render_template = "archive.html"
 
-    def get_exclude(self, request, obj=None):
-        """Exclude 'template_folder' field if ``BLOG_PLUGIN_TEMPLATE_FOLDERS`` contains one folder."""
-        return [] if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1 else ["template_folder"]
-
     def render(self, context, instance, placeholder):
         """Render the plugin."""
         context = super().render(context, instance, placeholder)
-        qs = instance.post_queryset(context["request"])
+        site = get_current_site(context["request"])
+        qs = Post.objects.on_site(site).filter(app_config=instance.app_config)
         context["dates"] = Post.objects.get_months(queryset=qs)
         return context

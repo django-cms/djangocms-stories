@@ -108,8 +108,26 @@ class AdminSiteQuerySet(SiteQuerySet):
         return self.filter(**kwargs)
 
 
+class SiteManager(models.Manager):
+    _queryset_class = SiteQuerySet
+
+
+class AdminManager(WithUserMixin, models.Manager):
+    _queryset_class = AdminSiteQuerySet
+
+    def current_content(self, **kwargs):
+        """Syntactic sugar: admin_manager.current_content()"""
+        return self.get_queryset().current_content(**kwargs)
+
+    def latest_content(self, **kwargs):
+        """Syntactic sugar: admin_manager.latest_content()"""
+        return self.get_queryset().latest_content(**kwargs)
+
+
 class GenericDateTaggedManager(TaggedFilterItem, models.Manager):
     use_for_related_fields = True
+    start_date_field = "date_featured"
+    fallback_date_field = "date_modified"
 
     queryset_class = SiteQuerySet
 
@@ -140,7 +158,7 @@ class GenericDateTaggedManager(TaggedFilterItem, models.Manager):
             queryset = self.get_queryset()
         if current_site:
             queryset = queryset.on_site()
-        dates_qs = queryset.values_list(queryset.start_date_field, queryset.fallback_date_field)
+        dates_qs = queryset.values_list(self.start_date_field, self.fallback_date_field)
         dates = []
         for blog_dates in dates_qs:
             if blog_dates[0]:
@@ -160,15 +178,3 @@ class GenericDateTaggedManager(TaggedFilterItem, models.Manager):
             {"date": now().replace(year=year, month=month, day=1), "count": date_counter[year, month]}
             for year, month in dates
         ]
-
-
-class AdminDateTaggedManager(WithUserMixin, GenericDateTaggedManager):
-    queryset_class = AdminSiteQuerySet
-
-    def current_content(self, **kwargs):
-        """Syntactic sugar: admin_manager.current_content()"""
-        return self.get_queryset().current_content(**kwargs)
-
-    def latest_content(self, **kwargs):
-        """Syntactic sugar: admin_manager.latest_content()"""
-        return self.get_queryset().latest_content(**kwargs)

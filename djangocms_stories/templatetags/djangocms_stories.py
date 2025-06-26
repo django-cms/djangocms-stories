@@ -4,6 +4,7 @@ from classytags.helpers import AsTag
 from cms.utils.plugins import get_plugins
 from cms.utils.urlutils import admin_reverse
 from django import template
+from django.urls import reverse
 
 from djangocms_stories.models import PostContent
 
@@ -31,7 +32,7 @@ def namespace_url(view_name, *args, namespace="djangocms_stories", **kwargs):
     :return: URL for the specified view in the given namespace
     :rtype: str
     """
-    return admin_reverse(f"{namespace}:{view_name}", args=args, kwargs=kwargs)
+    return reverse(f"{namespace}:{view_name}", args=args, kwargs=kwargs)
 
 
 @register.simple_tag(name="media_plugins", takes_context=True)
