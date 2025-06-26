@@ -292,7 +292,7 @@ class ModelAppHookConfig:
                     return self.render_app_config_form(request, form)
         return super().changeform_view(request, object_id, form_url, extra_context)
 
-    def get_form_x(self, request, obj=None, **kwargs):
+    def get_form_x(self, request, obj=None, **kwargs):  # pragma: no cover
         """
         Provides a flexible way to get the right form according to the context
 

@@ -1,6 +1,7 @@
 import factory
 from factory.django import DjangoModelFactory
 
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from datetime import timezone
@@ -78,3 +79,12 @@ class PostContentFactory(DjangoModelFactory):
     meta_title = factory.Faker("sentence", nb_words=4)
     meta_description = factory.Faker("sentence", nb_words=10)
     post_text = factory.Faker("paragraph", nb_sentences=3)
+
+    @classmethod
+    def _after_postgeneration(cls, obj, create, results=None):
+        if apps.is_installed("djangocms_versioning"):
+            # Add version object
+            from djangocms_versioning.constants import DRAFT
+            from djangocms_versioning.models import Version
+
+            Version.objects.create(content=obj, state=DRAFT, created_by=UserFactory(is_superuser=True))

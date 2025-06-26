@@ -1,22 +1,36 @@
 import pytest
 
+from django.apps import apps
+from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils.lorem_ipsum import words
 
 from cms.toolbar.utils import get_object_preview_url
 
+from .utils import publish_if_necessary
+
 
 @pytest.fixture
 @pytest.mark.django_db
-def page_content():
+def page_content(admin_user):
     from cms import api
+    from cms.models import PageContent
 
     page = api.create_page(
         title="Test Page",
         template="base.html",
         language="en",
     )
-    return page.get_admin_content("en")
+    page_content = PageContent.admin_manager.get(page=page, language="en")
+    if apps.is_installed("djangocms_versioning"):
+        from djangocms_versioning.models import Version
+
+        Version.objects.get_or_create(
+            content_type=ContentType.objects.get_for_model(page_content),
+            object_id=page_content.pk,
+            created_by=admin_user,
+        )
+    return page_content
 
 
 @pytest.fixture
@@ -34,7 +48,9 @@ def placeholder(page_content):
 
 
 @pytest.mark.django_db
-def test_blog_latest_entries_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
+def test_blog_latest_entries_plugin(
+    placeholder, admin_client, admin_user, simple_w_placeholder, assert_html_in_response
+):
     from cms import api
     from cms.toolbar.utils import get_object_preview_url
     from .factories import PostContentFactory
@@ -52,6 +68,7 @@ def test_blog_latest_entries_plugin(placeholder, admin_client, simple_w_placehol
     assert_html_in_response('<p class="blog-empty">No article found.</p>', response)
 
     batch = PostContentFactory.create_batch(5, language="en", post__app_config=simple_w_placeholder)
+    publish_if_necessary(batch, admin_user)
     response = admin_client.get(url)
     for post_content in batch:
         assert_html_in_response(

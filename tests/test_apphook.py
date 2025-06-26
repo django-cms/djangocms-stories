@@ -1,9 +1,12 @@
 from django.urls import resolve, reverse
 
 from django.apps import apps
+from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory
 from django.utils import lorem_ipsum
 from djangocms_stories.cms_appconfig import get_app_instance
+
+from .utils import publish_if_necessary
 
 
 def test_apphook(admin_client, simple_wo_placeholder, assert_html_in_response):
@@ -21,6 +24,7 @@ def test_apphook(admin_client, simple_wo_placeholder, assert_html_in_response):
         title=lorem_ipsum.words(3),
         post_text=lorem_ipsum.sentence(),
     )
+    publish_if_necessary(batch, user)
 
     page = api.create_page(
         title="Test Page",
@@ -30,7 +34,15 @@ def test_apphook(admin_client, simple_wo_placeholder, assert_html_in_response):
         apphook_namespace=simple_wo_placeholder.namespace,
     )
     if apps.is_installed("djangocms_versioning"):
-        page.get_admin_content("en").versions.first().publish(user=user)
+        from djangocms_versioning.models import Version
+
+        page_content = page.pagecontent_set(manager="admin_manager").get(language="en")
+        version = Version.objects.get_or_create(
+            content_type=ContentType.objects.get_for_model(page_content),
+            object_id=page_content.pk,
+            created_by=user,
+        )[0]
+        version.publish(user)
 
     reload_urlconf()
 

@@ -15,6 +15,7 @@ jobs:
           dj42_cms50.txt,
           dj52_cms50.txt,
         ]
+        versioning: [ "on", "off" ]
         os: [
           ubuntu-latest,
         ]
@@ -41,6 +42,7 @@ jobs:
 
     - name: Run coverage
       run: |
+        export TEST_WITH_VERSIONING=${{ matrix.versioning }}
         pytest --cov --cov-branch --cov-report=xml
 
     - name: Upload Coverage to Codecov

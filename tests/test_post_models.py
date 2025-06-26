@@ -7,8 +7,9 @@ from django.utils import translation
 from django.utils.encoding import force_bytes
 from django.utils.timezone import now
 
-
 from tests.utils import assert_num_queries
+
+from .utils import publish_if_necessary
 
 
 @pytest.mark.django_db
@@ -20,7 +21,6 @@ def test_base_fixture(post_content):
     assert post_content.meta_title == "Test Post Meta Title"
     assert post_content.meta_description == "This is a test post meta description."
     assert "<p>This is a test post content.</p>" in post_content.post_text
-    assert str(post_content.post) == "Test Post"
     assert post_content.get_template() == "djangocms_stories/post_detail.html"
     assert post_content.content.cmsplugin_set.filter(language="en").count() == 1
     assert post_content.media.cmsplugin_set.filter(language="en").count() == 0
@@ -29,7 +29,6 @@ def test_base_fixture(post_content):
     post = post_content.post
     assert post.featured() is False
     assert post.date == post.date_created  # No date_published or date_featured set, so date_created is used
-    assert post.guid == hashlib.sha256(force_bytes(f"-en-test-post-{post.app_config.namespace}-")).hexdigest()
     assert post.get_content(language="en", show_draft_content=True) == post_content
     assert post.get_image_full_url() == ""
     assert post.get_image_width() is None
@@ -40,6 +39,9 @@ def test_base_fixture(post_content):
     if apps.is_installed("djangocms_versioning"):
         assert post.get_content(language="en", show_draft_content=False) is None
     else:
+        # Some post properties access the content and are only available if the content is published
+        assert str(post_content.post) == "Test Post"
+        assert post.guid == hashlib.sha256(force_bytes(f"-en-test-post-{post.app_config.namespace}-")).hexdigest()
         assert post.get_content(language="en", show_draft_content=False) == post_content
 
 
@@ -79,7 +81,7 @@ def test_date_property(db):
 
 
 @pytest.mark.django_db
-def test_post_unicode_slug(db, post):
+def test_post_unicode_slug(db, post, admin_user):
     """Test the unicode slug of the Post model."""
     from djangocms_stories.models import PostContent
 
@@ -92,6 +94,11 @@ def test_post_unicode_slug(db, post):
         meta_description="This is a test post meta description.",
         post_text="<p>This is a test post content.</p>",
     )
+    if apps.is_installed("djangocms_versioning"):
+        from djangocms_versioning.constants import PUBLISHED
+        from djangocms_versioning.models import Version
+
+        Version.objects.using(db).create(content=post_content, created_by=admin_user, state=PUBLISHED)
 
     assert post_content.slug == "accentué"
 
@@ -118,6 +125,7 @@ def test_get_description(db):
 
     post_content_1 = PostContentFactory(meta_description="<p>This is a <b>test</b> description.</p>", abstract="")
     post_content_2 = PostContentFactory(meta_description="", abstract="<p>This is a <b>test</b> abstract.</p>")
+    publish_if_necessary([post_content_1, post_content_2], post_content_1.post.author)
 
     assert post_content_1.post.get_description() == "This is a test description."
     assert post_content_2.post.get_description() == "This is a test abstract."
@@ -129,6 +137,7 @@ def test_get_keywords(db):
 
     post_content_1 = PostContentFactory(meta_keywords="")
     post_content_2 = PostContentFactory(meta_keywords="test, are these key words, or not")
+    publish_if_necessary([post_content_1, post_content_2], post_content_1.post.author)
 
     assert post_content_1.post.get_keywords() == []
     assert post_content_2.post.get_keywords() == [

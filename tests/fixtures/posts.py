@@ -1,5 +1,7 @@
 import pytest
 
+from django.apps import apps
+
 
 @pytest.fixture
 @pytest.mark.django_db
@@ -13,7 +15,7 @@ def post(db, default_config):
 
 @pytest.fixture
 @pytest.mark.django_db
-def post_content(db, post):
+def post_content(db, post, admin_user):
     from djangocms_stories.models import PostContent
 
     post_content = PostContent.objects.using(db).create(
@@ -25,6 +27,14 @@ def post_content(db, post):
         meta_description="This is a test post meta description.",
         post_text="<p>This is a test post content.</p>",
     )
+    if apps.is_installed("djangocms_versioning"):
+        from djangocms_versioning.constants import DRAFT
+        from djangocms_versioning.models import Version
+
+        Version.objects.using(db).create(
+            content=post_content,
+            created_by=admin_user,
+        )
     if post.app_config.use_placeholder:
         from cms.api import add_plugin
         from cms.models import Placeholder
