@@ -189,7 +189,7 @@ class PostCategory(PostMetaMixin, ModelMeta, TranslatableModel):
         if self.children.exists():
             children.extend(self.children.all())
             for child in self.children.all():
-                children.extend(child.descendants())
+                children.extend(child.get_descendants())
         return children
 
     @cached_property

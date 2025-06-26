@@ -519,8 +519,8 @@ class PostAdmin(
                 pass
         return filters
 
-    def lookup_allowed(self, lookup, value):
-        return super().lookup_allowed(lookup, value) or any(
+    def lookup_allowed(self, lookup, value, request):
+        return super().lookup_allowed(lookup, value, request) or any(
             (
                 lookup.startswith("post__categories"),
                 lookup.startswith("post__app_config"),
