@@ -13,7 +13,7 @@ if djangocms_versioning_installed:
     from packaging.version import Version as PackageVersion
     from djangocms_versioning import __version__ as djangocms_versioning_version
 
-    if PackageVersion(djangocms_versioning_version) < PackageVersion("2.3"):
+    if PackageVersion(djangocms_versioning_version) < PackageVersion("2.3"):  # pragma: no cover
         raise ImportError(
             "djangocms_versioning >= 2.3.0 is required for djangocms_stories to work properly."
             " Please upgrade djangocms_versioning."
