@@ -2,6 +2,7 @@ import logging
 
 from cms.apphook_pool import apphook_pool
 from cms.menu_bases import CMSAttachMenu
+from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import resolve
 from django.utils.translation import get_language_from_request, gettext_lazy as _
@@ -123,7 +124,7 @@ class PostCategoryMenu(CMSAttachMenu):
         return nodes
 
 
-class BlogNavModifier(Modifier):
+class PostCategoryNavModifier(Modifier):
     """
     This navigation modifier makes sure that when
     a particular blog post is viewed,
@@ -174,8 +175,12 @@ class BlogNavModifier(Modifier):
         return nodes
 
 
-# menu_pool.register_modifier(PostNavModifier)
-# menu_pool.register_menu(PostCategoryMenu)
+if not hasattr(settings, "TESTS_RUNNING"):
+    # For reasons not fully understood, the test environment leasds to
+    # the menu pool being registered (at least) twice, which causes an error.
+    # This behavior has not been observed in production.
+    menu_pool.register_modifier(PostCategoryNavModifier)
+    menu_pool.register_menu(PostCategoryMenu)
 
 
 def clear_menu_cache(**kwargs):

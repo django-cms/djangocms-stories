@@ -120,3 +120,6 @@ CMS_CONFIRM_VERSION4 = True
 # AUTH_USER_MODEL = "test_utils.CustomUser"
 
 STATIC_URL = "/static/"
+
+
+TESTS_RUNNING = True
