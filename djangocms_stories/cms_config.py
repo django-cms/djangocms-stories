@@ -9,46 +9,15 @@ from .views import ToolbarDetailView
 djangocms_versioning_installed = apps.is_installed("djangocms_versioning")
 
 
-def copy_placeholder_content(original_content):
-    """Copy the content object and deepcopy its placeholders and plugins.The PlaceholderRelationField needs to
-    be named "placeholders".
+if djangocms_versioning_installed:
+    from packaging.version import Version as PackageVersion
+    from djangocms_versioning import __version__ as djangocms_versioning_version
 
-    This is needed for versioning integration.
-    """
-    ContentModel = original_content.__class__
-    # Copy content object
-    content_fields = {
-        field.name: getattr(original_content, field.name)
-        for field in ContentModel._meta.fields
-        # don't copy primary key because we're creating a new obj
-        if ContentModel._meta.pk.name != field.name
-    }
-    # Use original manager to not create a new Version object here
-    new_content = ContentModel._original_manager.create(**content_fields)
-
-    for field in ContentModel._meta.private_fields:
-        # Copy PlaceholderRelationFields
-        if isinstance(field, PlaceholderRelationField):
-            # Copy placeholders
-            new_placeholders = []
-            for placeholder in getattr(original_content, field.name).all():
-                placeholder_fields = {
-                    field.name: getattr(placeholder, field.name)
-                    for field in Placeholder._meta.fields
-                    # don't copy primary key because we're creating a new obj
-                    # and handle the source field later
-                    if field.name not in [Placeholder._meta.pk.name, "source"]
-                }
-                if placeholder.source:
-                    placeholder_fields["source"] = new_content
-                new_placeholder = Placeholder.objects.create(**placeholder_fields)
-                # Copy plugins
-                placeholder.copy_plugins(new_placeholder)
-                new_placeholders.append(new_placeholder)
-            getattr(new_content, field.name).add(*new_placeholders)
-
-    return new_content
-
+    if PackageVersion(djangocms_versioning_version) < PackageVersion("2.3"):
+        raise ImportError(
+            "djangocms_versioning >= 2.3.0 is required for djangocms_stories to work properly."
+            " Please upgrade djangocms_versioning."
+        )
 
 class StoriesCMSConfig(CMSAppConfig):
     cms_enabled = True
@@ -67,7 +36,6 @@ class StoriesCMSConfig(CMSAppConfig):
                 grouper_field_name="post",
                 extra_grouping_fields=["language"],
                 version_list_filter_lookups={"language": get_language_tuple},
-                copy_function=copy_placeholder_content,
                 grouper_selector_option_label=lambda obj, lang: obj.get_title(lang),
             ),
         ]
