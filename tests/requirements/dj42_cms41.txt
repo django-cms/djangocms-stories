@@ -1,3 +1,4 @@
 -r base.txt
 Django~=4.2
-django-cms~=4.1
+# django-cms~=4.1
+git+https://github.com/django-cms/django-cms.git@release/4.1.x#egg=django-cms
