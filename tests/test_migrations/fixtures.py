@@ -45,14 +45,14 @@ def generate_blog(config, user, **wkargs):
     )
     post.sites.add(1)  # Assuming site ID 1 is the default site
     increase_pk(Post)
-    post_en = PostContent.admin_manager.with_user(user).create(
+    post_en = PostContent.objects.with_user(user).create(
         post=post,
         language="en",
         title="Test Post 1",
         slug="test-post-1",
     )
     increase_pk(PostContent)
-    post_fr = PostContent.admin_manager.with_user(user).create(
+    post_fr = PostContent.objects.with_user(user).create(
         post=post,
         language="fr",
         title="Test Post 1 (FR)",

@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from parler.forms import TranslatableModelForm
 from taggit_autosuggest.widgets import TagAutoSuggest
 
-from .models import PostCategory, StoriesConfig, Post
+from .models import PostCategory, PostContent, StoriesConfig, Post
 from .settings import PERMALINK_TYPE_CATEGORY, get_setting
 
 User = get_user_model()
@@ -88,101 +88,6 @@ class AuthorPostsForm(BlogPluginForm):
         super().__init__(*args, **kwargs)
         # apply distinct due to django issue #11707
         self.fields["authors"].queryset = User.objects.filter(djangocms_stories_post_author__publish=True).distinct()
-
-
-# class PostAdminBaseForm(ConfigFormBase, forms.ModelForm):
-#     def __init__(self, *args, **kwargs):
-#         self.base_fields["meta_description"].validators = [MaxLengthValidator(get_setting("META_DESCRIPTION_LENGTH"))]
-#         original_attrs = self.base_fields["meta_description"].widget.attrs
-#         if "cols" in original_attrs:
-#             del original_attrs["cols"]
-#         if "rows" in original_attrs:
-#             del original_attrs["rows"]
-#         original_attrs["maxlength"] = get_setting("META_DESCRIPTION_LENGTH")
-#         self.base_fields["meta_description"].widget = forms.TextInput(original_attrs)
-#         self.base_fields["meta_title"].validators = [MaxLengthValidator(get_setting("META_TITLE_LENGTH"))]
-#         super().__init__(*args, **kwargs)
-#         if "categories" in self.fields:
-#             if self.app_config and self.app_config.url_patterns == PERMALINK_TYPE_CATEGORY:
-#                 self.fields["categories"].required = True
-#             self.fields["categories"].queryset = self.available_categories
-#         if "related" in self.fields:
-#             self.fields["related"].queryset = self.available_related_posts
-#
-#         if "app_config" in self.fields:
-#             # Don't allow app_configs to be added here. The correct way to add an
-#             # apphook-config is to create an apphook on a cms Page.
-#             self.fields["app_config"].widget.can_add_related = False
-#
-#         if self.app_config:
-#             if not self.initial.get("main_image_full", ""):
-#                 self.initial["main_image_full"] = self.app_config.app_data["config"].get("default_image_full")
-#             if not self.initial.get("main_image_thumbnail", ""):
-#                 self.initial["main_image_thumbnail"] = self.app_config.app_data["config"].get(
-#                     "default_image_thumbnail"
-#                 )
-
-
-class PostAdminFormBase(ConfigFormBase, forms.ModelForm):
-    """
-    Common methods between the admin and wizard form
-    """
-
-    class Meta:
-        model = Post
-        fields = "__all__"
-
-    @cached_property
-    def available_categories(self):
-        qs = StoriesConfig.objects
-        if self.app_config:
-            return qs.filter(app_config__namespace=self.app_config.namespace)
-        return qs
-
-    @cached_property
-    def available_related_posts(self):
-        qs = Post.objects
-        if self.app_config:
-            if self.app_config.use_related == "1":
-                qs = qs.filter(app_config__namespace=self.app_config.namespace)
-        return qs
-
-
-class PostAdminForm(PostAdminFormBase):
-    def __init__(self, *args, **kwargs):
-        if "meta_description" in self.base_fields:
-            # Not available for published fields
-            self.base_fields["meta_description"].validators = [
-                MaxLengthValidator(get_setting("META_DESCRIPTION_LENGTH"))
-            ]
-            original_attrs = self.base_fields["meta_description"].widget.attrs
-            if "cols" in original_attrs:
-                del original_attrs["cols"]
-            if "rows" in original_attrs:
-                del original_attrs["rows"]
-            original_attrs["maxlength"] = get_setting("META_DESCRIPTION_LENGTH")
-            self.base_fields["meta_description"].widget = forms.TextInput(original_attrs)
-        if "meta_title" in self.base_fields:
-            self.base_fields["meta_title"].validators = [MaxLengthValidator(get_setting("META_TITLE_LENGTH"))]
-        super().__init__(*args, **kwargs)
-        if "categories" in self.fields:
-            if getattr(self.app_config, "url_patterns", "") == PERMALINK_TYPE_CATEGORY:
-                self.fields["categories"].required = True
-            self.fields["categories"].queryset = self.available_categories
-        if "related" in self.fields:
-            self.fields["related"].queryset = self.available_related_posts
-
-        if "app_config" in self.fields:
-            # Don't allow app_configs to be added here. The correct way to add an
-            # apphook-config is to create an apphook on a cms Page.
-            self.fields["app_config"].widget.can_add_related = False
-
-        if self.app_config:
-            if not self.initial.get("main_image_full", ""):
-                self.initial["main_image_full"] = self.app_config.default_image_full
-            if not self.initial.get("main_image_thumbnail", ""):
-                self.initial["main_image_thumbnail"] = self.app_config.default_image_thumbnail
-
 
 class AppConfigForm(forms.Form):
     app_config = forms.ModelChoiceField(

@@ -181,8 +181,6 @@ def setup_blog_testproj():
     page.application_namespace = config1.namespace
     page.save()
 
-    execute_from_command_line(["manage.py", "create_versions", "--userid", str(user.id)])
-
     post_en1.versions.first().publish(user=user)
 
     return config1, config2, post1, post_en1, post_fr1, post2, post_en2, post_fr2

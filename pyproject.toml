@@ -108,6 +108,9 @@ testpaths = [ "tests" ]
 pythonpath = [ "." ]
 
 [tool.coverage.run]
+source = [
+  "djangocms_stories",
+]
 omit = [
-  "tests/*",
+  "djangocms_stories/migrations/*",
 ]

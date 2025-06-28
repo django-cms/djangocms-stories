@@ -1,5 +1,6 @@
 import pytest
 
+from django.utils.translation import activate
 from djangocms_stories.cms_appconfig import StoriesConfig
 
 
@@ -12,6 +13,7 @@ PERMALINK_TYPE_SLUG = "slug"
 @pytest.fixture
 @pytest.mark.django_db
 def simple_w_placeholder(db):
+    activate("en")
     return StoriesConfig.objects.using(db).create(
         namespace="djangocms_stories",
         app_title="Test Stories",
@@ -25,6 +27,7 @@ def simple_w_placeholder(db):
 @pytest.fixture
 @pytest.mark.django_db
 def simple_wo_placeholder(db):
+    activate("en")
     return StoriesConfig.objects.using(db).create(
         namespace="test_ns_wo_placeholder",
         app_title="Test Stories Without Placeholder",

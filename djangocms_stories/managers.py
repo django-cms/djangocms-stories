@@ -108,11 +108,11 @@ class AdminSiteQuerySet(SiteQuerySet):
         return self.filter(**kwargs)
 
 
-class SiteManager(models.Manager):
+class SiteManager(WithUserMixin, models.Manager):
     _queryset_class = SiteQuerySet
 
 
-class AdminManager(WithUserMixin, models.Manager):
+class AdminManager(models.Manager):
     _queryset_class = AdminSiteQuerySet
 
     def current_content(self, **kwargs):

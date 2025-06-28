@@ -39,3 +39,13 @@ def assert_html_in_response():
         )
 
     return assert_html
+
+@pytest.mark.django_db
+def test_load_wizards():
+    try:
+        from cms.wizards.wizard_base import get_entries
+    except (ImportError, ModuleNotFoundError):
+        from cms.wizards.helpers import get_entries
+
+    print("Registered wizards:", [wizard.title for wizard in get_entries()])
+

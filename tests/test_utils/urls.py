@@ -29,5 +29,6 @@ if "server" not in sys.argv:
     )
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
+    path('taggit_autosuggest/', include('taggit_autosuggest.urls')),
     path("", include("cms.urls")),
 )
