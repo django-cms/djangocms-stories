@@ -47,6 +47,7 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
         assert form.cleaned_data["app_config"], app_config_pk
 
         instance = form.save()
+        assert instance.slug == f"title{index}"
         if form.cleaned_data["app_config"].use_placeholder:
             assert instance.post_text == ""  # post_text moved to placeholder
             assert instance.content.get_plugins().filter(plugin_type="TextPlugin").count() == 1  # TextPlugin created
@@ -55,3 +56,20 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
         else:
             assert instance.content.get_plugins().filter(plugin_type="TextPlugin").count() == 0  # TextPlugin not created
             assert instance.post_text == "Random text"  # post_text remains in model
+
+        form = wiz.form(
+            data={
+                    "1-title": "title{}".format(index),
+                    "1-abstract": "abstract{}".format(index),
+                    "1-post_text": "",  # Do never create a empty TextPlugin
+                },
+            prefix=1,
+        )
+        form.language_code = "en"
+        instance = form.save()
+
+        assert instance.slug == f"title{index}-2"
+        if form.cleaned_data["app_config"].use_placeholder:
+            assert instance.content.get_plugins().filter(plugin_type="TextPlugin").count() == 0  # TextPlugin not created
+        else:
+            assert instance.post_text == ""  # post_text remains in model

@@ -81,7 +81,7 @@ class PostWizardForm(forms.ModelForm):
         slug = source
         i = 2
         while slug in used:
-            slug = "{}-{}".format(source, i)
+            slug = f"{source}-{i}"
             i += 1
         return slug
 
