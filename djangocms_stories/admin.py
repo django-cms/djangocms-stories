@@ -31,22 +31,6 @@ from .utils import is_versioning_enabled
 signal_dict = {}
 
 
-if StoriesCMSConfig.djangocms_versioning_enabled:
-    from djangocms_versioning.admin import ExtendedGrouperVersionAdminMixin, StateIndicatorMixin
-else:
-    # Declare stubs
-    class StateIndicatorMixin:
-        def state_indicator(self, obj):
-            pass
-
-        def get_list_display(self, request):
-            # remove "indicator" entry
-            return [item for item in super().get_list_display(request) if item != "state_indicator"]
-
-    class ExtendedGrouperVersionAdminMixin:
-        pass
-
-
 def register_extension(klass):
     if issubclass(klass, InlineModelAdmin):
         if klass in PostAdmin.inlines:
@@ -356,15 +340,13 @@ class CategoryAdmin(FrontendEditableAdminMixin, ModelAppHookConfig, Translatable
 class PostAdmin(
     FrontendEditableAdminMixin,
     ModelAppHookConfig,
-    StateIndicatorMixin,
-    ExtendedGrouperVersionAdminMixin,
     GrouperModelAdmin,
 ):
     # form = PostAdminForm
     app_config_initial_fields = ("app_config", "content__language")
     extra_grouping_fields = ("language",)
     inlines = []
-    list_display = ("title", "author", "app_config", "state_indicator", "admin_list_actions")
+    list_display = ("title", "author", "app_config", "admin_list_actions", )  # State indicator is added by Versioning if needed
     list_display_links = ("title",)
     search_fields = ("author__first_name",)
     readonly_fields = ("date_created", "date_modified")

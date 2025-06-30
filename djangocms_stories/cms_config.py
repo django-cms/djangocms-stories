@@ -20,9 +20,9 @@ class StoriesCMSConfig(CMSAppConfig):
         from djangocms_versioning import __version__ as djangocms_versioning_version
         from djangocms_versioning.datastructures import default_copy, VersionableItem
 
-        if PackageVersion(djangocms_versioning_version) < PackageVersion("2.3"):  # pragma: no cover
+        if PackageVersion(djangocms_versioning_version) < PackageVersion("2.4"):  # pragma: no cover
             raise ImportError(
-                "djangocms_versioning >= 2.3.0 is required for djangocms_stories to work properly."
+                "djangocms_versioning >= 2.4.0 is required for djangocms_stories to work properly."
                 " Please upgrade djangocms_versioning."
             )
 
@@ -33,6 +33,7 @@ class StoriesCMSConfig(CMSAppConfig):
                 extra_grouping_fields=["language"],
                 version_list_filter_lookups={"language": get_language_tuple},
                 grouper_selector_option_label=lambda obj, lang: obj.get_title(lang),
+                grouper_admin_mixin="__default__",
                 copy_function=default_copy,
             ),
         ]
