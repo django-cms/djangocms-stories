@@ -106,6 +106,9 @@ def setup_blog_testproj():
     from django.apps import apps
     from django.contrib.auth import get_user_model
     from django.contrib.auth.models import Group
+    from django.contrib.contenttypes.models import ContentType
+
+    from djangocms_versioning.models import Version
 
     from fixtures import (
         generate_config,
@@ -181,7 +184,7 @@ def setup_blog_testproj():
     page.application_namespace = config1.namespace
     page.save()
 
-    post_en1.versions.first().publish(user=user)
+    Version.objects.filter(content_type=ContentType.objects.get_for_model(post_en1), object_id=post_en1.pk).first().publish(user=user)
 
     return config1, config2, post1, post_en1, post_fr1, post2, post_en2, post_fr2
 

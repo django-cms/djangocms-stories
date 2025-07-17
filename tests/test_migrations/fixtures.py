@@ -1,3 +1,7 @@
+import random
+from djangocms_versioning.constants import DRAFT
+from djangocms_versioning.models import Version
+
 from djangocms_blog.cms_appconfig import BlogConfig
 from djangocms_blog.models import Post, PostContent
 
@@ -45,20 +49,23 @@ def generate_blog(config, user, **wkargs):
     )
     post.sites.add(1)  # Assuming site ID 1 is the default site
     increase_pk(Post)
-    post_en = PostContent.objects.with_user(user).create(
+    post_en = PostContent.objects.create(
         post=post,
         language="en",
         title="Test Post 1",
         slug="test-post-1",
     )
+    Version._default_manager.create(content=post_en, state=DRAFT, number=str(random.randint(1, 100)), created_by=user)
     increase_pk(PostContent)
-    post_fr = PostContent.objects.with_user(user).create(
+    post_fr = PostContent.objects.create(
         post=post,
         language="fr",
         title="Test Post 1 (FR)",
         slug="test-post-1",
     )
+    Version._default_manager.create(content=post_fr, state=DRAFT, number=str(random.randint(1, 100)), created_by=user)
     increase_pk(PostContent)
+
     return post, post_en, post_fr
 
 
