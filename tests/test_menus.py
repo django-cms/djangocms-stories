@@ -40,6 +40,9 @@ def page_with_menu(many_posts):
     )
     page.navigation_extenders = "PostCategoryMenu"
     page.save()
+    if apps.is_installed("djangocms_versioning"):
+        page_content = page.get_admin_content("en")
+        page_content.versions.first().publish(user=page_content.versions.created_by)
     return page
 
 
