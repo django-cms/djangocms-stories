@@ -56,7 +56,7 @@ To use taggit's autosuggest feature, add their URLS in ``urls.py``:
 
 .. code-block:: python
 
-    url_patterns += [path('taggit_autosuggest/', include('taggit_autosuggest.urls'))]
+    urlpatterns += [path('taggit_autosuggest/', include('taggit_autosuggest.urls'))]
 
 
 
