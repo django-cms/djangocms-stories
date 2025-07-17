@@ -63,7 +63,7 @@ class PostCategoryMenu(CMSAttachMenu):
         used_categories = []
         if posts_menu:
             if getattr(request, "toolbar", False) and request.toolbar.edit_mode_active:
-                post_contents = PostContent.admin_manager.current_content(language=language)
+                post_contents = PostContent.admin_manager.current_content(language=language).on_site()
             else:
                 post_contents = PostContent.objects.filter(language=language)
             if hasattr(self, "instance") and self.instance:
@@ -175,11 +175,11 @@ menu_pool.register_modifier(PostCategoryNavModifier)
 menu_pool.register_menu(PostCategoryMenu)
 
 
-def clear_menu_cache(**kwargs):
-    """
-    Empty menu cache when saving categories
-    """
-    menu_pool.clear(all=True)
+# def clear_menu_cache(**kwargs):
+#     """
+#     Empty menu cache when saving categories
+#     """
+#     menu_pool.clear(all=True)
 
 
 # post_save.connect(clear_menu_cache, sender=PostCategory)
