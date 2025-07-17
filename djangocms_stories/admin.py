@@ -366,7 +366,12 @@ class PostAdmin(
     inlines = []
     list_display = ("title", "author", "app_config", "state_indicator", "admin_list_actions")
     list_display_links = ("title",)
-    search_fields = ("content__title", "content__subtitle", "author__last_name", "author__first_name",)
+    search_fields = (
+        "content__title",
+        "content__subtitle",
+        "author__last_name",
+        "author__first_name",
+    )
     readonly_fields = ("date_created", "date_modified")
     date_hierarchy = "date_published"
     autocomplete_fields = ["author"]
@@ -448,17 +453,6 @@ class PostAdmin(
         if content_obj:
             return content_obj.title
         return _("Empty")
-
-    def get_search_results(self, request, queryset, search_term):
-        if not search_term:
-            # If no search term is provided, return the queryset as is
-            return queryset, True
-
-        qs, _ = super().get_search_results(request, queryset, search_term)
-        # Add search results for post content titles
-        content_title = PostContent.admin_manager.latest_content(title__icontains=search_term).values_list("post_id")
-        qs = qs | queryset.filter(pk__in=content_title)
-        return qs, False
 
     def get_form(self, request, obj=None, **kwargs):
         """Adds the language from the request to the form class"""
