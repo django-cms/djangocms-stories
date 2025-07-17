@@ -76,7 +76,7 @@ def copy_m2m(apps, pk_maps, m2m_relation):
     ).name + "_id"
     src_right = next(
         f for f in src_through_model._meta.get_fields()
-        if f.is_relation and f.many_to_one and f.related_model is src_field_obj.remote_field.model
+        if f.is_relation and f.many_to_one and f.related_model is src_field_obj.remote_field.model and f.name + "_id" != src_left
     ).name + "_id"
     tgt_left = next(
         f for f in tgt_through_model._meta.get_fields()
@@ -84,7 +84,7 @@ def copy_m2m(apps, pk_maps, m2m_relation):
     ).name + "_id"
     tgt_right = next(
         f for f in tgt_through_model._meta.get_fields()
-        if f.is_relation and f.many_to_one and f.related_model is tgt_field_obj.remote_field.model
+        if f.is_relation and f.many_to_one and f.related_model is tgt_field_obj.remote_field.model and f.name + "_id" != tgt_left
     ).name + "_id"
 
     left_key = TgtModel.__name__
@@ -93,6 +93,8 @@ def copy_m2m(apps, pk_maps, m2m_relation):
         left, right = getattr(src_obj, src_left), getattr(src_obj, src_right)
         new_left = pk_maps.get(left_key, {}).get(left, left)  # Leave unchanged if not present
         new_right = pk_maps.get(right_key, {}).get(right, right)  # Leave unchanged if not present
+        assert new_left is not None, f"Missing mapping for {left_key} {left}"
+        assert new_right is not None, f"Missing mapping for {right_key} {right}"
         tgt_through_model.objects.create(**{
             tgt_left: new_left,
             tgt_right: new_right,

@@ -69,6 +69,15 @@ def test_post_category_assignment():
     assert set(story1.categories.all()) == {cat2, cat3}
     assert set(story2.categories.all()) == {cat1}
 
+def test_related_posts():
+    from djangocms_stories.models import Post
+
+    story1, story2 = Post.objects.all()[:2]
+
+    assert story1.related.count() == 0, "Story 1 should have no related posts"
+    assert story2.related.count() == 1, "Story 2 should have one related post"
+    assert story2.related.first().pk == story1.pk, "Story 2 should be related to Story 1"
+
 
 def test_tag_assignment():
     from djangocms_stories.models import Post
