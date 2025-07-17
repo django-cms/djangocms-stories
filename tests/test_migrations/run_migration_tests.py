@@ -152,6 +152,8 @@ def setup_blog_testproj():
     post_en1.save()
     post_fr1.save()
     post2, post_en2, post_fr2 = generate_blog(config2, user, author=user)
+    post2.related.add(post1)
+
 
     cat1 = generate_category(config2, name="Category 1", slug="category-1")
     cat2 = generate_category(config2, name="Category 2", slug="category-2")
