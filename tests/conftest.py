@@ -1,13 +1,12 @@
-import pytest
 import re
 
-from .fixtures import (
-    post,  # noqa: F401
-    post_content,  # noqa: F401
-    default_config,  # noqa: F401
-    simple_w_placeholder,  # noqa: F401
-    simple_wo_placeholder,  # noqa: F401
-)
+import pytest
+
+from .fixtures import default_config  # noqa: F401
+from .fixtures import post  # noqa: F401
+from .fixtures import post_content  # noqa: F401
+from .fixtures import simple_w_placeholder  # noqa: F401
+from .fixtures import simple_wo_placeholder  # noqa: F401
 
 
 def normalize_html(html_string):
@@ -40,6 +39,7 @@ def assert_html_in_response():
 
     return assert_html
 
+
 @pytest.mark.django_db
 def test_load_wizards():
     try:
@@ -48,4 +48,3 @@ def test_load_wizards():
         from cms.wizards.helpers import get_entries
 
     print("Registered wizards:", [wizard.title for wizard in get_entries()])
-

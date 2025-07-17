@@ -1,8 +1,7 @@
 import pytest
-
 from django.utils.translation import activate
-from djangocms_stories.cms_appconfig import StoriesConfig
 
+from djangocms_stories.cms_appconfig import StoriesConfig
 
 PERMALINK_TYPE_FULL_DATE = "full_date"
 PERMALINK_TYPE_SHORT_DATE = "short_date"

@@ -1,5 +1,4 @@
 import pytest
-
 from filer.models import ThumbnailOption
 
 

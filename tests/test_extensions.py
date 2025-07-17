@@ -20,6 +20,7 @@ def test_registering_extension_admins():
 @pytest.mark.django_db
 def test_registering_extension_models():
     from tests.test_utils.models import MyPostExtension
+
     from .factories import PostFactory
 
     with pytest.warns(DeprecationWarning):

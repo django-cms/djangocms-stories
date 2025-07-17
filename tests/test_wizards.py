@@ -1,10 +1,9 @@
-
 import pytest
 
 try:
-    from cms.wizards.wizard_base import get_entries
+    from cms.wizards.wizard_base import get_entries  # noqa: F401
 except (ImportError, ModuleNotFoundError):
-    from cms.wizards.helpers import get_entries
+    pass
 
 
 @pytest.mark.django_db
@@ -20,10 +19,11 @@ def test_wizard_registered(default_config):
 
 
 def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_placeholder):
-    from django.apps import apps
-    from djangocms_stories.models import PostContent
-    from djangocms_text.models import Text
     from cms.utils.permissions import set_current_user
+    from django.apps import apps
+    from djangocms_text.models import Text
+
+    from djangocms_stories.models import PostContent
 
     cms_config = apps.get_app_config("djangocms_stories").cms_config
     wizs = [entry for entry in cms_config.cms_wizards if entry.model == PostContent]
@@ -35,10 +35,10 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
 
         form = wiz.form(
             data={
-                    "1-title": "title{}".format(index),
-                    "1-abstract": "abstract{}".format(index),
-                    "1-post_text": "Random text",
-                },
+                "1-title": f"title{index}",
+                "1-abstract": f"abstract{index}",
+                "1-post_text": "Random text",
+            },
             prefix=1,
         )
         form.language_code = "en"
@@ -54,15 +54,17 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
             plugin = Text.objects.get(pk=instance.content.get_plugins().get(plugin_type="TextPlugin").pk)
             assert plugin.body == "Random text"
         else:
-            assert instance.content.get_plugins().filter(plugin_type="TextPlugin").count() == 0  # TextPlugin not created
+            assert (
+                instance.content.get_plugins().filter(plugin_type="TextPlugin").count() == 0
+            )  # TextPlugin not created
             assert instance.post_text == "Random text"  # post_text remains in model
 
         form = wiz.form(
             data={
-                    "1-title": "title{}".format(index),
-                    "1-abstract": "abstract{}".format(index),
-                    "1-post_text": "",  # Do never create a empty TextPlugin
-                },
+                "1-title": f"title{index}",
+                "1-abstract": f"abstract{index}",
+                "1-post_text": "",  # Do never create a empty TextPlugin
+            },
             prefix=1,
         )
         form.language_code = "en"
@@ -70,6 +72,8 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
 
         assert instance.slug == f"title{index}-2"
         if form.cleaned_data["app_config"].use_placeholder:
-            assert instance.content.get_plugins().filter(plugin_type="TextPlugin").count() == 0  # TextPlugin not created
+            assert (
+                instance.content.get_plugins().filter(plugin_type="TextPlugin").count() == 0
+            )  # TextPlugin not created
         else:
             assert instance.post_text == ""  # post_text remains in model

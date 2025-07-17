@@ -2,7 +2,6 @@ import logging
 
 from cms.apphook_pool import apphook_pool
 from cms.menu_bases import CMSAttachMenu
-from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import resolve
 from django.utils.translation import get_language_from_request, gettext_lazy as _
@@ -22,7 +21,7 @@ class PostCategoryMenu(CMSAttachMenu):
     Handles all types of blog menu
     """
 
-    name = _("Blog menu")
+    name = _("Categories menu")
     _config = {}
 
     def get_nodes(self, request):
@@ -37,7 +36,7 @@ class PostCategoryMenu(CMSAttachMenu):
         language = get_language_from_request(request, check_path=True)
         current_site = get_current_site(request)
 
-        page_site = self.instance.node.site
+        page_site = self.instance.site if hasattr(self.instance, "site") else self.instance.node.site
         if self.instance and page_site != current_site:
             return []
 
@@ -54,12 +53,6 @@ class PostCategoryMenu(CMSAttachMenu):
                     logger.exception(e)
                     return []
             config = self._config[self.instance.application_namespace]
-            # if not getattr(request, "toolbar", False) or not request.toolbar.edit_mode_active:
-            #     if self.instance == self.instance.get_draft_object():
-            #         return []
-            # else:
-            #     if self.instance == self.instance.get_public_object():
-            #         return []
         if config and config.menu_structure in (MENU_TYPE_COMPLETE, MENU_TYPE_CATEGORIES):
             categories_menu = True
         if config and config.menu_structure in (MENU_TYPE_COMPLETE, MENU_TYPE_POSTS):
@@ -69,7 +62,10 @@ class PostCategoryMenu(CMSAttachMenu):
 
         used_categories = []
         if posts_menu:
-            post_contents = PostContent.objects.filter(language=language)
+            if getattr(request, "toolbar", False) and request.toolbar.edit_mode_active:
+                post_contents = PostContent.admin_manager.current_content(language=language)
+            else:
+                post_contents = PostContent.objects.filter(language=language)
             if hasattr(self, "instance") and self.instance:
                 post_contents = post_contents.filter(
                     post__app_config__namespace=self.instance.application_namespace
@@ -175,12 +171,8 @@ class PostCategoryNavModifier(Modifier):
         return nodes
 
 
-if not hasattr(settings, "TESTS_RUNNING"):
-    # For reasons not fully understood, the test environment leasds to
-    # the menu pool being registered (at least) twice, which causes an error.
-    # This behavior has not been observed in production.
-    menu_pool.register_modifier(PostCategoryNavModifier)
-    menu_pool.register_menu(PostCategoryMenu)
+menu_pool.register_modifier(PostCategoryNavModifier)
+menu_pool.register_menu(PostCategoryMenu)
 
 
 def clear_menu_cache(**kwargs):

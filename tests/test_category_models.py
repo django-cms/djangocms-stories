@@ -1,5 +1,6 @@
 import pytest
 from django.core.exceptions import ValidationError
+
 from djangocms_stories.models import PostCategory
 
 

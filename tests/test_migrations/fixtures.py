@@ -1,10 +1,10 @@
 import random
+
 from djangocms_versioning.constants import DRAFT
 from djangocms_versioning.models import Version
 
 from djangocms_blog.cms_appconfig import BlogConfig
 from djangocms_blog.models import Post, PostContent
-
 
 POST_CONTENT_DATA = {
     "post_en1": {
@@ -29,6 +29,7 @@ POST_CONTENT_DATA = {
 def increase_pk(model):
     """Generate non-consecutive primary keys for the given model."""
     import random
+
     from django.db import connection
 
     with connection.cursor() as cursor:

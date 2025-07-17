@@ -1,11 +1,9 @@
 import pytest
-
+from cms.toolbar.utils import get_object_preview_url
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils.lorem_ipsum import words
-
-from cms.toolbar.utils import get_object_preview_url
 
 from .utils import publish_if_necessary
 
@@ -53,6 +51,7 @@ def test_blog_latest_entries_plugin(
 ):
     from cms import api
     from cms.toolbar.utils import get_object_preview_url
+
     from .factories import PostContentFactory
 
     api.add_plugin(
@@ -83,8 +82,10 @@ def test_blog_latest_entries_plugin(
 
 @pytest.mark.django_db
 def test_blog_featured_posts_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
-    from cms import api
     import random
+
+    from cms import api
+
     from .factories import PostContentFactory
 
     batch = PostContentFactory.create_batch(5, language="en", post__app_config=simple_w_placeholder)
@@ -123,6 +124,7 @@ def test_blog_featured_posts_plugin(placeholder, admin_client, simple_w_placehol
 def test_blog_author_posts_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
     from cms import api
     from cms.toolbar.utils import get_object_preview_url
+
     from .factories import PostContentFactory
 
     batch = PostContentFactory.create_batch(5, language="en", post__app_config=simple_w_placeholder)
@@ -152,6 +154,7 @@ def test_blog_author_posts_plugin(placeholder, admin_client, simple_w_placeholde
 def test_blog_author_post_list_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
     from cms import api
     from cms.toolbar.utils import get_object_preview_url
+
     from .factories import PostContentFactory
 
     batch = PostContentFactory.create_batch(5, language="en", post__app_config=simple_w_placeholder)
@@ -186,6 +189,7 @@ def test_blog_author_post_list_plugin(placeholder, admin_client, simple_w_placeh
 def test_blog_tags_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
     from cms import api
     from cms.toolbar.utils import get_object_preview_url
+
     from .factories import PostContentFactory
 
     batch = PostContentFactory.create_batch(5, language="en", post__app_config=simple_w_placeholder)
@@ -220,6 +224,7 @@ def test_blog_tags_plugin(placeholder, admin_client, simple_w_placeholder, asser
 def test_blog_category_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
     from cms import api
     from cms.toolbar.utils import get_object_preview_url
+
     from .factories import PostCategoryFactory
 
     batch = PostCategoryFactory.create_batch(5, app_config=simple_w_placeholder)
@@ -248,6 +253,7 @@ def test_blog_category_plugin(placeholder, admin_client, simple_w_placeholder, a
 def test_blog_archive_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
     from cms import api
     from cms.toolbar.utils import get_object_preview_url
+
     from .factories import PostContentFactory
 
     api.add_plugin(

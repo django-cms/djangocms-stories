@@ -1,7 +1,6 @@
 from django.apps import apps
 from django.contrib import admin
 
-
 if apps.is_installed("djangocms_stories"):
     # Do not declare models if the migration test is running
     # This is to avoid circular imports during migrations

@@ -1,5 +1,5 @@
-from tempfile import mkdtemp
 import os
+from tempfile import mkdtemp
 
 
 def gettext(s):

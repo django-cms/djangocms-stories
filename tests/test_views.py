@@ -1,7 +1,8 @@
 import pytest
 from django.apps import apps
-from django.urls import reverse
 from django.test import RequestFactory
+from django.urls import reverse
+
 from djangocms_stories.cms_appconfig import get_app_instance
 
 from .utils import publish_if_necessary
@@ -29,6 +30,7 @@ def test_post_detail_view(client, admin_user, post_content, assert_html_in_respo
 @pytest.mark.django_db
 def test_post_detail_endpoint(admin_client, admin_user, post_content):
     from cms.toolbar.utils import get_object_preview_url
+
     from .factories import PostContentFactory
 
     related_post = PostContentFactory()
@@ -52,6 +54,7 @@ def test_post_list_view_queryset(admin_client, default_config):
     Test the PostListView returns a list of posts and renders expected content.
     """
     from djangocms_stories.views import PostListView
+
     from .factories import PostContentFactory
 
     PostContentFactory.create_batch(5, post__app_config=default_config)

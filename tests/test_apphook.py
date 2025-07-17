@@ -1,9 +1,9 @@
-from django.urls import resolve, reverse
-
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory
+from django.urls import resolve, reverse
 from django.utils import lorem_ipsum
+
 from djangocms_stories.cms_appconfig import get_app_instance
 
 from .utils import publish_if_necessary
@@ -14,7 +14,7 @@ def test_apphook(admin_client, simple_wo_placeholder, assert_html_in_response):
     from cms.toolbar.utils import get_object_preview_url
     from cms.utils.apphook_reload import reload_urlconf
 
-    from .factories import UserFactory, PostContentFactory
+    from .factories import PostContentFactory, UserFactory
 
     user = UserFactory(is_staff=True)
     batch = PostContentFactory.create_batch(

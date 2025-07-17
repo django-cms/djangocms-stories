@@ -1,7 +1,7 @@
 import pytest
-from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.test import Client
+from django.urls import reverse
 from django.utils.translation import override
 
 
@@ -47,7 +47,7 @@ def test_post_model_is_listed_in_admin(admin_client):
 
 def test_postcontentadmin_change_view_get_redirects_to_grouper(admin_client, db):
     # Create a Post and PostContent
-    from .factories import PostFactory, PostContentFactory
+    from .factories import PostContentFactory, PostFactory
 
     post = PostFactory()
     post_content = PostContentFactory(post=post, language="en", title="Test", post_text="Text")
@@ -61,7 +61,7 @@ def test_postcontentadmin_change_view_get_redirects_to_grouper(admin_client, db)
 
 def test_postcontentadmin_change_view_post_raises_404(admin_client, db):
     # Create a Post and PostContent
-    from .factories import PostFactory, PostContentFactory
+    from .factories import PostContentFactory, PostFactory
 
     post = PostFactory()
     post_content = PostContentFactory(post=post, language="en", title="Test", post_text="Text")

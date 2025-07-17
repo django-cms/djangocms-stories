@@ -1,8 +1,8 @@
 import datetime
 import hashlib
-from django.apps import apps
-import pytest
 
+import pytest
+from django.apps import apps
 from django.utils import translation
 from django.utils.encoding import force_bytes
 from django.utils.timezone import now

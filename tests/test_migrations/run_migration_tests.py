@@ -17,8 +17,9 @@ def test_apphook_migration():
 
 
 def test_post_content_migration():
-    from djangocms_stories.models import Post
     from fixtures import POST_CONTENT_DATA
+
+    from djangocms_stories.models import Post
 
     story1, story2 = Post.objects.all()[:2]
 
@@ -69,6 +70,7 @@ def test_post_category_assignment():
     assert set(story1.categories.all()) == {cat2, cat3}
     assert set(story2.categories.all()) == {cat1}
 
+
 def test_related_posts():
     from djangocms_stories.models import Post
 
@@ -116,15 +118,13 @@ def setup_blog_testproj():
     from django.contrib.auth import get_user_model
     from django.contrib.auth.models import Group
     from django.contrib.contenttypes.models import ContentType
-
     from djangocms_versioning.models import Version
-
     from fixtures import (
-        generate_config,
+        POST_CONTENT_DATA,
         generate_blog,
         generate_category,
+        generate_config,
         generate_placeholder_content,
-        POST_CONTENT_DATA,
     )
 
     assert apps.is_installed("djangocms_blog"), "djangocms_blog is not installed"
@@ -163,7 +163,6 @@ def setup_blog_testproj():
     post2, post_en2, post_fr2 = generate_blog(config2, user, author=user)
     post2.related.add(post1)
 
-
     cat1 = generate_category(config2, name="Category 1", slug="category-1")
     cat2 = generate_category(config2, name="Category 2", slug="category-2")
     with override("fr"):
@@ -195,7 +194,9 @@ def setup_blog_testproj():
     page.application_namespace = config1.namespace
     page.save()
 
-    Version.objects.filter(content_type=ContentType.objects.get_for_model(post_en1), object_id=post_en1.pk).first().publish(user=user)
+    Version.objects.filter(
+        content_type=ContentType.objects.get_for_model(post_en1), object_id=post_en1.pk
+    ).first().publish(user=user)
 
     return config1, config2, post1, post_en1, post_fr1, post2, post_en2, post_fr2
 
@@ -206,6 +207,7 @@ if __name__ == "__main__":
     import sys
     import traceback
     import types
+
     import django
 
     # Add repo root to the path
