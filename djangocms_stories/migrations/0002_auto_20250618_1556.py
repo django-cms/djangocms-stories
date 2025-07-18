@@ -2,7 +2,6 @@
 
 from django.db import migrations, models
 from django.db.migrations.recorder import MigrationRecorder
-from django.core.management import execute_from_command_line
 
 migration_table = (
     ("BlogConfig", "StoriesConfig"),
@@ -200,9 +199,7 @@ def migrate_from_blog_to_stories(apps, schema_editor):
 
     with schema_editor.connection.cursor() as cursor:
         tables = schema_editor.connection.introspection.table_names(cursor)
-        blog_m2n_tables = [
-            t for t in tables if t.startswith("djangocms_blog_") and t.count("_") > 2
-        ]
+        blog_m2n_tables = [t for t in tables if t.startswith("djangocms_blog_") and t.count("_") > 2]
         blog_plugin_tables = [t for t in tables if t.startswith("djangocms_blog_") and t.endswith("plugin") and t.count("_") <= 2]
         blog_other_tables = [t for t in tables if t.startswith("djangocms_blog_") and t not in blog_m2n_tables and t not in blog_plugin_tables]
         for table in blog_m2n_tables:
@@ -211,6 +208,7 @@ def migrate_from_blog_to_stories(apps, schema_editor):
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
         for table in blog_other_tables:
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
+
     # 7. Remove djangocms_blog migration records
     print("# 7. Remove djangocms_blog migration records")
     recorder = MigrationRecorder(schema_editor.connection)
