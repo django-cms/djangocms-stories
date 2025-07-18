@@ -196,6 +196,8 @@ def migrate_from_blog_to_stories(apps, schema_editor):
             model.objects.bulk_update(objs_to_update, ["content_type", "object_id"])
 
     # 6. Drop all djangocms_blog tables from the database
+    print("# 6. Drop all djangocms_blog tables from the database")
+
     with schema_editor.connection.cursor() as cursor:
         tables = schema_editor.connection.introspection.table_names(cursor)
         blog_m2n_tables = [
@@ -209,7 +211,10 @@ def migrate_from_blog_to_stories(apps, schema_editor):
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
         for table in blog_other_tables:
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
-
+    # 7. Remove djangocms_blog migration records
+    print("# 7. Remove djangocms_blog migration records")
+    recorder = MigrationRecorder(schema_editor.connection)
+    recorder.migration_qs.filter(app="djangocms_blog").delete()
 
 def adjust_apphooks(apps, schema_editor):
     Page = apps.get_model("cms", "Page")
