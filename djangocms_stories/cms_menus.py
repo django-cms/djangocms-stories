@@ -21,7 +21,7 @@ class PostCategoryMenu(CMSAttachMenu):
     Handles all types of blog menu
     """
 
-    name = _("Stories menu")
+    name = _("Categories menu")
     _config = {}
 
     def get_nodes(self, request):
