@@ -9,7 +9,7 @@ from menus.base import Modifier, NavigationNode
 from menus.menu_pool import menu_pool
 
 from .models import PostCategory, StoriesConfig, PostContent
-from .settings import MENU_TYPE_CATEGORIES, MENU_TYPE_COMPLETE, MENU_TYPE_NONE, MENU_TYPE_POSTS, get_setting
+from .settings import MENU_TYPE_CATEGORIES, MENU_TYPE_COMPLETE, MENU_TYPE_POSTS, get_setting
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ class PostCategoryMenu(CMSAttachMenu):
     Handles all types of blog menu
     """
 
-    name = _("Categories menu")
+    name = _("Stories menu")
     _config = {}
 
     def get_nodes(self, request):
@@ -40,25 +40,21 @@ class PostCategoryMenu(CMSAttachMenu):
         if self.instance and page_site != current_site:
             return []
 
-        categories_menu = False
-        posts_menu = False
-        config = False
         if self.instance:
-            if not self._config.get(self.instance.application_namespace, False):
-                try:
-                    self._config[self.instance.application_namespace] = StoriesConfig.objects.get(
-                        namespace=self.instance.application_namespace
-                    )
-                except StoriesConfig.DoesNotExist as e:
-                    logger.exception(e)
-                    return []
+            try:
+                self._config.setdefault(
+                    self.instance.application_namespace,
+                    StoriesConfig.objects.get(namespace=self.instance.application_namespace),
+                )
+            except StoriesConfig.DoesNotExist as e:
+                logger.exception(e)
+                return []
             config = self._config[self.instance.application_namespace]
-        if config and config.menu_structure in (MENU_TYPE_COMPLETE, MENU_TYPE_CATEGORIES):
-            categories_menu = True
-        if config and config.menu_structure in (MENU_TYPE_COMPLETE, MENU_TYPE_POSTS):
-            posts_menu = True
-        if config and config.menu_structure in (MENU_TYPE_NONE,):
-            return nodes
+            categories_menu = config and config.menu_structure in (MENU_TYPE_COMPLETE, MENU_TYPE_CATEGORIES)
+            posts_menu = config and config.menu_structure in (MENU_TYPE_COMPLETE, MENU_TYPE_POSTS)
+        else:
+            # No page assigned to?
+            return []
 
         used_categories = []
         if posts_menu:

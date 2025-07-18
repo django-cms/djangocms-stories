@@ -6,7 +6,7 @@ from ..models import PostContent
 from ..settings import get_setting
 
 
-class BlogSitemap(Sitemap):
+class StoriesSitemap(Sitemap):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.url_cache = {}
@@ -43,3 +43,14 @@ class BlogSitemap(Sitemap):
 
     def lastmod(self, obj: PostContent):
         return obj.post.date_modified
+
+
+class BlogSitemap(StoriesSitemap):
+    def __init__(self, *args, **kwargs):
+        import warnings
+
+        warnings.warn(
+            "BlogSitemap is deprecated and will be removed in future versions. Use StoriesSitemap instead.",
+            DeprecationWarning,
+        )
+        super().__init__(*args, **kwargs)

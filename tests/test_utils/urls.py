@@ -10,7 +10,7 @@ from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 from django.views.static import serve
 
-from djangocms_stories.sitemaps import BlogSitemap
+from djangocms_stories.sitemaps import StoriesSitemap
 
 admin.autodiscover()
 
@@ -18,7 +18,7 @@ urlpatterns = [
     path("media/<str:path>", serve, {"document_root": settings.MEDIA_ROOT, "show_indexes": True}),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("taggit_autosuggest/", include("taggit_autosuggest.urls")),
-    path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap, "blog": BlogSitemap}}),
+    path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap, "blog": StoriesSitemap}}),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

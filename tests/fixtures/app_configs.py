@@ -14,7 +14,7 @@ PERMALINK_TYPE_SLUG = "slug"
 def simple_w_placeholder(db):
     activate("en")
     return StoriesConfig.objects.using(db).create(
-        namespace="djangocms_stories",
+        namespace="djangocms_stories_1",
         app_title="Test Stories",
         object_name="Story",
         url_patterns=PERMALINK_TYPE_FULL_DATE,
