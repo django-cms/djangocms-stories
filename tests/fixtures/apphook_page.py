@@ -5,13 +5,13 @@ from django.test import RequestFactory
 
 
 @pytest.fixture
-def many_posts(simple_w_placeholder):
+def many_posts(default_config):
     from djangocms_stories.models import PostCategory
 
     from ..factories import PostContentFactory
 
-    batch = PostContentFactory.create_batch(10, post__app_config=simple_w_placeholder)
-    category = PostCategory.objects.create(name="Test Category", slug="test-category", app_config=simple_w_placeholder)
+    batch = PostContentFactory.create_batch(10, post__app_config=default_config)
+    category = PostCategory.objects.create(name="Test Category", slug="test-category", app_config=default_config)
     for post in batch:
         post.categories.add(category)
     if apps.is_installed("djangocms_versioning"):
@@ -21,7 +21,7 @@ def many_posts(simple_w_placeholder):
 
 
 @pytest.fixture
-def page_with_menu(many_posts, simple_w_placeholder):
+def page_with_menu(many_posts, default_config):
     from cms import api
 
     from tests.factories import UserFactory
@@ -35,7 +35,7 @@ def page_with_menu(many_posts, simple_w_placeholder):
         created_by=user,
     )
     page.application_urls = "StoriesApp"
-    page.application_namespace = simple_w_placeholder.namespace
+    page.application_namespace = default_config.namespace
     page.navigation_extenders = "PostCategoryMenu"
     page.save()
     if apps.is_installed("djangocms_versioning"):
@@ -43,10 +43,3 @@ def page_with_menu(many_posts, simple_w_placeholder):
         version = page_content.versions.first()
         version.publish(user=user)
     return page
-
-
-@pytest.fixture
-def category_request():
-    request = RequestFactory().get("/blog/category/test-category/")
-    request.user = AnonymousUser()
-    return request

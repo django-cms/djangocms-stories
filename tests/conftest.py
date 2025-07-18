@@ -2,7 +2,6 @@ import re
 
 import pytest
 
-from .fixtures import category_request  # noqa: F401
 from .fixtures import default_config  # noqa: F401
 from .fixtures import many_posts  # noqa: F401
 from .fixtures import page_with_menu  # noqa: F401

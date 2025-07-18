@@ -3,7 +3,8 @@ from django.apps import apps
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
 
-from djangocms_blog.settings import MENU_TYPE_CATEGORIES
+from djangocms_blog.settings import MENU_TYPE_CATEGORIES, MENU_TYPE_NONE
+from djangocms_stories.cms_menus import PostCategoryMenu
 
 
 @pytest.mark.django_db
@@ -27,16 +28,32 @@ def test_menu_nodes(page_with_menu, many_posts):
         assert len(nodes) == len(many_posts) + 1 + 1  # +1 for the page and the category
 
 
-def test_menu_configs(page_with_menu, simple_w_placeholder):
+def test_menu_configs(page_with_menu, default_config):
     from menus.menu_pool import menu_pool
-
-    simple_w_placeholder.menu_structure = MENU_TYPE_CATEGORIES
-    simple_w_placeholder.menu_empty_categories = False
-    simple_w_placeholder.save()
 
     request = RequestFactory().get(page_with_menu.get_absolute_url())
     request.user = AnonymousUser()
+
+    # Set the menu type category
+    for menu in menu_pool.menus.values():
+        if issubclass(menu, PostCategoryMenu):
+            menu._config[default_config.namespace].menu_structure = MENU_TYPE_CATEGORIES
+
+    # Clear all caches
     menu_pool.clear(all=True)
+
     renderer = menu_pool.get_renderer(request)
     nodes = renderer.get_nodes(request)
     assert len(nodes) == 2  # Only the category and the page should be present
+
+    # Set the menu type category
+    for menu in menu_pool.menus.values():
+        if issubclass(menu, PostCategoryMenu):
+            menu._config[default_config.namespace].menu_structure = MENU_TYPE_NONE
+
+    # Clear all caches
+    menu_pool.clear(all=True)
+
+    renderer = menu_pool.get_renderer(request)
+    nodes = renderer.get_nodes(request)
+    assert len(nodes) == 1  # Only the page should be present

@@ -21,7 +21,7 @@ class PostCategoryMenu(CMSAttachMenu):
     Handles all types of blog menu
     """
 
-    name = _("Categories menu")
+    name = _("Post category menu")
     _config = {}
 
     def get_nodes(self, request):
@@ -40,7 +40,7 @@ class PostCategoryMenu(CMSAttachMenu):
         if self.instance and page_site != current_site:
             return []
 
-        if self.instance:
+        if self.instance and self.instance.application_urls == "StoriesApp":
             try:
                 self._config.setdefault(
                     self.instance.application_namespace,
