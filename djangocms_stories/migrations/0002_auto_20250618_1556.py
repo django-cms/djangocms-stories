@@ -201,13 +201,16 @@ def migrate_from_blog_to_stories(apps, schema_editor):
         tables = schema_editor.connection.introspection.table_names(cursor)
         blog_m2n_tables = [t for t in tables if t.startswith("djangocms_blog_") and t.count("_") > 2]
         blog_plugin_tables = [t for t in tables if t.startswith("djangocms_blog_") and t.endswith("plugin") and t.count("_") <= 2]
-        blog_other_tables = [t for t in tables if t.startswith("djangocms_blog_") and t not in blog_m2n_tables and t not in blog_plugin_tables]
+        blog_other_tables = [t for t in tables if t.startswith("djangocms_blog_") and t not in (blog_m2n_tables + blog_plugin_tables)]
+        if "djangocms_blog_blogconfig" in blog_other_tables:
+            blog_other_tables.remove("djangocms_blog_blogconfig")
         for table in blog_m2n_tables:
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
         for table in blog_plugin_tables:
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
         for table in blog_other_tables:
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
+        cursor.execute(f'DROP TABLE IF EXISTS "djangocms_blog_blogconfig";')
 
     # 7. Remove djangocms_blog migration records
     print("# 7. Remove djangocms_blog migration records")
