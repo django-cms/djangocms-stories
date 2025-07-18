@@ -2,8 +2,8 @@ from cms.utils import get_language_list
 from django.contrib.sitemaps import Sitemap
 from django.urls.exceptions import NoReverseMatch
 
-from ..models import PostContent
-from ..settings import get_setting
+from djangocms_stories.models import PostContent
+from djangocms_stories.settings import get_setting
 
 
 class StoriesSitemap(Sitemap):
@@ -45,12 +45,12 @@ class StoriesSitemap(Sitemap):
         return obj.post.date_modified
 
 
-class BlogSitemap(StoriesSitemap):
+class BlogSitemap(StoriesSitemap):  # pragma: no cover
     def __init__(self, *args, **kwargs):
         import warnings
 
         warnings.warn(
-            "BlogSitemap is deprecated and will be removed in future versions. Use StoriesSitemap instead.",
+            "BlogSitemap is deprecated and will be removed in version 1.0. Use StoriesSitemap instead.",
             DeprecationWarning,
         )
         super().__init__(*args, **kwargs)

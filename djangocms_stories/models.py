@@ -442,8 +442,12 @@ class Post(models.Model):
                 kwargs["day"] = "%02d" % current_date.day
             if "<str:slug>" in urlconf or "<slug:slug>" in urlconf:
                 kwargs["slug"] = self.safe_translation_getter("slug", language_code=lang, any_language=True)  # NOQA
+                if kwargs["slug"] is None:
+                    return ""
             if "<slug:category>" in urlconf or "<str:category>" in urlconf:
                 kwargs["category"] = category.safe_translation_getter("slug", language_code=lang, any_language=True)  # NOQA
+                if kwargs["category"] is None:
+                    return ""
             try:
                 return reverse(
                     "%s:post-detail" % self.app_config.namespace, kwargs=kwargs, current_app=self.app_config.namespace

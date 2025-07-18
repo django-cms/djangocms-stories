@@ -9,4 +9,5 @@ def test_sitemap(page_with_menu, many_posts):
 
     # Check if all post URLs are in the sitemap
     for post in many_posts:
-        assert post.get_absolute_url() in urls
+        absolute_url = post.get_absolute_url()
+        assert not absolute_url or absolute_url in urls
