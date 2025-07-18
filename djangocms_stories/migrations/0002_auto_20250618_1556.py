@@ -216,6 +216,7 @@ def migrate_from_blog_to_stories(apps, schema_editor):
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
             if table in blog_other_tables:
                 blog_other_tables.remove(table)
+        # Drop remaining blog tables if any
         for table in blog_other_tables:
             cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
 

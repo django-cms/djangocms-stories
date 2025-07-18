@@ -8,19 +8,15 @@ from djangocms_stories.cms_appconfig import StoriesConfig
 
 
 @pytest.fixture
-def many_posts():
+def many_posts(simple_w_placeholder):
     from djangocms_stories.models import PostCategory
 
     from .factories import PostContentFactory
 
-    batch = PostContentFactory.create_batch(10)
-    category = PostCategory.objects.create(
-        name="Test Category", slug="test-category", app_config=StoriesConfig.objects.first()
-    )
+    batch = PostContentFactory.create_batch(10, post__app_config=simple_w_placeholder)
+    category = PostCategory.objects.create(name="Test Category", slug="test-category", app_config=simple_w_placeholder)
     for post in batch:
         post.categories.add(category)
-        post.app_config_id = StoriesConfig.objects.first().pk
-        post.save()
     if apps.is_installed("djangocms_versioning"):
         for post_content in batch[:5]:
             post_content.versions.first().publish(user=post_content.versions.first().created_by)
@@ -30,7 +26,6 @@ def many_posts():
 @pytest.fixture
 def page_with_menu(many_posts):
     from cms import api
-
     from tests.factories import UserFactory
 
     user = UserFactory(is_superuser=True, is_staff=True)
@@ -42,7 +37,7 @@ def page_with_menu(many_posts):
         created_by=user,
     )
     page.application_urls = "StoriesApp"
-    page.apphook_namespace = StoriesConfig.objects.first().namespace
+    page.application_namespace = StoriesConfig.objects.first().namespace
     page.navigation_extenders = "PostCategoryMenu"
     page.save()
     if apps.is_installed("djangocms_versioning"):
@@ -135,8 +130,4 @@ def test_menu_nodes(page_with_menu, many_posts):
     renderer = menu_pool.get_renderer(request)
     nodes = renderer.get_nodes(request)
 
-    assert len(nodes) > 0
-
-    if apps.is_installed("djangocms_versioning"):
-        pass
-        # assert len(nodes) == 6
+    assert len(nodes) == len(many_posts) + 1 + 1  # +1 for the page and the category
