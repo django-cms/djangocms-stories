@@ -130,4 +130,9 @@ def test_menu_nodes(page_with_menu, many_posts):
     renderer = menu_pool.get_renderer(request)
     nodes = renderer.get_nodes(request)
 
-    assert len(nodes) == len(many_posts) + 1 + 1  # +1 for the page and the category
+    if apps.is_installed("djangocms_versioning"):
+        # If versioning is installed, we have one more node for the page
+        assert len(nodes) == len(many_posts) // 2 + 1 + 1  # +1 for the page and the category
+        # The // 2 accounts for the fact that only half of the posts are published
+    else:
+        assert len(nodes) == len(many_posts) + 1 + 1  # +1 for the page and the category
