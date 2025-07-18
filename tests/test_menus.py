@@ -31,18 +31,24 @@ def many_posts():
 def page_with_menu(many_posts):
     from cms import api
 
+    from tests.factories import UserFactory
+
+    user = UserFactory(is_superuser=True, is_staff=True)
     page = api.create_page(
         title="Test Page",
         template="base.html",
         language="en",
-        apphook="StoriesApp",
-        apphook_namespace=StoriesConfig.objects.first().namespace,
+        slug="test-page",
+        created_by=user,
     )
+    page.application_urls = "StoriesApp"
+    page.apphook_namespace = StoriesConfig.objects.first().namespace
     page.navigation_extenders = "PostCategoryMenu"
     page.save()
     if apps.is_installed("djangocms_versioning"):
-        page_content = page.get_admin_content("en")
-        page_content.versions.first().publish(user=page_content.versions.created_by)
+        page_content = page.pagecontent_set(manager="admin_manager").first()
+        version = page_content.versions.first()
+        version.publish(user=user)
     return page
 
 
