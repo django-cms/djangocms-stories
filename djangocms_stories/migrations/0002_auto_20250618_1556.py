@@ -234,6 +234,10 @@ def adjust_apphooks(apps, schema_editor):
     Page.objects.filter(application_urls="BlogApp").update(
         application_urls="StoriesApp"
     )
+    Page.objects.filter(navigation_extenders="BlogCategoryMenu").update(
+        navigation_extenders="PostCategoryMenu"
+    )
+
 
 
 class Migration(migrations.Migration):
