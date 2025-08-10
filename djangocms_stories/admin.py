@@ -22,29 +22,12 @@ from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
 
-from .cms_config import StoriesCMSConfig
 from .forms import AppConfigForm, CategoryAdminForm
 from .models import PostCategory, StoriesConfig, Post, PostContent
 from .settings import get_setting
 from .utils import is_versioning_enabled
 
 signal_dict = {}
-
-
-if StoriesCMSConfig.djangocms_versioning_enabled:
-    from djangocms_versioning.admin import ExtendedGrouperVersionAdminMixin, StateIndicatorMixin
-else:
-    # Declare stubs
-    class StateIndicatorMixin:
-        def state_indicator(self, obj):
-            pass
-
-        def get_list_display(self, request):
-            # remove "indicator" entry
-            return [item for item in super().get_list_display(request) if item != "state_indicator"]
-
-    class ExtendedGrouperVersionAdminMixin:
-        pass
 
 
 def register_extension(klass):
@@ -356,8 +339,6 @@ class CategoryAdmin(FrontendEditableAdminMixin, ModelAppHookConfig, Translatable
 class PostAdmin(
     FrontendEditableAdminMixin,
     ModelAppHookConfig,
-    StateIndicatorMixin,
-    ExtendedGrouperVersionAdminMixin,
     GrouperModelAdmin,
 ):
     # form = PostAdminForm
