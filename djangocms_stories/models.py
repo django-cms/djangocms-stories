@@ -206,6 +206,16 @@ class PostCategory(PostMetaMixin, ModelMeta, TranslatableModel):
         return self.linked_posts.count()
 
     def get_absolute_url(self, lang=None):
+        """
+        Returns the absolute URL for the category overview in the specified language.
+        If the category has a translation in the given language, returns the URL for the category's detail page using its slug.
+        If the category does not exist in the specified language, falls back to the URL for the latest posts.
+        Args:
+            lang (str, optional): The language code to use for the URL. If not provided, determines the language automatically.
+        Returns:
+            str: The absolute URL for the category or the latest posts, depending on translation availability.
+        """
+
         lang = _get_language(self, lang)
         if self.has_translation(lang):
             slug = self.safe_translation_getter("slug", language_code=lang)
@@ -246,7 +256,10 @@ class PostCategory(PostMetaMixin, ModelMeta, TranslatableModel):
 
 class Post(models.Model):
     """
-    Posts
+    Represents a blog post or story entry with multilingual content, images, categories, tags, and publication metadata.
+    It is the "grouper model" for :class:`PostContent`.
+
+    This model supports translation, site-specific publishing, image handling, tagging, and flexible URL generation for posts.
     """
 
     author = models.ForeignKey(

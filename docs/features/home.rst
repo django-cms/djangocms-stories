@@ -40,7 +40,3 @@ Notice that the last permalink type is no longer present.
 
 Then, pick any of the three remaining permalink types in the layout section of the apphooks config
 linked to the home page (at http://yoursite.com/admin/djangocms_blog/blogconfig/).'
-
-.. warning:: Version 1.2 introduce a breaking change as it drops ``url`` function in favour of ``path``.
-             If you have customized the urls as documented above you **must** update the custom urlconf to path-based
-             patterns.
