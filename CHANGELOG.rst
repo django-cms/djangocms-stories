@@ -2,11 +2,12 @@
 Changelog
 =========
 
-0.7.1 (2025-08-09)
+0.7.1 (2025-08-28)
 ------------------
 
-* fix: Migrate navigation extenders
-
+* fix: Migrate navigation extenders by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/19
+* fix: Filter lookup allowed must not require request argument for Django 4.2 by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/28
+* fix missing admin-form dropdowns by @wfehr in https://github.com/django-cms/djangocms-stories/pull/23
 
 0.7.0 (2025-08-08)
 ------------------
