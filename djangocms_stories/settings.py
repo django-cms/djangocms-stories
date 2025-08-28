@@ -29,11 +29,6 @@ PERMALINKS = (  # noqa
     (PERMALINK_TYPE_CATEGORY, _("Category")),
     (PERMALINK_TYPE_SLUG, _("Just slug")),
 )
-"""
-.. _PERMALINKS:
-
-Permalinks styles.
-"""
 
 STORIES_UNICODE_SLUGS = True
 """
@@ -50,23 +45,12 @@ PERMALINKS_URLS = {  # noqa
     PERMALINK_TYPE_SLUG: "<str:slug>/",
 }
 
-"""
-.. _PERMALINKS_URLS:
-
-Permalinks urlconfs.
-"""
-
 MENU_TYPES = (  # noqa
     (MENU_TYPE_COMPLETE, _("Categories and posts")),
     (MENU_TYPE_CATEGORIES, _("Categories only")),
     (MENU_TYPE_POSTS, _("Posts only")),
     (MENU_TYPE_NONE, _("None")),
 )
-"""
-.. _DEFAULT_MENU_TYPES:
-
-Types of menu structure.
-"""
 
 SITEMAP_CHANGEFREQ_LIST = (  # noqa
     ("always", _("always")),
@@ -77,11 +61,6 @@ SITEMAP_CHANGEFREQ_LIST = (  # noqa
     ("yearly", _("yearly")),
     ("never", _("never")),
 )
-"""
-.. _SITEMAP_CHANGEFREQ_LIST:
-
-List of changefreqs defined in sitemaps.
-"""
 
 STORIES_IMAGE_THUMBNAIL_SIZE = {"size": "120x120", "crop": True, "upscale": False}
 """

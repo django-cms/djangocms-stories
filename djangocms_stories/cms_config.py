@@ -2,7 +2,7 @@ from cms.app_base import CMSAppConfig
 from django.apps import apps
 from django.db import DatabaseError
 
-from cms.utils import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 from cms.utils.i18n import get_language_tuple
 
 from .settings import get_setting
@@ -34,7 +34,9 @@ class StoriesCMSConfig(CMSAppConfig):
                 grouper_field_name="post",
                 extra_grouping_fields=["language"],
                 version_list_filter_lookups={
-                    "language": lambda request, _: get_language_tuple(site_id=get_current_site(request).pk)
+                    "language": lambda *args: get_language_tuple(
+                        site_id=get_current_site(args[0] if len(args) > 0 else None).pk
+                    )
                 },
                 grouper_selector_option_label=lambda obj, lang: obj.get_title(lang),
                 copy_function=default_copy,

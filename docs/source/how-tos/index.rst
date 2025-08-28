@@ -9,6 +9,8 @@ These guides provide step-by-step instructions for common tasks with djangocms-s
 
    multiple-configurations
    custom-templates
+   custom-urlconf
    seo-optimization
    migration-from-blog
    feeds-and-sitemaps
+   attach-to-home

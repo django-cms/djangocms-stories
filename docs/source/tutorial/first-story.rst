@@ -1,8 +1,8 @@
-#######################
-Creating Your First Story
-#######################
+##############################
+Creating Your First Story Blog
+##############################
 
-This guide will walk you through creating your first story with djangocms-stories.
+This guide will walk you through creating your first blog with djangocms-stories.
 
 Setting up a Stories Page
 ==========================

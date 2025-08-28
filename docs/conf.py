@@ -59,6 +59,11 @@ autodoc_default_options = {
     "exclude-members": "__weakref__",
 }
 
+# Additional autodoc settings
+autodoc_typehints = "description"
+autodoc_typehints_description_target = "documented"
+autodoc_class_signature = "mixed"
+
 # Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
@@ -119,7 +124,7 @@ exclude_patterns = ["_build"]
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
-# add_module_names = True
+add_module_names = False
 
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
