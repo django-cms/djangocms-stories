@@ -12,11 +12,13 @@ from .views import (
     TaggedListView,
 )
 
+_category_snippet = "c" if get_setting("USE_SHORTHAND_CATEGORY_LINK") is True else "category"
+
 app_name = "djangocms_stories"
 urlpatterns = [
     path("", PostListView.as_view(), name="posts-latest"),
-    path("category/", CategoryListView.as_view(), name="categories-all"),
-    path("category/<str:category>/", CategoryEntriesView.as_view(), name="posts-category"),
+    path(f"{_category_snippet}/", CategoryListView.as_view(), name="categories-all"),
+    path(f"{_category_snippet}/<str:category>/", CategoryEntriesView.as_view(), name="posts-category"),
     path("feed/", LatestEntriesFeed(), name="posts-latest-feed"),
     path("feed/fb/", FBInstantArticles(), name="posts-latest-feed-fb"),
     path("<int:year>/", PostArchiveView.as_view(), name="posts-archive"),

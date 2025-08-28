@@ -621,6 +621,13 @@ STORIES_WIZARD_CONTENT_PLUGIN_BODY = "body"
 Name of the plugin field to add wizard text.
 """
 
+STORIES_USE_SHORTHAND_CATEGORY_LINK = False
+"""
+.. _USE_SHORTHAND_CATEGORY_LINK
+
+Wether to use "c" or "category" for the category urls.
+"""
+
 params = {param: value for param, value in locals().items() if param.startswith("STORIES_")}
 
 """
