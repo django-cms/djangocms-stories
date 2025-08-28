@@ -34,7 +34,7 @@ def test_base_fixture(post_content):
     assert post.get_image_width() is None
     assert post.get_image_height() is None
     assert post.thumbnail_options() == {"crop": True, "size": "120x120", "upscale": False}
-    assert post.full_image_options() == {"crop": True, "size": "640", "upscale": False}
+    assert post.full_image_options() == {"crop": True, "size": "640x360", "upscale": False}
 
     if apps.is_installed("djangocms_versioning"):
         assert post.get_content(language="en", show_draft_content=False) is None
