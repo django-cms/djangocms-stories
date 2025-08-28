@@ -109,6 +109,18 @@ class StoriesConfigForm(TranslatableModelForm):
     class Meta:
         model = StoriesConfig
         fields = "__all__"
+        widgets = {
+            field: forms.Select(choices=get_setting(setting_name))
+            for field, setting_name in [
+                ("url_patterns", "AVAILABLE_PERMALINK_STYLES"),
+                ("menu_structure", "MENU_TYPES"),
+                ("sitemap_changefreq", "SITEMAP_CHANGEFREQ"),
+                ("object_type", "TYPES"),
+                ("og_type", "FB_TYPES"),
+                ("twitter_type", "TWITTER_TYPES"),
+                ("gplus_type", "SCHEMAORG_TYPES"),
+            ]
+        }
 
     def __init__(self, *args, **kwargs):
         """
@@ -125,13 +137,8 @@ class StoriesConfigForm(TranslatableModelForm):
             kwargs["initial"].setdefault("app_title", force_str(get_setting("AUTO_APP_TITLE")))
             kwargs["initial"].setdefault("object_name", force_str(get_setting("DEFAULT_OBJECT_NAME")))
 
-        super().__init__(*args, **kwargs)
+        # Set current saved value:
+        for field in self._meta.widgets.keys():
+            kwargs["initial"][field] = getattr(kwargs["instance"], field)
 
-        # Set choices for fields that have choices defined in settings
-        self.fields["url_patterns"].choices = get_setting("AVAILABLE_PERMALINK_STYLES")
-        self.fields["menu_structure"].choices = get_setting("MENU_TYPES")
-        self.fields["sitemap_changefreq"].choices = get_setting("SITEMAP_CHANGEFREQ")
-        self.fields["object_type"].choices = get_setting("TYPES")
-        self.fields["og_type"].choices = get_setting("FB_TYPES")
-        self.fields["twitter_type"].choices = get_setting("TWITTER_TYPES")
-        self.fields["gplus_type"].choices = get_setting("SCHEMAORG_TYPES")
+        super().__init__(*args, **kwargs)
