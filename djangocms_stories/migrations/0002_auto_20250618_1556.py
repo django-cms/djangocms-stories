@@ -209,16 +209,16 @@ def migrate_from_blog_to_stories(apps, schema_editor):
             'djangocms_blog_blogconfig',
         ]
         for table in blog_m2n_tables:
-            cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
+            cursor.execute(f"DROP TABLE IF EXISTS `{table}`;")
         for table in blog_plugin_tables:
-            cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
+            cursor.execute(f"DROP TABLE IF EXISTS `{table}`;")
         for table in blog_ordered_other_tables:
-            cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
+            cursor.execute(f"DROP TABLE IF EXISTS `{table}`;")
             if table in blog_other_tables:
                 blog_other_tables.remove(table)
         # Drop remaining blog tables if any
         for table in blog_other_tables:
-            cursor.execute(f'DROP TABLE IF EXISTS "{table}";')
+            cursor.execute(f"DROP TABLE IF EXISTS `{table}`;")
 
     # 7. Remove djangocms_blog migration records
     print("# 7. Remove djangocms_blog migration records")
@@ -234,6 +234,10 @@ def adjust_apphooks(apps, schema_editor):
     Page.objects.filter(application_urls="BlogApp").update(
         application_urls="StoriesApp"
     )
+    Page.objects.filter(navigation_extenders="BlogCategoryMenu").update(
+        navigation_extenders="PostCategoryMenu"
+    )
+
 
 
 class Migration(migrations.Migration):
