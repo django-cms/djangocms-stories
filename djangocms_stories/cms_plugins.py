@@ -14,7 +14,7 @@ from .settings import get_setting
 class StoriesPlugin(CMSPluginBase):
     module = get_setting("PLUGIN_MODULE_NAME")
     form = BlogPluginForm
-    field = []
+    fields = []
 
     def get_fields(self, request, obj=None):
         """
@@ -144,6 +144,7 @@ class BlogTagsPlugin(StoriesPlugin):
     name = get_setting("TAGS_PLUGIN_NAME")
     model = GenericBlogPlugin
     base_render_template = "tags.html"
+    show_add_form = False
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
@@ -162,6 +163,7 @@ class BlogCategoryPlugin(StoriesPlugin):
     name = get_setting("CATEGORY_PLUGIN_NAME")
     model = GenericBlogPlugin
     base_render_template = "categories.html"
+    show_add_form = False
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
@@ -187,6 +189,7 @@ class BlogArchivePlugin(StoriesPlugin):
     name = get_setting("ARCHIVE_PLUGIN_NAME")
     model = GenericBlogPlugin
     base_render_template = "archive.html"
+    show_add_form = False
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""

@@ -70,7 +70,7 @@ Easy-thumbnail alias configuration for the post main image when shown on the pos
 it's a dictionary with ``size``, ``crop`` and ``upscale`` keys.
 """
 
-STORIES_IMAGE_FULL_SIZE = {"size": "640", "crop": True, "upscale": False}
+STORIES_IMAGE_FULL_SIZE = {"size": "640x360", "crop": True, "upscale": False}
 """
 .. _IMAGE_FULL_SIZE:
 
