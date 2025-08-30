@@ -4,6 +4,8 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
+-e ..
+    # via -r requirements.in
 accessible-pygments==0.0.5
     # via furo
 alabaster==1.0.0
@@ -25,7 +27,9 @@ build==1.3.0
 certifi==2025.8.3
     # via requests
 charset-normalizer==3.4.3
-    # via requests
+    # via
+    #   reportlab
+    #   requests
 click==8.2.1
     # via
     #   black
@@ -38,6 +42,8 @@ colorama==0.4.6
     # via sphinx-autobuild
 coverage==7.10.6
     # via -r requirements.in
+cssselect2==0.8.0
+    # via svglib
 datetime==5.5
     # via -r requirements.in
 django==5.2.5
@@ -45,20 +51,52 @@ django==5.2.5
     #   -r requirements.in
     #   django-classy-tags
     #   django-cms
+    #   django-filer
     #   django-formtools
+    #   django-parler
+    #   django-polymorphic
     #   django-sekizai
+    #   django-taggit
+    #   django-taggit-templatetags
     #   django-treebeard
+    #   djangocms-admin-style
+    #   easy-thumbnails
 django-classy-tags==4.1.0
     # via
     #   django-cms
     #   django-sekizai
-django-cms @ git+https://github.com/django-cms/django-cms@main
-    # via -r requirements.in
+django-cms==5.0.2
+    # via
+    #   -r requirements.in
+    #   djangocms-stories
+django-filer==3.3.1
+    # via djangocms-stories
 django-formtools==2.5.1
     # via django-cms
+django-meta==2.5.0
+    # via djangocms-stories
+django-parler==2.3
+    # via djangocms-stories
+django-polymorphic==4.1.0
+    # via django-filer
 django-sekizai==4.1.0
     # via django-cms
+django-sortedm2m==4.0.0
+    # via djangocms-stories
+django-taggit==6.1.0
+    # via
+    #   django-taggit-autosuggest
+    #   django-taggit-templatetags
+    #   djangocms-stories
+django-taggit-autosuggest==0.4.2
+    # via djangocms-stories
+django-taggit-templatetags==0.2.5
+    # via djangocms-stories
+django-templatetag-sugar==1.0
+    # via django-taggit-templatetags
 django-treebeard==4.7.1
+    # via django-cms
+djangocms-admin-style==3.3.1
     # via django-cms
 docstrfmt==1.11.1
     # via -r requirements.in
@@ -66,6 +104,10 @@ docutils==0.21.2
     # via
     #   docstrfmt
     #   sphinx
+easy-thumbnails[svg]==2.10.1
+    # via
+    #   django-filer
+    #   djangocms-stories
 furo==2025.7.19
     # via -r requirements.in
 h11==0.16.0
@@ -80,6 +122,10 @@ jinja2==3.1.6
     # via sphinx
 libcst==1.8.2
     # via docstrfmt
+lxml==6.0.1
+    # via
+    #   djangocms-stories
+    #   svglib
 markupsafe==3.0.2
     # via
     #   -r requirements.in
@@ -90,9 +136,14 @@ packaging==25.0
     # via
     #   black
     #   build
+    #   django-cms
     #   sphinx
 pathspec==0.12.1
     # via black
+pillow==11.3.0
+    # via
+    #   easy-thumbnails
+    #   reportlab
 pip-tools==7.5.0
     # via -r requirements.in
 platformdirs==4.4.0
@@ -114,9 +165,15 @@ pyproject-hooks==1.2.0
     #   build
     #   pip-tools
 pytz==2025.2
-    # via datetime
+    # via
+    #   datetime
+    #   djangocms-stories
 pyyaml-ft==8.0.0
     # via libcst
+reportlab==4.4.3
+    # via
+    #   easy-thumbnails
+    #   svglib
 requests==2.32.5
     # via
     #   sphinx
@@ -167,8 +224,14 @@ sqlparse==0.5.3
     # via django
 starlette==0.47.3
     # via sphinx-autobuild
+svglib==1.5.1
+    # via easy-thumbnails
 tabulate==0.9.0
     # via docstrfmt
+tinycss2==1.4.0
+    # via
+    #   cssselect2
+    #   svglib
 typing-extensions==4.15.0
     # via beautifulsoup4
 urllib3==2.5.0
@@ -177,6 +240,10 @@ uvicorn==0.35.0
     # via sphinx-autobuild
 watchfiles==1.1.0
     # via sphinx-autobuild
+webencodings==0.5.1
+    # via
+    #   cssselect2
+    #   tinycss2
 websockets==15.0.1
     # via sphinx-autobuild
 wheel==0.45.1
