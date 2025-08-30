@@ -53,8 +53,8 @@ install:
 	python3 -m venv venv
 	. venv/bin/activate
 	pip install pip-tools
-	pip-compile requirements.in -o requirements.txt 2> /dev/null
-	pip install -r requirements.txt
+	cd .. ; pip-compile docs/requirements.in -o docs/requirements.txt
+	cd .. ; pip install -r docs/requirements.txt
 
 clean:
 	rm -rf $(BUILDDIR)/*

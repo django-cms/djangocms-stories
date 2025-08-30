@@ -14,4 +14,4 @@ django-cms
 codespell
 pip-tools
 docstrfmt
--e ..
+-e .
