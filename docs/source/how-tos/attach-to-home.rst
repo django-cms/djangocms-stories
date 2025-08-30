@@ -1,8 +1,8 @@
 .. _home-page:
 
-===============================
-How to attach stories apphookto the home page
-===============================
+==============================================
+How to attach stories apphook to the home page
+==============================================
 
 By attaching an apphook to a page, by default all child pages are swallowed by the apphook. This is normally not a problem.
 If you want to attach the stories apphook to the home page, however, you need to ensure not all CMS pages are shadowed as

@@ -6,12 +6,12 @@ You can run multiple story configurations, for example separate blogs or news fo
 different departments or topics.
 
 
-
 Creating Multiple Configurations
 =================================
 
 1. In Django admin, go to Stories → Configurations
 2. Create a new configuration with:
+
    - Unique namespace (e.g., "tech-blog", "news")
    - App title (e.g., "Tech Blog", "Company News")
    - Object name (e.g., "Article", "News Item")
@@ -51,21 +51,21 @@ If you need the same content to appear in multiple configurations, you must:
    exists in one configuration only. To display the same article in both
    a "Tech Blog" and "Company News" section, create two separate posts.
 
-**Example Workflow**
+   **Example Workflow**
 
-To create a post that appears in both "Tech Blog" and "Company News"::
+   To create a post that appears in both "Tech Blog" and "Company News"::
 
-    # Create first post
-    Tech Blog Post:
-    - App config: "tech-blog"
-    - Title: "New Framework Release"
-    - Content: [your content, potentially adjusted for a tech blog audience]
+        # Create first post
+        Tech Blog Post:
+        - App config: "tech-blog"
+        - Title: "New Framework Release"
+        - Content: [your content, potentially adjusted for a tech blog audience]
 
-    # Create second post
-    Company News Post:
-    - App config: "company-news"
-    - Title: "New Framework Release"
-    - Content: [same content, manually copied, potentially adjusted to new audience]
+        # Create second post
+        Company News Post:
+        - App config: "company-news"
+        - Title: "New Framework Release"
+        - Content: [same content, manually copied, potentially adjusted to new audience]
 
 Setting up Pages
 =================

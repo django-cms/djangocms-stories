@@ -8,4 +8,5 @@ This section explains the concepts and design decisions behind djangocms-stories
    :maxdepth: 2
 
    content-wizard
+   media-plugins
    versioning
