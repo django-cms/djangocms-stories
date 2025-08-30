@@ -10,9 +10,9 @@ Setting up a Stories Page
 1. In the Django CMS admin, create a new page
 2. Go to the "Advanced settings" of the newly created page
 3. Choose "Stories" in the "Application" field
-4. Select your Stories configuration
-5. Publish the page (if you are using versioning)
-6. Depending on your project configuration, you might need to restart the server to let Django know about the new application.
+4. Select your story config (see :ref:`create_a_stories_config`)
+5. Publish the page (if you are using versioning) to make it visible.
+6. Depending on your project configuration, you might need to restart the server to let Django know about the new application hook.
 
 Creating a Story
 =================

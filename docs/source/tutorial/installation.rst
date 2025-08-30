@@ -62,8 +62,11 @@ Run the database migrations::
 
     python manage.py migrate djangocms_stories
 
+
+.. _create_a_stories_config:
+
 Create a Stories Config
-=====================
+=======================
 
 In the Django admin, create a new Stories Config to configure your story application. In the simplest case you enter
 a namespace, e.g. ``blog`` and the name of a document, e.g. ``Article``. The namespace cannot be changed later.

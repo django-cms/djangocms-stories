@@ -347,6 +347,8 @@ class CategoryAdmin(FrontendEditableAdminMixin, ModelAppHookConfig, Translatable
             },
         ),
     )
+    autocomplete_fields = ["parent"]
+    search_fields = ["translationas__name", "meta_description"]
 
     class Media:
         css = {"all": ("{}djangocms_stories/css/{}".format(settings.STATIC_URL, "djangocms_stories_admin.css"),)}

@@ -21,7 +21,7 @@
     </header>
     {% endblock %}
     {% for post_content in postcontent_list %}
-        {% include "djangocms_stories/includes/blog_item.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+        {% include "djangocms_stories/includes/post_item.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
     {% empty %}
     <p class="blog-empty">{% trans "No article found." %}</p>
     {% endfor %}
