@@ -19,7 +19,25 @@ def admin_client(admin_user):
     return client
 
 
-def test_config_admin(admin_client, default_config, assert_html_in_response):
+def test_config_admin_add(admin_client, default_config, assert_html_in_response):
+    url = reverse("admin:djangocms_stories_storiesconfig_add")
+    response = admin_client.get(url)
+    parler_language_selector = """
+        <div class="parler-language-tabs">
+        <input type="hidden" class="language_button selected" name="en" /><span class="current">English</span>
+        <span class="empty">
+            <a href="?language=it">Italiano</a></span><span class="empty">
+            <a href="?language=fr">French</a>
+        </span></div>"""
+    namespace_can_be_written = (
+        '<input type="text" name="namespace" class="vTextField" maxlength="100" required id="id_namespace">'
+    )
+
+    assert_html_in_response(parler_language_selector, response)
+    assert_html_in_response(namespace_can_be_written, response)
+
+
+def test_config_admin_change(admin_client, default_config, assert_html_in_response):
     url = reverse("admin:djangocms_stories_storiesconfig_change", args=[default_config.pk])
     response = admin_client.get(url)
     parler_language_selector = """
