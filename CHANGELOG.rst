@@ -2,6 +2,11 @@
 Changelog
 =========
 
+0.7.2 (2025-09-04)
+------------------
+
+* fix: Adding a new stories config raised a server error
+
 0.7.1 (2025-08-28)
 ------------------
 
