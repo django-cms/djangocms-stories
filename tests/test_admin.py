@@ -19,7 +19,7 @@ def admin_client(admin_user):
     return client
 
 
-def test_config_admin_add(admin_client, default_config, assert_html_in_response):
+def test_config_admin_add(admin_client, assert_html_in_response):
     url = reverse("admin:djangocms_stories_storiesconfig_add")
     response = admin_client.get(url)
     parler_language_selector = """
@@ -211,3 +211,19 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     assert_html_in_response(
         '<label class="required" for="id_content__title">Title (English):</label>', response
     )  # PostContent title field
+
+
+def test_category_add_admin(admin_client, assert_html_in_response):
+    url = reverse("admin:djangocms_stories_postcategory_add")
+    response = admin_client.get(url)
+
+    assert_html_in_response(
+        '<select name="app_config" required aria-describedby="id_app_config_helptext" id="id_app_config">', response
+    )
+
+
+def test_category_add_admin_with_config(admin_client, default_config, assert_html_in_response):
+    url = reverse("admin:djangocms_stories_postcategory_add") + f"?app_config={default_config.pk}"
+    response = admin_client.get(url)
+
+    assert_html_in_response('<input type="text" name="name" maxlength="752" required id="id_name">', response)
