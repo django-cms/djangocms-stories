@@ -2,6 +2,16 @@
 Changelog
 =========
 
+0.7.3 (2025-09-09)
+------------------
+
+* Fix: Toolbar failed on non-post content toolbar objects by @corentinbettiol in https://github.com/django-cms/djangocms-stories/pull/38
+
+**New Contributors**
+
+* @corentinbettiol made their first contribution in https://github.com/django-cms/djangocms-stories/pull/38
+
+
 0.7.2 (2025-09-04)
 ------------------
 
