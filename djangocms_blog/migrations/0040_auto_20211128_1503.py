@@ -10,7 +10,7 @@ import djangocms_blog.models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("djangocms_blog", "0040_post_include_in_rss"),
+        ("djangocms_blog", "0042_alter_authorentriesplugin_cmsplugin_ptr_and_more"),
     ]
 
     operations = [
