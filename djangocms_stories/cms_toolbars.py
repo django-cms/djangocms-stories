@@ -106,7 +106,7 @@ class StoriesToolbar(CMSToolbar):
             # Properties menu entry
             object_name = current_config.object_name if current_config else Post._meta.verbose_name
             object_name = object_name.capitalize()
-            if current_content and self.request.user.has_perm("djangocms_stories.change_post"):
+            if isinstance(current_content, PostContent) and self.request.user.has_perm("djangocms_stories.change_post"):
                 admin_menu.add_modal_item(
                     _("%(object_name)s properties") % dict(object_name=object_name.capitalize()),
                     admin_reverse("djangocms_stories_post_change", args=(current_content.post.pk,)),
