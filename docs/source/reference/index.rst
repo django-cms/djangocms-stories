@@ -14,4 +14,4 @@ Complete API reference for djangocms-stories.
    admin
    managers
    templatetags
-   signals
+
