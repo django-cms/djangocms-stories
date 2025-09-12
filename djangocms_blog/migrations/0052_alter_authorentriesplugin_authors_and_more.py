@@ -8,7 +8,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("djangocms_blog", "0001_squashed_0051_alter_blogconfig_type_and_more"),
+        ("djangocms_blog", "0051_alter_blogconfig_type_and_more"),
         ("filer", "0017_image__transparent"),
         ("sites", "0002_alter_domain_unique"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
