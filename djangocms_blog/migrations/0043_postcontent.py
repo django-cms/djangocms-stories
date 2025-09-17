@@ -8,6 +8,7 @@ import djangocms_blog.models
 
 class Migration(migrations.Migration):
     dependencies = [
+        ("cms", "0033_placeholder_source_data_migration"),
         ("djangocms_blog", "0042_alter_post_enable_comments"),
     ]
 

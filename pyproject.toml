@@ -69,12 +69,18 @@ urls.Issues = "https://github.com/fsbraun/djangocms-stories/issues"
 [tool.setuptools.dynamic]
 version = { attr = "djangocms_stories.__version__" }
 
-[tool.setuptools.package-data]
-djangocms_stories = [ "static/**/*", "templates/**/*", "locale/**/*", "LICENSE", "README.rst" ]
-exclude = [ "**/bundles/" ]
+[tool.setuptools.packages.find]
+where = [ "." ]
+include = [ "djangocms_stories*", "djangocms_blog*" ]
 
-[tool.setuptools]
-packages = [ "djangocms_stories", "djangocms_blog" ]
+[tool.setuptools.package-data]
+"*" = [
+  "templates/**/*.html",
+  "static/**/*",
+  "locale/**/*",
+  "*.po",
+  "*.mo",
+]
 
 [tool.black]
 line-length = 119
