@@ -59,6 +59,7 @@ def model_to_json(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
+    atomic = False
     dependencies = [
         ("djangocms_blog", "0046_auto_20230717_2307"),
     ]
