@@ -2,10 +2,17 @@
 Changelog
 =========
 
+0.7.4 (2025-09-17)
+------------------
+
+* fix: Adjust quote chars for sql statements to db vendor in migration from djangocms-blog by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/42
+* fix: Migration from version 2.0.1 or later by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/41
+
+
 0.7.3 (2025-09-09)
 ------------------
 
-* Fix: Toolbar failed on non-post content toolbar objects by @corentinbettiol in https://github.com/django-cms/djangocms-stories/pull/38
+* fix: Toolbar failed on non-post content toolbar objects by @corentinbettiol in https://github.com/django-cms/djangocms-stories/pull/38
 
 **New Contributors**
 
