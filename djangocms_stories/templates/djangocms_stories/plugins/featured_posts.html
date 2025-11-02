@@ -1,8 +1,8 @@
 {% load i18n %}{% spaceless %}
 <div class="plugin plugin-blog">
     <div class="blog-featured-posts">
-        {% for post in posts_list %}
-            {% include "djangocms_stories/includes/post_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+        {% for post_content in postcontent_list %}
+            {% include "djangocms_stories/includes/post_item.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
         {% endfor %}
     </div>
 </div>

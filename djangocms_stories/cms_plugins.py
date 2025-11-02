@@ -93,7 +93,7 @@ class BlogFeaturedPostsPlugin(StoriesPlugin):
     def render(self, context, instance, placeholder):
         """Render the plugin."""
         context = super().render(context, instance, placeholder)
-        context["posts_list"] = instance.get_posts(context["request"])
+        context["postcontent_list"] = instance.get_posts(context["request"])
         context["TRUNCWORDS_COUNT"] = get_setting("POSTS_LIST_TRUNCWORDS_COUNT")
         return context
 
