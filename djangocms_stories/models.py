@@ -683,7 +683,11 @@ class BasePostPlugin(CMSPlugin):
 
     def post_content_queryset(self, request=None, selected_posts=None):
         language = translation.get_language()
-        if request and getattr(request, "toolbar", False) and request.toolbar.edit_mode_active:
+        if (
+            request
+            and getattr(request, "toolbar", False)
+            and (request.toolbar.edit_mode_active or request.toolbar.preview_mode_active)
+        ):
             post_contents = PostContent.admin_manager.latest_content()
         else:
             post_contents = PostContent.objects.all()
