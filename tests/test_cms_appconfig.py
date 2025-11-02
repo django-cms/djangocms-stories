@@ -3,11 +3,62 @@ from unittest.mock import Mock, patch
 import pytest
 from django.test import RequestFactory
 from django.urls import Resolver404
+from djangocms_stories.models import StoriesConfig
 
 from djangocms_stories.cms_appconfig import (
+    config_defaults,
     get_app_instance,
     get_namespace_from_request,
 )
+
+
+@pytest.mark.django_db
+def test_stories_config_str_returns_expected_string():
+    config = StoriesConfig(namespace="ns", app_title="My App", object_name="Story")
+    assert str(config) == "ns: My App / Story"
+
+
+@pytest.mark.django_db
+def test_stories_config_str_handles_exception():
+    config = StoriesConfig(**config_defaults, namespace="ns")
+    # Unsaved config does not have object_name, str access should handle that gracefully
+    result = str(config)
+    assert isinstance(result, str)
+
+
+def test_stories_config_get_app_title_returns_app_title():
+    config = StoriesConfig(**config_defaults, app_title="My App")
+    assert config.get_app_title() == "My App"
+
+
+def test_stories_config_get_app_title_returns_default():
+    config = StoriesConfig()
+    # Remove app_title to trigger default
+    if hasattr(config, "app_title"):
+        delattr(config, "app_title")
+    assert config.get_app_title() == "untitled"
+
+
+def test_stories_config_schemaorg_type_property():
+    config = StoriesConfig(gplus_type="Article")
+    assert config.schemaorg_type == "Article"
+
+
+@pytest.mark.django_db
+def test_stories_config_save_clears_menu_cache():
+    config = StoriesConfig(**config_defaults, namespace="test")
+    with patch("menus.menu_pool.menu_pool.clear") as mock_clear:
+        config.save()
+        mock_clear.assert_called_once_with(all=True)
+
+
+@pytest.mark.django_db
+def test_stories_config_delete_clears_menu_cache():
+    config = StoriesConfig(**config_defaults, namespace="hero")
+    config.save()
+    with patch("menus.menu_pool.menu_pool.clear") as mock_clear:
+        config.delete()
+        mock_clear.assert_called_once_with(all=True)
 
 
 # Tests for get_namespace_from_request function
@@ -152,7 +203,6 @@ def test_get_app_instance_config_does_not_exist():
 @pytest.mark.django_db
 def test_get_app_instance_multiple_configs_returned(simple_wo_placeholder):
     """Test get_app_instance when multiple configs match (should return None)"""
-    from djangocms_stories.models import StoriesConfig
 
     request = RequestFactory().get("/en/stories/")
 
