@@ -782,7 +782,12 @@ class FeaturedPostsPlugin(BasePostPlugin):
         self,
         request,
     ):
-        return self.post_content_queryset(request, selected_posts=self.posts.all())
+        posts = self.posts.all()
+        map = {
+            post_content.post_id: post_content
+            for post_content in self.post_content_queryset(request, selected_posts=posts)
+        }
+        return [map.get(post.pk) for post in posts if post.pk in map]
 
 
 class GenericBlogPlugin(BasePostPlugin):

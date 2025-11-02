@@ -123,7 +123,7 @@ def test_blog_featured_posts_plugin(placeholder, admin_client, simple_w_placehol
         from django.test import Client
 
         # No posts are published yet, so the featured posts should not appear on the site
-        url = placeholder.source.get_absolute_url()
+        url = placeholder.source.get_absolute_url("en")
         response = Client().get(url)
 
         assert response.status_code == 200
