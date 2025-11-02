@@ -1,5 +1,6 @@
 from cms.apphook_pool import apphook_pool
 from django.db import models
+from django.http import HttpRequest
 from django.urls import Resolver404, resolve
 from django.utils.translation import get_language_from_request, gettext_lazy as _, override
 from filer.models import ThumbnailOption
@@ -265,25 +266,32 @@ class StoriesConfig(TranslatableModel):
             return str(e)
 
 
-def get_app_instance(request):
+def get_namespace_from_request(request: HttpRequest) -> str:
+    """
+    Return current app instance namespace
+    """
+    try:
+        if hasattr(request, "toolbar") and hasattr(request.toolbar, "request_path"):
+            path = request.toolbar.request_path  # If v4 endpoint take request_path from toolbar
+        else:
+            path = request.path_info
+        return resolve(path).namespace
+    except Resolver404:
+        return None
+
+
+def get_app_instance(request: HttpRequest) -> tuple[str, StoriesConfig | None]:
     """
     Return current app instance namespace and config
     """
-    namespace, config = resolve(request.path_info).namespace, None
+    namespace, config = get_namespace_from_request(request), None
     if getattr(request, "current_page", None) and request.current_page.application_urls:
         app = apphook_pool.get_apphook(request.current_page.application_urls)
         if app and app.app_config:
-            try:
-                config = None
-                with override(get_language_from_request(request, check_path=True)):
-                    if hasattr(request, "toolbar") and hasattr(request.toolbar, "request_path"):
-                        path = request.toolbar.request_path  # If v4 endpoint take request_path from toolbar
-                    else:
-                        path = request.path_info
-                    namespace = resolve(path).namespace
-                    config = app.get_config(namespace)
-            except Resolver404:
-                pass
+            config = None
+            with override(get_language_from_request(request, check_path=True)):
+                namespace = get_namespace_from_request(request)
+                config = app.get_config(namespace)
     else:
         try:
             config = StoriesConfig.objects.get(namespace=namespace)

@@ -3,10 +3,11 @@ import logging
 from cms.apphook_pool import apphook_pool
 from cms.menu_bases import CMSAttachMenu
 from django.contrib.sites.shortcuts import get_current_site
-from django.urls import resolve
 from django.utils.translation import get_language_from_request, gettext_lazy as _
 from menus.base import Modifier, NavigationNode
 from menus.menu_pool import menu_pool
+
+from djangocms_stories.cms_appconfig import get_namespace_from_request
 
 from .models import PostCategory, StoriesConfig, PostContent
 from .settings import MENU_TYPE_CATEGORIES, MENU_TYPE_COMPLETE, MENU_TYPE_POSTS, get_setting
@@ -142,10 +143,14 @@ class PostCategoryNavModifier(Modifier):
             app = apphook_pool.get_apphook(request.current_page.application_urls)
 
         if app and app.app_config:
-            namespace = resolve(request.path).namespace
+            namespace = get_namespace_from_request(request)
+            if not namespace:
+                # Potentially a 404, might be a menu on a 404 page
+                return nodes
             if not self._config.get(namespace, False):
+                # Not cached yet
                 self._config[namespace] = app.get_config(namespace)
-            config = self._config[namespace]
+                config = self._config[namespace]
         try:
             if config and (not isinstance(config, StoriesConfig) or config.menu_structure != MENU_TYPE_CATEGORIES):
                 return nodes
