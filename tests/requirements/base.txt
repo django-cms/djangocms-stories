@@ -10,4 +10,5 @@ djangocms-text
 djangocms-video
 djangocms-versioning
 pysolr
+svglib!=1.6.0
 -e .
