@@ -23,11 +23,12 @@ def page_content(admin_user):
     if apps.is_installed("djangocms_versioning"):
         from djangocms_versioning.models import Version
 
-        Version.objects.get_or_create(
+        version, _ = Version.objects.get_or_create(
             content_type=ContentType.objects.get_for_model(page_content),
             object_id=page_content.pk,
             created_by=admin_user,
         )
+        version.publish(user=admin_user)
     return page_content
 
 
@@ -115,6 +116,16 @@ def test_blog_featured_posts_plugin(placeholder, admin_client, simple_w_placehol
                 response,
             )
         else:
+            assert post_content.title not in response.content.decode("utf-8")
+
+    if apps.is_installed("djangocms_versioning"):
+        # No posts are published yet, so the featured posts should not appear on the site
+        url = placeholder.source.get_absoute_url()
+
+        response = admin_client.get(url)
+        assert_html_in_response("<p>TextPlugin works.</p>", response)
+
+        for post_content in batch:
             assert post_content.title not in response.content.decode("utf-8")
 
 
