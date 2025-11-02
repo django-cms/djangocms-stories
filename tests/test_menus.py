@@ -8,7 +8,7 @@ from djangocms_stories.cms_menus import PostCategoryMenu, PostCategoryNavModifie
 
 
 @pytest.mark.django_db
-def test_nav_modifier_with_invalid_path():
+def test_nav_modifier_with_invalid_path(page_with_menu):
     """
     Tests that PostCategoryNavModifier does not fail with invalid request paths
     """
@@ -16,6 +16,7 @@ def test_nav_modifier_with_invalid_path():
 
     request = RequestFactory().get("/nonexistent/path/")
     request.user = AnonymousUser()
+    request.current_page = page_with_menu
 
     renderer = menu_pool.get_renderer(request)
     modifier = PostCategoryNavModifier(renderer)
