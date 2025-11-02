@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from cms.apphook_pool import apphook_pool
 from django.db import models
 from django.http import HttpRequest
