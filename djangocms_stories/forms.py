@@ -87,8 +87,8 @@ class AuthorPostsForm(BlogPluginForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # apply distinct due to django issue #11707
-        self.fields["authors"].queryset = User.objects.filter(djangocms_stories_post_author__isnull=False).distinct()
+        # Only include actual authors in the list
+        self.fields["authors"].queryset = User.objects.filter(djangocms_stories_post_author__isnull=False)
 
 
 class AppConfigForm(forms.Form):
