@@ -374,7 +374,7 @@ class Post(models.Model):
 
     def __str__(self):
         default = gettext("Post (no translation)")
-        return self.safe_translation_getter("title", any_language=True, default=default)
+        return self.safe_translation_getter("title", any_language=True, default=default, show_draft_content=True)
 
     @admin.display(boolean=True)
     def featured(self):
