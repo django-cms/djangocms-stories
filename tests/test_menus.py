@@ -4,7 +4,28 @@ from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
 
 from djangocms_blog.settings import MENU_TYPE_CATEGORIES, MENU_TYPE_NONE
-from djangocms_stories.cms_menus import PostCategoryMenu
+from djangocms_stories.cms_menus import PostCategoryMenu, PostCategoryNavModifier
+
+
+@pytest.mark.django_db
+def test_nav_modifier_with_invalid_path():
+    """
+    Tests that PostCategoryNavModifier does not fail with invalid request paths
+    """
+    from menus.menu_pool import menu_pool
+
+    request = RequestFactory().get("/nonexistent/path/")
+    request.user = AnonymousUser()
+
+    renderer = menu_pool.get_renderer(request)
+    modifier = PostCategoryNavModifier(renderer)
+    nodes = []
+
+    # Should not raise an exception
+    try:
+        modifier.modify(request, nodes, namespace=None, root_id=None, post_cut=False, breadcrumb=False)
+    except Exception as e:
+        pytest.fail(f"PostCategoryNavModifier raised an exception with invalid path: {e}")
 
 
 @pytest.mark.django_db
