@@ -531,7 +531,7 @@ class Post(models.Model):
         """
         if self.author:
             return reverse(
-                "%s:posts-author" % self.app_config.namespace,
+                f"{self.app_config.namespace}:posts-author",
                 kwargs={"username": self.author.username},
                 current_app=self.app_config.namespace,
             )
