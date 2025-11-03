@@ -52,7 +52,10 @@ def test_latest_entries_feed_link(page_with_menu):
     request = factory.get("/feed/")
     request.path = f"/{app_config.namespace}/feed/"
 
-    expected_link = reverse("%s:posts-latest" % app_config.namespace, current_app=app_config.namespace)
+    expected_link = reverse(
+        f"{app_config.namespace}:posts-latest",
+        current_app=app_config.namespace,
+    )
 
     with patch("djangocms_stories.feeds.get_app_instance") as mock_get_app:
         mock_get_app.return_value = (app_config.namespace, app_config)
