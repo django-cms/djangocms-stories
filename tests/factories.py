@@ -4,14 +4,11 @@ from datetime import timezone
 import factory
 from django.apps import apps
 from django.contrib.auth import get_user_model
-from django.contrib.sites.models import Site
 from factory.django import DjangoModelFactory
 
 from djangocms_stories.cms_appconfig import StoriesConfig
 from djangocms_stories.models import Post, PostCategory, PostContent
 from djangocms_stories.settings import PERMALINK_TYPE_FULL_DATE
-
-default_site = Site.objects.get(pk=1)  # Assuming you have a default site with pk=1
 
 
 class UserFactory(DjangoModelFactory):
