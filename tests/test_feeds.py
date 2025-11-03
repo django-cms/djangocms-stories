@@ -584,7 +584,7 @@ def test_tag_feed_end_to_end(client, page_with_menu):
 
     titles = [item.find("title").text for item in items]
     assert any("Python Post" in title for title in titles)
-    assert not any("JavaScript Post" in title for title in titles)
+    assert all("JavaScript Post" not in title for title in titles)
 
 
 @pytest.mark.django_db
