@@ -116,21 +116,6 @@ class GenericDateTaggedManager(TaggedFilterItem, WithUserMixin, models.Manager):
     def get_queryset(self, *args, **kwargs):
         return self.queryset_class(model=self.model, using=self._db, hints=self._hints)
 
-    def published(self, current_site=True):
-        return self.get_queryset().published(current_site)
-
-    def published_on_rss(self, current_site=True):
-        return self.get_queryset().published_on_rss(current_site)
-
-    def available(self, current_site=True):
-        return self.get_queryset().available(current_site)
-
-    def archived(self, current_site=True):
-        return self.get_queryset().archived(current_site)
-
-    def published_future(self, current_site=True):
-        return self.get_queryset().published_future(current_site)
-
     def filter_by_language(self, language, current_site=True):
         return self.get_queryset().filter_by_language(language, current_site)
 
