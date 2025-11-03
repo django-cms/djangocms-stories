@@ -38,11 +38,9 @@ class LatestEntriesFeed(Feed):
         return _("Blog articles on %(site_name)s") % {"site_name": Site.objects.get_current().name}
 
     def items(self, obj=None):
-        return (
-            Post.objects.namespace(self.namespace)
-            .published_on_rss()
-            .order_by("-date_published")[: self.feed_items_number]
-        )
+        return Post.objects.filter(app_config__namespace=self.namespace, include_in_rss=True).order_by(
+            "-date_published"
+        )[: self.feed_items_number]
 
     def item_title(self, item):
         return mark_safe(item.safe_translation_getter("title"))
@@ -62,7 +60,7 @@ class LatestEntriesFeed(Feed):
         return item.guid
 
     def item_author_name(self, item):
-        return item.get_author_name()
+        return item.get_author().get_full_name()
 
     def item_author_url(self, item):
         return item.get_author_url()
@@ -75,7 +73,7 @@ class TagFeed(LatestEntriesFeed):
         return tag  # pragma: no cover
 
     def items(self, obj=None):
-        return Post.objects().filter(tags__slug=obj)[: self.feed_items_number]
+        return Post.objects.filter(tags__slug=obj)[: self.feed_items_number]
 
 
 class FBInstantFeed(Rss201rev2Feed):
@@ -125,7 +123,9 @@ class FBInstantArticles(LatestEntriesFeed):
     feed_items_number = get_setting("FEED_INSTANT_ITEMS")
 
     def items(self, obj=None):
-        return Post.objects.namespace(self.namespace).order_by("-date_modified")[: self.feed_items_number]
+        return Post.objects.filter(app_config__namespace=self.namespace).order_by("-date_modified")[
+            : self.feed_items_number
+        ]
 
     def _clean_html(self, content):
         body = BytesIO(content)
@@ -154,7 +154,7 @@ class FBInstantArticles(LatestEntriesFeed):
         else:
             abstract = strip_tags(item.safe_translation_getter("post_text"))
         return {
-            "author": item.get_author_name(),
+            "author": item.get_author().get_full_name(),
             "content": content,
             "date": item.date_modified,
             "date_pub": item.date_modified,

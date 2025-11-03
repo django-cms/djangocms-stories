@@ -13,7 +13,7 @@ class BlogAppConfig(AppConfig):
         return super().ready()
 
 
-def check_settings(*args, **kwargs):
+def check_settings(*args, **kwargs):  # pragma: no cover
     from django.conf import settings
     from .settings import params
 

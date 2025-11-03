@@ -525,6 +525,18 @@ class Post(models.Model):
         """
         return self.author
 
+    def get_author_url(self):
+        """
+        Return the author URL if available
+        """
+        if self.author:
+            return reverse(
+                "%s:posts-author" % self.app_config.namespace,
+                kwargs={"username": self.author.username},
+                current_app=self.app_config.namespace,
+            )
+        return None
+
     def _set_default_author(self, current_user):
         if not self.author_id and self.app_config.set_author:
             if get_setting("AUTHOR_DEFAULT") is True:
