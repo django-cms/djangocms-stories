@@ -13,6 +13,7 @@ from datetime import timedelta
 from unittest.mock import Mock, patch
 
 import pytest
+from django.apps import apps
 from django.contrib.sites.models import Site
 from django.test import RequestFactory
 from django.urls import reverse
@@ -164,7 +165,9 @@ def test_latest_entries_feed_item_title(simple_wo_placeholder):
     from .factories import PostFactory, PostContentFactory
 
     post = PostFactory(app_config=simple_wo_placeholder)
-    PostContentFactory(post=post, title="Test Post Title", language="en")
+    post_content = PostContentFactory(post=post, title="Test Post Title", language="en")
+    if apps.is_installed("djangocms_versioning"):
+        post_content.versions.first().publish(user=post_content.versions.first().created_by)
 
     feed = LatestEntriesFeed()
     title = feed.item_title(post)
@@ -181,7 +184,11 @@ def test_latest_entries_feed_item_description_with_abstract(simple_wo_placeholde
     simple_wo_placeholder.save()
 
     post = PostFactory(app_config=simple_wo_placeholder)
-    PostContentFactory(post=post, abstract="<p>Test abstract</p>", post_text="<p>Full post text</p>", language="en")
+    post_content = PostContentFactory(
+        post=post, abstract="<p>Test abstract</p>", post_text="<p>Full post text</p>", language="en"
+    )
+    if apps.is_installed("djangocms_versioning"):
+        post_content.versions.first().publish(user=post_content.versions.first().created_by)
 
     feed = LatestEntriesFeed()
     description = feed.item_description(post)
@@ -198,7 +205,11 @@ def test_latest_entries_feed_item_description_without_abstract(simple_wo_placeho
     simple_wo_placeholder.save()
 
     post = PostFactory(app_config=simple_wo_placeholder)
-    PostContentFactory(post=post, abstract="<p>Test abstract</p>", post_text="<p>Full post text</p>", language="en")
+    post_content = PostContentFactory(
+        post=post, abstract="<p>Test abstract</p>", post_text="<p>Full post text</p>", language="en"
+    )
+    if apps.is_installed("djangocms_versioning"):
+        post_content.versions.first().publish(user=post_content.versions.first().created_by)
 
     feed = LatestEntriesFeed()
     description = feed.item_description(post)
@@ -354,9 +365,13 @@ def test_fb_instant_articles_items(page_with_menu):
     post2 = PostFactory(app_config=app_config, date_modified=now - timedelta(days=1))
     post3 = PostFactory(app_config=app_config, date_modified=now)
 
-    PostContentFactory(post=post1, language="en")
-    PostContentFactory(post=post2, language="en")
-    PostContentFactory(post=post3, language="en")
+    post_content1 = PostContentFactory(post=post1, language="en")
+    post_content2 = PostContentFactory(post=post2, language="en")
+    post_content3 = PostContentFactory(post=post3, language="en")
+    if apps.is_installed("djangocms_versioning"):
+        post_content1.versions.first().publish(user=post_content1.versions.first().created_by)
+        post_content2.versions.first().publish(user=post_content2.versions.first().created_by)
+        post_content3.versions.first().publish(user=post_content3.versions.first().created_by)
 
     with patch("djangocms_stories.feeds.get_app_instance") as mock_get_app:
         mock_get_app.return_value = (app_config.namespace, app_config)
@@ -473,20 +488,23 @@ def test_latest_entries_feed_end_to_end(client, page_with_menu):
         date_modified=now - timedelta(hours=1),
     )
 
-    PostContentFactory(
+    post_content1 = PostContentFactory(
         post=post1,
         title="First Test Post",
         abstract="<p>First abstract</p>",
         post_text="<p>First full content</p>",
         language="en",
     )
-    PostContentFactory(
+    post_content2 = PostContentFactory(
         post=post2,
         title="Second Test Post",
         abstract="<p>Second abstract</p>",
         post_text="<p>Second full content</p>",
         language="en",
     )
+    if apps.is_installed("djangocms_versioning"):
+        post_content1.versions.first().publish(user=post_content1.versions.first().created_by)
+        post_content2.versions.first().publish(user=post_content2.versions.first().created_by)
 
     # Get the feed URL
     url = reverse(
@@ -553,9 +571,13 @@ def test_tag_feed_end_to_end(client, page_with_menu):
     post2 = PostFactory(app_config=app_config, date_published=timezone.now() - timedelta(days=1))
     post3 = PostFactory(app_config=app_config, date_published=timezone.now() - timedelta(days=2))
 
-    PostContentFactory(post=post1, title="Python Post", language="en")
-    PostContentFactory(post=post2, title="Another Python Post", language="en")
-    PostContentFactory(post=post3, title="JavaScript Post", language="en")
+    post_content1 = PostContentFactory(post=post1, title="Python Post", language="en")
+    post_content2 = PostContentFactory(post=post2, title="Another Python Post", language="en")
+    post_content3 = PostContentFactory(post=post3, title="JavaScript Post", language="en")
+    if apps.is_installed("djangocms_versioning"):
+        post_content1.versions.first().publish(user=post_content1.versions.first().created_by)
+        post_content2.versions.first().publish(user=post_content2.versions.first().created_by)
+        post_content3.versions.first().publish(user=post_content3.versions.first().created_by)
 
     post1.tags.add("python", "web")
     post2.tags.add("python", "tutorial")
