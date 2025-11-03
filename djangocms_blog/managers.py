@@ -117,9 +117,11 @@ class GenericDateTaggedManager(TaggedFilterItem, WithUserMixin, models.Manager):
         return self.queryset_class(model=self.model, using=self._db, hints=self._hints)
 
     def filter_by_language(self, language, current_site=True):
+        """Convenience method to access the queryset's filter_by_language method."""
         return self.get_queryset().filter_by_language(language, current_site)
 
     def on_site(self, site=None):
+        """Convenience method to access the queryset's on_site method."""
         return self.get_queryset().on_site(site)
 
     def get_months(self, queryset=None, current_site=True):
