@@ -38,9 +38,11 @@ class LatestEntriesFeed(Feed):
         return _("Blog articles on %(site_name)s") % {"site_name": Site.objects.get_current().name}
 
     def items(self, obj=None):
-        return Post.objects.filter(app_config__namespace=self.namespace, include_in_rss=True).order_by(
-            "-date_published"
-        )[: self.feed_items_number]
+        return (
+            Post.objects.prefetch_related("postcontent_set")
+            .filter(app_config__namespace=self.namespace, include_in_rss=True)
+            .order_by("-date_published")[: self.feed_items_number]
+        )
 
     def item_title(self, item):
         return mark_safe(item.safe_translation_getter("title"))
@@ -60,7 +62,8 @@ class LatestEntriesFeed(Feed):
         return item.guid
 
     def item_author_name(self, item):
-        return item.get_author().get_full_name()
+        author = item.get_author()
+        return author.get_full_name() if author else None
 
     def item_author_url(self, item):
         return item.get_author_url()
