@@ -85,10 +85,34 @@ def test_latest_entries_feed_description():
     assert "Blog articles" in description
 
 
-@pytest.mark.django_db
-def test_latest_entries_feed_items(page_with_menu):
-    """Test that feed items returns published posts in correct order"""
-
++@pytest.mark.django_db
++def test_latest_entries_feed_excludes_non_rss_posts(page_with_menu):
++    """Test that posts with include_in_rss=False are excluded from the feed items"""
++    # Create two posts: one included in RSS, one excluded
++    included_post = Post.objects.create(
++        title="Included Post",
++        slug="included-post",
++        published=True,
++        include_in_rss=True,
++        published_date=timezone.now(),
++    )
++    excluded_post = Post.objects.create(
++        title="Excluded Post",
++        slug="excluded-post",
++        published=True,
++        include_in_rss=False,
++        published_date=timezone.now(),
++    )
++    feed = LatestEntriesFeed()
++    items = feed.items()
++    # Only the included post should be present
++    assert included_post in items
++    assert excluded_post not in items
++
++@pytest.mark.django_db
++def test_latest_entries_feed_items(page_with_menu):
++    """Test that feed items returns published posts in correct order"""
++
     app_config = StoriesConfig.objects.get(namespace=page_with_menu.application_namespace)
     factory = RequestFactory()
     request = factory.get("/feed/")
