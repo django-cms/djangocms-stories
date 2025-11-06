@@ -205,7 +205,7 @@ class TestGenericDateTaggedManager:
 
     def test_on_site_manager(self, page_with_menu, many_posts):
         """Test manager-level on_site method"""
-        posts = Post.objects.on_site()
+        posts = Post.objects.on_site(Site.objects.get_current())
 
         assert posts.exists()
 
@@ -232,13 +232,14 @@ class TestGenericDateTaggedManager:
 
     def test_get_months_with_current_site(self, page_with_menu, many_posts):
         """Test get_months filters by current site"""
-        months = Post.objects.get_months(current_site=True)
+        site = Site.objects.get_current()
+        months = Post.objects.get_months(site=site)
 
         assert isinstance(months, list)
 
     def test_get_months_without_current_site(self, page_with_menu, many_posts):
         """Test get_months without site filtering"""
-        months = Post.objects.get_months(current_site=False)
+        months = Post.objects.get_months(site=None)
 
         assert isinstance(months, list)
 
@@ -296,7 +297,8 @@ class TestManagerIntegration:
 
     def test_combining_filters(self, page_with_menu, many_posts):
         """Test combining manager methods with Django ORM filters"""
-        posts = Post.objects.on_site().filter(pk__in=[many_posts[0].post.pk])
+        site = Site.objects.get_current()
+        posts = Post.objects.on_site(site).filter(pk__in=[many_posts[0].post.pk])
 
         assert posts.count() >= 0
 
@@ -304,7 +306,8 @@ class TestManagerIntegration:
         """Test combining manager methods with Django ORM filters"""
         post = many_posts[0].post
 
-        posts = Post.objects.on_site().filter(pk=post.pk)
+        site = Site.objects.get_current()
+        posts = Post.objects.on_site(site).filter(pk=post.pk)
 
         assert posts.count() == 1
         assert posts.first() == post
@@ -326,8 +329,9 @@ class TestManagerIntegration:
         post.tags.add("site-tag")
 
         # Get tag cloud for current site
-        qs = Post.objects.on_site()
-        cloud = Post.objects.tag_cloud(queryset=qs, on_site=True, published=False)
+        site = Site.objects.get_current()
+        qs = Post.objects.all()
+        cloud = Post.objects.tag_cloud(queryset=qs, site=site, published=False)
 
         assert isinstance(cloud, list)
 

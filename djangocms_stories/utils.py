@@ -1,5 +1,7 @@
 from django.apps import apps
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+
 
 _versioning_enabled = None if "djangocms_versioning" in settings.INSTALLED_APPS else False
 
@@ -16,3 +18,18 @@ def is_versioning_enabled():
         except LookupError:
             _versioning_enabled = False
     return _versioning_enabled
+
+
+def site_compatibility_decorator(func):
+    """
+    A decorator to provide compatibility for django CMS versions
+    that do not support request-aware get_current_site calls.
+    """
+
+    try:
+        func(None)
+    except TypeError:
+        return lambda request: func()
+    except ImproperlyConfigured:
+        return func
+    return func

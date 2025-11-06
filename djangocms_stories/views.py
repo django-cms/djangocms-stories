@@ -10,11 +10,17 @@ from django.utils.translation import get_language
 from django.views.generic import DetailView, ListView
 from parler.views import TranslatableSlugMixin, ViewUrlMixin
 
+from cms.utils import get_current_site
+
 from .cms_appconfig import get_app_instance
 from .models import PostCategory, PostContent
 from .settings import get_setting
+from .utils import site_compatibility_decorator
+
 
 User = get_user_model()
+
+get_current_site = site_compatibility_decorator(get_current_site)
 
 
 class StoriesConfigMixin:
@@ -117,7 +123,8 @@ class BaseConfigListViewMixin(StoriesConfigMixin):
             queryset = self.model.objects.all()
         queryset = queryset.filter(language=language, post__app_config__namespace=self.namespace)
         setattr(self.request, get_setting("CURRENT_NAMESPACE"), self.config)
-        return self.optimize(queryset.on_site())
+        site = get_current_site(self.request)
+        return self.optimize(queryset.on_site(site))
 
     def get_template_names(self):
         template_path = (self.config and self.config.template_prefix) or "djangocms_stories"

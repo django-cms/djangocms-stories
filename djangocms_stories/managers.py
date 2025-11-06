@@ -56,11 +56,11 @@ class TaggedFilterItem:
         queryset = self.tag_list(other_model, queryset)
         return queryset.values("slug")
 
-    def tag_cloud(self, other_model=None, queryset=None, published=True, on_site=False):
+    def tag_cloud(self, other_model=None, queryset=None, published: bool = True, site: Site | None = None):
         from taggit.models import TaggedItem
 
-        if on_site:
-            queryset = queryset.on_site()
+        if site:
+            queryset = queryset.on_site(site)
         tag_ids = self._taglist(other_model, queryset)
         kwargs = {}
         if published:
@@ -82,14 +82,12 @@ class TaggedFilterItem:
 
 
 class SiteQuerySet(models.QuerySet):
-    def on_site(self, site=None):
-        if not site:
-            site = Site.objects.get_current()
+    def on_site(self, site: Site) -> "SiteQuerySet":
         return self.filter(models.Q(post__sites__isnull=True) | models.Q(post__sites=site.pk))
 
-    def filter_by_language(self, language, current_site=True):
-        if current_site:
-            return self.filter(language=language).on_site()
+    def filter_by_language(self, language, site: Site | None = None) -> "SiteQuerySet":
+        if site:
+            return self.filter(language=language).on_site(site)
         else:
             return self.filter(language=language)
 
@@ -143,21 +141,21 @@ class GenericDateTaggedManager(TaggedFilterItem, models.Manager):
     def archived(self, current_site=True):
         return self.get_queryset().archived(current_site)
 
-    def filter_by_language(self, language, current_site=True):
-        return self.get_queryset().filter_by_language(language, current_site)
+    def filter_by_language(self, language, site: Site | None = None):
+        return self.get_queryset().filter_by_language(language, site)
 
     def on_site(self, site=None):
         return self.get_queryset().on_site(site)
 
-    def get_months(self, queryset=None, current_site=True):
+    def get_months(self, queryset=None, site: Site | None = None):
         """
         Get months with aggregate count (how many posts is in the month).
         Results are ordered by date.
         """
         if queryset is None:
             queryset = self.get_queryset()
-        if current_site:
-            queryset = queryset.on_site()
+        if site:
+            queryset = queryset.on_site(site)
         dates_qs = queryset.values_list(self.start_date_field, self.fallback_date_field)
         dates = []
         for blog_dates in dates_qs:

@@ -59,14 +59,15 @@ class PostCategoryMenu(CMSAttachMenu):
 
         used_categories = []
         if posts_menu:
+            site = get_current_site(request)
             if getattr(request, "toolbar", False) and request.toolbar.edit_mode_active:
-                post_contents = PostContent.admin_manager.current_content(language=language).on_site()
+                post_contents = PostContent.admin_manager.current_content(language=language).on_site(site)
             else:
                 post_contents = PostContent.objects.filter(language=language)
             if hasattr(self, "instance") and self.instance:
                 post_contents = post_contents.filter(
                     post__app_config__namespace=self.instance.application_namespace
-                ).on_site()
+                ).on_site(site)
             post_contents = (
                 post_contents.distinct()
                 .select_related("post", "post__app_config")
