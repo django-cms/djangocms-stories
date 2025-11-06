@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import Counter
 
 from django.contrib.contenttypes.models import ContentType
