@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import Counter
 
 from django.contrib.contenttypes.models import ContentType
@@ -82,14 +84,8 @@ class TaggedFilterItem:
 
 
 class SiteQuerySet(models.QuerySet):
-    def on_site(self, site: Site) -> "SiteQuerySet":
+    def on_site(self, site: Site) -> SiteQuerySet:
         return self.filter(models.Q(post__sites__isnull=True) | models.Q(post__sites=site.pk))
-
-    def filter_by_language(self, language, site: Site | None = None) -> "SiteQuerySet":
-        if site:
-            return self.filter(language=language).on_site(site)
-        else:
-            return self.filter(language=language)
 
 
 class AdminSiteQuerySet(SiteQuerySet):
@@ -131,18 +127,6 @@ class GenericDateTaggedManager(TaggedFilterItem, models.Manager):
 
     def get_queryset(self, *args, **kwargs):
         return self.queryset_class(model=self.model, using=self._db, hints=self._hints)
-
-    def published_on_rss(self, current_site=True):
-        return self.get_queryset().published_on_rss(current_site)
-
-    def available(self, current_site=True):
-        return self.get_queryset().available(current_site)
-
-    def archived(self, current_site=True):
-        return self.get_queryset().archived(current_site)
-
-    def filter_by_language(self, language, site: Site | None = None):
-        return self.get_queryset().filter_by_language(language, site)
 
     def on_site(self, site=None):
         return self.get_queryset().on_site(site)
