@@ -232,10 +232,21 @@ class TestGenericDateTaggedManager:
 
     def test_get_months_with_current_site(self, page_with_menu, many_posts):
         """Test get_months filters by current site"""
-        site = Site.objects.get_current()
-        months = Post.objects.get_months(site=site)
+        # Ensure at least one date has two posts
+        first = Post.objects.first()
+        first.date_featured = Post.objects.last().date_featured
+        first.save()
 
+        months = Post.objects.get_months()
         assert isinstance(months, list)
+        # Assert that each month in the result matches posts from the specified site
+        for month in months:
+            date, count = month["date"], month["count"]
+            posts_in_month = Post.objects.filter(
+                date_featured__month=date.month,
+                date_featured__year=date.year,
+            )
+            assert posts_in_month.count() == count
 
     def test_get_months_without_current_site(self, page_with_menu, many_posts):
         """Test get_months without site filtering"""
