@@ -44,6 +44,14 @@ def test_base_fixture(post_content):
         assert post.guid == hashlib.sha256(force_bytes(f"-en-test-post-{post.app_config.namespace}-")).hexdigest()
         assert post.get_content(language="en", show_draft_content=False) == post_content
 
+    # PostContent properties
+    assert post_content.date_modified is post_content.post.date_modified
+    assert post_content.get_image_full_url() == ""
+    assert post_content.get_image_width() is None
+    assert post_content.get_image_height() is None
+    assert post_content.get_keywords() == []
+    assert post_content.get_tags() == ""
+
 
 @pytest.mark.django_db
 def test_post_content_compatibility_stubs(db, default_config):
@@ -130,6 +138,9 @@ def test_get_description(db):
     assert post_content_1.post.get_description() == "This is a test description."
     assert post_content_2.post.get_description() == "This is a test abstract."
 
+    assert post_content_1.get_description() == "This is a test description."
+    assert post_content_2.get_description() == "This is a test abstract."
+
 
 @pytest.mark.django_db
 def test_get_keywords(db):
@@ -141,6 +152,13 @@ def test_get_keywords(db):
 
     assert post_content_1.post.get_keywords() == []
     assert post_content_2.post.get_keywords() == [
+        "test",
+        "are these key words",
+        "or not",
+    ]
+
+    assert post_content_1.get_keywords() == []
+    assert post_content_2.get_keywords() == [
         "test",
         "are these key words",
         "or not",
@@ -198,3 +216,286 @@ def test_get_template(simple_w_placeholder, simple_wo_placeholder):
     assert post_content_without_placeholder.get_template() == "djangocms_stories/no_post_structure.html"
     assert post_content_without_config.get_template() == "djangocms_stories/post_detail.html"
     assert post_content_with_template_config.get_template() == "my-tempaltes/post_detail.html"
+
+
+@pytest.mark.django_db
+def test_get_image_full_url_no_image(db):
+    """Test get_image_full_url returns empty string when no image is set."""
+    from .factories import PostContentFactory, PostFactory
+
+    post = PostFactory(main_image=None)
+    post_content = PostContentFactory(post=post)
+
+    assert post.get_image_full_url() == ""
+    assert post_content.get_image_full_url() == ""
+
+
+@pytest.mark.django_db
+def test_get_image_width_no_image(db):
+    """Test get_image_width returns None when no image is set."""
+    from .factories import PostContentFactory, PostFactory
+
+    post = PostFactory(main_image=None)
+    post_content = PostContentFactory(post=post)
+
+    assert post.get_image_width() is None
+    assert post_content.get_image_width() is None
+
+
+@pytest.mark.django_db
+def test_get_image_height_no_image(db):
+    """Test get_image_height returns None when no image is set."""
+    from .factories import PostContentFactory, PostFactory
+
+    post = PostFactory(main_image=None)
+    post_content = PostContentFactory(post=post)
+
+    assert post.get_image_height() is None
+    assert post_content.get_image_height() is None
+
+
+@pytest.mark.django_db
+def test_get_image_full_url_with_image(db):
+    """Test get_image_full_url returns correct URL when image is set."""
+    from io import BytesIO
+
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from filer.models import Image
+    from PIL import Image as PILImage
+
+    from .factories import PostContentFactory, PostFactory
+
+    # Create a simple test image
+    image_file = BytesIO()
+    image = PILImage.new("RGB", (800, 600), color="red")
+    image.save(image_file, "JPEG")
+    image_file.seek(0)
+
+    uploaded_file = SimpleUploadedFile(
+        name="test_image.jpg",
+        content=image_file.read(),
+        content_type="image/jpeg",
+    )
+
+    # Create a filer Image object
+    filer_image = Image.objects.create(
+        file=uploaded_file,
+        original_filename="test_image.jpg",
+    )
+
+    post = PostFactory(main_image=filer_image)
+    post_content = PostContentFactory(post=post)
+
+    # Mock build_absolute_uri for testing
+    # The method should return a non-empty string with the image path
+    def mock_build_absolute_uri(path):
+        return f"http://example.com{path}"
+
+    post.build_absolute_uri = mock_build_absolute_uri
+    post_content.build_absolute_uri = mock_build_absolute_uri
+
+    # Without META_IMAGE_SIZE setting, should return the original image URL
+    url = post.get_image_full_url()
+    assert url != ""
+    assert "test_image" in url
+    assert url.startswith("http")  # build_absolute_uri should add domain
+
+    # PostContent should delegate to Post
+    assert post_content.get_image_full_url() == url
+
+
+@pytest.mark.django_db
+def test_get_image_width_with_image(db):
+    """Test get_image_width returns correct width when image is set."""
+    from io import BytesIO
+
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from filer.models import Image
+    from PIL import Image as PILImage
+
+    from .factories import PostContentFactory, PostFactory
+
+    # Create a test image with specific dimensions
+    image_file = BytesIO()
+    image = PILImage.new("RGB", (800, 600), color="blue")
+    image.save(image_file, "JPEG")
+    image_file.seek(0)
+
+    uploaded_file = SimpleUploadedFile(
+        name="test_width.jpg",
+        content=image_file.read(),
+        content_type="image/jpeg",
+    )
+
+    # Create a filer Image object
+    filer_image = Image.objects.create(
+        file=uploaded_file,
+        original_filename="test_width.jpg",
+    )
+
+    post = PostFactory(main_image=filer_image)
+    post_content = PostContentFactory(post=post)
+
+    # Without META_IMAGE_SIZE setting, should return the original image width
+    assert post.get_image_width() == 800
+    assert post_content.get_image_width() == 800
+
+
+@pytest.mark.django_db
+def test_get_image_height_with_image(db):
+    """Test get_image_height returns correct height when image is set."""
+    from io import BytesIO
+
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from filer.models import Image
+    from PIL import Image as PILImage
+
+    from .factories import PostContentFactory, PostFactory
+
+    # Create a test image with specific dimensions
+    image_file = BytesIO()
+    image = PILImage.new("RGB", (800, 600), color="green")
+    image.save(image_file, "JPEG")
+    image_file.seek(0)
+
+    uploaded_file = SimpleUploadedFile(
+        name="test_height.jpg",
+        content=image_file.read(),
+        content_type="image/jpeg",
+    )
+
+    # Create a filer Image object
+    filer_image = Image.objects.create(
+        file=uploaded_file,
+        original_filename="test_height.jpg",
+    )
+
+    post = PostFactory(main_image=filer_image)
+    post_content = PostContentFactory(post=post)
+
+    # Without META_IMAGE_SIZE setting, should return the original image height
+    assert post.get_image_height() == 600
+    assert post_content.get_image_height() == 600
+
+
+@pytest.mark.django_db
+def test_get_image_methods_with_thumbnail_settings(db, settings):
+    """Test image methods with META_IMAGE_SIZE setting configured."""
+    from io import BytesIO
+
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from filer.models import Image
+    from PIL import Image as PILImage
+
+    from .factories import PostContentFactory, PostFactory
+
+    # Configure META_IMAGE_SIZE setting to create thumbnails
+    # Set both possible setting names to ensure it works
+    settings.STORIES_META_IMAGE_SIZE = {"size": (400, 300), "crop": True}
+    settings.DJANGOCMS_BLOG_META_IMAGE_SIZE = {"size": (400, 300), "crop": True}
+
+    # Create a test image larger than the thumbnail size
+    image_file = BytesIO()
+    image = PILImage.new("RGB", (800, 600), color="yellow")
+    image.save(image_file, "JPEG")
+    image_file.seek(0)
+
+    uploaded_file = SimpleUploadedFile(
+        name="test_thumbnail.jpg",
+        content=image_file.read(),
+        content_type="image/jpeg",
+    )
+
+    # Create a filer Image object
+    filer_image = Image.objects.create(
+        file=uploaded_file,
+        original_filename="test_thumbnail.jpg",
+    )
+
+    post = PostFactory(main_image=filer_image)
+    post_content = PostContentFactory(post=post)
+
+    # Mock build_absolute_uri for testing
+    def mock_build_absolute_uri(path):
+        return f"http://example.com{path}"
+
+    post.build_absolute_uri = mock_build_absolute_uri
+    post_content.build_absolute_uri = mock_build_absolute_uri
+
+    # With META_IMAGE_SIZE setting, should use thumbnail dimensions
+    url = post.get_image_full_url()
+    assert url != ""
+    assert url.startswith("http")
+
+    # Thumbnail dimensions should be used
+    width = post.get_image_width()
+    height = post.get_image_height()
+    assert width == 400
+    assert height == 300
+
+    # PostContent should return same values
+    assert post_content.get_image_width() == 400
+    assert post_content.get_image_height() == 300
+    assert post_content.get_image_full_url() == url
+
+
+@pytest.mark.django_db
+def test_get_image_methods_different_image_formats(db):
+    """Test image methods work with different image formats."""
+    from io import BytesIO
+
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from filer.models import Image
+    from PIL import Image as PILImage
+
+    from .factories import PostFactory
+
+    # Mock build_absolute_uri for testing
+    def mock_build_absolute_uri(path):
+        return f"http://example.com{path}"
+
+    # Test with PNG format
+    png_file = BytesIO()
+    png_image = PILImage.new("RGBA", (400, 300), color=(255, 0, 0, 128))
+    png_image.save(png_file, "PNG")
+    png_file.seek(0)
+
+    png_uploaded = SimpleUploadedFile(
+        name="test.png",
+        content=png_file.read(),
+        content_type="image/png",
+    )
+
+    filer_png = Image.objects.create(
+        file=png_uploaded,
+        original_filename="test.png",
+    )
+
+    post_png = PostFactory(main_image=filer_png)
+    post_png.build_absolute_uri = mock_build_absolute_uri
+    assert post_png.get_image_full_url() != ""
+    assert post_png.get_image_width() == 400
+    assert post_png.get_image_height() == 300
+
+    # Test with GIF format
+    gif_file = BytesIO()
+    gif_image = PILImage.new("RGB", (200, 150), color="blue")
+    gif_image.save(gif_file, "GIF")
+    gif_file.seek(0)
+
+    gif_uploaded = SimpleUploadedFile(
+        name="test.gif",
+        content=gif_file.read(),
+        content_type="image/gif",
+    )
+
+    filer_gif = Image.objects.create(
+        file=gif_uploaded,
+        original_filename="test.gif",
+    )
+
+    post_gif = PostFactory(main_image=filer_gif)
+    post_gif.build_absolute_uri = mock_build_absolute_uri
+    assert post_gif.get_image_full_url() != ""
+    assert post_gif.get_image_width() == 200
+    assert post_gif.get_image_height() == 150

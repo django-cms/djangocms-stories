@@ -3,7 +3,6 @@ from filer.models import ThumbnailOption
 
 
 @pytest.fixture
-@pytest.mark.django_db
 def default_full(db):
     return ThumbnailOption.objects.using(db).create(
         name="Story thumbnail",
@@ -15,7 +14,6 @@ def default_full(db):
 
 
 @pytest.fixture
-@pytest.mark.django_db
 def default_thumbnail(db):
     return ThumbnailOption.objects.using(db).create(
         name="Story image",

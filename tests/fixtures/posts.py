@@ -3,7 +3,6 @@ from django.apps import apps
 
 
 @pytest.fixture
-@pytest.mark.django_db
 def post(db, default_config):
     from djangocms_stories.models import Post
 
@@ -13,7 +12,6 @@ def post(db, default_config):
 
 
 @pytest.fixture
-@pytest.mark.django_db
 def post_content(db, post, admin_user):
     from djangocms_stories.models import PostContent
 

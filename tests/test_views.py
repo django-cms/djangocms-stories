@@ -25,6 +25,9 @@ def test_post_detail_view(client, admin_user, post_content, assert_html_in_respo
     assert_html_in_response(
         f"<h4>{related_post.subtitle}</h4>", response
     )  # Subtitle appears in the related posts section
+    # meta:
+    assert_html_in_response(f'<meta property="og:title" content="{post_content.meta_title}">', response)
+    assert_html_in_response(f'<meta name="description" content="{post_content.meta_description}">', response)
 
 
 @pytest.mark.django_db
@@ -205,6 +208,9 @@ def test_post_category_view(client, admin_user, default_config):
         absolute_url = post_content.get_absolute_url()
         assert f'<article id="post-{post_content.slug}" class="post-item">' in content
         assert f'<h3><a href="{absolute_url}">{post_content.title}</a></h3>' in content
+    # meta:
+    assert f'<meta property="og:title" content="{category.name}">' in content
+    assert f'<meta name="description" content="{category.meta_description}">' in content
 
 
 @pytest.mark.django_db

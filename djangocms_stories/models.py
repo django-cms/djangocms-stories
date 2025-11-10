@@ -149,12 +149,15 @@ class PostCategory(PostMetaMixin, ModelMeta, TranslatableModel):
 
     _metadata = {
         "title": "get_title",
+        "og_title": "get_title",
+        "twitter_title": "get_title",
+        "schemaorg_title": "get_title",
         "description": "get_description",
         "og_description": "get_description",
         "twitter_description": "get_description",
         "schemaorg_description": "get_description",
         "schemaorg_type": "get_meta_attribute",
-        "locale": "get_locale",
+        "locale": "get_current_language",
         "object_type": "get_meta_attribute",
         "og_type": "get_meta_attribute",
         "og_app_id": "get_meta_attribute",
@@ -332,35 +335,6 @@ class Post(models.Model):
 
     objects = GenericDateTaggedManager()
 
-    _metadata = {
-        "title": "get_title",
-        "description": "get_description",
-        "keywords": "get_keywords",
-        "og_description": "get_description",
-        "twitter_description": "get_description",
-        "schemaorg_description": "get_description",
-        "locale": "get_locale",
-        "image": "get_image_full_url",
-        "image_width": "get_image_width",
-        "image_height": "get_image_height",
-        "object_type": "get_meta_attribute",
-        "og_type": "get_meta_attribute",
-        "og_app_id": "get_meta_attribute",
-        "og_profile_id": "get_meta_attribute",
-        "og_publisher": "get_meta_attribute",
-        "og_author_url": "get_meta_attribute",
-        "og_author": "get_meta_attribute",
-        "twitter_type": "get_meta_attribute",
-        "twitter_site": "get_meta_attribute",
-        "twitter_author": "get_meta_attribute",
-        "schemaorg_type": "get_meta_attribute",
-        "published_time": "date_published",
-        "modified_time": "date_modified",
-        "expiration_time": "date_published_end",
-        "tag": "get_tags",
-        "url": "get_absolute_url",
-    }
-
     class Meta:
         verbose_name = _("post")
         verbose_name_plural = _("posts")
@@ -512,13 +486,6 @@ class Post(models.Model):
                 return get_thumbnailer(self.main_image).get_thumbnail(thumbnail_options).height
             return self.main_image.height
 
-    def get_tags(self):
-        """
-        Returns the list of object tags as comma separated list
-        """
-        taglist = [tag.name for tag in self.tags.all()]
-        return ",".join(taglist)
-
     def get_author(self):
         """
         Return the author (user) objects
@@ -602,6 +569,38 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
     # objects = GenericDateTaggedManager()
     # admin_manager = AdminDateTaggedManager()
 
+    _metadata = {
+        "title": "get_title",
+        "og_title": "get_title",
+        "twitter_title": "get_title",
+        "schemaorg_title": "get_title",
+        "description": "get_description",
+        "keywords": "get_keywords",
+        "og_description": "get_description",
+        "twitter_description": "get_description",
+        "schemaorg_description": "get_description",
+        "locale": "language",
+        "image": "get_image_full_url",
+        "image_width": "get_image_width",
+        "image_height": "get_image_height",
+        "object_type": "get_meta_attribute",
+        "og_type": "get_meta_attribute",
+        "og_app_id": "get_meta_attribute",
+        "og_profile_id": "get_meta_attribute",
+        "og_publisher": "get_meta_attribute",
+        "og_author_url": "get_meta_attribute",
+        "og_author": "get_meta_attribute",
+        "twitter_type": "get_meta_attribute",
+        "twitter_site": "get_meta_attribute",
+        "twitter_author": "get_meta_attribute",
+        "schemaorg_type": "get_meta_attribute",
+        "published_time": "date_published",
+        "modified_time": "date_modified",
+        "expiration_time": "date_published_end",
+        "tag": "get_tags",
+        "url": "get_absolute_url",
+    }
+
     @property
     def author(self):
         return self.post.author
@@ -613,6 +612,10 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
     @property
     def date_published_end(self):
         return self.post.date_published_end
+
+    @property
+    def date_modified(self):
+        return self.post.date_modified
 
     @property
     def app_config(self):
@@ -652,6 +655,57 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
             return f"{folder}/{self.structure_template}"
         else:
             return f"{folder}/{self.no_structure_template}"
+
+    def get_title(self):
+        title = self.meta_title
+        if not title:
+            title = self.title or _("No title")
+        return title.strip()
+
+    def get_keywords(self):
+        """
+        Returns the list of keywords (as python list)
+        :return: list
+        """
+        keywords = self.meta_keywords.strip()
+        if "".join(keywords) == "":
+            return []
+        return [keyword.strip() for keyword in keywords.split(",")]
+
+    def get_description(self):
+        description = self.meta_description
+        if not description:
+            description = self.abstract
+        return strip_tags(description).strip()
+
+    def get_image_full_url(self):
+        if self.post.main_image:
+            if thumbnail_options := get_setting("META_IMAGE_SIZE"):
+                thumbnail_url = get_thumbnailer(self.post.main_image).get_thumbnail(thumbnail_options).url
+                return self.build_absolute_uri(thumbnail_url)
+            return self.build_absolute_uri(self.post.main_image.url)
+        return ""
+
+    def get_image_width(self):
+        if self.post.main_image:
+            thumbnail_options = get_setting("META_IMAGE_SIZE")
+            if thumbnail_options:
+                return get_thumbnailer(self.post.main_image).get_thumbnail(thumbnail_options).width
+            return self.post.main_image.width
+
+    def get_image_height(self):
+        if self.post.main_image:
+            thumbnail_options = get_setting("META_IMAGE_SIZE")
+            if thumbnail_options:
+                return get_thumbnailer(self.post.main_image).get_thumbnail(thumbnail_options).height
+            return self.post.main_image.height
+
+    def get_tags(self):
+        """
+        Returns the list of object tags as comma separated list
+        """
+        taglist = [tag.name for tag in self.post.tags.all()]
+        return ",".join(taglist)
 
     def __str__(self):
         return self.title or _("Untitled")

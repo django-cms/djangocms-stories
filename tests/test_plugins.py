@@ -9,7 +9,6 @@ from .utils import publish_if_necessary
 
 
 @pytest.fixture
-@pytest.mark.django_db
 def page_content(admin_user):
     from cms import api
     from cms.models import PageContent
@@ -34,7 +33,6 @@ def page_content(admin_user):
 
 
 @pytest.fixture
-@pytest.mark.django_db
 def placeholder(page_content):
     from cms.api import add_plugin
     from cms.models import Placeholder
