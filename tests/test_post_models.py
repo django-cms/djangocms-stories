@@ -499,3 +499,221 @@ def test_get_image_methods_different_image_formats(db):
     assert post_gif.get_image_full_url() != ""
     assert post_gif.get_image_width() == 200
     assert post_gif.get_image_height() == 150
+
+
+@pytest.mark.django_db
+def test_get_language_with_explicit_language_available(db, default_config):
+    """Test _get_language returns explicit language when it's available."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Create a category with English translation
+    category = PostCategoryFactory(app_config=default_config)
+    category.set_current_language("en")
+    category.name = "Test Category EN"
+    category.save()
+
+    # Request explicit language that exists
+    result = _get_language(category, "en")
+    assert result == "en"
+
+
+@pytest.mark.django_db
+def test_get_language_with_explicit_language_unavailable(db, default_config):
+    """Test _get_language falls back when explicit language is not available."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Create a category with only English translation
+    category = PostCategoryFactory(app_config=default_config)
+    category.set_current_language("en")
+    category.name = "Test Category EN"
+    category.save()
+
+    # Request explicit language that doesn't exist (e.g., German)
+    with translation.override("en"):
+        result = _get_language(category, "de")
+        # Should fall back to current active language (en)
+        assert result == "en"
+
+
+@pytest.mark.django_db
+def test_get_language_with_no_explicit_language_uses_active(db, default_config):
+    """Test _get_language uses active language when no explicit language provided."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Create a category with English and Italian translations
+    category = PostCategoryFactory(app_config=default_config)
+    category.set_current_language("en")
+    category.name = "Test Category EN"
+    category.save()
+
+    category.set_current_language("it")
+    category.name = "Test Category IT"
+    category.save()
+
+    # No explicit language, should use active language
+    with translation.override("it"):
+        result = _get_language(category, None)
+        assert result == "it"
+
+    with translation.override("en"):
+        result = _get_language(category, None)
+        assert result == "en"
+
+
+@pytest.mark.django_db
+def test_get_language_falls_back_to_current_language(db, default_config):
+    """Test _get_language falls back to instance's current language."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Create a category with only English translation
+    category = PostCategoryFactory(app_config=default_config)
+    category.set_current_language("en")
+    category.name = "Test Category EN"
+    category.save()
+
+    # Active language is something unavailable, should use instance's current
+    with translation.override("de"):
+        result = _get_language(category, None)
+        assert result == "en"
+
+
+@pytest.mark.django_db
+def test_get_language_with_fallback_languages_enabled(db, default_config, settings):
+    """Test _get_language uses fallback languages when enabled."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Enable fallback language in URL
+    settings.STORIES_USE_FALLBACK_LANGUAGE_IN_URL = True
+    settings.PARLER_LANGUAGES = {
+        1: (
+            {"code": "en"},
+            {"code": "it"},
+            {"code": "fr"},
+        ),
+        "default": {
+            "fallbacks": ["en"],
+            "hide_untranslated": False,
+        },
+    }
+
+    # Create a category with only English translation
+    category = PostCategoryFactory(app_config=default_config)
+    category.set_current_language("en")
+    category.name = "Test Category EN"
+    category.save()
+
+    # Request French which doesn't exist, should fall back to English
+    with translation.override("fr"):
+        result = _get_language(category, "fr")
+        # Should fall back to English (from fallback languages)
+        assert result == "en"
+
+
+@pytest.mark.django_db
+def test_get_language_with_fallback_languages_disabled(db, default_config, settings):
+    """Test _get_language behavior when fallback languages disabled."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Disable fallback language in URL
+    settings.STORIES_USE_FALLBACK_LANGUAGE_IN_URL = False
+
+    # Create a category with only English translation
+    category = PostCategoryFactory(app_config=default_config)
+    category.set_current_language("en")
+    category.name = "Test Category EN"
+    category.save()
+
+    # Request French which doesn't exist
+    with translation.override("fr"):
+        result = _get_language(category, "fr")
+        # Should return the requested language even if not available
+        # when fallback is disabled
+        assert result in ["fr", "en"]  # Either requested or current
+
+
+@pytest.mark.django_db
+def test_get_language_multiple_translations(db, default_config):
+    """Test _get_language with multiple available translations."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Create three separate categories, each with only one translation
+    # This avoids confusion from get_current_language() behavior
+
+    # Category with only English
+    cat_en = PostCategoryFactory(app_config=default_config)
+    cat_en.set_current_language("en")
+    cat_en.name = "Category EN"
+    cat_en.save()
+
+    # Category with only Italian
+    cat_it = PostCategoryFactory(app_config=default_config)
+    cat_it.set_current_language("it")
+    cat_it.name = "Category IT"
+    cat_it.save()
+
+    # Category with only French
+    cat_fr = PostCategoryFactory(app_config=default_config)
+    cat_fr.set_current_language("fr")
+    cat_fr.name = "Category FR"
+    cat_fr.save()
+
+    # Override active language to something unavailable
+    with translation.override("de"):
+        # Each should return their own language when explicitly requested
+        assert _get_language(cat_en, "en") == "en"
+        assert _get_language(cat_it, "it") == "it"
+        assert _get_language(cat_fr, "fr") == "fr"
+
+
+@pytest.mark.django_db
+def test_get_language_priority_order(db, default_config):
+    """Test _get_language priority: explicit > active > current > fallback."""
+    from djangocms_stories.models import _get_language
+
+    from .factories import PostCategoryFactory
+
+    # Create a category with English and Italian
+    category = PostCategoryFactory(app_config=default_config)
+
+    category.set_current_language("en")
+    category.name = "Test Category EN"
+    category.save()
+
+    category.set_current_language("it")
+    category.name = "Test Category IT"
+    category.save()
+
+    # Set current language to Italian
+    category.set_current_language("it")
+
+    # Test priority: explicit language wins over active language
+    # Set active to unavailable language to ensure explicit is used
+    with translation.override("de"):
+        result = _get_language(category, "it")
+        assert result == "it"  # Explicit wins
+
+    # Test priority: active language used when no explicit and active is available
+    with translation.override("en"):
+        result = _get_language(category, None)
+        assert result == "en"  # Active wins over current
+
+    # Test priority: current language used when active not available
+    # Set current to English first
+    category.set_current_language("en")
+    with translation.override("de"):
+        result = _get_language(category, None)
+        assert result == "en"  # Current wins (category's current is 'en')

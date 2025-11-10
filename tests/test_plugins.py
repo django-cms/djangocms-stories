@@ -284,3 +284,197 @@ def test_blog_archive_plugin(placeholder, admin_client, simple_w_placeholder, as
 
     assert_html_in_response(f'<a href="/en/blog/{post.date_featured.year}/{post.date_featured.month}/">', response)
     assert_html_in_response("<span>( 1 article )</span>", response)
+
+
+@pytest.mark.django_db
+def test_latest_posts_plugin_str(placeholder, simple_w_placeholder):
+    """Test __str__ method of LatestPostsPlugin."""
+    from cms import api
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogLatestEntriesPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+        latest_posts=10,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    assert str(instance) == "10 latest posts by tag"
+
+
+@pytest.mark.django_db
+def test_latest_posts_plugin_copy_relations(placeholder, simple_w_placeholder):
+    """Test copy_relations method of LatestPostsPlugin."""
+    from cms import api
+
+    from .factories import PostCategoryFactory, PostContentFactory
+
+    # Create categories and posts
+    categories = PostCategoryFactory.create_batch(3, app_config=simple_w_placeholder)
+    PostContentFactory.create_batch(5, language="en", post__app_config=simple_w_placeholder)
+
+    # Create original plugin with tags and categories
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogLatestEntriesPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+        latest_posts=5,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    instance.tags.add("test-tag", "another-tag", "third-tag")
+    instance.categories.add(*categories)
+
+    # Verify original instance has tags and categories
+    assert instance.tags.count() == 3
+    assert instance.categories.count() == 3
+
+    # Create new plugin and copy relations
+    new_plugin = api.add_plugin(
+        placeholder,
+        "BlogLatestEntriesPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+        latest_posts=5,
+    )
+    new_instance = new_plugin.get_plugin_instance()[0]
+    new_instance.copy_relations(instance)
+
+    # Verify new instance has same tags and categories
+    assert new_instance.tags.count() == 3
+    assert set(new_instance.tags.names()) == set(instance.tags.names())
+    assert new_instance.categories.count() == 3
+    assert set(new_instance.categories.all()) == set(instance.categories.all())
+
+
+@pytest.mark.django_db
+def test_author_entries_plugin_str(placeholder, simple_w_placeholder):
+    """Test __str__ method of AuthorEntriesPlugin."""
+    from cms import api
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogAuthorPostsPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+        latest_posts=7,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    assert str(instance) == "7 latest entries by author"
+
+
+@pytest.mark.django_db
+def test_author_entries_plugin_copy_relations(placeholder, simple_w_placeholder, admin_user):
+    """Test copy_relations method of AuthorEntriesPlugin."""
+    from cms import api
+    from django.contrib.auth import get_user_model
+
+    from .factories import PostContentFactory
+
+    User = get_user_model()
+
+    # Create additional users
+    users = [User.objects.create_user(username=f"user{i}", email=f"user{i}@example.com") for i in range(3)]
+    users.append(admin_user)
+
+    # Create posts by different authors (set author on Post, not PostContent)
+    for user in users:
+        PostContentFactory.create_batch(2, language="en", post__app_config=simple_w_placeholder, post__author=user)
+
+    # Create original plugin with authors
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogAuthorPostsPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+        latest_posts=5,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    instance.authors.add(*users[:2])
+
+    # Verify original instance has authors
+    assert instance.authors.count() == 2
+
+    # Create new plugin and copy relations
+    new_plugin = api.add_plugin(
+        placeholder,
+        "BlogAuthorPostsPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+        latest_posts=5,
+    )
+    new_instance = new_plugin.get_plugin_instance()[0]
+    new_instance.copy_relations(instance)
+
+    # Verify new instance has same authors
+    assert new_instance.authors.count() == 2
+    assert set(new_instance.authors.all()) == set(instance.authors.all())
+
+
+@pytest.mark.django_db
+def test_featured_posts_plugin_str(placeholder, simple_w_placeholder):
+    """Test __str__ method of FeaturedPostsPlugin."""
+    from cms import api
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogFeaturedPostsPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    assert str(instance) == "Featured posts"
+
+
+@pytest.mark.django_db
+def test_featured_posts_plugin_copy_relations(placeholder, simple_w_placeholder):
+    """Test copy_relations method of FeaturedPostsPlugin."""
+    from cms import api
+
+    from .factories import PostContentFactory
+
+    # Create posts
+    batch = PostContentFactory.create_batch(5, language="en", post__app_config=simple_w_placeholder)
+    posts = [post_content.post for post_content in batch]
+
+    # Create original plugin with featured posts
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogFeaturedPostsPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    instance.posts.add(*posts[:3])
+
+    # Verify original instance has posts
+    assert instance.posts.count() == 3
+
+    # Create new plugin and copy relations
+    new_plugin = api.add_plugin(
+        placeholder,
+        "BlogFeaturedPostsPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    new_instance = new_plugin.get_plugin_instance()[0]
+    new_instance.copy_relations(instance)
+
+    # Verify new instance has same posts
+    assert new_instance.posts.count() == 3
+    assert set(new_instance.posts.all()) == set(instance.posts.all())
+
+
+@pytest.mark.django_db
+def test_generic_blog_plugin_str(placeholder, simple_w_placeholder):
+    """Test __str__ method of GenericBlogPlugin."""
+    from cms import api
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogTagsPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    assert str(instance) == "generic blog plugin"
