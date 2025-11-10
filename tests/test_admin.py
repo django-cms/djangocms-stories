@@ -1103,7 +1103,7 @@ def test_postadmin_save_model_integration(admin_client, admin_user, default_conf
         "author": admin_user.pk,  # Set author explicitly
         "content__language": "en",
         "content__title": "Updated Title",
-        "content__slug": post.postcontent_set.first().slug,
+        "content__slug": post.postcontent_set(manager="admin_manager").first().slug,
         "content__post_text": "<p>Updated content</p>",
         "date_published_0": "2025-11-10",
         "date_published_1": "12:00:00",
