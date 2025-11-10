@@ -821,6 +821,105 @@ def test_config_admin_save_model_menu_structure_change(admin_client, default_con
     assert response.status_code in [200, 302]
 
 
+@pytest.mark.django_db
+def test_config_admin_save_model_menu_structure_clears_cache(admin_user, default_config):
+    """Test that save_model clears menu cache when menu_structure changes"""
+    from djangocms_stories.admin import ConfigAdmin
+    from djangocms_stories.models import StoriesConfig
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from unittest.mock import Mock, patch
+
+    admin_instance = ConfigAdmin(StoriesConfig, site)
+    request = RequestFactory().post("/")
+    request.user = admin_user
+
+    # Mock form with changed_data including menu_structure
+    form = Mock()
+    form.changed_data = ["config.menu_structure"]
+
+    # Mock menu_pool.clear - patch where it's imported
+    with patch("menus.menu_pool.menu_pool") as mock_menu_pool:
+        admin_instance.save_model(request, default_config, form, change=True)
+        # Verify menu_pool.clear was called with all=True
+        mock_menu_pool.clear.assert_called_with(all=True)
+
+
+@pytest.mark.django_db
+def test_config_admin_save_model_urlconf_change_triggers_restart(admin_user, default_config):
+    """Test that save_model triggers restart when urlconf changes"""
+    from djangocms_stories.admin import ConfigAdmin
+    from djangocms_stories.models import StoriesConfig
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from unittest.mock import Mock, patch
+
+    admin_instance = ConfigAdmin(StoriesConfig, site)
+    request = RequestFactory().post("/")
+    request.user = admin_user
+
+    # Mock form with changed_data including urlconf
+    form = Mock()
+    form.changed_data = ["config.urlconf"]
+
+    # Mock trigger_restart - patch where it's imported
+    with patch("cms.signals.apphook.trigger_restart") as mock_trigger_restart:
+        admin_instance.save_model(request, default_config, form, change=True)
+        # Verify trigger_restart was called
+        mock_trigger_restart.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_config_admin_save_model_no_relevant_changes(admin_user, default_config):
+    """Test that save_model calls super().save_model even without menu/urlconf changes"""
+    from djangocms_stories.admin import ConfigAdmin
+    from djangocms_stories.models import StoriesConfig
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from unittest.mock import Mock
+
+    admin_instance = ConfigAdmin(StoriesConfig, site)
+    request = RequestFactory().post("/")
+    request.user = admin_user
+
+    # Mock form with changed_data NOT including menu_structure or urlconf
+    form = Mock()
+    form.changed_data = ["app_title"]
+
+    # Just verify it completes without error (super().save_model is called)
+    result = admin_instance.save_model(request, default_config, form, change=True)
+    # save_model returns None, just verify no exception was raised
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_config_admin_save_model_both_changes(admin_user, default_config):
+    """Test that save_model handles both menu_structure and urlconf changes"""
+    from djangocms_stories.admin import ConfigAdmin
+    from djangocms_stories.models import StoriesConfig
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from unittest.mock import Mock, patch
+
+    admin_instance = ConfigAdmin(StoriesConfig, site)
+    request = RequestFactory().post("/")
+    request.user = admin_user
+
+    # Mock form with both changed
+    form = Mock()
+    form.changed_data = ["config.menu_structure", "config.urlconf"]
+
+    # Mock both
+    with (
+        patch("menus.menu_pool.menu_pool") as mock_menu_pool,
+        patch("cms.signals.apphook.trigger_restart") as mock_trigger_restart,
+    ):
+        admin_instance.save_model(request, default_config, form, change=True)
+        # Verify both were called
+        mock_menu_pool.clear.assert_called_with(all=True)
+        mock_trigger_restart.assert_called_once()
+
+
 def test_postadmin_get_urls_custom():
     """Test PostAdmin adds custom URLs"""
     from djangocms_stories.admin import PostAdmin
