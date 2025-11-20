@@ -126,6 +126,11 @@ class StoriesConfigForm(TranslatableModelForm):
         """
         Initialize the StoriesConfigForm instance with defaults and choices.
         """
+        if "instance" in kwargs and kwargs["instance"]:
+            # Editing an existing instance; no need to set initial defaults
+            super().__init__(*args, **kwargs)
+            return
+
         from .cms_appconfig import config_defaults
 
         kwargs.setdefault("initial", {})
