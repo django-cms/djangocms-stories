@@ -2,6 +2,11 @@
 Changelog
 =========
 
+0.7.5 (2025-11-21)
+------------------
+
+* fix: Stories config form instead of current values always presented initial values 
+
 0.7.4 (2025-09-17)
 ------------------
 
