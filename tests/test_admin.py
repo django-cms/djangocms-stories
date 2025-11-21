@@ -1,4 +1,7 @@
 import pytest
+
+from django import VERSION as DJANGO_VERSION
+
 from django.contrib.auth import get_user_model
 from django.test import Client
 from django.urls import reverse
@@ -207,9 +210,12 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     )
 
     # Both post and post content fields are present
-    assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
+    expected_tag = "label" if DJANGO_VERSION <= (6, 0) else "legend"
     assert_html_in_response(
-        '<label class="required" for="id_content__title">Title (English):</label>', response
+        f'<{expected_tag} class="inline" for="id_author">Author:</{expected_tag}>', response
+    )  # Post author field
+    assert_html_in_response(
+        f'<{expected_tag} class="required" for="id_content__title">Title (English):</{expected_tag}>', response
     )  # PostContent title field
 
 
