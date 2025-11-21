@@ -215,7 +215,7 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
         f'<{expected_tag} class="inline" for="id_author">Author:</{expected_tag}>', response
     )  # Post author field
     assert_html_in_response(
-        f'<{expected_tag} class="required" for="id_content__title">Title (English):</{expected_tag}>', response
+        '<label class="required" for="id_content__title">Title (English):</label>', response
     )  # PostContent title field
 
 
