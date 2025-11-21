@@ -24,7 +24,6 @@ from easy_thumbnails.files import get_thumbnailer
 from filer.fields.image import FilerImageField
 from filer.models import ThumbnailOption
 from menus.menu_pool import menu_pool
-from meta.models import ModelMeta
 from parler.models import TranslatableModel, TranslatedFields
 from sortedm2m.fields import SortedManyToManyField
 from taggit_autosuggest.managers import TaggableManager
@@ -33,6 +32,22 @@ from .cms_appconfig import StoriesConfig
 from .fields import slugify
 from .managers import AdminManager, GenericDateTaggedManager, SiteManager
 from .settings import STORIES_PLUGIN_TEMPLATE_FOLDERS as DEFAULT_TEMPLATE_FOLDERS, get_setting
+
+if apps.is_installed("meta"):
+    from meta.models import ModelMeta
+else:
+
+    class ModelMeta:
+        """
+        Stub class if django-meta is not installed
+        """
+
+        def as_meta(self):
+            return None
+
+        def build_absolute_uri(self, url):
+            return url
+
 
 STORIES_CURRENT_POST_IDENTIFIER = get_setting("CURRENT_POST_IDENTIFIER")
 STORIES_CURRENT_NAMESPACE = get_setting("CURRENT_NAMESPACE")

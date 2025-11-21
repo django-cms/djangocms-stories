@@ -1,4 +1,3 @@
 -r base.txt
 Django~=4.2
-# django-cms~=5.0
-git+https://github.com/django-cms/django-cms.git@release/5.0.x#egg=django-cms
+django-cms~=5.0

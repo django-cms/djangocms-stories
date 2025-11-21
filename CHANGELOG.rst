@@ -5,7 +5,8 @@ Changelog
 0.7.5 (2025-11-21)
 ------------------
 
-* fix: Stories config form instead of current values always presented inital values 
+* fix: Stories config form instead of current values always presented inital values
+* fix: Allow to run without django-meta installed
 
 0.7.4 (2025-09-17)
 ------------------
