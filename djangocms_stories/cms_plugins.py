@@ -25,7 +25,7 @@ class StoriesPlugin(CMSPluginBase):
         """
         fields = self.fields
         if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1 and "template_folder" not in fields:
-            fields.append("template_folder")
+            fields = fields + ["template_folder"]
         return fields
 
     def get_render_template(self, context, instance, placeholder):
