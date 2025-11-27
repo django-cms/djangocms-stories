@@ -306,29 +306,6 @@ class ModelAppHookConfig:
                     get["language"] = request.POST.get("language", get_language_from_request(request))
                     request.GET = get
                     request.method = "GET"  # Force POST to skip app_config form next time
-            # Normalize invalid language codes for POST submissions of the actual add form
-            if request.method == "POST" and "content__title" in request.POST:
-                # Build set of valid language codes
-                valid_codes = set()
-                try:
-                    site_id = getattr(settings, "SITE_ID", None)
-                    parler_langs = getattr(settings, "PARLER_LANGUAGES", {})
-                    site_langs = parler_langs.get(site_id) or parler_langs.get(None) or []
-                    for entry in site_langs:
-                        code = entry.get("code") if isinstance(entry, dict) else None
-                        if code:
-                            valid_codes.add(code)
-                except Exception:
-                    pass
-                if not valid_codes:
-                    # Fallback to Django LANGUAGES setting
-                    for code, _name in getattr(settings, "LANGUAGES", []):
-                        valid_codes.add(code)
-                post_mutable = request.POST.copy()
-                lang = post_mutable.get("content__language")
-                if lang and valid_codes and lang not in valid_codes:
-                    post_mutable["content__language"] = get_language_from_request(request)
-                    request.POST = post_mutable
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 
