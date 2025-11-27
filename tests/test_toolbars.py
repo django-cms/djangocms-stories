@@ -216,8 +216,18 @@ def test_get_published_post_version_not_postcontent(toolbar_request, mock_toolba
 
 
 @pytest.mark.django_db
-def test_get_published_post_version_with_postcontent(toolbar_request, mock_toolbar, post_content):
+def test_get_published_post_version_with_postcontent(toolbar_request, mock_toolbar, post_content, admin_user):
     """Test _get_published_post_version returns PostContent when matching language exists."""
+    from django.apps import apps
+
+    # If versioning is enabled, publish the post_content
+    if apps.is_installed("djangocms_versioning"):
+        from djangocms_versioning.models import Version
+
+        # Get the version and publish it
+        version = Version.objects.get(object_id=post_content.pk)
+        version.publish(admin_user)
+
     stories_toolbar = StoriesToolbar(toolbar_request, mock_toolbar, False, None)
     stories_toolbar.current_lang = "en"
 
