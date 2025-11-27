@@ -49,7 +49,7 @@ class CategoryAdminForm(ConfigFormBase, TranslatableModelForm):
             config = None
             if getattr(self.instance, "app_config_id", None):
                 qs = qs.filter(app_config__namespace=self.instance.app_config.namespace)
-            elif "app_config" in self.initial:
+            elif self.initial.get("app_config", None):
                 config = StoriesConfig.objects.get(pk=self.initial["app_config"])
             elif self.data.get("app_config", None):
                 config = StoriesConfig.objects.get(pk=self.data["app_config"])
