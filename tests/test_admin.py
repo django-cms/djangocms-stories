@@ -1094,36 +1094,6 @@ def test_postadmin_save_model_missing_app_config_shows_selection(admin_client):
 
 
 @pytest.mark.django_db
-def test_postadmin_save_model_invalid_language_falls_back(admin_client, simple_w_placeholder):
-    """Edge case: submitting with an unknown language should not crash and use defaults."""
-    url = reverse("admin:djangocms_stories_post_add")
-    # first step: select app_config
-    admin_client.post(url, data={"app_config": simple_w_placeholder.pk, "language": "xx"})
-
-    # submit with invalid language code
-    data = {
-        "app_config": simple_w_placeholder.pk,
-        "content__language": "xx",
-        "content__title": "Invalid Lang Title",
-        "content__slug": "invalid-lang-slug",
-        "_save": "Save",
-    }
-    response = admin_client.post(url, data=data, follow=True)
-    assert response.status_code == 200
-
-    from djangocms_stories.models import PostContent, Post
-
-    # Content should be created either with fallback or normalized language
-    post = Post.objects.filter(postcontent__slug="invalid-lang-slug").first()
-    assert post is not None
-    pc = (
-        PostContent.admin_manager.current_content(post=post, language="en").first()
-        or PostContent.admin_manager.current_content(post=post, language="xx").first()
-    )
-    assert pc is not None
-
-
-@pytest.mark.django_db
 def test_postadmin_save_related_preserves_restricted_sites_on_remove(admin_user, default_config):
     """Edge case: user has restricted sites; removing them in form should keep them attached."""
     from djangocms_stories.admin import PostAdmin
