@@ -668,7 +668,7 @@ class PostContentAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
         """Redirect to grouper change view to allow for FrontendEditing of Post Content fields"""
         to_field = request.POST.get(TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
         obj = self.get_object(request, unquote(object_id), to_field)
-        if request.method == "GET":
+        if obj and request.method == "GET":
             return HttpResponseRedirect(admin_reverse("djangocms_stories_post_change", args=[obj.post.pk]))
         raise Http404
 

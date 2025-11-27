@@ -469,7 +469,7 @@ STORIES_ENABLE_THROUGH_TOOLBAR_MENU = False
 Show djangocms-blog toolbar in any page, even when outside the blog apphooks.
 """
 
-STORIES_PLUGIN_MODULE_NAME = _("Blog")
+STORIES_PLUGIN_MODULE_NAME = _("Posts")
 """
 .. _PLUGIN_MODULE_NAME:
 

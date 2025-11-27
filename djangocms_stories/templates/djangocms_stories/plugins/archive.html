@@ -1,4 +1,4 @@
-{% load i18n djangocms_stories %}{% spaceless %}
+{% load i18n l10n djangocms_stories %}{% spaceless %}
 <div class="plugin plugin-blog">
     <h3>{% trans "Archive" %}</h3>
     {% regroup dates by date.year as years %}
@@ -6,7 +6,7 @@
     <ul class="blog-archive">
         {% for year in years %}
         <li{% if year.grouper == current_year %} class="active"{% endif %}>
-            <a href="{% namespace_url 'posts-archive' year=year.grouper namespace=instance.app_config.namespace %}">{{ year.grouper }}</a>
+            <a href="{% namespace_url 'posts-archive' year=year.grouper namespace=instance.app_config.namespace %}">{{ year.grouper|unlocalize }}</a>
             <ul>
                 {% for month in year.list %}
                 <li{% if year.grouper == current_year and month.date.month == current_month %} class="active"{% else %} class="month"{% endif %}>
