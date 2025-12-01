@@ -128,8 +128,7 @@ class StoriesConfigForm(TranslatableModelForm):
         """
         if "instance" in kwargs and kwargs["instance"]:
             # Editing an existing instance; no need to set initial defaults
-            super().__init__(*args, **kwargs)
-            return
+            return super().__init__(*args, **kwargs)
 
         from .cms_appconfig import config_defaults
 
@@ -141,10 +140,5 @@ class StoriesConfigForm(TranslatableModelForm):
         with override(self.language_code):
             kwargs["initial"].setdefault("app_title", force_str(get_setting("AUTO_APP_TITLE")))
             kwargs["initial"].setdefault("object_name", force_str(get_setting("DEFAULT_OBJECT_NAME")))
-
-        if "instance" in kwargs and kwargs["instance"]:
-            # Set current saved value:
-            for field in self._meta.widgets.keys():
-                kwargs["initial"][field] = getattr(kwargs["instance"], field)
 
         super().__init__(*args, **kwargs)
