@@ -14,7 +14,7 @@ from .settings import get_setting
 class StoriesPlugin(CMSPluginBase):
     module = get_setting("PLUGIN_MODULE_NAME")
     form = BlogPluginForm
-    fields = []
+    fields = ["app_config"]
 
     def get_fields(self, request, obj=None):
         """
@@ -24,8 +24,8 @@ class StoriesPlugin(CMSPluginBase):
 
         """
         fields = self.fields
-        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1:
-            fields.append("template_folder")
+        if len(get_setting("PLUGIN_TEMPLATE_FOLDERS")) > 1 and "template_folder" not in fields:
+            fields = fields + ["template_folder"]
         return fields
 
     def get_render_template(self, context, instance, placeholder):
@@ -144,7 +144,6 @@ class BlogTagsPlugin(StoriesPlugin):
     name = get_setting("TAGS_PLUGIN_NAME")
     model = GenericBlogPlugin
     base_render_template = "tags.html"
-    show_add_form = False
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
@@ -163,7 +162,6 @@ class BlogCategoryPlugin(StoriesPlugin):
     name = get_setting("CATEGORY_PLUGIN_NAME")
     model = GenericBlogPlugin
     base_render_template = "categories.html"
-    show_add_form = False
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
@@ -189,7 +187,6 @@ class BlogArchivePlugin(StoriesPlugin):
     name = get_setting("ARCHIVE_PLUGIN_NAME")
     model = GenericBlogPlugin
     base_render_template = "archive.html"
-    show_add_form = False
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""

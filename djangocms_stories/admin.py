@@ -138,12 +138,18 @@ class ModelAppHookConfig:
             if StoriesConfig.objects.count() == 1:
                 return StoriesConfig.objects.first()
             if request.POST.get("app_config", False):
-                return StoriesConfig.objects.get(pk=int(request.POST.get("app_config", False)))
+                try:
+                    return StoriesConfig.objects.get(pk=int(request.POST.get("app_config", False)))
+                except (ValueError, StoriesConfig.DoesNotExist):
+                    return None
             return None
         elif obj and getattr(obj, "app_config", False):
             return getattr(obj, "app_config")
         elif request.GET.get("app_config", False):
-            return StoriesConfig.objects.get(pk=int(request.GET.get("app_config")))
+            try:
+                return StoriesConfig.objects.get(pk=int(request.GET.get("app_config")))
+            except (ValueError, StoriesConfig.DoesNotExist):
+                return None
         return None
 
     def _set_config_defaults(self, request, form, obj=None):
@@ -288,33 +294,19 @@ class ModelAppHookConfig:
                     if request.method == "POST":
                         form = AppConfigForm(request.POST)
                     else:
-                        form = AppConfigForm(initial={"app_config": None, "language": request.GET.get("language")})
+                        form = AppConfigForm(
+                            initial={"app_config": None, "language": get_language_from_request(request)}
+                        )
                     return self.render_app_config_form(request, form)
+                elif request.method == "POST" and "content__title" not in request.POST:
+                    # This is the post from the AppConfigForm, move to opening the actual change form
+                    # Take the provided values (app_config, languages) as initial values for the new form
+                    get = copy.copy(request.GET)  # Make a copy to modify
+                    get["app_config"] = app_config_default.pk
+                    get["language"] = request.POST.get("language", get_language_from_request(request))
+                    request.GET = get
+                    request.method = "GET"  # Force POST to skip app_config form next time
         return super().changeform_view(request, object_id, form_url, extra_context)
-
-    def get_form_x(self, request, obj=None, **kwargs):  # pragma: no cover
-        """
-        Provides a flexible way to get the right form according to the context
-
-        """
-        form = super().get_form(request, obj, **kwargs)
-        if "app_config" not in form.base_fields:
-            return form
-        app_config_default = self._app_config_select(request, obj)
-        if app_config_default:
-            form.base_fields["app_config"].initial = app_config_default
-            get = copy.copy(request.GET)  # Make a copy to modify
-            get["app_config"] = app_config_default.pk
-            request.GET = get
-        elif app_config_default is None and request.method == "GET":
-
-            class InitialForm(form):
-                class Meta(form.Meta):
-                    fields = self.app_config_initial_fields
-
-            form = InitialForm
-        form = self._set_config_defaults(request, form, obj)
-        return form
 
 
 @admin.register(PostCategory)
@@ -668,7 +660,7 @@ class PostContentAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
         """Redirect to grouper change view to allow for FrontendEditing of Post Content fields"""
         to_field = request.POST.get(TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
         obj = self.get_object(request, unquote(object_id), to_field)
-        if request.method == "GET":
+        if obj and request.method == "GET":
             return HttpResponseRedirect(admin_reverse("djangocms_stories_post_change", args=[obj.post.pk]))
         raise Http404
 

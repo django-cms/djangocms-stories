@@ -1091,6 +1091,81 @@ def test_postadmin_save_model_sets_default_author(admin_client, default_config):
 
 
 @pytest.mark.django_db
+def test_postadmin_save_model_missing_app_config_shows_selection(admin_client):
+    """Edge case: calling add without any app_config should show AppConfigForm."""
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert b"app_config" in response.content
+
+
+@pytest.mark.django_db
+def test_postadmin_save_related_preserves_restricted_sites_on_remove(admin_user, default_config):
+    """Edge case: user has restricted sites; removing them in form should keep them attached."""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site as admin_site
+    from django.contrib.sites.models import Site
+    from .factories import PostFactory, PostContentFactory
+
+    site1 = Site.objects.get_current()
+    Site.objects.create(domain="edge-site2.com", name="Edge Site 2")
+
+    post = PostFactory(app_config=default_config)
+    PostContentFactory(post=post, language="en")
+    post.sites.add(site1)
+
+    admin_instance = PostAdmin(Post, admin_site)
+    request = RequestFactory().post("/")
+    request.user = admin_user
+
+    # User is restricted to site1
+    admin_user.get_sites = lambda: Site.objects.filter(pk__in=[site1.pk])
+
+    class MockForm:
+        instance = post
+        cleaned_data = {"sites": []}  # user attempts to remove all sites
+
+        def save_m2m(self):
+            pass
+
+    form = MockForm()
+    admin_instance.save_related(request, form, [], False)
+    # site1 should remain attached due to restriction logic
+    post.refresh_from_db()
+    assert site1 in post.sites.all()
+
+
+@pytest.mark.django_db
+def test_postadmin_changeform_view_invalid_app_config_param(admin_client, simple_w_placeholder):
+    """Edge case: invalid app_config id in GET should not crash, should show selection or 200."""
+    # pass a non-existing app_config id
+    url = reverse("admin:djangocms_stories_post_add") + "?app_config=999999"
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    # Should show selection form since the app_config is invalid
+    assert b"app_config" in response.content
+
+
+@pytest.mark.django_db
+def test_postadmin_changeform_view_permission_denied_shows_403(admin_user, default_config):
+    """Edge case: user without add permission should get 403 on add view."""
+    from django.contrib.auth import get_user_model
+
+    User = get_user_model()
+    user = User.objects.create_user(username="limited", email="limited@example.com", password="x")
+
+    client = Client()
+    client.force_login(user)
+
+    url = reverse("admin:djangocms_stories_post_add")
+    response = client.get(url)
+    # Depending on Django admin, can be 403 or redirect to login; accept either 302 or 403
+    assert response.status_code in [302, 403]
+
+
+@pytest.mark.django_db
 def test_postadmin_save_model_integration(admin_client, admin_user, default_config):
     """Test save_model integration through admin interface"""
     from django.urls import reverse
@@ -1181,3 +1256,104 @@ def test_postadmin_changeform_view_no_app_config(admin_client):
     # Should show app config selection form
     assert response.status_code == 200
     assert b"app_config" in response.content
+
+
+@pytest.mark.django_db
+def test_add_post_admin_flow_with_endpoints(admin_client, simple_w_placeholder):
+    """Test the complete flow of adding a post through admin endpoints."""
+    from djangocms_stories.models import Post, PostContent
+
+    # Step 1: GET request to add post URL - should return AppConfigForm
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should contain app_config selection form
+    assert b"app_config" in response.content
+    assert b"select" in response.content.lower()
+
+    # Step 2: POST app_config selection to get the actual Post form
+    # The admin converts this POST to GET internally and shows the actual form
+    response = admin_client.post(
+        url,
+        data={
+            "app_config": simple_w_placeholder.pk,
+            "language": "en",
+        },
+        follow=False,
+    )
+
+    # Should return 200 with the actual post content form (not redirect)
+    assert response.status_code == 200
+    # Check that we got the Post content form (title indicates "Add English content")
+    assert b"Add" in response.content or b"add" in response.content
+    # Should have fields for PostContent
+    assert b"title" in response.content.lower() or b"id_title" in response.content.lower()
+
+    # Step 3: Submit the post content form to create the post
+    initial_post_count = Post.objects.count()
+    PostContent.objects.count()
+
+    # When using placeholder, the form expects different field names
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__language": "en",
+        "content__title": "Test Post via Admin",
+        "content__subtitle": "Test Subtitle",
+        "content__slug": "test-post-via-admin",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=True)
+
+    # Should get some response (either success or showing form again with errors)
+    assert response.status_code == 200
+
+    # Verify post was created
+    assert Post.objects.count() == initial_post_count + 1
+
+    # Verify the created post
+    new_post = Post.objects.latest("id")
+    assert new_post.app_config == simple_w_placeholder
+
+    # Verify the created post content
+    new_post_content = PostContent.admin_manager.current_content(post=new_post, language="en").first()
+    assert new_post_content is not None
+    assert new_post_content.title == "Test Post via Admin"
+    assert new_post_content.subtitle == "Test Subtitle"
+    assert new_post_content.slug == "test-post-via-admin"
+
+
+@pytest.mark.django_db
+def test_add_post_admin_with_preselected_config(admin_client, simple_w_placeholder):
+    """Test adding a post when app_config is already in URL parameters."""
+    from djangocms_stories.models import Post
+
+    # When app_config is in URL, should skip AppConfigForm and show Post form directly
+    url = reverse("admin:djangocms_stories_post_add") + f"?app_config={simple_w_placeholder.pk}"
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the post form, not the app_config selection
+    assert b"title" in response.content.lower()
+    # app_config should be pre-filled (hidden or readonly)
+    assert str(simple_w_placeholder.pk).encode() in response.content
+
+    # Verify we can submit the form
+    initial_count = Post.objects.count()
+
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__title": "test post",
+        "content__language": "en",
+        "content__slug": "test-post-preselected",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=True)
+
+    assert response.status_code == 200
+    assert Post.objects.count() == initial_count + 1
+
+    new_post = Post.objects.latest("id")
+    assert new_post.app_config == simple_w_placeholder

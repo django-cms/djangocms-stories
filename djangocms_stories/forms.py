@@ -49,7 +49,7 @@ class CategoryAdminForm(ConfigFormBase, TranslatableModelForm):
             config = None
             if getattr(self.instance, "app_config_id", None):
                 qs = qs.filter(app_config__namespace=self.instance.app_config.namespace)
-            elif "app_config" in self.initial:
+            elif self.initial.get("app_config", None):
                 config = StoriesConfig.objects.get(pk=self.initial["app_config"])
             elif self.data.get("app_config", None):
                 config = StoriesConfig.objects.get(pk=self.data["app_config"])
@@ -128,8 +128,7 @@ class StoriesConfigForm(TranslatableModelForm):
         """
         if "instance" in kwargs and kwargs["instance"]:
             # Editing an existing instance; no need to set initial defaults
-            super().__init__(*args, **kwargs)
-            return
+            return super().__init__(*args, **kwargs)
 
         from .cms_appconfig import config_defaults
 
@@ -141,10 +140,5 @@ class StoriesConfigForm(TranslatableModelForm):
         with override(self.language_code):
             kwargs["initial"].setdefault("app_title", force_str(get_setting("AUTO_APP_TITLE")))
             kwargs["initial"].setdefault("object_name", force_str(get_setting("DEFAULT_OBJECT_NAME")))
-
-        if "instance" in kwargs and kwargs["instance"]:
-            # Set current saved value:
-            for field in self._meta.widgets.keys():
-                kwargs["initial"][field] = getattr(kwargs["instance"], field)
 
         super().__init__(*args, **kwargs)

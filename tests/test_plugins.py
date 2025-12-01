@@ -478,3 +478,101 @@ def test_generic_blog_plugin_str(placeholder, simple_w_placeholder):
     )
     instance = plugin.get_plugin_instance()[0]
     assert str(instance) == "generic blog plugin"
+
+
+@pytest.mark.django_db
+def test_stories_plugin_get_fields_single_template_folder(placeholder, simple_w_placeholder):
+    """Test get_fields doesn't add template_folder when only one folder configured."""
+    from cms import api
+    from djangocms_stories.cms_plugins import BlogLatestEntriesPlugin
+    from django.test import RequestFactory
+    from unittest.mock import patch
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogLatestEntriesPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    plugin_class = BlogLatestEntriesPlugin(instance.get_plugin_class(), instance)
+    request = RequestFactory().get("/")
+
+    # Mock get_setting to return single template folder
+    with patch("djangocms_stories.cms_plugins.get_setting") as mock_get_setting:
+        mock_get_setting.return_value = ["default"]
+        fields = plugin_class.get_fields(request, instance)
+
+        # template_folder should not be in fields
+        assert "template_folder" not in fields
+        assert "app_config" in fields
+
+
+@pytest.mark.django_db
+def test_stories_plugin_get_fields_multiple_template_folders(placeholder, simple_w_placeholder):
+    """Test get_fields adds template_folder when multiple folders configured."""
+    from cms import api
+    from djangocms_stories.cms_plugins import BlogLatestEntriesPlugin
+    from django.test import RequestFactory
+    from unittest.mock import patch
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogLatestEntriesPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    plugin_class = BlogLatestEntriesPlugin(instance.get_plugin_class(), instance)
+    request = RequestFactory().get("/")
+
+    # Mock get_setting to return multiple template folders
+    with patch("djangocms_stories.cms_plugins.get_setting") as mock_get_setting:
+        mock_get_setting.return_value = ["default", "custom"]
+        fields = plugin_class.get_fields(request, instance)
+
+        # template_folder should be in fields
+        assert "template_folder" in fields
+        assert "app_config" in fields
+
+
+@pytest.mark.django_db
+def test_stories_plugin_get_fields_repeated_calls(placeholder, simple_w_placeholder):
+    """Test that repeated calls to get_fields don't add template_folder multiple times."""
+    from cms import api
+    from djangocms_stories.cms_plugins import BlogLatestEntriesPlugin
+    from django.test import RequestFactory
+    from unittest.mock import patch
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogLatestEntriesPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    plugin_class = BlogLatestEntriesPlugin(instance.get_plugin_class(), instance)
+    request = RequestFactory().get("/")
+
+    # Mock get_setting to return multiple template folders
+    with patch("djangocms_stories.cms_plugins.get_setting") as mock_get_setting:
+        mock_get_setting.return_value = ["default", "custom"]
+
+        # Call get_fields multiple times
+        fields1 = plugin_class.get_fields(request, instance)
+        fields2 = plugin_class.get_fields(request, instance)
+        fields3 = plugin_class.get_fields(request, instance)
+
+        # All calls should return the same result
+        assert fields1 == fields2 == fields3
+
+        # Count how many times template_folder appears in the result
+        template_folder_count = fields3.count("template_folder")
+        assert template_folder_count == 1, f"template_folder appears {template_folder_count} times, expected 1"
+
+        # Verify all expected fields are present
+        assert "app_config" in fields1
+        assert "latest_posts" in fields1
+        assert "tags" in fields1
+        assert "categories" in fields1
+        assert "template_folder" in fields1
