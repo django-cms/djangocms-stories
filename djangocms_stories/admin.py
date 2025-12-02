@@ -303,6 +303,7 @@ class ModelAppHookConfig:
                     # This is the post from the AppConfigForm, move to opening the actual change form
                     # Take the provided values (app_config, languages) as initial values for the new form
                     get_params = {
+                        **request.GET,
                         "app_config": app_config_default.pk,
                         "language": request.POST.get("language", get_language_from_request(request)),
                     }
@@ -452,7 +453,7 @@ class PostAdmin(
         """Adds the language from the request to the form class"""
         form_class = super().get_form(request, obj, **kwargs)
         form_class.language = get_language_from_request(request)
-        if "app_config" in form_class.base_fields:
+        if obj is None and "app_config" in form_class.base_fields:
             form_class.base_fields["app_config"].widget = forms.HiddenInput()
         return form_class
 
