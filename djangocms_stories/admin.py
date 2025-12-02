@@ -18,7 +18,6 @@ from django.db.models import Prefetch, signals
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path
-from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
@@ -302,12 +301,10 @@ class ModelAppHookConfig:
                 elif request.method == "POST" and "content__title" not in request.POST:
                     # This is the post from the AppConfigForm, move to opening the actual change form
                     # Take the provided values (app_config, languages) as initial values for the new form
-                    get_params = {
-                        **request.GET,
-                        "app_config": app_config_default.pk,
-                        "language": request.POST.get("language", get_language_from_request(request)),
-                    }
-                    return HttpResponseRedirect(f"{request.path}?{urlencode(get_params)}")
+                    get_params = request.GET.copy()
+                    get_params["app_config"] = app_config_default.pk
+                    get_params["language"] = request.POST.get("language", get_language_from_request(request))
+                    return HttpResponseRedirect(f"{request.path}?{get_params.urlencode()}")
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 
