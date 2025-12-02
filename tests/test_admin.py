@@ -521,12 +521,12 @@ def test_sitelistfilter_queryset(admin_user, default_config):
 
 def test_modelapphookconfig_app_config_select_single_config(admin_user, default_config):
     """Test _app_config_select when only one config exists"""
-    from djangocms_stories.admin import CategoryAdmin
-    from djangocms_stories.models import PostCategory
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
     from django.test import RequestFactory
     from django.contrib.admin.sites import site
 
-    admin_instance = CategoryAdmin(PostCategory, site)
+    admin_instance = PostAdmin(Post, site)
     request = RequestFactory().get("/")
     request.user = admin_user
 
@@ -537,12 +537,12 @@ def test_modelapphookconfig_app_config_select_single_config(admin_user, default_
 
 def test_modelapphookconfig_app_config_select_from_get(admin_user, default_config):
     """Test _app_config_select when app_config is in GET params"""
-    from djangocms_stories.admin import CategoryAdmin
-    from djangocms_stories.models import PostCategory
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
     from django.test import RequestFactory
     from django.contrib.admin.sites import site
 
-    admin_instance = CategoryAdmin(PostCategory, site)
+    admin_instance = PostAdmin(Post, site)
     request = RequestFactory().get("/", {"app_config": default_config.pk})
     request.user = admin_user
 
