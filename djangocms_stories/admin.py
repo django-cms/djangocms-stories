@@ -1,4 +1,3 @@
-import copy
 from copy import deepcopy
 
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
@@ -6,6 +5,7 @@ from cms.admin.utils import GrouperModelAdmin
 from cms.models import ValidationError
 from cms.utils import get_language_from_request
 from cms.utils.urlutils import admin_reverse
+from django import forms
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.admin import helpers
@@ -18,6 +18,7 @@ from django.db.models import Prefetch, signals
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path
+from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
@@ -301,11 +302,11 @@ class ModelAppHookConfig:
                 elif request.method == "POST" and "content__title" not in request.POST:
                     # This is the post from the AppConfigForm, move to opening the actual change form
                     # Take the provided values (app_config, languages) as initial values for the new form
-                    get = copy.copy(request.GET)  # Make a copy to modify
-                    get["app_config"] = app_config_default.pk
-                    get["language"] = request.POST.get("language", get_language_from_request(request))
-                    request.GET = get
-                    request.method = "GET"  # Force POST to skip app_config form next time
+                    get_params = {
+                        "app_config": app_config_default.pk,
+                        "language": request.POST.get("language", get_language_from_request(request)),
+                    }
+                    return HttpResponseRedirect(f"{request.path}?{urlencode(get_params)}")
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 
@@ -354,7 +355,6 @@ class PostAdmin(
     ExtendedGrouperVersionAdminMixin,
     GrouperModelAdmin,
 ):
-    # form = PostAdminForm
     app_config_initial_fields = ("app_config", "content__language")
     extra_grouping_fields = ("language",)
     inlines = []
@@ -452,6 +452,8 @@ class PostAdmin(
         """Adds the language from the request to the form class"""
         form_class = super().get_form(request, obj, **kwargs)
         form_class.language = get_language_from_request(request)
+        if "app_config" in form_class.base_fields:
+            form_class.base_fields["app_config"].widget = forms.HiddenInput()
         return form_class
 
     def can_change_content(self, request, content_obj) -> bool:
