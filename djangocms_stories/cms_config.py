@@ -24,7 +24,7 @@ class StoriesCMSConfig(CMSAppConfig):
 
         if PackageVersion(djangocms_versioning_version) < PackageVersion("2.3"):  # pragma: no cover
             raise ImportError(
-                "djangocms_versioning >= 2.3.0 is required for djangocms_stories to work properly."
+                "djangocms_versioning >= 2.4.0 is required for djangocms_stories to work properly."
                 " Please upgrade djangocms_versioning."
             )
 
@@ -40,6 +40,7 @@ class StoriesCMSConfig(CMSAppConfig):
                 },
                 grouper_selector_option_label=lambda obj, lang: obj.get_title(lang),
                 copy_function=default_copy,
+                grouper_admin_mixin="__default__",
             ),
         ]
 

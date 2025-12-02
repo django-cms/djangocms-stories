@@ -124,7 +124,6 @@ class StoriesConfig(TranslatableModel):
     url_patterns = models.CharField(
         max_length=12,
         verbose_name=_("Permalink structure"),
-        blank=True,
     )
     #: Use placeholder and plugins for article body (default: :ref:`USE_PLACEHOLDER <USE_PLACEHOLDER>`)
     use_placeholder = models.BooleanField(
