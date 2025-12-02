@@ -34,7 +34,7 @@ jobs:
             versioning: "on"
           - requirements-file: "dj42_cms41.txt"
             python-version: "3.14"
-          - requirements-file: "dj42_cms40.txt"
+          - requirements-file: "dj42_cms50.txt"
             python-version: "3.14"
     steps:
     - uses: actions/checkout@v4
