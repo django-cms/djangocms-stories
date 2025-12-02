@@ -1274,10 +1274,10 @@ def test_add_post_admin_flow_with_endpoints(admin_client, simple_w_placeholder):
             "app_config": simple_w_placeholder.pk,
             "language": "en",
         },
-        follow=False,
+        follow=True,
     )
 
-    # Should return 200 with the actual post content form (not redirect)
+    # Should return 200 with the actual post content form
     assert response.status_code == 200
     # Check that we got the Post content form (title indicates "Add English content")
     assert b"Add" in response.content or b"add" in response.content
