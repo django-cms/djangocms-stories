@@ -13,7 +13,7 @@ from django.contrib.admin.utils import unquote
 from django.contrib.sites.models import Site
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import Prefetch, signals
+from django.db.models import signals
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path
@@ -614,10 +614,10 @@ class PostAdmin(
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         sites = self.get_restricted_sites(request)
-        if sites.exists():
-            pks = list(sites.all().values_list("pk", flat=True))
+        if sites:
+            pks = [site.pk for site in sites]
             qs = qs.filter(sites__in=pks)
-        return qs.distinct().prefetch_related(Prefetch("postcontent_set", queryset=PostContent.admin_manager.all()))
+        return qs.select_related("author", "app_config")
 
     def save_related(self, request, form, formsets, change):
         if self.get_restricted_sites(request).exists():

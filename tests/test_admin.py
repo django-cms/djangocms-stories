@@ -550,6 +550,145 @@ def test_modelapphookconfig_app_config_select_from_get(admin_user, default_confi
     assert result == default_config
 
 
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_multiple_configs_no_params(admin_user):
+    """Test _app_config_select when multiple configs exist and no params provided"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from .factories import StoriesConfigFactory
+
+    # Create multiple configs
+    StoriesConfigFactory(namespace="config1", app_title="Config 1")
+    StoriesConfigFactory(namespace="config2", app_title="Config 2")
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/")
+    request.user = admin_user
+
+    # With multiple configs and no params, should return None
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_from_post(admin_user, default_config):
+    """Test _app_config_select when app_config is in POST params"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().post("/", {"app_config": default_config.pk})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result == default_config
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_post_id(admin_user):
+    """Test _app_config_select with invalid POST app_config ID"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    # Try with non-existent ID
+    request = RequestFactory().post("/", {"app_config": 99999})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_post_value(admin_user):
+    """Test _app_config_select with non-numeric POST app_config"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().post("/", {"app_config": "invalid"})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_get_id(admin_user):
+    """Test _app_config_select with invalid GET app_config ID"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/", {"app_config": 99999})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_get_value(admin_user):
+    """Test _app_config_select with non-numeric GET app_config"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/", {"app_config": "not-a-number"})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_from_existing_object(admin_user, default_config):
+    """Test _app_config_select when obj has app_config attribute"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from .factories import PostFactory
+
+    post = PostFactory(app_config=default_config)
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/")
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, post)
+    assert result == default_config
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_get_overrides_single(admin_user, default_config):
+    """Test _app_config_select: GET param takes precedence over single config count"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    # Even with single config, explicit GET param should be used
+    request = RequestFactory().get("/", {"app_config": default_config.pk})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result == default_config
+
+
 def test_modelapphookconfig_get_config_data(admin_user, default_config):
     """Test get_config_data retrieves config values"""
     from djangocms_stories.admin import PostAdmin
@@ -615,8 +754,8 @@ def test_postadmin_queryset_distinct(admin_user, default_config):
 
     queryset = admin_instance.get_queryset(request)
 
-    # Should be distinct and have prefetch_related for postcontent_set
-    assert queryset.query.distinct
+    # Check that author is select_related
+    assert "author" in queryset.query.select_related
 
 
 def test_register_unregister_extension_inline():
