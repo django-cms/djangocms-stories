@@ -13,7 +13,9 @@ from .fixtures import simple_wo_placeholder  # noqa: F401
 
 def normalize_html(html_string):
     """Normalize HTML by removing extra whitespace"""
-    # Remove all 'aria-labeledby' attributes
+    # Remove all data-* attributes
+    html_string = re.sub(r'\s*data-[a-zA-Z0-9_-]+="[^"]*"', "", html_string)
+    # Remove all aria-describedby attributes
     html_string = re.sub(r'\s*aria-describedby="[^"]*"', "", html_string)
     # Remove whitespace between tags
     html_string = re.sub(r">\s+<", "><", html_string.strip())

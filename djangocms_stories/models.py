@@ -419,7 +419,7 @@ class Post(models.Model):
         with translation.override(lang):
             kwargs = {}
             current_date = self.date
-            urlconf = get_setting("PERMALINK_URLS")[self.app_config.url_patterns]
+            urlconf = get_setting("PERMALINK_URLS").get(self.app_config.url_patterns)
             if "<int:year>" in urlconf:
                 kwargs["year"] = current_date.year
             if "<int:month>" in urlconf:

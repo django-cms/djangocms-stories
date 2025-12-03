@@ -99,8 +99,9 @@ class AppConfigForm(forms.Form):
         help_text=_("Select the app config to apply to the new post."),
     )
     language = forms.CharField(widget=forms.HiddenInput(), required=False)
+    app_config_form = forms.BooleanField(widget=forms.HiddenInput(), initial=True, required=False)
 
-    fieldsets = [(None, {"fields": ("app_config", "language")})]
+    fieldsets = [(None, {"fields": ("app_config", "language", "app_config_form")})]
 
 
 class StoriesConfigForm(TranslatableModelForm):
