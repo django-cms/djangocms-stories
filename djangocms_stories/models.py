@@ -366,13 +366,14 @@ class Post(models.Model):
             return self._content_cache[key]
         except KeyError:
             if show_draft_content:
+                # Check for djangcms-versioning's prefetch cache - it's already language-filtered
+                # If present we avoid unnecessary DB queries
+                if hasattr(self, "_current_contents"):
+                    return self._current_contents[0]
                 qs = self.postcontent_set(manager="admin_manager").current_content()
             else:
                 qs = self.postcontent_set
-            qs = qs.prefetch_related(
-                "placeholders",
-                "post__categories",
-            ).filter(language=language)
+            qs = qs.filter(language=language)
 
             self._content_cache[key] = qs.first()
             return self._content_cache[key]
