@@ -368,7 +368,7 @@ class Post(models.Model):
             if show_draft_content:
                 # Check for djangcms-versioning's prefetch cache - it's already language-filtered
                 # If present we avoid unnecessary DB queries
-                if hasattr(self, "_current_contents"):
+                if hasattr(self, "_current_contents") and self._current_contents:
                     return self._current_contents[0]
                 qs = self.postcontent_set(manager="admin_manager").current_content()
             else:
