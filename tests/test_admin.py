@@ -1600,3 +1600,111 @@ def test_add_post_with_two_story_configs(admin_client, simple_w_placeholder, sim
     new_post_content = PostContent.admin_manager.current_content(post=new_post, language="en").first()
     assert new_post_content is not None
     assert new_post_content.title == "Test Post Two Configs"
+
+
+@pytest.mark.django_db
+def test_add_post_with_two_story_configs_invalid_form(admin_client, simple_w_placeholder, simple_wo_placeholder):
+    """Test that AppConfigForm is shown again when post form submission is invalid."""
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    # Ensure we have two configs
+    assert StoriesConfig.objects.count() == 2
+
+    # Step 1: GET add view should show AppConfigForm
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the app_config selection form
+    assert "app_config" in response.content.decode()
+
+    # Step 2: POST app_config selection to proceed to the actual Post form
+    response = admin_client.post(
+        url,
+        data={
+            "app_config": simple_w_placeholder.pk,
+            "language": "en",
+            "app_config_form": "on",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    # Should now show the post form with title field
+    assert b"title" in response.content.lower()
+
+    # Step 3: Submit an invalid post form (missing required title field)
+    from djangocms_stories.models import Post
+
+    initial_post_count = Post.objects.count()
+
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__language": "en",
+        # Missing content__title - required field
+        "content__subtitle": "Test Subtitle",
+        "content__slug": "test-post-invalid",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=False)
+
+    # Should not create a new post since form is invalid
+    assert Post.objects.count() == initial_post_count
+
+    # Response should indicate form validation error or redirect to AppConfigForm
+    # The admin form should either show validation errors (200) or handle the invalid state
+    # We'll verify that we get either a form re-display with errors
+    assert response.status_code in (200, 302)
+
+    # If it's a redirect, follow it
+    if response.status_code == 302:
+        response = admin_client.get(response.url)
+
+    # Should show the AppConfigForm again since we're back at the add view
+    response_text = response.content.decode()
+    assert "app_config" in response_text
+    # AppConfigForm should be rendered again
+    assert "<select" in response_text or "<option" in response_text
+
+
+@pytest.mark.django_db
+def test_add_post_app_config_form_invalid(admin_client, simple_w_placeholder, simple_wo_placeholder):
+    """Test that AppConfigForm is shown again when app_config selection is invalid."""
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    # Ensure we have two configs
+    assert StoriesConfig.objects.count() == 2
+
+    # Step 1: GET add view should show AppConfigForm
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the app_config selection form
+    assert "app_config" in response.content.decode()
+
+    # Step 2: POST invalid app_config selection (using non-existent pk)
+    invalid_pk = 9999  # Non-existent pk
+    response = admin_client.post(
+        url,
+        data={
+            "app_config": invalid_pk,
+            "language": "en",
+            "app_config_form": "on",
+        },
+        follow=False,
+    )
+
+    # Should get a response (200 for re-displayed form with errors, or 302 redirect)
+    assert response.status_code in (200, 302)
+
+    # If redirect, follow it
+    if response.status_code == 302:
+        response = admin_client.get(response.url)
+
+    # Should show the AppConfigForm again with validation errors
+    response_text = response.content.decode()
+    assert "app_config" in response_text
+    # Should have the form controls to select an app config again
+    assert "<select" in response_text or "<option" in response_text
