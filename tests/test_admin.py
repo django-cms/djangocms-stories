@@ -1490,3 +1490,113 @@ def test_add_post_admin_with_preselected_config(admin_client, simple_w_placehold
 
     new_post = Post.objects.latest("id")
     assert new_post.app_config == simple_w_placeholder
+
+
+@pytest.mark.django_db
+def test_add_post_with_one_story_config(admin_client, simple_w_placeholder):
+    """Test adding a post when only one story config exists - should skip AppConfigForm and save successfully."""
+    from djangocms_stories.models import Post, PostContent
+
+    # Ensure only one config exists
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    assert StoriesConfig.objects.count() == 1
+
+    # Step 1: GET add view should skip AppConfigForm and show the post form directly
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the post form directly (title field should be present)
+    assert b"title" in response.content.lower()
+    # Should not show the app_config selection form
+    assert "Select the app config" not in response.content.decode()
+
+    # Step 2: Submit the post form with a title
+    initial_post_count = Post.objects.count()
+
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__language": "en",
+        "content__title": "Test Post Single Config",
+        "content__subtitle": "Test Subtitle",
+        "content__slug": "test-post-single-config",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=True)
+
+    # Should successfully save
+    assert response.status_code == 200
+    assert Post.objects.count() == initial_post_count + 1
+
+    # Verify the post was created with correct data
+    new_post = Post.objects.latest("id")
+    assert new_post.app_config == simple_w_placeholder
+
+    new_post_content = PostContent.admin_manager.current_content(post=new_post, language="en").first()
+    assert new_post_content is not None
+    assert new_post_content.title == "Test Post Single Config"
+
+
+@pytest.mark.django_db
+def test_add_post_with_two_story_configs(admin_client, simple_w_placeholder, simple_wo_placeholder):
+    """Test adding a post when two story configs exist - should show AppConfigForm first."""
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    # Ensure we have two configs
+    assert StoriesConfig.objects.count() == 2
+
+    # Step 1: GET add view should show AppConfigForm
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the app_config selection form
+    response_text = response.content.decode()
+    assert "app_config" in response_text
+    # Should have select dropdown or choice field for selecting between configs
+    assert b"<select" in response.content or b"<option" in response.content
+
+    # Step 2: POST app_config selection to proceed to the actual Post form
+    response = admin_client.post(
+        url,
+        data={
+            "app_config": simple_w_placeholder.pk,
+            "language": "en",
+            "app_config_form": "on",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    # Should now show the post form with title field
+    assert b"title" in response.content.lower()
+
+    # Step 3: Submit the post form to create the post
+    from djangocms_stories.models import Post, PostContent
+
+    initial_post_count = Post.objects.count()
+
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__language": "en",
+        "content__title": "Test Post Two Configs",
+        "content__subtitle": "Test Subtitle",
+        "content__slug": "test-post-two-configs",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=True)
+
+    # Should successfully save
+    assert response.status_code == 200
+    assert Post.objects.count() == initial_post_count + 1
+
+    # Verify the post was created with the selected config
+    new_post = Post.objects.latest("id")
+    assert new_post.app_config == simple_w_placeholder
+
+    new_post_content = PostContent.admin_manager.current_content(post=new_post, language="en").first()
+    assert new_post_content is not None
+    assert new_post_content.title == "Test Post Two Configs"
