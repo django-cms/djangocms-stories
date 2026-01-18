@@ -270,17 +270,19 @@ class ModelAppHookConfig:
         """
         if object_id is None:
             # Add new object
-            if request.method == "GET" or "app_config" in request.POST:
+            if request.method == "GET":
                 app_config_default = self._app_config_select(request, None)
                 if not app_config_default:
-                    if request.method == "POST":
-                        form = AppConfigForm(request.POST)
-                    else:
-                        form = AppConfigForm(
-                            initial={"app_config": None, "language": get_language_from_request(request)}
-                        )
+                    form = AppConfigForm(initial={"app_config": None, "language": get_language_from_request(request)})
                     return self.render_app_config_form(request, form)
-                elif request.method == "POST" and "app_config_form" in request.POST:
+                request.GET = request.GET.copy()
+                request.GET["app_config"] = app_config_default.pk
+            elif "app_config" in request.POST:
+                app_config_default = self._app_config_select(request, None)
+                if not app_config_default:
+                    form = AppConfigForm(request.POST)
+                    return self.render_app_config_form(request, form)
+                elif "app_config_form" in request.POST:
                     # This is the post from the AppConfigForm, move to opening the actual change form
                     # Take the provided values (app_config, languages) as initial values for the new form
                     get_params = request.GET.copy()
