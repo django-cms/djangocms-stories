@@ -26,10 +26,13 @@ def site_compatibility_decorator(func):
     that do not support request-aware get_current_site calls.
     """
 
-    try:
-        func(None)
-    except TypeError:
-        return lambda request: func()
-    except ImproperlyConfigured:
+    def wrapper(func):
+        try:
+            func(None)
+        except TypeError:
+            return lambda request: func()
+        except ImproperlyConfigured:
+            return func
         return func
-    return func
+
+    return wrapper
