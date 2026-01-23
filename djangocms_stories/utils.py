@@ -1,6 +1,6 @@
+import inspect
 from django.apps import apps
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 
 
 _versioning_enabled = None if "djangocms_versioning" in settings.INSTALLED_APPS else False
@@ -26,13 +26,8 @@ def site_compatibility_decorator(func):
     that do not support request-aware get_current_site calls.
     """
 
-    def wrapper(func):
-        try:
-            func(None)
-        except TypeError:
-            return lambda request: func()
-        except ImproperlyConfigured:
-            return func
-        return func
+    sig = inspect.signature(func)
 
-    return wrapper
+    if len(sig.parameters) >= 1:
+        return func
+    return lambda request: func()
