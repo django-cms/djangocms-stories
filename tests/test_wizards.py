@@ -1,3 +1,4 @@
+from django.test import RequestFactory
 import pytest
 
 try:
@@ -19,7 +20,6 @@ def test_wizard_registered(default_config):
 
 
 def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_placeholder):
-    from cms.utils.permissions import set_current_user
     from django.apps import apps
     from djangocms_text.models import Text
 
@@ -27,8 +27,8 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
 
     cms_config = apps.get_app_config("djangocms_stories").cms_config
     wizs = [entry for entry in cms_config.cms_wizards if entry.model == PostContent]
-
-    set_current_user(admin_user)
+    request = RequestFactory().get("/")
+    request.user = admin_user
     for index, wiz in enumerate(wizs):
         form = wiz.form()
         app_config_pk = form.default_appconfig
@@ -41,6 +41,7 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
             },
             prefix=1,
         )
+        form._request = request
         form.language_code = "en"
 
         assert form.is_valid()
@@ -67,6 +68,7 @@ def test_wizard_form(admin_client, admin_user, simple_w_placeholder, simple_wo_p
             },
             prefix=1,
         )
+        form._request = request
         form.language_code = "en"
         instance = form.save()
 
