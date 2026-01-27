@@ -3,7 +3,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 
 from cms.api import add_plugin
-from cms.utils.permissions import get_current_user
 from cms.wizards.wizard_base import Wizard
 
 from .cms_appconfig import StoriesConfig
@@ -50,7 +49,7 @@ class PostWizardForm(forms.ModelForm):
         post = Post(
             app_config=self.cleaned_data["app_config"],
         )
-        user = get_current_user()
+        user = self._request.user
         post._set_default_author(user)
         post.save()
 
