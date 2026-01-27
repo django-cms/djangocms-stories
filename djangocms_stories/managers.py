@@ -5,6 +5,7 @@ from collections import Counter
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.db import models
+from django.db.models.manager import BaseManager
 from django.utils.timezone import now
 
 from cms.models.managers import WithUserMixin
@@ -102,13 +103,11 @@ class AdminSiteQuerySet(SiteQuerySet):
         return self.filter(**kwargs)
 
 
-class SiteManager(WithUserMixin, models.Manager):
-    _queryset_class = SiteQuerySet
+class SiteManager(WithUserMixin, BaseManager.from_queryset(SiteQuerySet)):
+    pass
 
 
-class AdminManager(models.Manager):
-    _queryset_class = AdminSiteQuerySet
-
+class AdminManager(BaseManager.from_queryset(AdminSiteQuerySet)):
     def current_content(self, **kwargs):
         """Syntactic sugar: admin_manager.current_content()"""
         return self.get_queryset().current_content(**kwargs)
@@ -118,15 +117,10 @@ class AdminManager(models.Manager):
         return self.get_queryset().latest_content(**kwargs)
 
 
-class GenericDateTaggedManager(TaggedFilterItem, models.Manager):
+class GenericDateTaggedManager(TaggedFilterItem, BaseManager.from_queryset(SiteQuerySet)):
     use_for_related_fields = True
     start_date_field = "date_featured"
     fallback_date_field = "date_modified"
-
-    queryset_class = SiteQuerySet
-
-    def get_queryset(self, *args, **kwargs):
-        return self.queryset_class(model=self.model, using=self._db, hints=self._hints)
 
     def on_site(self, site=None):
         return self.get_queryset().on_site(site)
