@@ -4,7 +4,7 @@ from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from cms.admin.utils import GrouperModelAdmin
 from cms.models import ValidationError
 from cms.utils import get_language_from_request
-from cms.utils.urlutils import admin_reverse
+from cms.utils.urlutils import admin_namespace, admin_reverse
 from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin import helpers
@@ -507,7 +507,7 @@ class PostAdmin(
         urls = [
             path(
                 "content/",
-                RedirectView.as_view(pattern_name="admin:djangocms_stories_post_changelist"),
+                RedirectView.as_view(pattern_name=f"{admin_namespace}:djangocms_stories_post_changelist"),
                 name="djangocms_stories_postcontent_changelist",
             ),
         ]
