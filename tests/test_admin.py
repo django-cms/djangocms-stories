@@ -1073,6 +1073,19 @@ def test_postadmin_get_urls_custom():
     assert "djangocms_stories_postcontent_changelist" in url_patterns
 
 
+def test_postadmin_postcontent_changelist_redirects(admin_client):
+    """The custom admin URL 'content/' should redirect to the Post changelist."""
+
+    # The custom URL is registered on the Post admin (".../post/content/").
+    # We build it from the Post changelist URL to avoid a name collision with
+    # the PostContent modeladmin changelist.
+    url = reverse("admin:djangocms_stories_post_changelist").rstrip("/") + "/content/"
+    response = admin_client.get(url)
+
+    assert response.status_code == 302
+    assert response["Location"] == reverse("admin:djangocms_stories_post_changelist")
+
+
 def test_postadmin_save_related_no_restricted_sites(admin_user, default_config):
     """Test save_related when user has no restricted sites"""
     from djangocms_stories.admin import PostAdmin
