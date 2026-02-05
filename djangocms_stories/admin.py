@@ -507,7 +507,7 @@ class PostAdmin(
         urls = [
             path(
                 "content/",
-                RedirectView.as_view(pattern_name="djangocms_stories_post_changelist"),
+                RedirectView.as_view(pattern_name="admin:djangocms_stories_post_changelist"),
                 name="djangocms_stories_postcontent_changelist",
             ),
         ]
