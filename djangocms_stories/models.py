@@ -332,9 +332,9 @@ class Post(models.Model):
     )
 
     related = SortedManyToManyField(
-        "self", 
-        verbose_name=_("Related Posts"), 
-        blank=True, 
+        "self",
+        verbose_name=_("Related Posts"),
+        blank=True,
         symmetrical=False,
     )
 
@@ -348,6 +348,7 @@ class Post(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._admin_content_cache = False
         self._content_cache = None
         self._language_cache = None
 
@@ -361,7 +362,7 @@ class Post(models.Model):
             return False
         return bool(self.date_featured <= now())
 
-    def _get_content(self, language: str,  qs) -> models.Model | None:
+    def _get_content(self, language: str, qs) -> models.Model | None:
         if self._content_cache is None:
             self._content_cache = {obj.language: obj for obj in qs}
             self._language_cache = list(self._content_cache.keys())
@@ -381,6 +382,9 @@ class Post(models.Model):
                 stacklevel=2,
             )
             return self.get_admin_content(language)
+        if self._admin_content_cache:
+            self._content_cache = None
+            self._admin_content_cache = False
         return self._get_content(language or get_language(), self.postcontent_set.all())
 
     def get_admin_content(self, language=None):
@@ -388,6 +392,7 @@ class Post(models.Model):
             language = translation.get_language()
             # Use admin cache if available
         if hasattr(self, "_admin_prefetch_cache") and not self._content_cache:
+            self._admin_content_cache = True
             self._content_cache = {obj.language: obj for obj in self._admin_prefetch_cache}
             self._language_cache = list(self._content_cache.keys())
         return self._get_content(language, self.postcontent_set(manager="admin_manager").latest_content())
