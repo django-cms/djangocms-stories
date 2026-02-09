@@ -5,7 +5,7 @@ Changelog
 0.7.5 (2025-12-03)
 ------------------
 
-* fix: Allow to run without django-meta installed
+* fix: Allow running without django-meta installed
 * fix: Stories config form instead of current values always presented initial values
 * fix: Migration from djangocms-blog version 2.0.1 or later by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/41
 * fix: Adjust quote chars for sql statements to db vendor by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/42
