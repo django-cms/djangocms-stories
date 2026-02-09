@@ -35,7 +35,7 @@ from .settings import STORIES_PLUGIN_TEMPLATE_FOLDERS as DEFAULT_TEMPLATE_FOLDER
 
 if apps.is_installed("meta"):
     from meta.models import ModelMeta
-else:
+else:  # pragma: no cover
 
     class ModelMeta:
         """
