@@ -38,8 +38,9 @@ def test_post_content_migration():
     )
 
     story1._content_cache = None  # Clear content cache to force re-fetching from the database
-    assert story1.get_admin_content("fr").language == "fr"
+    assert story1.get_admin_content("fr").language == "fr" 
 
+    story1._content_cache = None  # Clear content cache to force re-fetching from the database
     assert story1.get_title("fr") == content1en["meta_title"], (
         f"The first story title should be '{content1en['meta_title']}', not '{story1.get_title('fr')}'"
     )
