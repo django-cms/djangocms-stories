@@ -2,10 +2,20 @@
 Changelog
 =========
 
+0.8.0 (2026-02-09)
+------------------
+
+* fix: Site compatibility decorator executed immediately by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/72
+* fix: Add form did not validate with only one story config present by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/70
+* fix: Do not rely on active cms permissions for wizard by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/74
+* fix: Redirect used wrong url pattern by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/79
+* fix: N+1 regression in changelist view by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/80
+* fix: Allow running without django-meta installed by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/60
+
+
 0.7.5 (2025-12-03)
 ------------------
 
-* fix: Allow running without django-meta installed
 * fix: Stories config form instead of current values always presented initial values
 * fix: Migration from djangocms-blog version 2.0.1 or later by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/41
 * fix: Adjust quote chars for sql statements to db vendor by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/42
