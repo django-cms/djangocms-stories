@@ -118,7 +118,7 @@ def test_post_unicode_slug(db, post, admin_user):
         assert post.get_title(language="en") == "Meta Accentué"
         post_content.meta_title = ""
         post_content.save()
-        post._content_cache = {}  # Clear the cache to force re-fetching
+        post._content_cache = None  # Clear the cache to force re-fetching
         assert post.get_title(language="fr") == "Accentué"
         assert post.get_title(language="en") == "Accentué"
         assert post.guid == hashlib.sha256(force_bytes(f"-fr-accentué-{post.app_config.namespace}-")).hexdigest()

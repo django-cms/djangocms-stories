@@ -356,12 +356,9 @@ class Post(models.Model):
             return False
         return bool(self.date_featured <= now())
 
-    def _get_content(self, language: str, qs) -> models.Model | None:
+    def _get_content(self, language: str,  qs) -> models.Model | None:
         if self._content_cache is None:
-            if hasattr(self, "_content_prefetch_cache"):
-                self._content_cache = {obj.language: obj for obj in self._content_prefetch_cache}
-            else:
-                self._content_cache = {obj.language: obj for obj in qs}
+            self._content_cache = {obj.language: obj for obj in qs}
         return self._content_cache.get(language)
 
     def get_content(self, language=None, show_draft_content=False):
@@ -378,11 +375,14 @@ class Post(models.Model):
                 stacklevel=2,
             )
             return self.get_admin_content(language)
-        return self._get_content(language or get_language(), self.postcontent_set.select_related("post"))
+        return self._get_content(language or get_language(), self.postcontent_set.all())
 
     def get_admin_content(self, language=None):
         if not language:
             language = translation.get_language()
+            # Use admin cache if available
+        if hasattr(self, "_admin_prefetch_cache") and not self._content_cache:
+            self._content_cache = {obj.language: obj for obj in self._admin_prefetch_cache}
         return self._get_content(language, self.postcontent_set(manager="admin_manager").latest_content())
 
     def safe_translation_getter(

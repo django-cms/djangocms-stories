@@ -621,7 +621,7 @@ class PostAdmin(
         if sites:
             pks = [site.pk for site in sites]
             qs = qs.filter(sites__in=pks)
-        prefetch = models.Prefetch("postcontent_set", queryset=PostContent.admin_manager.latest_content(), to_attr="_content_prefetch_cache")
+        prefetch = models.Prefetch("postcontent_set", queryset=PostContent.admin_manager.latest_content(), to_attr="_admin_prefetch_cache")
         return qs.select_related("author", "app_config").prefetch_related(prefetch, "categories", "sites")
 
     def get_content_obj(self, obj):
@@ -629,8 +629,8 @@ class PostAdmin(
             return obj
         if obj in self._content_obj_cache:
             return self._content_obj_cache[obj]
-        if hasattr(obj, "_content_prefetch_cache"):
-            for content_obj in obj._content_prefetch_cache:
+        if hasattr(obj, "_admin_prefetch_cache"):
+            for content_obj in obj._admin_prefetch_cache:
                 if all(getattr(content_obj, key, None) == value for key, value in self.current_content_filters.items()):
                     self._content_obj_cache[obj] = content_obj
                     return content_obj
