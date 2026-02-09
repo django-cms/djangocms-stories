@@ -29,6 +29,7 @@ def test_post_content_migration():
     )
 
     content1en = POST_CONTENT_DATA["post_en1"]
+    story1._content_cache = None  # Clear content cache to force re-fetching from the database
     assert story1.get_title("en") == content1en["meta_title"], (
         f"The first story title should be '{content1en['meta_title']}', not '{story1.get_title('en')}'"
     )
@@ -36,7 +37,8 @@ def test_post_content_migration():
         f"The first story description should be '{content1en['meta_description']}', not '{story1.get_descrition('en')}'"
     )
 
-    assert story1.get_content("fr", show_draft_content=True).language == "fr"
+    story1._content_cache = None  # Clear content cache to force re-fetching from the database
+    assert story1.get_admin_content("fr").language == "fr"
 
     assert story1.get_title("fr") == content1en["meta_title"], (
         f"The first story title should be '{content1en['meta_title']}', not '{story1.get_title('fr')}'"
@@ -95,12 +97,12 @@ def test_post_content_placeholder_moved():
     story1, story2 = Post.objects.all()[:2]
 
     content1, content2 = (
-        story1.get_content("en", show_draft_content=True),
-        story1.get_content("fr", show_draft_content=True),
+        story1.get_admin_content("en"),
+        story1.get_admin_content("fr",),
     )
     empty1, empty2 = (
-        story2.get_content("en", show_draft_content=True),
-        story2.get_content("fr", show_draft_content=True),
+        story2.get_admin_content("en"),
+        story2.get_admin_content("fr"),
     )
 
     assert content1 and content2, "Both content objects should exist"
