@@ -331,7 +331,12 @@ class Post(models.Model):
         help_text=_("Type a tag and hit tab, or start typing and select from autocomplete list."),
     )
 
-    related = SortedManyToManyField("self", verbose_name=_("Related Posts"), blank=True, symmetrical=False)
+    related = SortedManyToManyField(
+        "self", 
+        verbose_name=_("Related Posts"), 
+        blank=True, 
+        symmetrical=False,
+    )
 
     objects = GenericDateTaggedManager()
 
@@ -399,9 +404,10 @@ class Post(models.Model):
         to make this behavior the default for the given field.
         """
 
-        content_obj = self.get_admin_content(language_code) if show_draft_content else self.get_content(language_code)
+        getter = self.get_admin_content if show_draft_content else self.get_content
+        content_obj = getter(language_code)
         if content_obj is None and any_language and self.get_available_languages():
-            content_obj = self.get_admin_content(self.get_available_languages()[0]) if  show_draft_content else self.get_content(self.get_available_languages()[0])
+            content_obj = getter(self.get_available_languages()[0])
         return getattr(content_obj, field, default)
 
     @property

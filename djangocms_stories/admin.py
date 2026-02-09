@@ -649,6 +649,11 @@ class PostAdmin(
                 form.instance.sites.add(*self.get_restricted_sites(request).all().values_list("pk", flat=True))
         super().save_related(request, form, formsets, change)
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "related":
+            qs = self.get_queryset(request)
+            kwargs["queryset"] = qs
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 @admin.register(PostContent)
 class PostContentAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
