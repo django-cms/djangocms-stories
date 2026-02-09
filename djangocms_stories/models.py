@@ -331,7 +331,12 @@ class Post(models.Model):
         help_text=_("Type a tag and hit tab, or start typing and select from autocomplete list."),
     )
 
-    related = SortedManyToManyField("self", verbose_name=_("Related Posts"), blank=True, symmetrical=False)
+    related = SortedManyToManyField(
+        "self",
+        verbose_name=_("Related Posts"),
+        blank=True,
+        symmetrical=False,
+    )
 
     objects = GenericDateTaggedManager()
 
@@ -343,10 +348,11 @@ class Post(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._content_cache = {}
+        self._admin_content_cache = False
+        self._content_cache = None
         self._language_cache = None
 
-    def __str__(self):
+    def __str__(self) -> str:
         default = gettext("Post (no translation)")
         return self.safe_translation_getter("title", any_language=True, default=default, show_draft_content=True)
 
@@ -356,26 +362,38 @@ class Post(models.Model):
             return False
         return bool(self.date_featured <= now())
 
+    def _get_content(self, language: str, admin_content: bool, qs) -> models.Model | None:
+        if self._content_cache is None or admin_content is not self._admin_content_cache:
+            self._content_cache = {obj.language: obj for obj in qs}
+            self._language_cache = list(self._content_cache.keys())
+            self._admin_content_cache = admin_content
+        return self._content_cache.get(language)
+
     def get_content(self, language=None, show_draft_content=False):
         if not language:
             language = translation.get_language()
 
-        key = f"{language}_{'latest' if show_draft_content else 'public'}"
+        if show_draft_content:
+            import warnings
 
-        try:
-            return self._content_cache[key]
-        except KeyError:
-            if show_draft_content:
-                qs = self.postcontent_set(manager="admin_manager").current_content()
-            else:
-                qs = self.postcontent_set
-            qs = qs.prefetch_related(
-                "placeholders",
-                "post__categories",
-            ).filter(language=language)
+            warnings.warn(
+                "The `show_draft_content` parameter is deprecated and will be removed in future versions. "
+                "Use the get_admin_content to fetch latest content instead.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+            return self.get_admin_content(language)
+        return self._get_content(language or get_language(), False, self.postcontent_set.all())
 
-            self._content_cache[key] = qs.first()
-            return self._content_cache[key]
+    def get_admin_content(self, language=None):
+        if not language:
+            language = translation.get_language()
+            # Use admin cache if available
+        if hasattr(self, "_admin_prefetch_cache") and not self._admin_content_cache:
+            self._content_cache = {obj.language: obj for obj in self._admin_prefetch_cache}
+            self._language_cache = list(self._content_cache.keys())
+            self._admin_content_cache = True
+        return self._get_content(language, True, self.postcontent_set(manager="admin_manager").latest_content())
 
     def safe_translation_getter(
         self, field, default=None, language_code=None, any_language=False, show_draft_content=False
@@ -391,9 +409,10 @@ class Post(models.Model):
         to make this behavior the default for the given field.
         """
 
-        content_obj = self.get_content(language_code, show_draft_content=show_draft_content)
+        getter = self.get_admin_content if show_draft_content else self.get_content
+        content_obj = getter(language_code)
         if content_obj is None and any_language and self.get_available_languages():
-            content_obj = self.get_content(self.get_available_languages()[0], show_draft_content=show_draft_content)
+            content_obj = getter(self.get_available_languages()[0])
         return getattr(content_obj, field, default)
 
     @property

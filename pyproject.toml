@@ -58,6 +58,7 @@ optional-dependencies.test = [
   "pytest",
   "pytest-asyncio",
   "pytest-django",
+  "pytest-factoryboy",
 ]
 # urls.Documentation = "https://djangocms-blog.readthedocs.io/"
 urls.Homepage = "https://github.com/django-cms/djangocms-stories"

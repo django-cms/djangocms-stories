@@ -29,7 +29,7 @@ def test_base_fixture(post_content):
     post = post_content.post
     assert post.featured() is False
     assert post.date == post.date_created  # No date_published or date_featured set, so date_created is used
-    assert post.get_content(language="en", show_draft_content=True) == post_content
+    assert post.get_admin_content(language="en") == post_content
     assert post.get_image_full_url() == ""
     assert post.get_image_width() is None
     assert post.get_image_height() is None
@@ -37,12 +37,12 @@ def test_base_fixture(post_content):
     assert post.full_image_options() == {"crop": True, "size": "640x360", "upscale": False}
 
     if apps.is_installed("djangocms_versioning"):
-        assert post.get_content(language="en", show_draft_content=False) is None
+        assert post.get_content(language="en") is None
     else:
         # Some post properties access the content and are only available if the content is published
         assert str(post_content.post) == "Test Post"
         assert post.guid == hashlib.sha256(force_bytes(f"-en-test-post-{post.app_config.namespace}-")).hexdigest()
-        assert post.get_content(language="en", show_draft_content=False) == post_content
+        assert post.get_content(language="en") == post_content
 
     # PostContent properties
     assert post_content.date_modified is post_content.post.date_modified
@@ -118,7 +118,7 @@ def test_post_unicode_slug(db, post, admin_user):
         assert post.get_title(language="en") == "Meta Accentué"
         post_content.meta_title = ""
         post_content.save()
-        post._content_cache = {}  # Clear the cache to force re-fetching
+        post._content_cache = None  # Clear the cache to force re-fetching
         assert post.get_title(language="fr") == "Accentué"
         assert post.get_title(language="en") == "Accentué"
         assert post.guid == hashlib.sha256(force_bytes(f"-fr-accentué-{post.app_config.namespace}-")).hexdigest()
@@ -188,13 +188,13 @@ def test_get_author(db):
 
 
 @pytest.mark.django_db
-def test_get_content_caches(post_content):
-    """Test that get_content caches the result."""
+def test_get_admin_content_caches(post_content):
+    """Test that get_admin_content caches the result."""
     post = post_content.post
-    post_content = post.get_content(language="en", show_draft_content=True)
+    post_content = post.get_admin_content(language="en")
     with assert_num_queries(0):
         # This should hit the cache
-        assert post.get_content(language="en", show_draft_content=True) is post_content
+        assert post.get_admin_content(language="en") is post_content
 
 
 @pytest.mark.django_db
