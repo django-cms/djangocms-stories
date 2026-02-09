@@ -3,7 +3,7 @@ import pytest
 from django import VERSION as DJANGO_VERSION
 
 from django.contrib.auth import get_user_model
-from django.test import Client
+from django.test import Client, RequestFactory
 from django.urls import reverse
 from django.utils.translation import override
 
@@ -136,6 +136,36 @@ def test_postadmin_change_list_view_other_lang(admin_client, default_config, ass
 
 
 @pytest.mark.django_db
+def test_postadmin_changelist_query_count_with_many_posts(admin_client, many_posts):
+    from django.db import connection
+    from django.test.utils import CaptureQueriesContext
+
+    url = reverse("admin:djangocms_stories_post_changelist")
+
+    with CaptureQueriesContext(connection) as queries:
+        response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert len(many_posts) >= 10
+    # Query breakdown (from CaptureQueriesContext on 2026-02-09, 10 posts):
+    # 01 session lookup
+    # 02 admin user lookup
+    # 03 categories list (for list filter)
+    # 04 stories config list (for list filter / defaults)
+    # 05 sites list (for list filter)
+    # 06 tag list for Post model (taggit filter)
+    # 07-08 post count (pagination + result count)
+    # 09 post changelist rows (select_related author, app_config)
+    # 10 postcontent prefetch for listed posts
+    # 11 categories prefetch for listed posts
+    # 12 sites prefetch for listed posts
+    # 13 published date range aggregation (first/last)
+    # 14 published year archive values
+    # 15-19 CMS usersettings/clipboard bootstrap (first visit)
+    assert len(queries) <= 21  # Leeway of three queries for minor changes in Django
+
+
+@pytest.mark.django_db
 def test_postadmin_bulk_enable_comments(admin_client, default_config, assert_html_in_response):
     # Create some posts
     from .factories import PostFactory
@@ -210,10 +240,10 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     )
 
     # Both post and post content fields are present
-    expected_tag = "label" if DJANGO_VERSION <= (6, 0) else "legend"
-    assert_html_in_response(
-        f'<{expected_tag} class="inline" for="id_author">Author:</{expected_tag}>', response
-    )  # Post author field
+    if DJANGO_VERSION >= (6,0):
+        assert_html_in_response('<legend class="inline" for="id_author">Author:</legend>', response)  # Post author field
+    else:
+        assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
     assert_html_in_response(
         '<label class="required" for="id_content__title">Title (English):</label>', response
     )  # PostContent title field
@@ -261,9 +291,15 @@ def test_postadmin_lookup_allowed(admin_user):
     admin_instance = PostAdmin(Post, site)
 
     # These lookups should be allowed
-    assert admin_instance.lookup_allowed("post__categories__name", None)
-    assert admin_instance.lookup_allowed("post__app_config__namespace", None)
-
+    if DJANGO_VERSION >= (6, 0):
+        request = RequestFactory().get("/")
+        request.user = admin_user
+        assert admin_instance.lookup_allowed("post__categories__name", None, request)
+        assert admin_instance.lookup_allowed("post__app_config__namespace", None, request)
+    else:
+        assert admin_instance.lookup_allowed("post__categories__name", None)
+        assert admin_instance.lookup_allowed("post__app_config__namespace", None)
+    
 
 def test_postadmin_has_restricted_sites_no_restriction(admin_user):
     """Test has_restricted_sites when user has no site restrictions"""
@@ -527,12 +563,12 @@ def test_sitelistfilter_queryset(admin_user, default_config):
 
 def test_modelapphookconfig_app_config_select_single_config(admin_user, default_config):
     """Test _app_config_select when only one config exists"""
-    from djangocms_stories.admin import CategoryAdmin
-    from djangocms_stories.models import PostCategory
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
     from django.test import RequestFactory
     from django.contrib.admin.sites import site
 
-    admin_instance = CategoryAdmin(PostCategory, site)
+    admin_instance = PostAdmin(Post, site)
     request = RequestFactory().get("/")
     request.user = admin_user
 
@@ -543,12 +579,151 @@ def test_modelapphookconfig_app_config_select_single_config(admin_user, default_
 
 def test_modelapphookconfig_app_config_select_from_get(admin_user, default_config):
     """Test _app_config_select when app_config is in GET params"""
-    from djangocms_stories.admin import CategoryAdmin
-    from djangocms_stories.models import PostCategory
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
     from django.test import RequestFactory
     from django.contrib.admin.sites import site
 
-    admin_instance = CategoryAdmin(PostCategory, site)
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/", {"app_config": default_config.pk})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result == default_config
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_multiple_configs_no_params(admin_user):
+    """Test _app_config_select when multiple configs exist and no params provided"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from .factories import StoriesConfigFactory
+
+    # Create multiple configs
+    StoriesConfigFactory(namespace="config1", app_title="Config 1")
+    StoriesConfigFactory(namespace="config2", app_title="Config 2")
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/")
+    request.user = admin_user
+
+    # With multiple configs and no params, should return None
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_from_post(admin_user, default_config):
+    """Test _app_config_select when app_config is in POST params"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().post("/", {"app_config": default_config.pk})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result == default_config
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_post_id(admin_user):
+    """Test _app_config_select with invalid POST app_config ID"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    # Try with non-existent ID
+    request = RequestFactory().post("/", {"app_config": 99999})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_post_value(admin_user):
+    """Test _app_config_select with non-numeric POST app_config"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().post("/", {"app_config": "invalid"})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_get_id(admin_user):
+    """Test _app_config_select with invalid GET app_config ID"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/", {"app_config": 99999})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_invalid_get_value(admin_user):
+    """Test _app_config_select with non-numeric GET app_config"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/", {"app_config": "not-a-number"})
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, None)
+    assert result is None
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_from_existing_object(admin_user, default_config):
+    """Test _app_config_select when obj has app_config attribute"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+    from .factories import PostFactory
+
+    post = PostFactory(app_config=default_config)
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/")
+    request.user = admin_user
+
+    result = admin_instance._app_config_select(request, post)
+    assert result == default_config
+
+
+@pytest.mark.django_db
+def test_modelapphookconfig_app_config_select_get_overrides_single(admin_user, default_config):
+    """Test _app_config_select: GET param takes precedence over single config count"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    # Even with single config, explicit GET param should be used
     request = RequestFactory().get("/", {"app_config": default_config.pk})
     request.user = admin_user
 
@@ -621,8 +796,8 @@ def test_postadmin_queryset_distinct(admin_user, default_config):
 
     queryset = admin_instance.get_queryset(request)
 
-    # Should be distinct and have prefetch_related for postcontent_set
-    assert queryset.query.distinct
+    # Check that author is select_related
+    assert "author" in queryset.query.select_related
 
 
 def test_register_unregister_extension_inline():
@@ -938,6 +1113,19 @@ def test_postadmin_get_urls_custom():
     # Should have custom URL for content redirect
     url_patterns = [url.name for url in urls if hasattr(url, "name")]
     assert "djangocms_stories_postcontent_changelist" in url_patterns
+
+
+def test_postadmin_postcontent_changelist_redirects(admin_client):
+    """The custom admin URL 'content/' should redirect to the Post changelist."""
+
+    # The custom URL is registered on the Post admin (".../post/content/").
+    # We build it from the Post changelist URL to avoid a name collision with
+    # the PostContent modeladmin changelist.
+    url = reverse("admin:djangocms_stories_post_changelist").rstrip("/") + "/content/"
+    response = admin_client.get(url)
+
+    assert response.status_code == 302
+    assert response["Location"] == reverse("admin:djangocms_stories_post_changelist")
 
 
 def test_postadmin_save_related_no_restricted_sites(admin_user, default_config):
@@ -1280,10 +1468,10 @@ def test_add_post_admin_flow_with_endpoints(admin_client, simple_w_placeholder):
             "app_config": simple_w_placeholder.pk,
             "language": "en",
         },
-        follow=False,
+        follow=True,
     )
 
-    # Should return 200 with the actual post content form (not redirect)
+    # Should return 200 with the actual post content form
     assert response.status_code == 200
     # Check that we got the Post content form (title indicates "Add English content")
     assert b"Add" in response.content or b"add" in response.content
@@ -1357,3 +1545,221 @@ def test_add_post_admin_with_preselected_config(admin_client, simple_w_placehold
 
     new_post = Post.objects.latest("id")
     assert new_post.app_config == simple_w_placeholder
+
+
+@pytest.mark.django_db
+def test_add_post_with_one_story_config(admin_client, simple_w_placeholder):
+    """Test adding a post when only one story config exists - should skip AppConfigForm and save successfully."""
+    from djangocms_stories.models import Post, PostContent
+
+    # Ensure only one config exists
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    assert StoriesConfig.objects.count() == 1
+
+    # Step 1: GET add view should skip AppConfigForm and show the post form directly
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the post form directly (title field should be present)
+    assert b"title" in response.content.lower()
+    # Should not show the app_config selection form
+    assert "Select the app config" not in response.content.decode()
+
+    # Step 2: Submit the post form with a title
+    initial_post_count = Post.objects.count()
+
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__language": "en",
+        "content__title": "Test Post Single Config",
+        "content__subtitle": "Test Subtitle",
+        "content__slug": "test-post-single-config",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=True)
+
+    # Should successfully save
+    assert response.status_code == 200
+    assert Post.objects.count() == initial_post_count + 1
+
+    # Verify the post was created with correct data
+    new_post = Post.objects.latest("id")
+    assert new_post.app_config == simple_w_placeholder
+
+    new_post_content = PostContent.admin_manager.current_content(post=new_post, language="en").first()
+    assert new_post_content is not None
+    assert new_post_content.title == "Test Post Single Config"
+
+
+@pytest.mark.django_db
+def test_add_post_with_two_story_configs(admin_client, simple_w_placeholder, simple_wo_placeholder):
+    """Test adding a post when two story configs exist - should show AppConfigForm first."""
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    # Ensure we have two configs
+    assert StoriesConfig.objects.count() == 2
+
+    # Step 1: GET add view should show AppConfigForm
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the app_config selection form
+    response_text = response.content.decode()
+    assert "app_config" in response_text
+    # Should have select dropdown or choice field for selecting between configs
+    assert b"<select" in response.content or b"<option" in response.content
+
+    # Step 2: POST app_config selection to proceed to the actual Post form
+    response = admin_client.post(
+        url,
+        data={
+            "app_config": simple_w_placeholder.pk,
+            "language": "en",
+            "app_config_form": "on",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    # Should now show the post form with title field
+    assert b"title" in response.content.lower()
+
+    # Step 3: Submit the post form to create the post
+    from djangocms_stories.models import Post, PostContent
+
+    initial_post_count = Post.objects.count()
+
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__language": "en",
+        "content__title": "Test Post Two Configs",
+        "content__subtitle": "Test Subtitle",
+        "content__slug": "test-post-two-configs",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=True)
+
+    # Should successfully save
+    assert response.status_code == 200
+    assert Post.objects.count() == initial_post_count + 1
+
+    # Verify the post was created with the selected config
+    new_post = Post.objects.latest("id")
+    assert new_post.app_config == simple_w_placeholder
+
+    new_post_content = PostContent.admin_manager.current_content(post=new_post, language="en").first()
+    assert new_post_content is not None
+    assert new_post_content.title == "Test Post Two Configs"
+
+
+@pytest.mark.django_db
+def test_add_post_with_two_story_configs_invalid_form(admin_client, simple_w_placeholder, simple_wo_placeholder):
+    """Test that AppConfigForm is shown again when post form submission is invalid."""
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    # Ensure we have two configs
+    assert StoriesConfig.objects.count() == 2
+
+    # Step 1: GET add view should show AppConfigForm
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the app_config selection form
+    assert "app_config" in response.content.decode()
+
+    # Step 2: POST app_config selection to proceed to the actual Post form
+    response = admin_client.post(
+        url,
+        data={
+            "app_config": simple_w_placeholder.pk,
+            "language": "en",
+            "app_config_form": "on",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    # Should now show the post form with title field
+    assert b"title" in response.content.lower()
+
+    # Step 3: Submit an invalid post form (missing required title field)
+    from djangocms_stories.models import Post
+
+    initial_post_count = Post.objects.count()
+
+    post_data = {
+        "app_config": simple_w_placeholder.pk,
+        "content__language": "en",
+        # Missing content__title - required field
+        "content__subtitle": "Test Subtitle",
+        "content__slug": "test-post-invalid",
+        "_save": "Save",
+    }
+
+    response = admin_client.post(url, data=post_data, follow=False)
+
+    # Should not create a new post since form is invalid
+    assert Post.objects.count() == initial_post_count
+
+    # Response should indicate form validation error or redirect to AppConfigForm
+    # The admin form should either show validation errors (200) or handle the invalid state
+    # We'll verify that we get either a form re-display with errors
+    assert response.status_code in (200, 302)
+
+    # If it's a redirect, follow it
+    if response.status_code == 302:
+        response = admin_client.get(response.url)
+
+    # Should show the AppConfigForm again since we're back at the add view
+    response_text = response.content.decode()
+    assert "app_config" in response_text
+    # AppConfigForm should be rendered again
+    assert "<select" in response_text or "<option" in response_text
+
+
+@pytest.mark.django_db
+def test_add_post_app_config_form_invalid(admin_client, simple_w_placeholder, simple_wo_placeholder):
+    """Test that AppConfigForm is shown again when app_config selection is invalid."""
+    from djangocms_stories.cms_appconfig import StoriesConfig
+
+    # Ensure we have two configs
+    assert StoriesConfig.objects.count() == 2
+
+    # Step 1: GET add view should show AppConfigForm
+    url = reverse("admin:djangocms_stories_post_add")
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    # Should show the app_config selection form
+    assert "app_config" in response.content.decode()
+
+    # Step 2: POST invalid app_config selection (using non-existent pk)
+    invalid_pk = 9999  # Non-existent pk
+    response = admin_client.post(
+        url,
+        data={
+            "app_config": invalid_pk,
+            "language": "en",
+            "app_config_form": "on",
+        },
+        follow=False,
+    )
+
+    # Should get a response (200 for re-displayed form with errors, or 302 redirect)
+    assert response.status_code in (200, 302)
+
+    # If redirect, follow it
+    if response.status_code == 302:
+        response = admin_client.get(response.url)
+
+    # Should show the AppConfigForm again with validation errors
+    response_text = response.content.decode()
+    assert "app_config" in response_text
+    # Should have the form controls to select an app config again
+    assert "<select" in response_text or "<option" in response_text

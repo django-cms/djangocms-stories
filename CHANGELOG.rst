@@ -2,11 +2,28 @@
 Changelog
 =========
 
-0.7.5 (2025-11-21)
+0.7.5 (2025-12-03)
 ------------------
 
-* fix: Stories config form instead of current values always presented inital values
 * fix: Allow to run without django-meta installed
+* fix: Stories config form instead of current values always presented initial values
+* fix: Migration from djangocms-blog version 2.0.1 or later by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/41
+* fix: Adjust quote chars for sql statements to db vendor by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/42
+* fix: Menus failed on 404 pages by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/49
+* fix: Features post plugin stayed empty by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/50
+* fix: Authors plugin did throw an exception by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/51
+* fix: feeds raised exceptions by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/52
+* fix: Allow for request-based site detection by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/56
+* fix: Metadata for PostContent by @wfehr in https://github.com/django-cms/djangocms-stories/pull/48
+* fix: Only initialize config form, if new configs are created by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/58
+* fix: Archive plugin by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/61
+* fix: Category admin form sometimes did not initialize correctly by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/62
+* fix: 2-stage blog add form by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/63
+* chore: Add tests for template tags by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/53
+* chore: Improve coverage by adding admin and model tests by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/57
+* chore: Prepare release 0.7.5 by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/59
+
+**Full Changelog**: https://github.com/django-cms/djangocms-stories/compare/0.7.3...0.7.5
 
 0.7.4 (2025-09-17)
 ------------------

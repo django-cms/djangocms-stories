@@ -1,12 +1,12 @@
-import copy
 from copy import deepcopy
 
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from cms.admin.utils import GrouperModelAdmin
 from cms.models import ValidationError
 from cms.utils import get_language_from_request
+from cms.utils.conf import get_cms_setting
 from cms.utils.urlutils import admin_reverse
-from django.conf import settings
+from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin import helpers
 from django.contrib.admin.options import IS_POPUP_VAR, TO_FIELD_VAR, InlineModelAdmin, get_content_type_for_model
@@ -14,7 +14,7 @@ from django.contrib.admin.utils import unquote
 from django.contrib.sites.models import Site
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import Prefetch, signals
+from django.db.models import signals
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path
@@ -22,29 +22,13 @@ from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
 
-from .cms_config import StoriesCMSConfig
 from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
 from .models import PostCategory, StoriesConfig, Post, PostContent
 from .settings import get_setting
 from .utils import is_versioning_enabled
 
 signal_dict = {}
-
-
-if StoriesCMSConfig.djangocms_versioning_enabled:
-    from djangocms_versioning.admin import ExtendedGrouperVersionAdminMixin, StateIndicatorMixin
-else:
-    # Declare stubs
-    class StateIndicatorMixin:
-        def state_indicator(self, obj):
-            pass
-
-        def get_list_display(self, request):
-            # remove "indicator" entry
-            return [item for item in super().get_list_display(request) if item != "state_indicator"]
-
-    class ExtendedGrouperVersionAdminMixin:
-        pass
+admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
 
 
 def register_extension(klass):
@@ -288,53 +272,50 @@ class ModelAppHookConfig:
         """
         if object_id is None:
             # Add new object
-            if request.method == "GET" or "app_config" in request.POST:
+            if request.method == "GET":
                 app_config_default = self._app_config_select(request, None)
                 if not app_config_default:
-                    if request.method == "POST":
-                        form = AppConfigForm(request.POST)
-                    else:
-                        form = AppConfigForm(
-                            initial={"app_config": None, "language": get_language_from_request(request)}
-                        )
+                    form = AppConfigForm(initial={"app_config": None, "language": get_language_from_request(request)})
                     return self.render_app_config_form(request, form)
-                elif request.method == "POST" and "content__title" not in request.POST:
+                request.GET = request.GET.copy()
+                request.GET["app_config"] = app_config_default.pk
+            elif "app_config" in request.POST:
+                app_config_default = self._app_config_select(request, None)
+                if not app_config_default:
+                    form = AppConfigForm(request.POST)
+                    return self.render_app_config_form(request, form)
+                elif "app_config_form" in request.POST:
                     # This is the post from the AppConfigForm, move to opening the actual change form
                     # Take the provided values (app_config, languages) as initial values for the new form
-                    get = copy.copy(request.GET)  # Make a copy to modify
-                    get["app_config"] = app_config_default.pk
-                    get["language"] = request.POST.get("language", get_language_from_request(request))
-                    request.GET = get
-                    request.method = "GET"  # Force POST to skip app_config form next time
+                    get_params = request.GET.copy()
+                    get_params["app_config"] = app_config_default.pk
+                    get_params["language"] = request.POST.get("language", get_language_from_request(request))
+                    return HttpResponseRedirect(f"{request.path}?{get_params.urlencode()}")
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 
 @admin.register(PostCategory)
-class CategoryAdmin(FrontendEditableAdminMixin, ModelAppHookConfig, TranslatableAdmin):
+class CategoryAdmin(FrontendEditableAdminMixin, TranslatableAdmin):
     form = CategoryAdminForm
     list_display = [
         "name",
         "parent",
         "app_config",
         "all_languages_column",
-        "priority",
     ]
     fieldsets = (
-        (None, {"fields": ("parent", "app_config", "name", "meta_description")}),
+        (None, {"fields": ("parent", "app_config", "name", "slug", "meta_description")}),
         (
             _("Info"),
             {
-                "fields": (
-                    "abstract",
-                    "priority",
-                ),
+                "fields": ("abstract",),
                 "classes": ("collapse",),
             },
         ),
         (
-            _("Images"),
+            _("Image"),
             {
-                "fields": ("main_image", "main_image_thumbnail", "main_image_full"),
+                "fields": ("main_image", ("main_image_thumbnail", "main_image_full")),
                 "classes": ("collapse",),
             },
         ),
@@ -343,22 +324,23 @@ class CategoryAdmin(FrontendEditableAdminMixin, ModelAppHookConfig, Translatable
     search_fields = ["translationas__name", "meta_description"]
 
     class Media:
-        css = {"all": ("{}djangocms_stories/css/{}".format(settings.STATIC_URL, "djangocms_stories_admin.css"),)}
+        css = {"all": ("djangocms_stories/css/djangocms_stories_admin.css",)}
 
 
 @admin.register(Post)
 class PostAdmin(
     FrontendEditableAdminMixin,
     ModelAppHookConfig,
-    StateIndicatorMixin,
-    ExtendedGrouperVersionAdminMixin,
     GrouperModelAdmin,
 ):
-    # form = PostAdminForm
     app_config_initial_fields = ("app_config", "content__language")
     extra_grouping_fields = ("language",)
     inlines = []
-    list_display = ("title", "author", "app_config", "state_indicator", "admin_list_actions")
+    list_display = (
+        "title",
+        "author",
+        "app_config",
+    )
     list_display_links = ("title",)
     search_fields = (
         "content__title",
@@ -438,7 +420,6 @@ class PostAdmin(
     an optional third value if the target "fields" has subgroups.
     """
 
-    app_config_values = {"default_published": "publish"}
     _sites = None
     _post_content_type = None
 
@@ -452,6 +433,8 @@ class PostAdmin(
         """Adds the language from the request to the form class"""
         form_class = super().get_form(request, obj, **kwargs)
         form_class.language = get_language_from_request(request)
+        if obj is None and "app_config" in form_class.base_fields:
+            form_class.base_fields["app_config"].widget = forms.HiddenInput()
         return form_class
 
     def can_change_content(self, request, content_obj) -> bool:
@@ -526,7 +509,7 @@ class PostAdmin(
         urls = [
             path(
                 "content/",
-                RedirectView.as_view(pattern_name="djangocms_stories_post_changelist"),
+                RedirectView.as_view(pattern_name=f"{admin_namespace}:djangocms_stories_post_changelist"),
                 name="djangocms_stories_postcontent_changelist",
             ),
         ]
@@ -635,10 +618,25 @@ class PostAdmin(
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         sites = self.get_restricted_sites(request)
-        if sites.exists():
-            pks = list(sites.all().values_list("pk", flat=True))
+        if sites:
+            pks = [site.pk for site in sites]
             qs = qs.filter(sites__in=pks)
-        return qs.distinct().prefetch_related(Prefetch("postcontent_set", queryset=PostContent.admin_manager.all()))
+        prefetch = models.Prefetch("postcontent_set", queryset=PostContent.admin_manager.latest_content(), to_attr="_admin_prefetch_cache")
+        return qs.select_related("author", "app_config").prefetch_related(prefetch, "categories", "sites")
+
+    def get_content_obj(self, obj):
+        if obj is None or isinstance(obj, self.content_model):
+            return obj
+        if obj in self._content_obj_cache:
+            return self._content_obj_cache[obj]
+        if hasattr(obj, "_admin_prefetch_cache"):
+            for content_obj in obj._admin_prefetch_cache:
+                if all(getattr(content_obj, key, None) == value for key, value in self.current_content_filters.items()):
+                    self._content_obj_cache[obj] = content_obj
+                    return content_obj
+            self._content_obj_cache[obj] = None
+            return None
+        return super().get_content_obj(obj)
 
     def save_related(self, request, form, formsets, change):
         if self.get_restricted_sites(request).exists():
@@ -651,6 +649,11 @@ class PostAdmin(
                 form.instance.sites.add(*self.get_restricted_sites(request).all().values_list("pk", flat=True))
         super().save_related(request, form, formsets, change)
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "related":
+            qs = self.get_queryset(request)
+            kwargs["queryset"] = qs
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 @admin.register(PostContent)
 class PostContentAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
