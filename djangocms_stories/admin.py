@@ -4,6 +4,7 @@ from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from cms.admin.utils import GrouperModelAdmin
 from cms.models import ValidationError
 from cms.utils import get_language_from_request
+from cms.utils.conf import get_cms_setting
 from cms.utils.urlutils import admin_reverse
 from django import forms
 from django.contrib import admin, messages
@@ -27,6 +28,7 @@ from .settings import get_setting
 from .utils import is_versioning_enabled
 
 signal_dict = {}
+admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
 
 
 def register_extension(klass):
@@ -507,7 +509,7 @@ class PostAdmin(
         urls = [
             path(
                 "content/",
-                RedirectView.as_view(pattern_name="djangocms_stories_post_changelist"),
+                RedirectView.as_view(pattern_name=f"{admin_namespace}:djangocms_stories_post_changelist"),
                 name="djangocms_stories_postcontent_changelist",
             ),
         ]
