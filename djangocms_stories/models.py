@@ -362,10 +362,11 @@ class Post(models.Model):
             return False
         return bool(self.date_featured <= now())
 
-    def _get_content(self, language: str, qs) -> models.Model | None:
-        if self._content_cache is None:
+    def _get_content(self, language: str, admin_content: bool, qs) -> models.Model | None:
+        if self._content_cache is None or admin_content is not self._admin_content_cache:
             self._content_cache = {obj.language: obj for obj in qs}
             self._language_cache = list(self._content_cache.keys())
+            self._admin_content_cache = admin_content
         return self._content_cache.get(language)
 
     def get_content(self, language=None, show_draft_content=False):
@@ -382,20 +383,17 @@ class Post(models.Model):
                 stacklevel=2,
             )
             return self.get_admin_content(language)
-        if self._admin_content_cache:
-            self._content_cache = None
-            self._admin_content_cache = False
-        return self._get_content(language or get_language(), self.postcontent_set.all())
+        return self._get_content(language or get_language(), False, self.postcontent_set.all())
 
     def get_admin_content(self, language=None):
         if not language:
             language = translation.get_language()
             # Use admin cache if available
-        if hasattr(self, "_admin_prefetch_cache") and not self._content_cache:
-            self._admin_content_cache = True
+        if hasattr(self, "_admin_prefetch_cache") and not self._admin_content_cache:
             self._content_cache = {obj.language: obj for obj in self._admin_prefetch_cache}
             self._language_cache = list(self._content_cache.keys())
-        return self._get_content(language, self.postcontent_set(manager="admin_manager").latest_content())
+            self._admin_content_cache = True
+        return self._get_content(language, True, self.postcontent_set(manager="admin_manager").latest_content())
 
     def safe_translation_getter(
         self, field, default=None, language_code=None, any_language=False, show_draft_content=False
