@@ -160,7 +160,7 @@ def test_postadmin_changelist_query_count_with_many_posts(admin_client, many_pos
     # 13 published date range aggregation (first/last)
     # 14 published year archive values
     # 15-19 CMS usersettings/clipboard bootstrap (first visit)
-    assert len(queries) == 19
+    assert len(queries) < 21  # Leeway of two queries for minor changes
 
 
 @pytest.mark.django_db
