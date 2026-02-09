@@ -1,28 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
 # Translators:
-# Alban Tiberghien <alban.tiberghien@gmail.com>, 2017
-# Corentin Bettiol, 2023
-# Iacopo Spalletti, 2014
-# yakky <i.spalletti@nephila.it>, 2016
-# Robin Durner, 2022
+# Fabian Braun <fsbraun@gmx.de>, 2026
+# Corentin Bettiol, 2026
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: djangocms-blog\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-08 06:51+0200\n"
-"PO-Revision-Date: 2014-03-29 15:29+0000\n"
-"Last-Translator: Corentin Bettiol, 2023\n"
-"Language-Team: French (http://app.transifex.com/nephila/djangocms-blog/"
-"language/fr/)\n"
-"Language: fr\n"
+"PO-Revision-Date: 2026-02-02 20:41+0000\n"
+"Last-Translator: Corentin Bettiol, 2026\n"
+"Language-Team: French (https://app.transifex.com/divio/teams/58664/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
-"1000000 == 0 ? 1 : 2;\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 "X-Generator: Lokalize 1.5\n"
 
 #: admin.py:97
@@ -30,20 +28,17 @@ msgid "site"
 msgstr "site"
 
 #: admin.py:121
-#, fuzzy
-#| msgid "app. config"
 msgid "Select app config"
-msgstr "configuration de l'application"
+msgstr "Sélectionnez la configuration d'application"
 
 #: admin.py:122
 msgid "Select the app config for the new object"
-msgstr ""
+msgstr "Sélectionnez la configuration d'application pour le nouvel objet"
 
 #: admin.py:233
-#, fuzzy, python-format
-#| msgid "Add post"
+#, python-format
 msgid "Add %s"
-msgstr "Ajouter un article"
+msgstr "Ajouter %s"
 
 #: admin.py:333 admin.py:404
 msgid "Info"
@@ -59,7 +54,7 @@ msgstr "SEO"
 
 #: admin.py:455
 msgid "Empty"
-msgstr ""
+msgstr "Vide"
 
 #: admin.py:470
 msgid "Enable comments for selection"
@@ -96,30 +91,24 @@ msgstr ""
 "methodes du modèle Post"
 
 #: apps.py:8 cms_apps.py:14
-#, fuzzy
-#| msgid "Categories"
 msgid "Stories"
-msgstr "Catégories"
+msgstr "Stories"
 
 #: cms_appconfig.py:82
-#, fuzzy
-#| msgid "blog config"
 msgid "stories config"
-msgstr "Configuration du blog"
+msgstr "configuration de stories"
 
 #: cms_appconfig.py:83
-#, fuzzy
-#| msgid "blog configs"
 msgid "stories configs"
-msgstr "Configurations du blog"
+msgstr "configurations de stories"
 
 #: cms_appconfig.py:86
 msgid "type"
-msgstr ""
+msgstr "type"
 
 #: cms_appconfig.py:90
 msgid "instance namespace"
-msgstr ""
+msgstr "namespace d'instance"
 
 #: cms_appconfig.py:96
 msgid "application title"
@@ -130,10 +119,8 @@ msgid "object name"
 msgstr "Nom de l’objet"
 
 #: cms_appconfig.py:107
-#, fuzzy
-#| msgid "Default size of full images"
 msgid "default size of full images"
-msgstr "Taille par défaut des images principales"
+msgstr "taille par défaut des images en entier"
 
 #: cms_appconfig.py:108
 msgid ""
@@ -144,10 +131,8 @@ msgstr ""
 "article."
 
 #: cms_appconfig.py:117
-#, fuzzy
-#| msgid "Default size of thumbnail images"
 msgid "default size of thumbnail images"
-msgstr "Taille par défaut des images miniatures"
+msgstr "taille par défaut des miniatures d'images"
 
 #: cms_appconfig.py:118
 msgid ""
@@ -174,18 +159,16 @@ msgid "Enable related posts"
 msgstr "Activer articles similaires"
 
 #: cms_appconfig.py:138
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "Aucun"
+msgstr "Non"
 
 #: cms_appconfig.py:139
 msgid "Yes, from this stories config"
-msgstr ""
+msgstr "Oui, depuis cette configuration de stories"
 
 #: cms_appconfig.py:140
 msgid "Yes, from this site"
-msgstr ""
+msgstr "Oui, depuis ce site"
 
 #: cms_appconfig.py:145
 msgid "Set author by default"
@@ -198,18 +181,16 @@ msgstr "Nombre d’articles par page"
 #: cms_appconfig.py:151
 msgid "When paginating list views, how many articles per page?"
 msgstr ""
-"Lors de la pagination des listes, combien d’articles souhaitez vous afficher "
-"par page ?"
+"Lors de la pagination des listes, combien d’articles souhaitez vous afficher"
+" par page ?"
 
 #: cms_appconfig.py:158
 msgid "Template prefix"
 msgstr "Prefixe dans le template"
 
 #: cms_appconfig.py:159
-#, fuzzy
-#| msgid "Alternative directory to load the blog templates from"
 msgid "Alternative directory to load the stories templates from"
-msgstr "Répertoire alternatif à partir duquel charger les templates du blog"
+msgstr "Charger les templates de stories à partir de ce répertoire alternatif"
 
 #: cms_appconfig.py:164
 msgid "Menu structure"
@@ -306,7 +287,8 @@ msgid "Send notifications on post update"
 msgstr "Envoyer des notifications lors de la mise à jour d'un article"
 
 #: cms_appconfig.py:236
-msgid "Emits a desktop notification -if enabled- when editing a published post"
+msgid ""
+"Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
 "Emets une notification sur le bureau, si activée, lors de la édition d'un "
 "article publié"
@@ -326,43 +308,36 @@ msgid "Create a new {0} in {1}"
 msgstr "Ajouter un nouveau {0} dans {1}"
 
 #: cms_menus.py:24
-#, fuzzy
-#| msgid "blog category"
 msgid "Post category menu"
-msgstr "catégorie du blog"
+msgstr "Menu des catégories d'articles"
 
 #: cms_toolbars.py:38
 msgid "View on site"
-msgstr ""
+msgstr "Voir sur le site"
 
 #: cms_toolbars.py:45
 msgid "Preview"
-msgstr ""
+msgstr "Prévisualiser"
 
 #: cms_toolbars.py:67
 msgid "View Published"
-msgstr ""
+msgstr "Voir la version publiée"
 
 #: cms_toolbars.py:111
 #, python-format
 msgid "%(object_name)s properties"
-msgstr ""
+msgstr "propriétés de %(object_name)s "
 
 #: cms_toolbars.py:122
-#, fuzzy
-#| msgid "liveblog entries"
 msgid "All entries"
-msgstr "Entrées liveblog"
+msgstr "Tous les posts"
 
 #: cms_toolbars.py:131
-#, fuzzy, python-format
-#| msgid "object name"
+#, python-format
 msgid "New %(object_name)s"
-msgstr "Nom de l’objet"
+msgstr "Nouveau %(object_name)s"
 
 #: cms_toolbars.py:138
-#, fuzzy
-#| msgid "Edit configuration"
 msgid "Edit Configuration"
 msgstr "Modifier la configuration"
 
@@ -373,6 +348,7 @@ msgstr "configuration de l'application"
 #: cms_wizards.py:93
 msgid "Selected story not available any more. Close wizard."
 msgstr ""
+"La story sélectionnée n'est plus disponible. Vous pouvez fermer la fenêtre."
 
 #: feeds.py:38
 #, python-format
@@ -380,14 +356,12 @@ msgid "Blog articles on %(site_name)s"
 msgstr "Articles de blog sur le site %(site_name)s"
 
 #: forms.py:97
-#, fuzzy
-#| msgid "app. config"
 msgid "App Config"
-msgstr "configuration de l'application"
+msgstr "Configuration de l'application"
 
 #: forms.py:99
 msgid "Select the app config to apply to the new post."
-msgstr ""
+msgstr "Sélectionnez la configuration d'application pour le nouveau post"
 
 #: models.py:100
 msgid "parent"
@@ -402,14 +376,15 @@ msgid "modified at"
 msgstr "modifié le"
 
 #: models.py:109 models.py:309 models.py:641
-msgid "When selecting a value, the form is reloaded to get the updated default"
+msgid ""
+"When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
+"Lorsque vous sélectionnez une valeur, le formulaire est rechargé pour "
+"obtenir la valeur par défaut mise à jour."
 
 #: models.py:111
-#, fuzzy
-#| msgid "Sitemap priority"
 msgid "priority"
-msgstr "Priorité de la sitemap"
+msgstr "priorité"
 
 #: models.py:113 models.py:271
 msgid "main image"
@@ -440,22 +415,16 @@ msgid "abstract"
 msgstr "résumé"
 
 #: models.py:172
-#, fuzzy
-#| msgid "blog category"
 msgid "post category"
-msgstr "catégorie du blog"
+msgstr "catégorie du post"
 
 #: models.py:173
-#, fuzzy
-#| msgid "blog categories"
 msgid "post categories"
-msgstr "catégories du blog"
+msgstr "catégories des posts"
 
 #: models.py:222
-#, fuzzy
-#| msgid "BlogCategory (no translation)"
 msgid "PostCategory (no translation)"
-msgstr "Catégorie du blog (sans traduction)"
+msgstr "CatégorieDePost (sans traduction)"
 
 #: models.py:254
 msgid "author"
@@ -479,7 +448,7 @@ msgstr "publié jusqu’à"
 
 #: models.py:265
 msgid "featured date"
-msgstr "date présentée"
+msgstr "date de mise en avant"
 
 #: models.py:266
 msgid "include in RSS feed"
@@ -499,11 +468,11 @@ msgstr "Site(s)"
 
 #: models.py:301
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in "
-"all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in"
+" all the configured sites."
 msgstr ""
-"Sélectionnez les sites dans lesquels afficher l’article. Si aucun site n’est "
-"sélectionné, l’article sera visible dans tous les sites."
+"Sélectionnez les sites dans lesquels afficher l’article. Si aucun site n’est"
+" sélectionné, l’article sera visible dans tous les sites."
 
 #: models.py:315
 msgid ""
@@ -517,42 +486,32 @@ msgid "Related Posts"
 msgstr "Articles similaires"
 
 #: models.py:352
-#, fuzzy
-#| msgid "Add post"
 msgid "post"
-msgstr "Ajouter un article"
+msgstr "post"
 
 #: models.py:353
-#, fuzzy
-#| msgid "Add post"
 msgid "posts"
-msgstr "Ajouter un article"
+msgstr "posts"
 
 #: models.py:363
 msgid "Post (no translation)"
 msgstr "Article (sans traduction)"
 
 #: models.py:461
-#, fuzzy
-#| msgid "title"
 msgid "No title"
-msgstr "Titre"
+msgstr "Sans titre"
 
 #: models.py:544
-#, fuzzy
-#| msgid "post date"
 msgid "post content"
-msgstr "Date de publication"
+msgstr "contenu du post"
 
 #: models.py:545
-#, fuzzy
-#| msgid "post date"
 msgid "post contents"
-msgstr "Date de publication"
+msgstr "contenus des posts"
 
 #: models.py:551
 msgid "language"
-msgstr ""
+msgstr "langue"
 
 #: models.py:553
 msgid "title"
@@ -583,10 +542,8 @@ msgid "text"
 msgstr "texte"
 
 #: models.py:632
-#, fuzzy
-#| msgid "untitled"
 msgid "Untitled"
-msgstr "sans titre"
+msgstr "Sans titre"
 
 #: models.py:644
 msgid "current site"
@@ -597,52 +554,39 @@ msgid "Select items from the current site only"
 msgstr "Sélectionner les éléments à partir du site actuel seulement"
 
 #: models.py:648
-#, fuzzy
-#| msgid "Plugin template"
 msgid "Plugin layout"
 msgstr "Template de plugin"
 
 #: models.py:649
-#, fuzzy
-#| msgid "Select plugin template to load for this instance"
 msgid "Select plugin layout to load for this instance"
 msgstr "Sélectionner un template de plugin pour cette instance"
 
 #: models.py:689 models.py:730
-#, fuzzy
-#| msgid "liveblog entries"
 msgid "entries"
-msgstr "Entrées liveblog"
+msgstr "nombre de posts"
 
 #: models.py:691
-#, fuzzy
-#| msgid "The number of latests articles to be displayed."
 msgid "The number of latests entries to be displayed."
-msgstr "Nombre d’articles récents à afficher."
+msgstr "Le nombre de posts à afficher."
 
 #: models.py:694
 msgid "filter by tag"
 msgstr "filtrer par tag"
 
 #: models.py:696
-#, fuzzy
-#| msgid "Show only the blog articles tagged with chosen tags."
 msgid "Show only the entries tagged with chosen tags."
-msgstr "Afficher seulement les articles qui ont les tags séléctionnés."
+msgstr "Afficher seulement les posts possédant ces tags."
 
 #: models.py:702
 msgid "filter by category"
 msgstr "filtrer par catégorie"
 
 #: models.py:703
-#, fuzzy
-#| msgid "Show only the blog articles tagged with chosen categories."
 msgid "Show only the posts of the chosen categories."
-msgstr "Afficher seulement les articles des catégories séléctionnées"
+msgstr "Afficher seulement les posts possédant ces catégories."
 
 #: models.py:707
-#, fuzzy, python-format
-#| msgid "%s latest articles by tag"
+#, python-format
 msgid "%s latest posts by tag"
 msgstr "%s derniers articles par tag"
 
@@ -651,14 +595,11 @@ msgid "authors"
 msgstr "Auteurs"
 
 #: models.py:732
-#, fuzzy
-#| msgid "The number of author articles to be displayed."
 msgid "The number of author entries to be displayed."
 msgstr "Le nombre d’articles de l’auteur à afficher"
 
 #: models.py:736
-#, fuzzy, python-format
-#| msgid "%s latest articles by author"
+#, python-format
 msgid "%s latest entries by author"
 msgstr "%s derniers articles par auteur"
 
@@ -731,10 +672,8 @@ msgid "never"
 msgstr "jamais"
 
 #: settings.py:378
-#, fuzzy
-#| msgid "articles"
 msgid "Article"
-msgstr "articles"
+msgstr "Article"
 
 #: settings.py:399 settings.py:406 settings.py:493
 msgid "Blog"
@@ -783,21 +722,19 @@ msgstr "Template par défaut"
 
 #: templates/admin/djangocms_stories/post/change_list.html:4
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
-#, fuzzy
-#| msgid "blog articles"
 msgid "Blog articles"
-msgstr "articles du blog"
+msgstr "Articles du blog"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
 msgid "Versions"
-msgstr ""
+msgstr "Versions"
 
 #: templates/djangocms_stories/category_list.html:11
 #: templates/djangocms_stories/plugins/archive.html:26
@@ -871,86 +808,8 @@ msgstr "Articles écrits par"
 
 #: templates/djangocms_stories/plugins/categories.html:15
 msgid "No categories found."
-msgstr "Aucune catégorie trouvée"
+msgstr "Aucune catégorie trouvée."
 
 #: templates/djangocms_stories/post_list.html:13
 msgid "Tag"
 msgstr "Tag"
-
-#~ msgid "Publish selection"
-#~ msgstr "Publier les articles sélectionnés"
-
-#~ msgid "Unpublish selection"
-#~ msgstr "Dépublier les articles sélectionnés"
-
-#~ msgid "Enable liveblog for selection"
-#~ msgstr "Activer le liveblog sur les articles sélectionnés"
-
-#~ msgid "Disable liveblog for selection "
-#~ msgstr "Désactiver le liveblog sur les articles sélectionnés"
-
-#~ msgid "django CMS Blog"
-#~ msgstr "django CMS Blog"
-
-#~ msgid "Post published by default"
-#~ msgstr "Post publié par défaut"
-
-#~ msgid "Set author"
-#~ msgstr "Auteur"
-
-#~ msgid "Blog menu"
-#~ msgstr "Menu du blog"
-
-#~ msgid "Post list"
-#~ msgstr "Liste des articles"
-
-#~ msgid "Category list"
-#~ msgstr "Liste des catégories"
-
-#~ msgid "Tag list"
-#~ msgstr "Liste des tags"
-
-#~ msgid "Edit Post"
-#~ msgstr "Editer un article"
-
-#, python-brace-format
-#~ msgid "Publish {0} now"
-#~ msgstr "Publier {0} maintenant"
-
-#~ msgid "Slug"
-#~ msgstr "Slug (pour l'URL)"
-
-#~ msgid "Leave empty for automatic slug, or override as required."
-#~ msgstr ""
-#~ "Laissez vide pour générer un slug automatiquement, ou remplacez-le si "
-#~ "nécessaire."
-
-#~ msgid "Liveblog"
-#~ msgstr "Liveblog"
-
-#~ msgid "Liveblog item"
-#~ msgstr "Élément liveblog"
-
-#~ msgid "publish liveblog entry"
-#~ msgstr "Publier l'éntrée liveblog"
-
-#~ msgid "liveblog entry"
-#~ msgstr "Entrée liveblog"
-
-#~ msgid "image"
-#~ msgstr "image"
-
-#~ msgid "thumbnail size"
-#~ msgstr "taille de l'image miniature"
-
-#~ msgid "publish"
-#~ msgstr "publier"
-
-#~ msgid "enable liveblog on post"
-#~ msgstr "activer le liveblog sur l'article"
-
-#~ msgid "blog article"
-#~ msgstr "article du blog"
-
-#~ msgid "by"
-#~ msgstr "par"
