@@ -364,6 +364,7 @@ class Post(models.Model):
     def _get_content(self, language: str,  qs) -> models.Model | None:
         if self._content_cache is None:
             self._content_cache = {obj.language: obj for obj in qs}
+            self._language_cache = list(self._content_cache.keys())
         return self._content_cache.get(language)
 
     def get_content(self, language=None, show_draft_content=False):
@@ -388,6 +389,7 @@ class Post(models.Model):
             # Use admin cache if available
         if hasattr(self, "_admin_prefetch_cache") and not self._content_cache:
             self._content_cache = {obj.language: obj for obj in self._admin_prefetch_cache}
+            self._language_cache = list(self._content_cache.keys())
         return self._get_content(language, self.postcontent_set(manager="admin_manager").latest_content())
 
     def safe_translation_getter(
