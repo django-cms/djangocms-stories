@@ -1,5 +1,7 @@
 import pytest
+
 from django import VERSION as DJANGO_VERSION
+
 from django.contrib.auth import get_user_model
 from django.test import Client, RequestFactory
 from django.urls import reverse
