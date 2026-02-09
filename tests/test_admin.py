@@ -1,6 +1,7 @@
 import pytest
+from django import VERSION as DJANGO_VERSION
 from django.contrib.auth import get_user_model
-from django.test import Client
+from django.test import Client, RequestFactory
 from django.urls import reverse
 from django.utils.translation import override
 
@@ -133,6 +134,36 @@ def test_postadmin_change_list_view_other_lang(admin_client, default_config, ass
 
 
 @pytest.mark.django_db
+def test_postadmin_changelist_query_count_with_many_posts(admin_client, many_posts):
+    from django.db import connection
+    from django.test.utils import CaptureQueriesContext
+
+    url = reverse("admin:djangocms_stories_post_changelist")
+
+    with CaptureQueriesContext(connection) as queries:
+        response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert len(many_posts) >= 10
+    # Query breakdown (from CaptureQueriesContext on 2026-02-09, 10 posts):
+    # 01 session lookup
+    # 02 admin user lookup
+    # 03 categories list (for list filter)
+    # 04 stories config list (for list filter / defaults)
+    # 05 sites list (for list filter)
+    # 06 tag list for Post model (taggit filter)
+    # 07-08 post count (pagination + result count)
+    # 09 post changelist rows (select_related author, app_config)
+    # 10 postcontent prefetch for listed posts
+    # 11 categories prefetch for listed posts
+    # 12 sites prefetch for listed posts
+    # 13 published date range aggregation (first/last)
+    # 14 published year archive values
+    # 15-19 CMS usersettings/clipboard bootstrap (first visit)
+    assert len(queries) == 19
+
+
+@pytest.mark.django_db
 def test_postadmin_bulk_enable_comments(admin_client, default_config, assert_html_in_response):
     # Create some posts
     from .factories import PostFactory
@@ -207,7 +238,10 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     )
 
     # Both post and post content fields are present
-    assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
+    if DJANGO_VERSION >= (6,0):
+        assert_html_in_response('<legend class="inline" for="id_author">Author:</legend>', response)  # Post author field
+    else:
+        assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
     assert_html_in_response(
         '<label class="required" for="id_content__title">Title (English):</label>', response
     )  # PostContent title field
@@ -255,9 +289,15 @@ def test_postadmin_lookup_allowed(admin_user):
     admin_instance = PostAdmin(Post, site)
 
     # These lookups should be allowed
-    assert admin_instance.lookup_allowed("post__categories__name", None)
-    assert admin_instance.lookup_allowed("post__app_config__namespace", None)
-
+    if DJANGO_VERSION >= (6, 0):
+        request = RequestFactory().get("/")
+        request.user = admin_user
+        assert admin_instance.lookup_allowed("post__categories__name", None, request)
+        assert admin_instance.lookup_allowed("post__app_config__namespace", None, request)
+    else:
+        assert admin_instance.lookup_allowed("post__categories__name", None)
+        assert admin_instance.lookup_allowed("post__app_config__namespace", None)
+    
 
 def test_postadmin_has_restricted_sites_no_restriction(admin_user):
     """Test has_restricted_sites when user has no site restrictions"""
