@@ -113,7 +113,6 @@ def test_post_list_view_filters_by_publication_date_end(client, admin_user, defa
         title="Visible Post",
         post__app_config=default_config,
         post__date_published=current_time - timedelta(days=2),
-        post__date_published_end=current_time + timedelta(days=2),
     )
 
     expired_post = PostContentFactory(
@@ -123,7 +122,13 @@ def test_post_list_view_filters_by_publication_date_end(client, admin_user, defa
         post__date_published_end=current_time - timedelta(days=1),
     )
 
-    publish_if_necessary([visible_post, expired_post], admin_user)
+    future_post = PostContentFactory(
+        title="Future Post",
+        post__app_config=default_config,
+        post__date_published=current_time + timedelta(days=10),
+    )
+
+    publish_if_necessary([visible_post, expired_post, future_post], admin_user)
 
     url = reverse("djangocms_stories:posts-latest")
 
@@ -134,6 +139,7 @@ def test_post_list_view_filters_by_publication_date_end(client, admin_user, defa
 
     assert visible_post.title in content
     assert expired_post.title not in content
+    assert future_post.title not in content
 
 
 @pytest.mark.django_db
