@@ -1,3 +1,5 @@
+from datetime import timedelta
+from django.utils.timezone import now
 import pytest
 from django.apps import apps
 from django.test import RequestFactory
@@ -96,6 +98,42 @@ def test_post_list_view(admin_client, admin_user, default_config):
         absolute_url = post_content.get_absolute_url()
         assert f'<article id="post-{post_content.slug}" class="post-item">' in content
         assert f'<h3><a href="{absolute_url}">{post_content.title}</a></h3>' in content
+
+
+@pytest.mark.django_db
+def test_post_list_view_filters_by_publication_date_end(client, admin_user, default_config):
+    """
+    Test the PostListView returns a list of posts within the date_published and date_published_end window.
+    """
+    from .factories import PostContentFactory
+
+    current_time = now()
+
+    visible_post = PostContentFactory(
+        title="Visible Post",
+        post__app_config=default_config,
+        post__date_published=current_time - timedelta(days=2),
+        post__date_published_end=current_time + timedelta(days=2),
+    )
+
+    expired_post = PostContentFactory(
+        title="Expired Post",
+        post__app_config=default_config,
+        post__date_published=current_time - timedelta(days=10),
+        post__date_published_end=current_time - timedelta(days=1),
+    )
+
+    publish_if_necessary([visible_post, expired_post], admin_user)
+
+    url = reverse("djangocms_stories:posts-latest")
+
+    # Use client to simulate public visitor.
+    response = client.get(url)
+    assert response.status_code == 200
+    content = response.content.decode("utf-8")
+
+    assert visible_post.title in content
+    assert expired_post.title not in content
 
 
 @pytest.mark.django_db
