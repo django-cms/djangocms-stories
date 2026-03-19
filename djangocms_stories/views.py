@@ -4,6 +4,7 @@ from cms.utils import get_current_site
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Q
+from django.db.models.functions import Coalesce
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -123,11 +124,15 @@ class BaseConfigListViewMixin(StoriesConfigMixin):
         else:
             queryset = self.model.objects.all()
             queryset = queryset.filter(
-                Q(post__date_published__lte=current_time),
+                Q(post__date_published__lte=current_time) | Q(post__date_published__isnull=True),
                 Q(post__date_published_end__isnull=True) | Q(post__date_published_end__gt=current_time),
             )
 
         queryset = queryset.filter(language=language, post__app_config__namespace=self.namespace)
+        queryset = queryset.annotate(sort_date=Coalesce("post__date_published", "post__date_created")).order_by(
+            "-sort_date"
+        )
+
         setattr(self.request, get_setting("CURRENT_NAMESPACE"), self.config)
         site = get_current_site(self.request)
 
