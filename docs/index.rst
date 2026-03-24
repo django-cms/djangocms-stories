@@ -1,31 +1,37 @@
-.. djangocms-stories documentation master file
-
-##############################################
-Welcome to djangocms-stories's documentation!
-##############################################
+############################################
+Welcome to djangocms-stories documentation!
+############################################
 
 .. include:: ../README.rst
-
 
 ********
 Contents
 ********
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
-   installation
-   features/index
-   autodoc/settings
-   autodoc/index
-   development
-   contributing
-   history
+   tutorial/index
 
+.. toctree::
+   :maxdepth: 2
+
+   how-tos/index
+
+.. toctree::
+   :maxdepth: 2
+
+   explanations/index
+
+.. toctree::
+   :maxdepth: 2
+
+   reference/index
 
 ******************
 Indices and tables
 ******************
 
 * :ref:`genindex`
+* :ref:`modindex`
 * :ref:`search`
