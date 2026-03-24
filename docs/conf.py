@@ -82,11 +82,11 @@ source_suffix = ".rst"
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = "source/index"
+master_doc = "index"
 
 # General information about the project.
 project = "djangocms-stories"
-copyright = "2024, Fabian Braun"  # noqa
+copyright = "2026, Fabian Braun"  # noqa
 author = "Fabian Braun"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -118,13 +118,13 @@ exclude_patterns = [
     "venv",
     "env",
     # Exclude the old documentation tree — master_doc is source/index
-    "index.rst",
     "installation.rst",
     "development.rst",
     "contributing.rst",
     "history.rst",
     "features",
     "autodoc",
+    "source",
 ]
 
 # The reST default role (used for this markup: `text`) to use for all
