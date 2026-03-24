@@ -14,24 +14,24 @@ project's applications.
     @admin.register(Post)
     class CustomPostAdmin(PostAdmin):
         ...
-        you_attributes_and_methods
+        your_attributes_and_methods
 
 
 *************************
 Customizing the fieldsets
 *************************
 
-Due to the logic in :py:meth:`djangocms_blog.admin.PostAdmin.get_fieldsets` method, it's advised to customize the
-fieldsets by overriding two private attributes :py:attr:`djangocms_blog.admin.PostAdmin._fieldsets` and
-:py:attr:`djangocms_blog.admin.PostAdmin._fieldset_extra_fields_position`.
+Due to the logic in :py:meth:`djangocms_stories.admin.PostAdmin.get_fieldsets` method, it's advised to customize the
+fieldsets by overriding two private attributes :py:attr:`djangocms_stories.admin.PostAdmin._fieldsets` and
+:py:attr:`djangocms_stories.admin.PostAdmin._fieldset_extra_fields_position`.
 
 _fieldsets
 =================
 
-``_fieldsets`` attribute follow the standard `Django Admin fieldset`_ structure. This is the primary source for customization.
+``_fieldsets`` attribute follows the standard `Django Admin fieldset`_ structure. This is the primary source for customization.
 
-You can freely rearrange and remove fields from this structure as you would to in a normal ``fieldsets`` attribute; the only
-caveat is that you must ensure consistency extra fields position set by ``_fieldset_extra_fields_position``.
+You can freely rearrange and remove fields from this structure as you would in a normal ``fieldsets`` attribute; the only
+caveat is that you must ensure consistency with the extra fields position set by ``_fieldset_extra_fields_position``.
 
 
 _fieldset_extra_fields_position
@@ -40,10 +40,10 @@ _fieldset_extra_fields_position
 As some fields are managed by settings and apphook config, they are added to the final ``fieldsets`` by ``PostAdmin.get_fieldsets``;
 you can customize their position (or hide them) by overriding ``_fieldset_extra_fields_position`` attribute.
 
-The attribute is a dictionary containing the fields name as key, and by providing their position in the fieldsets as tuple.
+The attribute is a dictionary containing the field names as keys, and their position in the fieldsets as tuple values.
 
 Use a 2-item tuple if the field must be appended at the row level (e.g.: ``(None, {"fields": ["field_a", "field_b"]})``) or
-a 3-item tuple if the field must be appended in a subgroup (e.g.: ``(None, {"fields": ["field_a", ["field_b"[]})``.
+a 3-item tuple if the field must be appended in a subgroup (e.g.: ``(None, {"fields": ["field_a", ["field_b"]]})``).
 
 Example
 ===============================
@@ -75,16 +75,13 @@ Example
             "post_text": [0, 1],
             "sites": [1, 1, 0],
             "author": [1, 1],
-            "enable_liveblog": None,
             "related": [1, 1, 0],
         }
 
 This example will result in:
 
-* ``"enable_liveblog"``: hidden even if enabled in settings
 * ``"sites"``: added in the same subgroup as ``"tags"``
 * ``"author"``: appended after the ``"enable_comments"`` field
-* ``"app_config"`` field moved to ``"Info"`` fieldset
 
 
 .. _admin_filter_function:
@@ -92,7 +89,8 @@ This example will result in:
 Filter function
 ===============
 
-You can add / remove / filter fields at runtime by defining a method on you custom admin and proving its name in :ref:`BLOG_ADMIN_POST_FIELDSET_FILTER <ADMIN_POST_FIELDSET_FILTER>`.
+You can add / remove / filter fields at runtime by defining a method on your custom admin and providing its name
+in :ref:`STORIES_ADMIN_POST_FIELDSET_FILTER <ADMIN_POST_FIELDSET_FILTER>`.
 
 Method must take the following arguments:
 
@@ -112,4 +110,4 @@ Function example:
         return fsets
 
 
-.. _django admin fieldset: https://docs.djangoproject.com/en/3.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets
+.. _django admin fieldset: https://docs.djangoproject.com/en/stable/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets

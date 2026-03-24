@@ -1,25 +1,29 @@
-#####################
-djangocms_blog.models
-#####################
+########################
+djangocms_stories.models
+########################
 
 Models
 ########
 
-.. autoclass:: djangocms_blog.models.Post
+.. autoclass:: djangocms_stories.models.Post
     :members:
     :private-members:
 
-.. autoclass:: djangocms_blog.models.BlogCategory
+.. autoclass:: djangocms_stories.models.PostContent
     :members:
     :private-members:
 
-.. autoclass:: djangocms_blog.models.BlogMetaMixin
+.. autoclass:: djangocms_stories.models.PostCategory
+    :members:
+    :private-members:
+
+.. autoclass:: djangocms_stories.models.PostMetaMixin
     :members:
     :private-members:
 
 Managers
 ########
 
-.. automodule:: djangocms_blog.managers
+.. automodule:: djangocms_stories.managers
     :members:
     :private-members:
