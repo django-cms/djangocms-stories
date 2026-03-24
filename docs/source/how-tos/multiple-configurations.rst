@@ -1,112 +1,89 @@
-################################
+######################################
 How to set up multiple configurations
-################################
+######################################
 
-You can run multiple story configurations, for example separate blogs or news for
-different departments or topics.
+djangocms-stories supports running multiple independent story configurations on the same site.
+This is useful when your project needs distinct content sections — for example, a company blog,
+a news feed, and a knowledge base — each with its own URL structure, templates, and editorial
+settings.
 
+Understanding configurations
+=============================
 
-Creating Multiple Configurations
-=================================
+A ``StoriesConfig`` is an apphook configuration that controls how a group of posts behaves:
+which permalink style is used, how many posts per page, which menu items appear, and so on.
+Each configuration gets its own namespace (like ``blog`` or ``news``), and each CMS page can
+host exactly one configuration.
 
-1. In Django admin, go to Stories → Configurations
-2. Create a new configuration with:
+Posts belong to a single configuration. This means a post published under the "Tech Blog"
+configuration will only appear on the Tech Blog page and its feeds — it won't show up
+under "Company News" unless you create a separate post there.
 
-   - Unique namespace (e.g., "tech-blog", "news")
-   - App title (e.g., "Tech Blog", "Company News")
-   - Object name (e.g., "Article", "News Item")
+Creating a new configuration
+=============================
 
-Post Assignment to Configurations
-==================================
+Open the Django admin and navigate to **Stories > Configurations**. Create a new entry with:
 
-**One Configuration per Post**
+- A **namespace** that will appear in URLs and must be unique (e.g. ``tech-blog``). This
+  cannot be changed later, so choose carefully.
+- An **app title** that editors will see in the toolbar and admin (e.g. "Tech Blog").
+- An **object name** that labels individual items in the wizard and admin (e.g. "Article" or
+  "News Item").
 
-Each post belongs to exactly one configuration. When creating a post, you must select which configuration it belongs to. This determines:
+You can also configure the permalink style, pagination, menu structure, and SEO defaults
+independently for each configuration.
 
-- Which blog/site the post appears on
-- Which templates and styling are used
-- Which permissions apply
-- Which menu structure includes the post
+Attaching configurations to pages
+===================================
 
-**Changing Configuration Assignment**
+Each configuration needs a CMS page to live on. Create a new page for each section, open
+its **Page settings**, choose **Stories** as the application, and select the matching
+configuration.
 
-You can change a post's configuration assignment later:
+Because the page determines the base URL, you get natural URL separation: ``/blog/my-post/``
+vs. ``/news/my-post/``. If you prefer, you can also use different permalink styles per
+configuration — dates for the blog, categories for news.
 
-1. Go to the post in Django admin
-2. Change the "App config" field to a different configuration
-3. Save the post
+After publishing the page, the configuration is live.
 
-The post will then appear in the new configuration and disappear from the old one.
+Using different templates per configuration
+============================================
 
-**Posts in Multiple Configurations**
+Each configuration can load templates from a different directory by setting the
+**Template prefix** field in the configuration admin. For example, if you set the prefix to
+``news``, djangocms-stories will look for templates in ``templates/news/`` before falling back
+to the defaults.
 
-If you need the same content to appear in multiple configurations, you must:
+This means you can have a card-based layout for one section and a traditional list for another,
+without any template logic branching on the namespace:
 
-1. Create separate post instances for each configuration
-2. Copy the content between posts manually
-3. Maintain each copy independently
-
-.. note::
-   There is no automatic content sharing between configurations. Each post
-   exists in one configuration only. To display the same article in both
-   a "Tech Blog" and "Company News" section, create two separate posts.
-
-   **Example Workflow**
-
-   To create a post that appears in both "Tech Blog" and "Company News"::
-
-        # Create first post
-        Tech Blog Post:
-        - App config: "tech-blog"
-        - Title: "New Framework Release"
-        - Content: [your content, potentially adjusted for a tech blog audience]
-
-        # Create second post
-        Company News Post:
-        - App config: "company-news"
-        - Title: "New Framework Release"
-        - Content: [same content, manually copied, potentially adjusted to new audience]
-
-Setting up Pages
-=================
-
-1. Create separate pages for each configuration to live. The page will be the "root" of that
-   configuration's content.
-2. Assign the respective configuration to each page
-3. Publish the page to make the configuration visible
-4. Set different URL patterns if needed
-
-Template Customization
-=======================
-
-Create configuration-specific templates::
+.. code-block:: text
 
     templates/
-        djangocms_stories/
-            tech-blog/
-                post_list.html
-                post_detail.html
-            news/
-                post_list.html
-                post_detail.html
+        djangocms_stories/      # default templates
+            post_list.html
+            post_detail.html
+        news/                   # templates for the "news" config
+            post_list.html
+            post_detail.html
 
-Navigation Menus
-================
+Menu and navigation
+====================
 
-Each configuration can have its own menu structure:
+Each configuration has its own menu structure setting. The "Tech Blog" might show a full
+category-and-post tree in the navigation, while "Company News" shows only posts without
+categories, and "Knowledge Base" shows categories only.
 
-1. Configure menu settings per app config
-2. Choose between:
-   - No menu items
-   - Categories only
-   - Posts only
-   - Complete menu (categories + posts)
+Configure this in the **Menu structure** field of each ``StoriesConfig``.
 
-Permissions
-===========
+Sharing content across configurations
+=======================================
 
-Set different permissions per configuration:
+There is no automatic content sharing between configurations. If you need the same article to
+appear in two sections, you'll need to create it twice — once per configuration. This is by
+design: each section may have different audiences, different editorial workflows, and different
+publication schedules.
 
-1. Create user groups per configuration
-2. Assign appropriate permissions
-3. Use the Stories Config permissions to control access
+In practice, this is rarely needed. If you find yourself duplicating content frequently,
+consider whether a single configuration with categories might serve your needs better than
+multiple configurations.

@@ -6,6 +6,44 @@ View classes for displaying stories and categories.
 
 .. currentmodule:: djangocms_stories.views
 
+Mixins
+======
+
+StoriesConfigMixin
+------------------
+
+.. autoclass:: StoriesConfigMixin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BaseConfigListViewMixin
+-----------------------
+
+.. autoclass:: BaseConfigListViewMixin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Detail Views
+============
+
+PostDetailView
+--------------
+
+.. autoclass:: PostDetailView
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ToolbarDetailView
+-----------------
+
+.. autoclass:: ToolbarDetailView
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 List Views
 ==========
 
@@ -13,6 +51,14 @@ PostListView
 ------------
 
 .. autoclass:: PostListView
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+CategoryListView
+-----------------
+
+.. autoclass:: CategoryListView
    :members:
    :undoc-members:
    :show-inheritance:
@@ -41,17 +87,6 @@ AuthorEntriesView
    :undoc-members:
    :show-inheritance:
 
-Detail Views
-============
-
-PostDetailView
---------------
-
-.. autoclass:: PostDetailView
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Archive Views
 =============
 
@@ -59,49 +94,6 @@ PostArchiveView
 ---------------
 
 .. autoclass:: PostArchiveView
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-PostYearArchiveView
--------------------
-
-.. autoclass:: PostYearArchiveView
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-PostMonthArchiveView
---------------------
-
-.. autoclass:: PostMonthArchiveView
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-PostDayArchiveView
-------------------
-
-.. autoclass:: PostDayArchiveView
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Mixins
-======
-
-AppConfigMixin
---------------
-
-.. autoclass:: AppConfigMixin
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-BaseMixin
----------
-
-.. autoclass:: BaseMixin
    :members:
    :undoc-members:
    :show-inheritance:

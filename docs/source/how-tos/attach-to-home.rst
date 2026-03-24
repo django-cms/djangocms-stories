@@ -4,19 +4,26 @@
 How to attach stories apphook to the home page
 ==============================================
 
-By attaching an apphook to a page, by default all child pages are swallowed by the apphook. This is normally not a problem.
-If you want to attach the stories apphook to the home page, however, you need to ensure not all CMS pages are shadowed as
-child pages of the home page.
+Attaching the stories apphook to the home page turns your site's root URL into a blog or
+news feed — visitors land directly on the latest posts instead of a static page. This works
+well for content-driven sites, but requires one small configuration tweak to avoid URL
+conflicts.
 
-This can be achieved by disallowing the slug-based permalink style for the stories apphook.
+Why a tweak is needed
+=====================
 
-*********************************************
-Remove slug permalink type from configuration
-*********************************************
+When an apphook is attached to a page, django CMS routes all URLs beneath that page through
+the apphook's urlconf. For most pages this is fine, but the home page is the parent of
+*every* other page in the tree. If the stories urlconf includes a catch-all slug pattern
+(``<str:slug>/``), it will swallow URLs meant for child pages like ``/about/`` or ``/contact/``.
 
-Permalinks must be updated to avoid stories urlconf swallowing django CMS page patterns.
+The fix is straightforward: remove the slug-only permalink style so that post URLs always
+contain a date or category prefix, leaving bare slugs free for CMS pages.
 
-To avoid this add the following settings to your project:
+Step 1: Restrict permalink styles
+==================================
+
+Add the following to your project settings to remove the slug-only option:
 
 .. code-block:: python
 
@@ -31,19 +38,15 @@ To avoid this add the following settings to your project:
         "category": "<str:category>/<str:slug>/",
     }
 
-Notice that the **slug permalink type** is no longer present, since it shadows other CMS page patterns.
+With these settings, post URLs will always start with a date or category segment, and CMS
+pages beneath the home page will resolve normally.
 
-Then, pick any of the three remaining permalink types in the layout section of the apphooks config
-linked to the home page (at http://yoursite.com/admin/djangocms_stories/storiesconfig/).
+Then open the ``StoriesConfig`` admin and pick one of the three remaining permalink styles in
+the **Layout** section.
 
-*********************************
-Add/upadete stories apphook to the home page
-*********************************
+Step 2: Attach the apphook
+============================
 
-* Go to the django CMS page admin: http://localhost:8000/admin/cms/page
-* Edit the home page
-* Go to **Advanced settings** and select Stories from the **Application** selector and create an **Application configuration**;
-* Customise the Application instance name, if needed
-* Publish the page
-* Restart the project instance to properly load stories urls.
-
+Open the home page in the django CMS admin, go to **Page settings**, select **Stories** from
+the **Application** dropdown, and choose your configuration. Publish the page — your home page
+is now a stories listing.

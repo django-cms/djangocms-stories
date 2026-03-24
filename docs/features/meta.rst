@@ -4,10 +4,10 @@
 Setup social metatags rendering
 ###############################
 
-djangocms-blog implements `django-meta <https://github.com/nephila/django-meta>`_ and it come ready to provide a
+djangocms-stories implements `django-meta <https://github.com/nephila/django-meta>`_ and comes ready to provide a
 fairly complete social meta tags set.
 
-Custom metatags are rendered on the blog post detail page only, while on the list page (which is a basically django CMS page)
+Custom metatags are rendered on the story detail page only, while on the list page (which is basically a django CMS page)
 you can use `djangocms-page-meta <https://github.com/nephila/djangocms-page-meta/>`_ to render meta tags based on the django CMS
 page object.
 
@@ -19,13 +19,12 @@ In order to enable its rendering you must follow two steps:
 
       META_SITE_PROTOCOL = 'https'  # set 'http' for non ssl enabled websites
       META_USE_SITES = True
-      META_USE_OG_PROPERTIES=True
-      META_USE_TWITTER_PROPERTIES=True
-      META_USE_GOOGLEPLUS_PROPERTIES=True # django-meta 1.x+
-      META_USE_SCHEMAORG_PROPERTIES=True  # django-meta 2.x+
+      META_USE_OG_PROPERTIES = True
+      META_USE_TWITTER_PROPERTIES = True
+      META_USE_SCHEMAORG_PROPERTIES = True
 
 
-* Include ``meta/meta.html`` in the ``head`` tag of the template used to render ``djangocms-blog``.
+* Include ``meta/meta.html`` in the ``head`` tag of the template used to render ``djangocms-stories``.
 
   a. The recommended way is to include in your project base templates:
 
@@ -38,8 +37,8 @@ In order to enable its rendering you must follow two steps:
             {% include "meta/meta.html" %}
             ...
 
-  b. alternatively djangocms-blog base template provide a ``meta`` block you can place in your templates to only include ``meta.html``
-     for the blog posts:
+  b. Alternatively the djangocms-stories base template provides a ``meta`` block you can place in your templates to only
+     include ``meta.html`` for the story pages:
 
      .. code-block:: html+django
          :name: base_b.html
@@ -65,4 +64,5 @@ In order to enable its rendering you must follow two steps:
             {% endblock meta %}
             ...
 
-For complete social meta tags rendering, configure default properties (see ``BLOG_FB``, ``BLOG_TWITTER``, ``BLOG_GPLUS``/``BLOG_SCHEMAORG`` in :ref:`settings`) and apphook ones.
+For complete social meta tags rendering, configure default properties (see ``STORIES_FB_*``, ``STORIES_TWITTER_*``,
+``STORIES_SCHEMAORG_*`` in :ref:`settings`) and apphook-specific ones.

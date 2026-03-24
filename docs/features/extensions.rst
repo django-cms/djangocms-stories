@@ -1,4 +1,3 @@
-
 .. _extensions:
 
 ###############
@@ -7,7 +6,7 @@ Post Extensions
 
 Posts can be extended to attach arbitrary fields to a post instance.
 
-E.g. one want's to have in a template a field or placeholder related to a post.
+E.g. one wants to have in a template a field or placeholder related to a post.
 
 .. code-block:: python
 
@@ -21,7 +20,7 @@ Define the models in your models.py
 
     from cms.models import CMSPlugin, PlaceholderField
 
-    from djangocms_blog.models import Post
+    from djangocms_stories.models import Post
 
     class PostExtension(models.Model):
         post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='extension')
@@ -32,7 +31,7 @@ Define the models in your models.py
         some_placeholder = PlaceholderField('some_placeholder')
 
 
-Define a inline in your admin.py
+Define an inline in your admin.py
 
 .. code-block:: python
 
@@ -48,13 +47,13 @@ Define a inline in your admin.py
         verbose_name_plural = "PostExtensions"
 
 
-Register the extension in djangocms_blog
+Register the extension in djangocms_stories
 
 .. code-block:: python
 
-    import djangocms_blog.admin as blog_admin
-    blog_admin.register_extension(PostExtensionInline)
-    blog_admin.register_extension(PostPlaceholderExtension)
+    import djangocms_stories.admin as stories_admin
+    stories_admin.register_extension(PostExtensionInline)
+    stories_admin.register_extension(PostPlaceholderExtension)
 
 
 After this the inline will be available in the Post add and Post change admin forms and a PostPlaceholderExtension

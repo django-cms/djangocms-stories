@@ -7,6 +7,7 @@ This section explains the concepts and design decisions behind djangocms-stories
 .. toctree::
    :maxdepth: 2
 
-   content-wizard
+   publishing
+   app-configuration
    media-plugins
-   versioning
+   content-wizard

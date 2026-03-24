@@ -36,56 +36,47 @@ PostCategory
    :undoc-members:
    :show-inheritance:
 
-Configuration Models
-====================
-
-.. currentmodule:: djangocms_stories.cms_appconfig
-
-StoriesConfig
--------------
-
-.. autoclass:: StoriesConfig
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Related Models
-==============
+Plugin Models
+=============
 
 .. currentmodule:: djangocms_stories.models
 
-RelatedPost
------------
+BasePostPlugin
+--------------
 
-.. autoclass:: RelatedPost
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :special-members: __str__
-
-Model Managers
-==============
-
-PostManager
------------
-
-.. autoclass:: PostManager
+.. autoclass:: BasePostPlugin
    :members:
    :undoc-members:
    :show-inheritance:
 
-PostContentManager
-------------------
+LatestPostsPlugin
+-----------------
 
-.. autoclass:: PostContentManager
+.. autoclass:: LatestPostsPlugin
    :members:
    :undoc-members:
    :show-inheritance:
 
-CategoryManager
----------------
+AuthorEntriesPlugin
+-------------------
 
-.. autoclass:: CategoryManager
+.. autoclass:: AuthorEntriesPlugin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FeaturedPostsPlugin
+-------------------
+
+.. autoclass:: FeaturedPostsPlugin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GenericBlogPlugin
+-----------------
+
+.. autoclass:: GenericBlogPlugin
    :members:
    :undoc-members:
    :show-inheritance:

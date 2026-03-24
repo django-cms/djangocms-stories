@@ -6,65 +6,35 @@ Model managers and querysets for efficient database operations.
 
 .. currentmodule:: djangocms_stories.managers
 
-Post Managers
-=============
+Querysets
+=========
 
-PostManager
------------
-
-.. autoclass:: PostManager
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-PostQuerySet
+SiteQuerySet
 ------------
 
-.. autoclass:: PostQuerySet
+.. autoclass:: SiteQuerySet
    :members:
    :undoc-members:
    :show-inheritance:
 
-Content Managers
-================
+AdminSiteQuerySet
+-----------------
 
-PostContentManager
-------------------
-
-.. autoclass:: PostContentManager
+.. autoclass:: AdminSiteQuerySet
    :members:
    :undoc-members:
    :show-inheritance:
 
-PostContentQuerySet
--------------------
+Managers
+========
 
-.. autoclass:: PostContentQuerySet
+SiteManager
+-----------
+
+.. autoclass:: SiteManager
    :members:
    :undoc-members:
    :show-inheritance:
-
-Category Managers
-=================
-
-CategoryManager
----------------
-
-.. autoclass:: CategoryManager
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-CategoryQuerySet
-----------------
-
-.. autoclass:: CategoryQuerySet
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Admin Managers
-==============
 
 AdminManager
 ------------
@@ -74,10 +44,10 @@ AdminManager
    :undoc-members:
    :show-inheritance:
 
-RelatedManager
---------------
+GenericDateTaggedManager
+------------------------
 
-.. autoclass:: RelatedManager
+.. autoclass:: GenericDateTaggedManager
    :members:
    :undoc-members:
    :show-inheritance:

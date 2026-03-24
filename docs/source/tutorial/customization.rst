@@ -13,6 +13,8 @@ This allows you to add your own markup and styling to customize the appearance o
 Default template directory structure
 ------------------------------------
 
+.. code-block::
+
     djangocms_stories/
         templates/
             djangocms_stories/
@@ -201,15 +203,12 @@ Story Configuration
 ::
 
     # Number of stories per page
-    STORIES_PAGINATE_BY = 10
-
-    # Default template for stories
-    STORIES_TEMPLATE_PREFIX = 'my_stories'
+    STORIES_PAGINATION = 20
 
     # Enable/disable features
     STORIES_USE_ABSTRACT = True
-    STORIES_USE_TAGS = True
-    STORIES_USE_CATEGORIES = True
+    STORIES_USE_PLACEHOLDER = True
+    STORIES_USE_RELATED = True
 
 .. seealso::
 

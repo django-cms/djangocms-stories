@@ -33,29 +33,10 @@ CategoryAdmin
    :undoc-members:
    :show-inheritance:
 
-StoriesConfigAdmin
-------------------
+ConfigAdmin
+-----------
 
-.. autoclass:: StoriesConfigAdmin
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Inline Classes
-==============
-
-PostContentInline
------------------
-
-.. autoclass:: PostContentInline
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-RelatedPostInline
------------------
-
-.. autoclass:: RelatedPostInline
+.. autoclass:: ConfigAdmin
    :members:
    :undoc-members:
    :show-inheritance:
@@ -63,18 +44,10 @@ RelatedPostInline
 Admin Mixins
 ============
 
-TranslatableAdminMixin
-----------------------
+ModelAppHookConfig
+------------------
 
-.. autoclass:: TranslatableAdminMixin
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-AppConfigFilterMixin
---------------------
-
-.. autoclass:: AppConfigFilterMixin
+.. autoclass:: ModelAppHookConfig
    :members:
    :undoc-members:
    :show-inheritance:
@@ -82,26 +55,17 @@ AppConfigFilterMixin
 Admin Filters
 =============
 
-CategoryFilter
+SiteListFilter
 --------------
 
-.. autoclass:: CategoryFilter
+.. autoclass:: SiteListFilter
    :members:
    :undoc-members:
    :show-inheritance:
 
-PublishedFilter
----------------
+Extension Registration
+======================
 
-.. autoclass:: PublishedFilter
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autofunction:: register_extension
 
-AuthorFilter
-------------
-
-.. autoclass:: AuthorFilter
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autofunction:: unregister_extension

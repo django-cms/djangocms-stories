@@ -1,11 +1,8 @@
-.. djangocms-blog documentation master file, created by
-   sphinx-quickstart on Sun Jun  5 23:27:04 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. djangocms-stories documentation master file
 
-##########################################
-Welcome to djangocms-blog's documentation!
-##########################################
+##############################################
+Welcome to djangocms-stories's documentation!
+##############################################
 
 .. include:: ../README.rst
 

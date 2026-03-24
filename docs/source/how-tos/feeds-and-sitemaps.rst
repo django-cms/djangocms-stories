@@ -1,211 +1,97 @@
-##############################
+################################
 How to set up feeds and sitemaps
-##############################
+################################
 
-djangocms-stories provides RSS/Atom feeds and XML sitemaps for better content distribution and SEO.
+Good content deserves to be found. djangocms-stories ships with RSS feeds and integrates with
+Django's sitemap framework so search engines and feed readers can discover your posts
+automatically.
 
-RSS Feeds Setup
-===============
+RSS feeds
+=========
 
-Enable RSS feeds in your URL configuration::
+Feeds are included in the default URL configuration and start working as soon as you attach
+the apphook to a page. Three feed endpoints are available out of the box:
 
-    # urls.py
-    from djangocms_stories.feeds import LatestPostsFeed, TaggedPostsFeed, CategoryPostsFeed
+- ``feed/`` — the latest entries across all categories (``LatestEntriesFeed``)
+- ``feed/fb/`` — a Facebook Instant Articles feed (``FBInstantArticles``)
+- ``tag/<slug>/feed/`` — a per-tag feed so readers can subscribe to specific topics (``TagFeed``)
 
-    urlpatterns = [
-        # ... other URLs
-        path('stories/', include('djangocms_stories.urls')),
+No extra URL wiring is needed if you use the standard apphook setup. The feeds respect the
+``STORIES_FEED_LATEST_ITEMS``, ``STORIES_FEED_TAGS_ITEMS``, and ``STORIES_FEED_INSTANT_ITEMS``
+settings to control how many items appear.
 
-        # RSS feeds
-        path('feed/latest/', LatestPostsFeed(), name='stories-latest-feed'),
-        path('feed/category/<slug:category>/', CategoryPostsFeed(), name='stories-category-feed'),
-        path('feed/tag/<slug:tag>/', TaggedPostsFeed(), name='stories-tag-feed'),
-    ]
+Helping browsers discover your feeds
+--------------------------------------
 
-Custom Feed Configuration
-=========================
+Add a ``<link>`` tag to your base template so browsers and feed readers can auto-discover the
+RSS endpoint:
 
-Customize feed content by subclassing the feed classes::
-
-    # feeds.py
-    from djangocms_stories.feeds import LatestPostsFeed
-
-    class CustomPostsFeed(LatestPostsFeed):
-        title = "My Custom Stories Feed"
-        description = "Latest stories from my website"
-
-        def items(self):
-            return super().items()[:10]  # Limit to 10 items
-
-        def item_description(self, item):
-            return item.abstract or item.title
-
-Feed Discovery
-==============
-
-Add feed discovery to your templates::
-
-    {% load stories_tags %}
+.. code-block:: html+django
 
     <head>
-        {% get_feed_url as feed_url %}
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ feed_url }}">
+        <link rel="alternate" type="application/rss+xml"
+              title="RSS Feed"
+              href="{% url 'djangocms_stories:posts-latest-feed' %}">
     </head>
 
-Sitemaps Configuration
-======================
+Customizing feeds
+------------------
 
-Enable sitemaps for better SEO::
+If the defaults don't fit, subclass the feed classes. For example, to change the title and
+limit items:
 
-    # urls.py
+.. code-block:: python
+
+    from djangocms_stories.feeds import LatestEntriesFeed
+
+    class CustomFeed(LatestEntriesFeed):
+        title = "My Stories"
+        description = "Hand-picked stories from our team"
+
+        def items(self):
+            return super().items()[:5]
+
+Register the subclass in your own URL configuration alongside — or instead of — the default
+feeds.
+
+Feed caching
+--------------
+
+Feeds are cached for one hour by default. Adjust ``STORIES_FEED_CACHE_TIMEOUT`` (in seconds) to
+change this. On high-traffic sites a longer timeout reduces database load; on sites where
+freshness matters, lower it.
+
+Sitemaps
+========
+
+Sitemaps tell search engines which pages exist and how often they change. djangocms-stories
+provides a ``StoriesSitemap`` that lists every published post in every available language,
+together with the ``changefreq`` and ``priority`` values you configure per ``StoriesConfig``.
+
+To enable it, register the sitemap in your project's ``urls.py``:
+
+.. code-block:: python
+
     from django.contrib.sitemaps.views import sitemap
-    from djangocms_stories.sitemaps import StoriesSitemap, CategoriesSitemap
+    from cms.sitemaps import CMSSitemap
+    from djangocms_stories.sitemaps import StoriesSitemap
 
     sitemaps = {
+        'cmspages': CMSSitemap,
         'stories': StoriesSitemap,
-        'categories': CategoriesSitemap,
     }
 
     urlpatterns = [
         # ... other URLs
-        path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+        path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+             name='django.contrib.sitemaps.views.sitemap'),
     ]
 
-Custom Sitemap Options
-======================
+Once the sitemap is live, add its URL to your ``robots.txt`` so crawlers find it:
 
-Customize sitemap behavior::
-
-    # sitemaps.py
-    from djangocms_stories.sitemaps import StoriesSitemap
-
-    class CustomStoriesSitemap(StoriesSitemap):
-        changefreq = "weekly"
-        priority = 0.8
-
-        def items(self):
-            # Only include published stories from last year
-            from datetime import datetime, timedelta
-            last_year = datetime.now() - timedelta(days=365)
-            return super().items().filter(date_published__gte=last_year)
-
-Multi-language Feeds
-====================
-
-For multi-language sites, create language-specific feeds::
-
-    # feeds.py
-    from djangocms_stories.feeds import LatestPostsFeed
-    from django.utils.translation import get_language
-
-    class LanguagePostsFeed(LatestPostsFeed):
-        def get_object(self, request):
-            return get_language()
-
-        def items(self, language):
-            from djangocms_stories.models import Post
-            return Post.objects.published().language(language)
-
-Feed Templates
-==============
-
-Customize feed templates by creating::
-
-    templates/
-        feeds/
-            stories_title.html
-            stories_description.html
-            stories_item_title.html
-            stories_item_description.html
-
-Example ``stories_item_description.html``::
-
-    {{ obj.abstract|default:obj.title|striptags|safe }}
-
-Adding Feed Links to Templates
-===============================
-
-Add feed links to your story templates::
-
-    {% load stories_tags %}
-
-    <div class="feed-links">
-        <a href="{% url 'stories-latest-feed' %}">
-            <i class="icon-rss"></i> Subscribe to RSS
-        </a>
-
-        {% if category %}
-            <a href="{% url 'stories-category-feed' category=category.slug %}">
-                <i class="icon-rss"></i> {{ category.name }} RSS
-            </a>
-        {% endif %}
-    </div>
-
-Podcast Feeds
-=============
-
-For audio content, create podcast feeds::
-
-    # feeds.py
-    from djangocms_stories.feeds import LatestPostsFeed
-
-    class PodcastFeed(LatestPostsFeed):
-        feed_type = 'application/rss+xml'
-        title = "My Podcast"
-        description = "Audio stories and episodes"
-
-        def items(self):
-            # Only posts with audio content
-            return super().items().filter(content__cmsplugin__plugin_type='AudioPlugin')
-
-        def item_enclosure_url(self, item):
-            # Return audio file URL
-            audio_plugin = item.content.cmsplugin_set.filter(plugin_type='AudioPlugin').first()
-            if audio_plugin:
-                return audio_plugin.get_plugin_instance()[0].audio_file.url
-            return None
-
-Search Engine Submission
-=========================
-
-Submit your sitemap to search engines:
-
-1. **Google Search Console**
-   - Add your sitemap URL: ``https://yoursite.com/sitemap.xml``
-
-2. **Bing Webmaster Tools**
-   - Submit sitemap in the Sitemaps section
-
-3. **robots.txt**
-   Add sitemap location::
-
-    User-agent: *
-    Allow: /
+.. code-block:: text
 
     Sitemap: https://yoursite.com/sitemap.xml
 
-Monitoring and Analytics
-========================
-
-Track feed usage:
-
-1. **Server logs** - Monitor feed URL access
-2. **Analytics** - Track feed subscriber behavior
-3. **Feed validation** - Use tools like W3C Feed Validator
-4. **Performance** - Monitor feed generation time
-
-Feed Caching
-============
-
-Improve performance with caching::
-
-    # settings.py
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-            'LOCATION': 'redis://127.0.0.1:6379/1',
-        }
-    }
-
-    # Cache feeds for 1 hour
-    STORIES_FEED_CACHE_TIMEOUT = 3600
+You can also submit the URL directly in Google Search Console or Bing Webmaster Tools for
+faster indexing.

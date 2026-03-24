@@ -1,6 +1,6 @@
-############
+#############
 How-to guides
-############
+#############
 
 These guides provide step-by-step instructions for common tasks with djangocms-stories.
 

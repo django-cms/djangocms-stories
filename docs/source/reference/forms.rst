@@ -4,31 +4,50 @@ Forms
 
 Form classes for story creation and editing.
 
-.. currentmodule:: djangocms_stories.forms
-
 Admin Forms
 ===========
 
-PostForm
---------
+.. currentmodule:: djangocms_stories.forms
 
-.. autoclass:: PostForm
+CategoryAdminForm
+-----------------
+
+.. autoclass:: CategoryAdminForm
    :members:
    :undoc-members:
    :show-inheritance:
 
-PostContentForm
----------------
+StoriesConfigForm
+-----------------
 
-.. autoclass:: PostContentForm
+.. autoclass:: StoriesConfigForm
    :members:
    :undoc-members:
    :show-inheritance:
 
-CategoryForm
-------------
+Plugin Forms
+============
 
-.. autoclass:: CategoryForm
+BlogPluginForm
+--------------
+
+.. autoclass:: BlogPluginForm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LatestEntriesForm
+-----------------
+
+.. autoclass:: LatestEntriesForm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AuthorPostsForm
+----------------
+
+.. autoclass:: AuthorPostsForm
    :members:
    :undoc-members:
    :show-inheritance:
@@ -42,46 +61,6 @@ PostWizardForm
 --------------
 
 .. autoclass:: PostWizardForm
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Frontend Forms
-==============
-
-.. currentmodule:: djangocms_stories.forms
-
-CommentForm
------------
-
-.. autoclass:: CommentForm
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-SearchForm
-----------
-
-.. autoclass:: SearchForm
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Form Widgets
-============
-
-CategorySelectWidget
---------------------
-
-.. autoclass:: CategorySelectWidget
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-TagWidget
----------
-
-.. autoclass:: TagWidget
    :members:
    :undoc-members:
    :show-inheritance:

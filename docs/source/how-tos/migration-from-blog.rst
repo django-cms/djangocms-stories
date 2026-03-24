@@ -4,102 +4,125 @@
 How to migrate from djangocms-blog
 ##################################
 
-This guide helps you migrate from djangocms-blog to djangocms-stories.
+djangocms-stories is the successor to djangocms-blog, redesigned for django CMS 4+. The
+database migration is automated and covered by tests, but you should still treat it as a
+significant change — back up first, migrate in staging, then promote to production.
 
-Pre-migration Checklist
-========================
+Before you start
+=================
 
-Before starting the migration:
+Make a full database backup. The migration will move data from djangocms-blog's tables into
+new djangocms-stories tables and then drop the old tables, so there is no going back without a
+backup.
 
-1. **Backup your database** - Create a full backup
-2. **Document customizations** - Note any custom templates, fields, or modifications
-3. **Test environment** - Perform migration in a staging environment first
-4. **Dependencies** - Check for other packages that depend on djangocms-blog
+Also take note of any customizations you've made: custom templates, admin extensions, model
+extensions, or overridden settings. These will need manual attention after the data migration.
 
-Installation Steps
-==================
+If other packages in your project depend on djangocms-blog (custom apps that import its
+models, for example), update them first or plan to update them in the same deployment.
 
-1. Uninstall djangocms-blog::
+Step 1: Install djangocms-stories alongside djangocms-blog
+============================================================
+
+Uninstall the old package and install the new one::
 
     pip uninstall djangocms-blog
-
-2. Install djangocms-stories::
-
     pip install djangocms-stories
 
-3. Add to INSTALLED_APPS (keep djangocms_blog for now)::
+Then add ``djangocms_stories`` to ``INSTALLED_APPS`` while keeping ``djangocms_blog`` temporarily:
+
+.. code-block:: python
 
     INSTALLED_APPS = [
-        # ... other apps
-        'djangocms_blog',  # Keep temporarily
-        'djangocms_stories',  # Add new
-        # ... dependencies
+        # ...
+        'djangocms_blog',      # keep for now — the migration reads its tables
+        'djangocms_stories',   # new
+        # ...
     ]
 
-4. Migrate data by running migrations::
+Step 2: Run the data migration
+================================
+
+Run migrations for both apps::
 
     python manage.py migrate djangocms_blog
     python manage.py migrate djangocms_stories
 
-   .. warning::
+The djangocms-stories migration ``0002`` reads all existing blog data — posts, categories,
+configurations, plugins — copies it into the new tables, and drops the old djangocms-blog
+tables.
 
-        The migration process will move existing data from djangocms-blog's
-        database table to the new djangocms-stories tables **and delete the old tables**.
-        Be sure to have made a backup.
+.. warning::
 
-5. Remove djangocms_blog from INSTALLED_APPS::
+    This is a one-way operation. The old tables are deleted. Make sure your backup is in place.
 
-    INSTALLED_APPS = [
-        # ... other apps
-        'djangocms_stories',  # Keep new
-        # ... dependencies
-    ]
+Step 3: Remove djangocms-blog
+===============================
 
-Template Migration
-==================
+Once the migration succeeds, remove ``djangocms_blog`` from ``INSTALLED_APPS``. It is no longer
+needed.
 
-Update your templates to use the new namespace:
+Step 4: Update templates
+=========================
 
-1. Rename template directories::
+Rename your template directory and update the tag library import:
+
+.. code-block:: bash
 
     mv templates/djangocms_blog templates/djangocms_stories
 
-2. Update template tags in templates::
+Inside your templates, replace the old tag library and URL namespace:
 
-    # Old
+.. code-block:: html+django
+
+    {# Old #}
     {% load blog_tags %}
-
-    # New
-    {% load stories_tags %}
-
-3. Update URL names::
-
-    # Old
     {% url 'djangocms_blog:post-detail' slug=post.slug %}
 
-    # New
+    {# New #}
+    {% load djangocms_stories %}
     {% url 'djangocms_stories:post-detail' slug=post.slug %}
 
-Settings Migration
-==================
+The model structure has also changed. In djangocms-blog, ``post`` carried both
+language-independent fields (author, dates, images) and translated fields (title, slug,
+abstract). In djangocms-stories these are split:
 
-Update your Django settings::
+- ``post`` — the ``Post`` object with language-independent data (author, dates, categories, tags,
+  images, related posts)
+- ``post_content`` — the ``PostContent`` object with per-language fields (title, subtitle, slug,
+  abstract, content placeholder, media placeholder) and a ``post`` back-reference
 
-    # Replace blog settings with stories equivalents
+Templates that accessed ``post.title`` should now use ``post_content.title``, and templates that
+accessed ``post.date_published`` from a ``PostContent`` context should use
+``post_content.post.date_published``.
 
-    # Old
-    BLOG_PAGINATE_BY = 10
-    BLOG_USE_ABSTRACT = True
+Step 5: Update settings
+========================
 
-    # New
-    STORIES_PAGINATE_BY = 10
-    STORIES_USE_ABSTRACT = True
+All ``BLOG_*`` settings have ``STORIES_*`` equivalents:
 
-URL Configuration
-=================
+.. code-block:: python
 
-Normally, URL configurations are migrated automatically. Only if you
-manage your blog / stories URLs manually, update your URL patterns::
+    # Old                              # New
+    BLOG_PAGINATION = 10               STORIES_PAGINATION = 10
+    BLOG_USE_ABSTRACT = True           STORIES_USE_ABSTRACT = True
+    BLOG_USE_PLACEHOLDER = True        STORIES_USE_PLACEHOLDER = True
+    BLOG_PERMALINK_URLS = {...}        STORIES_PERMALINK_URLS = {...}
+    BLOG_URLCONF = '...'               STORIES_URLCONF = '...'
+    BLOG_MULTISITE = True              STORIES_MULTISITE = True
+
+.. note::
+
+    For backwards compatibility, ``BLOG_*`` settings are still read as fallbacks if the
+    corresponding ``STORIES_*`` setting is not defined. Rename them anyway to keep your
+    settings file clear.
+
+Step 6: Update manual URL configuration (if any)
+==================================================
+
+If you manage story URLs outside the apphook (unusual, but possible), update the import:
+
+.. code-block:: python
 
     # Old
     path('blog/', include('djangocms_blog.urls')),
@@ -107,32 +130,29 @@ manage your blog / stories URLs manually, update your URL patterns::
     # New
     path('blog/', include('djangocms_stories.urls')),
 
-Post-migration Steps
+Apphook-managed URLs are migrated automatically — no action needed in the common case.
+
+After the migration
 ====================
 
-1. **Test thoroughly** - Verify all functionality works
-2. **Update internal links** - Update any hardcoded URLs
-3. **Clean up** - Remove old templates and unused code
+Walk through the site and verify that post detail pages, category pages, tag pages, feeds,
+and the admin all work as expected. Check the apphook assignments in the CMS page settings to
+confirm they point to the new ``Stories`` application.
 
-Troubleshooting
-===============
+If something looks wrong, the most common causes are:
 
+**Missing or broken templates**
+    Make sure you renamed the template directory and updated all ``{% load %}`` tags.
+
+**Broken URLs or 404s**
+    Check that URL names use the ``djangocms_stories:`` namespace and that any hardcoded paths
+    have been updated.
+
+**Missing custom fields**
+    If you extended the old ``Post`` model with custom inlines or fields, recreate them against
+    the new models and re-register them with ``djangocms_stories.admin.register_extension()``.
 
 .. note::
-    Community help is available on our
-    `Discord server <https://www.django-cms.org/discord>`_.
 
-Common issues and solutions:
-
-**Missing templates**
-    Copy and rename your blog templates to stories
-
-**Broken URLs**
-    Update all URL references and set up redirects
-
-**Custom fields**
-    Recreate custom fields in the new models
-
-**Permissions**
-    Review and update user permissions for the new app
-
+    Community help is available on the
+    `django CMS Discord server <https://www.django-cms.org/discord>`_.
