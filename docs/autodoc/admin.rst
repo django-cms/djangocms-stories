@@ -1,22 +1,21 @@
-####################
-djangocms_blog.admin
-####################
+########################
+djangocms_stories.admin
+########################
 
 Admin classes
 #############
 
-.. automodule:: djangocms_blog.admin
+.. automodule:: djangocms_stories.admin
     :members:
     :private-members:
 
 Admin forms
 #############
 
-
-.. autoclass:: djangocms_blog.forms.CategoryAdminForm
+.. autoclass:: djangocms_stories.forms.CategoryAdminForm
     :members:
     :private-members:
 
-.. autoclass:: djangocms_blog.forms.PostAdminForm
+.. autoclass:: djangocms_stories.forms.StoriesConfigForm
     :members:
     :private-members:

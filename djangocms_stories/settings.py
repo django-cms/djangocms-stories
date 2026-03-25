@@ -163,7 +163,7 @@ STORIES_TYPES = meta_settings.OBJECT_TYPES
 
 Choices of available blog types.
 
-Available values are defined in to ``META_OBJECT_TYPES`` defined in `django-meta settings`_.
+Available values are defined in to ``META_OBJECT_TYPES`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_FB_TYPE = "Article"
@@ -179,7 +179,7 @@ STORIES_FB_TYPES = meta_settings.FB_TYPES
 
 Choices of available blog types.
 
-Available values are defined in to ``META_FB_TYPES`` defined in `django-meta settings`_.
+Available values are defined in to ``META_FB_TYPES`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_FB_APPID = meta_settings.get_setting("FB_APPID")
@@ -188,7 +188,7 @@ STORIES_FB_APPID = meta_settings.get_setting("FB_APPID")
 
 Facebook Application ID.
 
-Default from ``FB_APPID`` defined in `django-meta settings`_.
+Default from ``FB_APPID`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_FB_PROFILE_ID = meta_settings.get_setting("FB_PROFILE_ID")
@@ -197,7 +197,7 @@ STORIES_FB_PROFILE_ID = meta_settings.get_setting("FB_PROFILE_ID")
 
 Facebook profile ID of the post author.
 
-Default from ``FB_PROFILE_ID`` defined in `django-meta settings`_.
+Default from ``FB_PROFILE_ID`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_FB_PUBLISHER = meta_settings.get_setting("FB_PUBLISHER")
@@ -206,7 +206,7 @@ STORIES_FB_PUBLISHER = meta_settings.get_setting("FB_PUBLISHER")
 
 Facebook URL of the blog publisher.
 
-Default from ``FB_PUBLISHER`` defined in `django-meta settings`_.
+Default from ``FB_PUBLISHER`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_FB_AUTHOR_URL = "get_author_url"
@@ -236,7 +236,7 @@ STORIES_TWITTER_TYPES = meta_settings.TWITTER_TYPES
 
 Choices of available blog types for twitter.
 
-Default from ``TWITTER_TYPES`` defined in `django-meta settings`_.
+Default from ``TWITTER_TYPES`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_TWITTER_SITE = meta_settings.get_setting("TWITTER_SITE")
@@ -245,7 +245,7 @@ STORIES_TWITTER_SITE = meta_settings.get_setting("TWITTER_SITE")
 
 Twitter account of the site.
 
-Default from ``TWITTER_SITE`` defined in `django-meta settings`_.
+Default from ``TWITTER_SITE`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_TWITTER_AUTHOR = "get_author_twitter"
@@ -268,7 +268,7 @@ STORIES_SCHEMAORG_TYPES = meta_settings.SCHEMAORG_TYPES
 
 Choices of available Schema.org types.
 
-Default from ``SCHEMAORG_TYPES`` defined in `django-meta settings`_.
+Default from ``SCHEMAORG_TYPES`` defined in `django-meta settings <https://github.com/nephila/django-meta#settings>`_.
 """
 
 STORIES_SCHEMAORG_AUTHOR = "get_author_schemaorg"
@@ -602,9 +602,7 @@ Name of the plugin field to add wizard text.
 
 params = {param: value for param, value in locals().items() if param.startswith("STORIES_")}
 
-"""
-.. _django-meta settings: https://github.com/nephila/django-meta#settings
-"""
+#: See `django-meta settings <https://github.com/nephila/django-meta#settings>`_ for more information.
 
 
 def get_setting(name):

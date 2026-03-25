@@ -46,7 +46,7 @@ extensions = [
     # "sphinx.ext.intersphinx",
     "sphinx.ext.todo",
     "sphinx.ext.coverage",
-    "sphinx.ext.viewcode",
+    # "sphinx.ext.viewcode",  # disabled: source code is on GitHub, no need to duplicate it
     "sphinx.ext.napoleon",
 ]
 
@@ -82,11 +82,11 @@ source_suffix = ".rst"
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = "source/index"
+master_doc = "index"
 
 # General information about the project.
 project = "djangocms-stories"
-copyright = "2024, Fabian Braun"  # noqa
+copyright = "2026, Fabian Braun"  # noqa
 author = "Fabian Braun"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -113,7 +113,19 @@ language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ["_build"]
+exclude_patterns = [
+    "_build",
+    "venv",
+    "env",
+    # Exclude the old documentation tree — master_doc is source/index
+    "installation.rst",
+    "development.rst",
+    "contributing.rst",
+    "history.rst",
+    "features",
+    "autodoc",
+    "source",
+]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -141,6 +153,9 @@ pygments_style = "sphinx"
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+# Suppress warnings for labels defined in external packages (e.g. django CMS)
+suppress_warnings = ["ref.ref"]
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -175,7 +190,7 @@ html_theme = "furo"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = []
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

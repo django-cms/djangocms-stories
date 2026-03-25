@@ -1,8 +1,7 @@
+########################
+djangocms_stories.views
+########################
 
-####################
-djangocms_blog.views
-####################
-
-.. automodule:: djangocms_blog.views
+.. automodule:: djangocms_stories.views
     :members:
     :private-members:

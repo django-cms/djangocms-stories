@@ -2,26 +2,25 @@
 Development & community
 #######################
 
-django CMS Blog is an open-source project.
+djangocms-stories is an open-source project.
 
 You don't need to be an expert developer to make a valuable contribution - all you need is a little
 knowledge, and a willingness to follow the contribution guidelines.
 
 *******
-Nephila
+Credits
 *******
 
-django CMS Blog was created by Iacopo Spalletti at `Nephila <https://www.nephila.it/>`_
-and is released under BSD License.
-
-Nephila is an active supporter of django CMS and its community, and it maintains overall
-control of the `django CMS Blog repository <https://github.com/nephila/djangocms-blog>`_.
+djangocms-stories is inspired by `Nephila's <https://github.com/nephila>`_ excellent
+`djangocms-blog <https://github.com/nephila/djangocms-blog>`_, with the intent to align it with
+django CMS's new philosophy since version 4: "The design philosophy of django CMS is to solve
+something complex with many simple things."
 
 ********************
 Standards & policies
 ********************
 
-django CMS Blog is a django CMS application, and shares much of django CMS's standards and
+djangocms-stories is a django CMS application, and shares much of django CMS's standards and
 policies.
 
 These include:
@@ -36,4 +35,4 @@ These include:
   activity
 
 Please familiarise yourself with this documentation if you'd like to contribute to
-django CMS Blog.
+djangocms-stories.
