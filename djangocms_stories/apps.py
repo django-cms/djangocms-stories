@@ -1,4 +1,4 @@
-from django.apps import AppConfig
+from django.apps import AppConfig, apps
 from django.core.checks import Warning, register
 from django.utils.translation import gettext_lazy as _
 
@@ -10,18 +10,17 @@ class BlogAppConfig(AppConfig):
 
     def ready(self):
         register(check_settings)
-        try:
+        # Set date_published and date_published_end when a post is published/unpublished
+        if apps.is_installed("djangocms_versioning"):
             from djangocms_versioning.signals import post_version_operation
             from .signal_handlers import handle_version_operation
-            # Set date_published and date_published_end when a post is published/unpublished
             post_version_operation.connect(
                 handle_version_operation,
-                dispatch_uid="stories_handle_version_operation",
+                dispatch_uid="stories_handle_version_operation"
             )
-        except ImportError:
-            pass
-        return super().ready()
 
+        return super().ready()
+        
 
 def check_settings(*args, **kwargs):  # pragma: no cover
     from django.conf import settings
