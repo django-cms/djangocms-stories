@@ -240,8 +240,10 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     )
 
     # Both post and post content fields are present
-    if DJANGO_VERSION >= (6,0):
-        assert_html_in_response('<legend class="inline" for="id_author">Author:</legend>', response)  # Post author field
+    if DJANGO_VERSION >= (6, 0):
+        assert_html_in_response(
+            '<legend class="inline" for="id_author">Author:</legend>', response
+        )  # Post author field
     else:
         assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
     assert_html_in_response(
@@ -299,7 +301,7 @@ def test_postadmin_lookup_allowed(admin_user):
     else:
         assert admin_instance.lookup_allowed("post__categories__name", None)
         assert admin_instance.lookup_allowed("post__app_config__namespace", None)
-    
+
 
 def test_postadmin_has_restricted_sites_no_restriction(admin_user):
     """Test has_restricted_sites when user has no site restrictions"""
@@ -438,6 +440,23 @@ def test_postadmin_fieldsets_with_related(admin_user, default_config):
             flat_fields.append(field)
 
     assert "related" in flat_fields
+
+
+def test_related_posts_queryset_excludes_self(admin_client, default_config):
+    """
+    Test that ensures that a post is excluded from its own 'related posts' section
+    in the admin view.
+    """
+    from .factories import PostFactory
+
+    post = PostFactory(app_config=default_config)
+    url = reverse("admin:djangocms_stories_post_change", args=[post.pk])
+    response = admin_client.get(url)
+
+    form = response.context["adminform"].form
+    related_queryset = form.fields["related"].queryset
+
+    assert post not in related_queryset
 
 
 def test_config_admin_readonly_namespace(admin_user, default_config):
