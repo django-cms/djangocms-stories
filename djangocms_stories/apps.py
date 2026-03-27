@@ -18,7 +18,6 @@ class BlogAppConfig(AppConfig):
                 handle_version_operation,
                 dispatch_uid="stories_handle_version_operation"
             )
-
         return super().ready()
         
 
