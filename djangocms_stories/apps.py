@@ -10,6 +10,13 @@ class BlogAppConfig(AppConfig):
 
     def ready(self):
         register(check_settings)
+        try:
+            from djangocms_versioning.signals import post_version_operation
+            from .signal_handlers import handle_version_operation
+            # Set date_published and date_published_end when a post is published/unpublished
+            post_version_operation.connect(handle_version_operation)
+        except ImportError:
+            pass
         return super().ready()
 
 
