@@ -35,7 +35,7 @@ To install the latest version directly from GitHub, run:
 
     pip install djangocms-stories djangocms-text
 
-Add ``djangocms_stories`` to your ``INSTALLED_APPS`` in your Django project's ``settings.py``:
+Add ``djangocms_stories`` and ``djangocms_text`` to your ``INSTALLED_APPS`` in your Django project's ``settings.py``:
 
 .. code-block:: python
 
