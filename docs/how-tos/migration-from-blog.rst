@@ -27,15 +27,16 @@ Step 1: Install djangocms-stories alongside djangocms-blog
 Uninstall the old package and install the new one::
 
     pip uninstall djangocms-blog
-    pip install djangocms-stories
+    pip install djangocms-stories djangocms-text
 
-Then add ``djangocms_stories`` to ``INSTALLED_APPS`` while keeping ``djangocms_blog`` temporarily:
+Then add ``djangocms_stories`` and the required ``djangocms_text`` to ``INSTALLED_APPS`` while keeping ``djangocms_blog`` temporarily:
 
 .. code-block:: python
 
     INSTALLED_APPS = [
         # ...
         'djangocms_blog',      # keep for now — the migration reads its tables
+        'djangocms_text',      # required
         'djangocms_stories',   # new
         # ...
     ]
@@ -46,6 +47,7 @@ Step 2: Run the data migration
 Run migrations for both apps::
 
     python manage.py migrate djangocms_blog
+    python manage.py migrate djangocms_text
     python manage.py migrate djangocms_stories
 
 The djangocms-stories migration ``0002`` reads all existing blog data — posts, categories,
