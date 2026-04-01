@@ -295,7 +295,7 @@ class Post(models.Model):
 
     date_modified = models.DateTimeField(_("last modified"), auto_now=True)
     """Timestamp automatically updated whenever the post is saved. Set automatically. Does not
-    reflect reflect changes to PostContent instances."""
+    reflect changes to PostContent instances."""
 
     date_published = models.DateTimeField(_("published since"), null=True, blank=True)
     """Start of the publication window; Posts remain invisible before that date. They are visible 
