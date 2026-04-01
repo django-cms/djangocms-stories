@@ -350,13 +350,19 @@ class PostAdmin(
     )
     readonly_fields = ("date_created", "date_modified")
     date_hierarchy = "date_published"
-    autocomplete_fields = ["author"]
+    autocomplete_fields = ["author", "related"]
     frontend_editable_fields = ("title", "abstract", "post_text")
     enhance_exclude = ("main_image", "tags")
     actions = [
         "enable_comments",
         "disable_comments",
     ]
+
+    class Media:
+        js = (
+            "djangocms_stories/js/Sortable.min.js",
+            "djangocms_stories/js/related-sortable.js",
+        )
 
     _fieldsets = [
         (
