@@ -22,7 +22,7 @@ Installation steps
 
   .. code-block:: bash
 
-      pip install djangocms-stories
+      pip install djangocms-stories djangocms-text
 
 * Add ``djangocms_stories`` and its dependencies to INSTALLED_APPS:
 
@@ -37,6 +37,7 @@ Installation steps
             'taggit_autosuggest',
             'meta',
             'sortedm2m',
+            'djangocms_text',
             'djangocms_stories',
             ...
         ]
