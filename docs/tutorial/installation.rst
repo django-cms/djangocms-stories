@@ -12,7 +12,7 @@ Installing djangocms-stories
 
 Install using pip::
 
-    pip install djangocms-stories
+    pip install djangocms-stories djangocms-text
 
 Add to your Django settings
 ============================
@@ -21,6 +21,7 @@ Add ``djangocms_stories`` and some dependent apps to your ``INSTALLED_APPS``::
 
     INSTALLED_APPS = [
         # ... other apps
+        'djangocms_text',
         'djangocms_stories',
         'parler',
         'taggit',
