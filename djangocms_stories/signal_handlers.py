@@ -1,7 +1,8 @@
 from django.utils.timezone import now
-from djangocms_versioning.constants import OPERATION_PUBLISH, OPERATION_UNPUBLISH
+from djangocms_versioning.constants import OPERATION_PUBLISH, OPERATION_UNPUBLISH, PUBLISHED
 from djangocms_versioning.models import Version
 from .models import PostContent
+from django.contrib.contenttypes.models import ContentType
 
 
 def set_published_dates(sender, obj, operation, **kwargs):
@@ -22,6 +23,17 @@ def set_published_dates(sender, obj, operation, **kwargs):
         post.save(update_fields=["date_published", "date_published_end"])
 
     elif operation == OPERATION_UNPUBLISH:
-        if not post.date_published_end or post.date_published_end < now():
-            post.date_published_end = now()
-            post.save(update_fields=["date_published_end"])
+        content_type = ContentType.objects.get_for_model(PostContent)
+        no_published_languages = (
+            Version.objects.filter(
+                content_type=content_type,
+                object_id__in=post.postcontent_set.values_list("id", flat=True),
+                state=PUBLISHED,
+            )
+            .exclude(pk=obj.pk) .exists()
+        )
+
+        if not no_published_languages:
+            if not post.date_published_end or post.date_published_end < now():
+                post.date_published_end = now()
+                post.save(update_fields=["date_published_end"])
