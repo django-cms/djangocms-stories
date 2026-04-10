@@ -240,7 +240,7 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     )
 
     # Both post and post content fields are present
-    if DJANGO_VERSION >= (6,0):
+    if DJANGO_VERSION >= (6,1):
         assert_html_in_response('<legend class="inline" for="id_author">Author:</legend>', response)  # Post author field
     else:
         assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
