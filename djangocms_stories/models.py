@@ -742,7 +742,7 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
         return ",".join(taglist)
 
     def __str__(self):
-        return self.title or _("Untitled")
+        return self.title or gettext("Untitled")
 
 
 class BasePostPlugin(CMSPlugin):
