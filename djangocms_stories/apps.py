@@ -13,7 +13,7 @@ class BlogAppConfig(AppConfig):
         # Set date_published and date_published_end when a post is published/unpublished
         if apps.is_installed("djangocms_versioning"):
             from djangocms_versioning.signals import post_version_operation
-            from .signal_handlers import set_published_dates
+            from .versioning_signals import set_published_dates
             post_version_operation.connect(
                 set_published_dates,
                 dispatch_uid="stories_set_published_dates"

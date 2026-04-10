@@ -1,3 +1,10 @@
+# This file is only imported ever if djangocsm-versioning is installed into
+# a project. It takes its signals to set publication dates.
+#
+# Using a different versioning mechanism, you will have to either set the#
+# dates manually or provide custom logic.
+
+
 from django.utils.timezone import now
 from djangocms_versioning.constants import OPERATION_PUBLISH, OPERATION_UNPUBLISH, PUBLISHED
 from djangocms_versioning.models import Version
