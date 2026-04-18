@@ -288,16 +288,37 @@ class Post(models.Model):
         related_name="djangocms_stories_post_author",
         on_delete=models.PROTECT,
     )
+    """User who authored the post; optional and protected from deletion while referenced."""
 
     date_created = models.DateTimeField(_("created"), auto_now_add=True)
+    """Timestamp when the post grouper was first created. Set automatically."""
+
     date_modified = models.DateTimeField(_("last modified"), auto_now=True)
+    """Timestamp automatically updated whenever the post is saved. Set automatically. Does not
+    reflect changes to PostContent instances."""
+
     date_published = models.DateTimeField(_("published since"), null=True, blank=True)
+    """Start of the publication window; Posts remain invisible before that date. They are visible 
+    if the field is empty. When working with django CMS versioning this field is set automatically
+    upon first publication of a PostContent instance. Otherwise, it will need to be set manually."""
+
     date_published_end = models.DateTimeField(_("published until"), null=True, blank=True)
+    """Optional end of the publication window after which the post is no longer public. Posts are visible 
+    if the field is empty or if the date is in the future. Posts stay visible indefinitely if the field is 
+    empty. When working with django CMS versioning this field is set automatically when a PostContent instance 
+    with a future publication date is published. Otherwise, it will need to be set manually."""
+
     date_featured = models.DateTimeField(_("featured date"), null=True, blank=True)
+    """Optional date used to feature/sort content independently from publication date."""
+
     include_in_rss = models.BooleanField(_("include in RSS feed"), default=True)
+    """Controls whether this post appears in generated RSS feeds."""
+
     categories = models.ManyToManyField(
         "djangocms_stories.PostCategory", verbose_name=_("category"), related_name="posts", blank=True
     )
+    """Categories assigned to the post for navigation, filtering, and URL generation."""
+
     main_image = FilerImageField(
         verbose_name=_("main image"),
         blank=True,
@@ -305,6 +326,8 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         related_name="djangocms_stories_post_image",
     )
+    """Primary image used in listings, detail views, and social metadata."""
+
     main_image_thumbnail = models.ForeignKey(
         thumbnail_model,
         verbose_name=_("main image thumbnail"),
@@ -313,6 +336,8 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
+    """Thumbnail preset to apply when rendering the main image in compact contexts."""
+
     main_image_full = models.ForeignKey(
         thumbnail_model,
         verbose_name=_("main image full"),
@@ -321,9 +346,13 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
+    """Thumbnail preset to apply when rendering the main image at full/detail size."""
+
     enable_comments = models.BooleanField(
         verbose_name=_("enable comments on post"), default=get_setting("ENABLE_COMMENTS")
     )
+    """Enables or disables comments for this specific post."""
+
     sites = models.ManyToManyField(
         "sites.Site",
         verbose_name=_("Site(s)"),
@@ -332,6 +361,8 @@ class Post(models.Model):
             "Select sites in which to show the post. If none is set it will be visible in all the configured sites."
         ),
     )
+    """Restricts visibility to specific Django sites; empty means all configured sites."""
+
     app_config = models.ForeignKey(
         StoriesConfig,
         on_delete=models.CASCADE,
@@ -339,12 +370,14 @@ class Post(models.Model):
         verbose_name=_("app. config"),
         help_text=_("When selecting a value, the form is reloaded to get the updated default"),
     )
+    """Stories app configuration controlling namespace, URL scheme, and behavior."""
 
     tags = TaggableManager(
         blank=True,
         related_name="djangocms_stories_tags",
         help_text=_("Type a tag and hit tab, or start typing and select from autocomplete list."),
     )
+    """Free-form tags used for filtering, discovery, and tag-based plugin queries."""
 
     related = SortedManyToManyField(
         "self",
@@ -352,6 +385,7 @@ class Post(models.Model):
         blank=True,
         symmetrical=False,
     )
+    """Manually curated, ordered links to other posts for editorial recommendations."""
 
     objects = GenericDateTaggedManager()
 
@@ -574,9 +608,15 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
 
     # Gruping fields
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    """Grouper relation linking this translated content row to its parent post."""
+
     language = models.CharField(_("language"), max_length=15, db_index=True)
+    """Language code for this translation variant (for example: en, de, fr)."""
+
     # Content fields (by post and language
     title = models.CharField(_("title"), max_length=752)
+    """Main post title shown in lists, detail pages, and metadata fallbacks."""
+
     slug = models.SlugField(
         _("slug"),
         max_length=752,
@@ -584,10 +624,20 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
         db_index=True,
         allow_unicode=STORIES_ALLOW_UNICODE_SLUGS,
     )
+    """Per-language URL slug; auto-generated from title when left empty."""
+
     subtitle = models.CharField(verbose_name=_("subtitle"), max_length=767, blank=True, default="")
+    """Optional secondary heading displayed beneath or alongside the title."""
+
     abstract = HTMLField(_("abstract"), blank=True, default="", configuration="STORIES_ABSTRACT_CKEDITOR")
+    """Short rich-text summary used in previews, listings, and meta fallbacks."""
+
     meta_description = models.TextField(verbose_name=_("post meta description"), blank=True, default="")
+    """SEO/social description for this language variant of the post."""
+
     meta_keywords = models.TextField(verbose_name=_("post meta keywords"), blank=True, default="")
+    """Comma-separated keywords used by metadata integrations."""
+
     meta_title = models.CharField(
         verbose_name=_("post meta title"),
         help_text=_("used in title tag and social sharing"),
@@ -595,8 +645,13 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
         blank=True,
         default="",
     )
+    """Custom page and sharing title; falls back to title when not provided."""
+
     post_text = HTMLField(_("text"), default="", blank=True, configuration="STORIES_POST_TEXT_EDITOR_CONF")
+    """Primary rich-text body content for the translated post if using plugins is disabled."""
+
     placeholders = PlaceholderRelationField()
+    """django CMS placeholders container for structured plugin-based content regions."""
 
     objects = SiteManager()
     admin_manager = AdminManager()
