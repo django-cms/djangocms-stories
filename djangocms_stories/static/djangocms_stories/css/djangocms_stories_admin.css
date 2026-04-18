@@ -19,7 +19,7 @@
     margin: 0;
 }
 
-form select {
+form .flex-container > select {
     max-width: 266px;
 }
 
