@@ -33,21 +33,25 @@
                     closeRelatedSelect2();
                 },
                 onSort: function () {
-                    var labels = Array.from(selection.querySelectorAll(".select2-selection__choice"))
-                    .map(function (element) {
-                        return element.getAttribute("title");
-                    })
-                    .filter(Boolean);
+                    var $jq = window.django && window.django.jQuery;
+                    var chips = Array.from(selection.querySelectorAll(".select2-selection__choice"));
+                    var values = chips
+                        .map(function (chip) {
+                            var data = $jq ? $jq(chip).data("data") : null;
+                            return data ? String(data.id) : null;
+                        })
+                        .filter(function (v) { return v !== null; });
 
-                    var options = Array.from(select.options);
-
-                    labels.forEach(function (label) {
-                    var option = options.find(function (candidate) {
-                        return candidate.text === label;
+                    var optionsByValue = {};
+                    Array.from(select.options).forEach(function (option) {
+                        optionsByValue[option.value] = option;
                     });
-                    if (option) {
-                        select.appendChild(option);
-                    }
+
+                    values.forEach(function (value) {
+                        var option = optionsByValue[value];
+                        if (option) {
+                            select.appendChild(option);
+                        }
                     });
 
                     select.dispatchEvent(new Event("change", { bubbles: true }));
