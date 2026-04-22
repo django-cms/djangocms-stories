@@ -427,7 +427,7 @@ class PostAdmin(
         "content__post_text": (0, 1),
         "sites": (1, 1, 0),
         "author": (1, 1, 0),
-        "related": (1, 1, 0),
+        "related": (0, 1),
     }
     """
     Indexes where to append extra fields.

@@ -26,21 +26,28 @@
             });
             }
 
+            function stampChipValues() {
+                /* Chips and selected <option>s are in the same order until the user drags.
+                   Stamp each chip with its option value so we can recover it after reorder. */
+                var chips = selection.querySelectorAll(".select2-selection__choice");
+                var options = select.options;
+                var count = Math.min(chips.length, options.length);
+                for (var i = 0; i < count; i++) {
+                    chips[i].dataset.optionValue = options[i].value;
+                }
+            }
+
             new Sortable(selection, {
                 animation: 150,
                 draggable: ".select2-selection__choice",
                 onStart: function () {
+                    stampChipValues();
                     closeRelatedSelect2();
                 },
                 onSort: function () {
-                    var $jq = window.django && window.django.jQuery;
-                    var chips = Array.from(selection.querySelectorAll(".select2-selection__choice"));
-                    var values = chips
-                        .map(function (chip) {
-                            var data = $jq ? $jq(chip).data("data") : null;
-                            return data ? String(data.id) : null;
-                        })
-                        .filter(function (v) { return v !== null; });
+                    var values = Array.from(selection.querySelectorAll(".select2-selection__choice"))
+                        .map(function (chip) { return chip.dataset.optionValue; })
+                        .filter(Boolean);
 
                     var optionsByValue = {};
                     Array.from(select.options).forEach(function (option) {
