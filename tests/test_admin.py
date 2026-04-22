@@ -511,6 +511,23 @@ def test_postadmin_fieldsets_with_related(admin_user, default_config):
     assert "related" in flat_fields
 
 
+def test_related_posts_queryset_excludes_self(admin_client, default_config):
+    """
+    Test that ensures that a post is excluded from its own 'related posts' section
+    in the admin view.
+    """
+    from .factories import PostFactory
+
+    post = PostFactory(app_config=default_config)
+    url = reverse("admin:djangocms_stories_post_change", args=[post.pk])
+    response = admin_client.get(url)
+
+    form = response.context["adminform"].form
+    related_queryset = form.fields["related"].queryset
+
+    assert post not in related_queryset
+
+
 def test_config_admin_readonly_namespace(admin_user, default_config):
     """Test that namespace field becomes readonly on existing config"""
     from djangocms_stories.admin import ConfigAdmin

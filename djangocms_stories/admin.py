@@ -669,7 +669,13 @@ class PostAdmin(
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "related":
             qs = self.get_queryset(request)
+
+            resolved = request.resolver_match
+            if resolved and "object_id" in resolved.kwargs:
+                qs = qs.exclude(pk=resolved.kwargs["object_id"])
+
             kwargs["queryset"] = qs
+
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
