@@ -1,6 +1,7 @@
 import os.path
 
 from cms.utils import get_current_site
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Q
@@ -123,10 +124,12 @@ class BaseConfigListViewMixin(StoriesConfigMixin):
             queryset = self.model.admin_manager.latest_content()
         else:
             queryset = self.model.objects.all()
-            queryset = queryset.filter(
-                Q(post__date_published__lte=current_time) | Q(post__date_published__isnull=True),
-                Q(post__date_published_end__isnull=True) | Q(post__date_published_end__gt=current_time),
-            )
+
+            if not apps.is_installed("djangocms_timed_publishing"):
+                queryset = queryset.filter(
+                    Q(post__date_published__lte=current_time) | Q(post__date_published__isnull=True),
+                    Q(post__date_published_end__isnull=True) | Q(post__date_published_end__gt=current_time),
+                )
 
         queryset = queryset.filter(language=language, post__app_config__namespace=self.namespace)
         queryset = queryset.annotate(sort_date=Coalesce("post__date_published", "post__date_created")).order_by(
