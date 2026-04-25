@@ -620,20 +620,25 @@ class PostAdmin(
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        sites = self.get_restricted_sites(request)
         if sites:
             pks = [site.pk for site in sites]
             qs = qs.filter(sites__in=pks)
+
         prefetch_lookups = getattr(qs, "_prefetch_related_lookups", ())
-        already_prefetched = any(                                                                  
-            isinstance(p, models.Prefetch) and p.to_attr == "_admin_prefetch_cache"                
+        already_prefetched = any(
+            isinstance(p, models.Prefetch)
+            and p.lookup == "postcontent_set"
+            and p.to_attr == "_admin_prefetch_cache"
             for p in prefetch_lookups
-        ) 
+        )
         if not already_prefetched:
             prefetch = models.Prefetch(
-                "postcontent_set", queryset=PostContent.admin_manager.latest_content(), to_attr="_admin_prefetch_cache"
+                "postcontent_set",
+                queryset=PostContent.admin_manager.latest_content(),
+                to_attr="_admin_prefetch_cache",
             )
             qs = qs.prefetch_related(prefetch)
+
         return qs.select_related("author", "app_config").prefetch_related("categories", "sites")
 
     def get_content_objx(self, obj):
