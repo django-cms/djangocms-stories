@@ -624,9 +624,10 @@ class PostAdmin(
         if sites:
             pks = [site.pk for site in sites]
             qs = qs.filter(sites__in=pks)
+        prefetch_lookups = getattr(qs, "_prefetch_related_lookups", ())
         already_prefetched = any(                                                                  
             isinstance(p, models.Prefetch) and p.to_attr == "_admin_prefetch_cache"                
-            for p in qs._prefetch_related_lookups
+            for p in prefetch_lookups
         ) 
         if not already_prefetched:
             prefetch = models.Prefetch(
