@@ -528,6 +528,101 @@ def test_related_posts_queryset_excludes_self(admin_client, default_config):
     assert post not in related_queryset
 
 
+@pytest.mark.django_db
+def test_postadmin_get_search_results_excludes_self_for_related(admin_user, default_config):
+    """Autocomplete searches for the 'related' field must exclude the source post."""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.contrib.admin.sites import site
+    from .factories import PostFactory
+
+    source_post = PostFactory(app_config=default_config)
+    other_posts = PostFactory.create_batch(3, app_config=default_config)
+
+    admin_instance = PostAdmin(Post, site)
+    referer = reverse("admin:djangocms_stories_post_change", args=[source_post.pk])
+    request = RequestFactory().get(
+        "/admin/autocomplete/",
+        {"field_name": "related"},
+        HTTP_REFERER=f"http://testserver{referer}",
+    )
+    request.user = admin_user
+
+    queryset, _ = admin_instance.get_search_results(request, Post.objects.all(), "")
+
+    assert source_post not in queryset
+    for other in other_posts:
+        assert other in queryset
+
+
+@pytest.mark.django_db
+def test_postadmin_get_search_results_other_field_unchanged(admin_user, default_config):
+    """Autocomplete for fields other than 'related' must not exclude any post."""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.contrib.admin.sites import site
+    from .factories import PostFactory
+
+    source_post = PostFactory(app_config=default_config)
+
+    admin_instance = PostAdmin(Post, site)
+    referer = reverse("admin:djangocms_stories_post_change", args=[source_post.pk])
+    request = RequestFactory().get(
+        "/admin/autocomplete/",
+        {"field_name": "categories"},
+        HTTP_REFERER=f"http://testserver{referer}",
+    )
+    request.user = admin_user
+
+    queryset, _ = admin_instance.get_search_results(request, Post.objects.all(), "")
+
+    assert source_post in queryset
+
+
+@pytest.mark.django_db
+def test_postadmin_get_search_results_unresolvable_referer(admin_user, default_config):
+    """An unresolvable HTTP_REFERER must not raise and must not filter the queryset."""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.contrib.admin.sites import site
+    from .factories import PostFactory
+
+    posts = PostFactory.create_batch(2, app_config=default_config)
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get(
+        "/admin/autocomplete/",
+        {"field_name": "related"},
+        HTTP_REFERER="http://testserver/some/non-admin/path/that/does-not-resolve/",
+    )
+    request.user = admin_user
+
+    queryset, _ = admin_instance.get_search_results(request, Post.objects.all(), "")
+
+    for post in posts:
+        assert post in queryset
+
+
+@pytest.mark.django_db
+def test_postadmin_get_search_results_no_referer(admin_user, default_config):
+    """Without an HTTP_REFERER the queryset is returned unchanged for 'related'."""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.contrib.admin.sites import site
+    from .factories import PostFactory
+
+    posts = PostFactory.create_batch(2, app_config=default_config)
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/admin/autocomplete/", {"field_name": "related"})
+    request.user = admin_user
+
+    queryset, _ = admin_instance.get_search_results(request, Post.objects.all(), "")
+
+    for post in posts:
+        assert post in queryset
+
+
 def test_config_admin_readonly_namespace(admin_user, default_config):
     """Test that namespace field becomes readonly on existing config"""
     from djangocms_stories.admin import ConfigAdmin
