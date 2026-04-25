@@ -1,3 +1,4 @@
+from django.conf.global_settings import INSTALLED_APPS
 import pytest
 
 from django import VERSION as DJANGO_VERSION
@@ -240,8 +241,10 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     )
 
     # Both post and post content fields are present
-    if DJANGO_VERSION >= (6,1):
-        assert_html_in_response('<legend class="inline" for="id_author">Author:</legend>', response)  # Post author field
+    if DJANGO_VERSION >= (6, 1):
+        assert_html_in_response(
+            '<legend class="inline" for="id_author">Author:</legend>', response
+        )  # Post author field
     else:
         assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
     assert_html_in_response(
@@ -368,6 +371,74 @@ def test_postadmin_fieldsets_with_abstract(admin_user, default_config):
             flat_fields.append(field)
 
     assert "content__abstract" in flat_fields
+
+
+def test_postadmin_fieldsets_date_fields_present_by_default(admin_user, default_config):
+    """Test that date_published fields are present by default when django_timed_publishing is not installed"""
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/", {"app_config": default_config.pk})
+    request.user = admin_user
+
+    fieldsets = admin_instance.get_fieldsets(request, None)
+
+    all_fields = []
+    for _, data in fieldsets:
+        all_fields.extend(data.get("fields", []))
+
+    # Flatten nested field lists
+    flat_fields = []
+    for field in all_fields:
+        if isinstance(field, list):
+            flat_fields.extend(field)
+        else:
+            flat_fields.append(field)
+
+    assert "date_published" in flat_fields
+    assert "date_published_end" in flat_fields
+    assert "date_featured" in flat_fields
+
+
+@pytest.mark.django_db
+def test_postadmin_fieldsets_date_fields_removed_when_timed_publishing_extension_installed(admin_user, default_config):
+    """Test that date_published fields are removed when django_timed_publishing is installed"""
+    from unittest.mock import patch
+    from djangocms_stories.admin import PostAdmin
+    from djangocms_stories.models import Post
+    from django.test import RequestFactory
+    from django.contrib.admin.sites import site
+
+    admin_instance = PostAdmin(Post, site)
+    request = RequestFactory().get("/", {"app_config": default_config.pk})
+    request.user = admin_user
+
+    with patch(
+        "djangocms_stories.admin.apps.is_installed",
+        side_effect=lambda app: app == "djangocms_timed_publishing",
+    ):
+        fieldsets = admin_instance.get_fieldsets(request, None)
+
+    all_fields = []
+    for _, data in fieldsets:
+        all_fields.extend(data.get("fields", []))
+
+    # Flatten nested field lists
+    flat_fields = []
+    for field in all_fields:
+        if isinstance(field, list):
+            flat_fields.extend(field)
+        else:
+            flat_fields.append(field)
+
+    assert "date_published" not in flat_fields
+    assert "date_published_end" not in flat_fields
+
+    # Should still be present
+    assert "date_featured" in flat_fields
 
 
 def test_postadmin_fieldsets_without_placeholder(admin_user, default_config):
