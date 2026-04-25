@@ -439,6 +439,9 @@ class PostAdmin(
 
     def can_change_content(self, request, content_obj) -> bool:
         """Returns True if user can change content_obj"""
+        if hasattr(super(), "can_change_content"):
+            return super().can_change_content(request, content_obj)
+        
         if content_obj and is_versioning_enabled():
             version = content_obj.versions.first()
             return version and version.check_modify.as_bool(request.user)
@@ -621,10 +624,18 @@ class PostAdmin(
         if sites:
             pks = [site.pk for site in sites]
             qs = qs.filter(sites__in=pks)
-        prefetch = models.Prefetch("postcontent_set", queryset=PostContent.admin_manager.latest_content(), to_attr="_admin_prefetch_cache")
-        return qs.select_related("author", "app_config").prefetch_related(prefetch, "categories", "sites")
+        already_prefetched = any(                                                                  
+            isinstance(p, models.Prefetch) and p.to_attr == "_admin_prefetch_cache"                
+            for p in qs._prefetch_related_lookups
+        ) 
+        if not already_prefetched:
+            prefetch = models.Prefetch(
+                "postcontent_set", queryset=PostContent.admin_manager.latest_content(), to_attr="_admin_prefetch_cache"
+            )
+            qs = qs.prefetch_related(prefetch)
+        return qs.select_related("author", "app_config").prefetch_related("categories", "sites")
 
-    def get_content_obj(self, obj):
+    def get_content_objx(self, obj):
         if obj is None or isinstance(obj, self.content_model):
             return obj
         if obj in self._content_obj_cache:
