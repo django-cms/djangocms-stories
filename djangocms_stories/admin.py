@@ -1,4 +1,5 @@
 from copy import deepcopy
+from urllib.parse import urlparse
 
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from cms.admin.utils import GrouperModelAdmin
@@ -18,7 +19,7 @@ from django.db import models
 from django.db.models import signals
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.urls import path
+from django.urls import Resolver404, path, resolve
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
@@ -683,6 +684,19 @@ class PostAdmin(
             kwargs["widget"] = SortedAutocompleteSelectMultiple(db_field, self.admin_site, using=kwargs.get("using"))
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, may_have_duplicates = super().get_search_results(request, queryset, search_term)
+        if request.GET.get("field_name") == "related":
+            referer = request.META.get("HTTP_REFERER", "")
+            if referer:
+                try:
+                    object_id = resolve(urlparse(referer).path).kwargs.get("object_id")
+                except Resolver404:
+                    object_id = None
+                if object_id:
+                    queryset = queryset.exclude(pk=object_id)
+        return queryset, may_have_duplicates
 
 
 @admin.register(PostContent)
