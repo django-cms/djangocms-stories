@@ -10,7 +10,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.timezone import now
-from django.utils.translation import get_language
+from django.utils.translation import get_language, get_language_from_request
 from django.views.generic import DetailView, ListView
 from parler.views import TranslatableSlugMixin, ViewUrlMixin
 
@@ -65,6 +65,9 @@ class PostDetailView(StoriesConfigMixin, DetailView):
         else:
             template_path = (self.config and self.config.template_prefix) or "djangocms_stories"
             return [os.path.join(template_path, self.base_template_name)]
+
+    def get_queryset(self):
+        return super().get_queryset().filter(language=get_language())
 
     def get_object(self):
         obj = super().get_object()
