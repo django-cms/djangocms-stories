@@ -2,6 +2,8 @@ import pytest
 from django.apps import apps
 from django.test import RequestFactory
 from django.urls import reverse
+from django.utils import translation
+from django.utils.timezone import now
 
 from djangocms_stories.cms_appconfig import get_app_instance
 
@@ -241,3 +243,68 @@ def test_post_category_list_view(client, default_config, assert_html_in_response
     for category in categories:
         assert_html_in_response(f'<section id="category-{category.slug}" class="category-item">', response)
         assert_html_in_response(f'<div class="category-header"><h3>{category.name}</h3></div>', response)
+
+
+@pytest.mark.django_db
+def test_post_detail_view_same_slug_different_languages(client, admin_user, default_config):
+    """
+    Two PostContent objects with the same slug but different languages
+    should each return the correct content for their respective language.
+    """
+    from djangocms_stories.models import Post
+
+    from .factories import PostContentFactory, UserFactory
+
+    post = Post.objects.create(
+        app_config=default_config,
+        author=UserFactory(),
+        date_published=now(),
+    )
+
+    en_content = PostContentFactory(
+        post=post,
+        language="en",
+        title="English Title",
+        subtitle="English Subtitle",
+        slug="shared-slug",
+        meta_title="English Meta Title",
+        meta_description="English meta description.",
+    )
+    fr_content = PostContentFactory(
+        post=post,
+        language="fr",
+        title="Titre Français",
+        subtitle="Sous-titre Français",
+        slug="shared-slug",
+        meta_title="Titre Méta Français",
+        meta_description="Description méta française.",
+    )
+
+    publish_if_necessary([en_content, fr_content], admin_user)
+
+    # Build URL using the post's date and the shared slug
+    date = post.date
+    url_kwargs = {
+        "year": date.year,
+        "month": "%02d" % date.month,
+        "day": "%02d" % date.day,
+        "slug": "shared-slug",
+    }
+
+    # Request the English version (reverse with 'en' language gives /en/blog/...)
+    with translation.override("en"):
+        en_url = reverse("djangocms_stories:post-detail", kwargs=url_kwargs)
+    en_response = client.get(en_url)
+    assert en_response.status_code == 200
+    en_body = en_response.content.decode("utf-8")
+    assert "English Title" in en_body
+    assert "Titre Français" not in en_body
+
+    # Request the French version
+    with translation.override("fr"):
+        fr_url = reverse("djangocms_stories:post-detail", kwargs=url_kwargs)
+    fr_response = client.get(fr_url)
+    assert fr_response.status_code == 200
+    fr_body = fr_response.content.decode("utf-8")
+    assert "Titre Français" in fr_body
+    assert "English Title" not in fr_body
