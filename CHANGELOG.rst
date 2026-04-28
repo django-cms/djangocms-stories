@@ -2,6 +2,19 @@
 Changelog
 =========
 
+0.9.0 (2026-05-01)
+------------------
+
+* feat: Autocomplete widget for related posts (faster loading, better ux) by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/98
+* fix: setting to disable unicode chars in slug fields by @corentinbettiol in https://github.com/django-cms/djangocms-stories/pull/81
+* fix: PostContent could return a lazy string instad of string by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/94
+* fix: set post published dates by @agigibairene in https://github.com/django-cms/djangocms-stories/pull/89
+* fix: exclude current post from related selection by @dnlzrgz in https://github.com/django-cms/djangocms-stories/pull/90
+* fix: Ignored language when fetching a post content object by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/97
+* docs: Clean-up docs for djangocms-stories by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/88
+* docs: add missing djangocms-text dependency by @dnlzrgz in https://github.com/django-cms/djangocms-stories/pull/91
+* docs: Add docstrings for core models by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/93
+
 0.8.0 (2026-02-09)
 ------------------
 

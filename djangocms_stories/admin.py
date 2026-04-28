@@ -1,4 +1,5 @@
 from copy import deepcopy
+from urllib.parse import urlparse
 
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from cms.admin.utils import GrouperModelAdmin
@@ -11,13 +12,14 @@ from django.contrib import admin, messages
 from django.contrib.admin import helpers
 from django.contrib.admin.options import IS_POPUP_VAR, TO_FIELD_VAR, InlineModelAdmin, get_content_type_for_model
 from django.contrib.admin.utils import unquote
+from django.contrib.admin.widgets import AutocompleteSelectMultiple
 from django.contrib.sites.models import Site
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import signals
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.urls import path
+from django.urls import Resolver404, path, resolve
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
@@ -29,6 +31,17 @@ from .utils import is_versioning_enabled
 
 signal_dict = {}
 admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
+
+
+class SortedAutocompleteSelectMultiple(AutocompleteSelectMultiple):
+    """Preserve the order of ``value`` when rendering selected choices."""
+
+    def optgroups(self, name, value, attr=None):
+        groups = super().optgroups(name, value, attr)
+        order = {str(v): i for i, v in enumerate(value)}
+        for _group_name, subgroup, _index in groups:
+            subgroup.sort(key=lambda opt: order.get(str(opt["value"]), len(order)))
+        return groups
 
 
 def register_extension(klass):
@@ -350,13 +363,19 @@ class PostAdmin(
     )
     readonly_fields = ("date_created", "date_modified")
     date_hierarchy = "date_published"
-    autocomplete_fields = ["author"]
+    autocomplete_fields = ["author", "related"]
     frontend_editable_fields = ("title", "abstract", "post_text")
     enhance_exclude = ("main_image", "tags")
     actions = [
         "enable_comments",
         "disable_comments",
     ]
+
+    class Media:
+        js = (
+            "djangocms_stories/js/Sortable.min.js",
+            "djangocms_stories/js/related-sortable.js",
+        )
 
     _fieldsets = [
         (
@@ -409,7 +428,7 @@ class PostAdmin(
         "content__post_text": (0, 1),
         "sites": (1, 1, 0),
         "author": (1, 1, 0),
-        "related": (1, 1, 0),
+        "related": (0, 1),
     }
     """
     Indexes where to append extra fields.
@@ -677,8 +696,22 @@ class PostAdmin(
                 qs = qs.exclude(pk=resolved.kwargs["object_id"])
 
             kwargs["queryset"] = qs
+            kwargs["widget"] = SortedAutocompleteSelectMultiple(db_field, self.admin_site, using=kwargs.get("using"))
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, may_have_duplicates = super().get_search_results(request, queryset, search_term)
+        if request.GET.get("field_name") == "related":
+            referer = request.META.get("HTTP_REFERER", "")
+            if referer:
+                try:
+                    object_id = resolve(urlparse(referer).path).kwargs.get("object_id")
+                except Resolver404:
+                    object_id = None
+                if object_id:
+                    queryset = queryset.exclude(pk=object_id)
+        return queryset, may_have_duplicates
 
 
 @admin.register(PostContent)
