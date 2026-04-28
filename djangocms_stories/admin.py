@@ -660,7 +660,7 @@ class PostAdmin(
 
         return qs.select_related("author", "app_config").prefetch_related("categories", "sites")
 
-    def get_content_objx(self, obj):
+    def get_content_obj(self, obj):
         if obj is None or isinstance(obj, self.content_model):
             return obj
         if obj in self._content_obj_cache:
