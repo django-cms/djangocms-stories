@@ -639,6 +639,7 @@ class PostAdmin(
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
+        sites = self.get_restricted_sites(request)
         if sites:
             pks = [site.pk for site in sites]
             qs = qs.filter(sites__in=pks)
