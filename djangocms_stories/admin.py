@@ -8,6 +8,7 @@ from cms.utils import get_language_from_request
 from cms.utils.conf import get_cms_setting
 from cms.utils.urlutils import admin_reverse
 from django import forms
+from django.apps import apps
 from django.contrib import admin, messages
 from django.contrib.admin import helpers
 from django.contrib.admin.options import IS_POPUP_VAR, TO_FIELD_VAR, InlineModelAdmin, get_content_type_for_model
@@ -25,7 +26,7 @@ from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
 
 from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
-from .models import PostCategory, StoriesConfig, Post, PostContent
+from .models import Post, PostCategory, PostContent, StoriesConfig
 from .settings import get_setting
 from .utils import is_versioning_enabled
 
@@ -460,7 +461,7 @@ class PostAdmin(
         """Returns True if user can change content_obj"""
         if hasattr(super(), "can_change_content"):
             return super().can_change_content(request, content_obj)
-        
+
         if content_obj and is_versioning_enabled():
             version = content_obj.versions.first()
             return version and version.check_modify.as_bool(request.user)
@@ -595,6 +596,17 @@ class PostAdmin(
             config = obj.app_config
 
         fsets = deepcopy(self._fieldsets)
+
+        if apps.is_installed("djangocms_timed_publishing"):
+            self.date_hierarchy = None
+
+            time_published_fields = {"date_published", "date_published_end"}
+            for _, fieldset_options in fsets:
+                fields = fieldset_options.get("fields", [])
+                for i, field_entry in enumerate(fields):
+                    if isinstance(field_entry, list):
+                        fields[i] = [f for f in field_entry if f not in time_published_fields]
+
         related_posts = []
         abstract = bool(getattr(config, "use_abstract", get_setting("USE_ABSTRACT")))
         placeholder = bool(getattr(config, "use_placeholder", get_setting("USE_PLACEHOLDER")))
@@ -646,9 +658,7 @@ class PostAdmin(
 
         prefetch_lookups = getattr(qs, "_prefetch_related_lookups", ())
         already_prefetched = any(
-            isinstance(p, models.Prefetch)
-            and p.lookup == "postcontent_set"
-            and p.to_attr == "_admin_prefetch_cache"
+            isinstance(p, models.Prefetch) and p.lookup == "postcontent_set" and p.to_attr == "_admin_prefetch_cache"
             for p in prefetch_lookups
         )
         if not already_prefetched:
