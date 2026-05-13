@@ -647,7 +647,7 @@ class PostAdmin(
         prefetch_lookups = getattr(qs, "_prefetch_related_lookups", ())
         already_prefetched = any(
             isinstance(p, models.Prefetch)
-            and p.lookup == "postcontent_set"
+            and p.prefetch_through == "postcontent_set"
             and p.to_attr == "_admin_prefetch_cache"
             for p in prefetch_lookups
         )
@@ -664,16 +664,16 @@ class PostAdmin(
     def get_content_obj(self, obj):
         if obj is None or isinstance(obj, self.content_model):
             return obj
-        if obj in self._content_obj_cache:
-            return self._content_obj_cache[obj]
+        if hasattr(obj, "_content_obj_cache"):
+            return obj._content_obj_cache
         if hasattr(obj, "_admin_prefetch_cache"):
             for content_obj in obj._admin_prefetch_cache:
                 if all(
                     getattr(content_obj, key, None) == value for key, value in self.current_content_filters.items()
                 ):
-                    self._content_obj_cache[obj] = content_obj
+                    obj._content_obj_cache = content_obj
                     return content_obj
-            self._content_obj_cache[obj] = None
+            obj._content_obj_cache = None
             return None
         return super().get_content_obj(obj)
 
