@@ -647,7 +647,7 @@ class PostAdmin(
         prefetch_lookups = getattr(qs, "_prefetch_related_lookups", ())
         already_prefetched = any(
             isinstance(p, models.Prefetch)
-            and p.lookup == "postcontent_set"
+            and p.prefetch_through == "postcontent_set"
             and p.to_attr == "_admin_prefetch_cache"
             for p in prefetch_lookups
         )
