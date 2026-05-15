@@ -12,6 +12,7 @@ from django.utils.safestring import mark_safe
 from django.utils.text import normalize_newlines
 from django.utils.translation import get_language_from_request, gettext as _
 from lxml import etree
+from django.db.models import F
 
 from .cms_appconfig import get_app_instance
 from .models import Post
@@ -41,7 +42,7 @@ class LatestEntriesFeed(Feed):
         return (
             Post.objects.prefetch_related("postcontent_set")
             .filter(app_config__namespace=self.namespace, include_in_rss=True)
-            .order_by("-date_published")[: self.feed_items_number]
+            .order_by(F("date_published").desc(nulls_last=True))[: self.feed_items_number][: self.feed_items_number]
         )
 
     def item_title(self, item):
