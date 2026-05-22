@@ -604,9 +604,8 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
     class Meta:
         verbose_name = _("post content")
         verbose_name_plural = _("post contents")
-        # PostContent.Meta
-        ordering = (Coalesce(F("post__date_published"), F("post__date_created")).desc(), "-post__date_created")
-        get_latest_by = "post__date_published"
+        ordering = ("post",)
+        get_latest_by = "post"
 
     # Gruping fields
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
