@@ -28,6 +28,7 @@ from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
 from .models import PostCategory, StoriesConfig, Post, PostContent
 from .settings import get_setting
 from .utils import is_versioning_enabled
+from .cms_appconfig import get_template_style_choices
 
 signal_dict = {}
 admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
@@ -774,6 +775,7 @@ class ConfigAdmin(TranslatableAdmin):
                         "url_patterns",
                         ("menu_structure", "menu_empty_categories"),
                         "template_prefix",
+                        "template_style", 
                         ("default_image_full", "default_image_thumbnail"),
                     ),
                     "classes": ("collapse",),
@@ -855,3 +857,14 @@ class ConfigAdmin(TranslatableAdmin):
 
             trigger_restart()
         return super().save_model(request, obj, form, change)
+
+
+    
+    def get_form(self, request, obj=None, **kwargs):
+        '''renders template_style as a dropdown populated from STORIES_TEMPLATE_STYLES setting'''
+        form = super().get_form(request, obj, **kwargs)
+        if 'template_style' in form.base_fields:
+            form.base_fields['template_style'].widget = forms.Select(
+                choices=[("", _("— Use Default —"))] + list(get_template_style_choices())
+            )
+        return form

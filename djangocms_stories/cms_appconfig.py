@@ -7,6 +7,7 @@ from django.urls import Resolver404, resolve
 from django.utils.translation import get_language_from_request, gettext_lazy as _, override
 from filer.models import ThumbnailOption
 from parler.models import TranslatableModel, TranslatedFields
+from django.conf import settings
 
 from .settings import MENU_TYPE_COMPLETE, get_setting
 
@@ -40,6 +41,12 @@ config_defaults = {
     "send_knock_update": False,
 }
 
+
+# Template styles
+def get_template_style_choices():
+    return getattr(settings, 'STORIES_TEMPLATE_STYLES', (
+        ("Default", "djangocms_stories"),
+    ))
 
 class StoriesConfig(TranslatableModel):
     """
@@ -265,6 +272,22 @@ class StoriesConfig(TranslatableModel):
             return f"{self.namespace}: {self.get_app_title()} / {self.object_name}"
         except Exception as e:
             return str(e)
+
+    
+    template_style = models.CharField(
+        max_length=200,
+        blank=True,
+        default="",
+        verbose_name=_("Template Style"),
+        help_text=_("Select the template style for this blog instance."),
+    )
+
+    def get_template_style(self):
+        """Return the configured style, falling back to the first defined style."""
+        if self.template_style:
+            return self.template_style
+        styles = get_template_style_choices()
+        return styles[-1][1] if styles else "djangocms_stories"
 
 
 def get_namespace_from_request(request: HttpRequest) -> str:

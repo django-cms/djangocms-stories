@@ -31,3 +31,20 @@ def site_compatibility_decorator(func):
     if len(sig.parameters) >= 1:
         return func
     return lambda request: func()
+
+
+
+def get_template(template_name, app_config=None):
+    """
+    Resolves a template path based on the apphook config's template style.
+    How to use it:
+        template = get_template("post_list.html", app_config=config)
+        # Returns eg. "djangocms_stories_bootstrap_5/post_list.html"
+    """
+    if app_config and hasattr(app_config, 'get_template_style'):
+        style = app_config.get_template_style()
+    else:
+        styles = getattr(settings, 'STORIES_TEMPLATE_STYLES', (("Default", "djangocms_stories"),))
+        style = styles[-1][1]  
+
+    return f"{style}/{template_name}"
