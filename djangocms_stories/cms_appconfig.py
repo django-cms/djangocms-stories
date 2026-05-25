@@ -52,7 +52,6 @@ config_defaults = {
 
 
 
-
 class StoriesConfig(TranslatableModel):
     """
 
