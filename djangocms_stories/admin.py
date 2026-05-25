@@ -28,7 +28,7 @@ from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
 from .models import PostCategory, StoriesConfig, Post, PostContent
 from .settings import get_setting
 from .utils import is_versioning_enabled
-from .cms_appconfig import get_template_style_choices
+from .cms_appconfig import StoriesConfig, DEFAULT_TEMPLATE_STYLES
 
 signal_dict = {}
 admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
@@ -861,10 +861,11 @@ class ConfigAdmin(TranslatableAdmin):
 
     
     def get_form(self, request, obj=None, **kwargs):
-        '''renders template_style as a dropdown populated from STORIES_TEMPLATE_STYLES setting'''
+        '''Renders template_styles as a dropdown populated from STORIES_TEMPLATE_STYLES setting'''
         form = super().get_form(request, obj, **kwargs)
         if 'template_style' in form.base_fields:
             form.base_fields['template_style'].widget = forms.Select(
-                choices=[("", _("— Use Default —"))] + list(get_template_style_choices())
+                choices=[("", _("— Use Default —"))] + 
+                    [(style_path, label) for (label, style_path) in DEFAULT_TEMPLATE_STYLES]
             )
         return form

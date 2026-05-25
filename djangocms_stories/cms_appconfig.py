@@ -8,8 +8,17 @@ from django.utils.translation import get_language_from_request, gettext_lazy as 
 from filer.models import ThumbnailOption
 from parler.models import TranslatableModel, TranslatedFields
 from django.conf import settings
-
 from .settings import MENU_TYPE_COMPLETE, get_setting
+
+DEFAULT_TEMPLATE_STYLES = getattr(
+    settings,
+    "STORIES_TEMPLATE_STYLES",
+    (("Default", "djangocms_stories"),),
+)
+
+DEFAULT_TEMPLATE_STYLE = (
+    DEFAULT_TEMPLATE_STYLES[-1][1] if DEFAULT_TEMPLATE_STYLES else "djangocms_stories"
+)
 
 config_defaults = {
     "default_image_full": None,
@@ -42,11 +51,7 @@ config_defaults = {
 }
 
 
-# Template styles
-def get_template_style_choices():
-    return getattr(settings, 'STORIES_TEMPLATE_STYLES', (
-        ("Default", "djangocms_stories"),
-    ))
+
 
 class StoriesConfig(TranslatableModel):
     """
@@ -277,17 +282,14 @@ class StoriesConfig(TranslatableModel):
     template_style = models.CharField(
         max_length=200,
         blank=True,
-        default="",
+        default=DEFAULT_TEMPLATE_STYLE,
         verbose_name=_("Template Style"),
         help_text=_("Select the template style for this blog instance."),
     )
 
     def get_template_style(self):
-        """Return the configured style, falling back to the first defined style."""
-        if self.template_style:
-            return self.template_style
-        styles = get_template_style_choices()
-        return styles[-1][1] if styles else "djangocms_stories"
+        """Return the configured style, fall back to the resolved default style."""
+        return self.template_style or DEFAULT_TEMPLATE_STYLE
 
 
 def get_namespace_from_request(request: HttpRequest) -> str:

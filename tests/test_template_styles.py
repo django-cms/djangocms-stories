@@ -19,7 +19,7 @@ class TestGetTemplateStyleChoices(TestCase):
         from djangocms_stories.cms_appconfig import get_template_style_choices
 
         custom_styles = (
-            ("Bootstrap 5", "bootstrap_5"),
+            ("Bootstrap 5", "djangocms_stories_bootstrap_5"),
             ("Default", "djangocms_stories"),
         )
         with patch("djangocms_stories.cms_appconfig.settings") as mock_settings:
@@ -30,14 +30,13 @@ class TestGetTemplateStyleChoices(TestCase):
 
 class TestStoriesConfigTemplateStyle(TestCase):
     def _make_config(self, template_style=""):
-        from djangocms_stories.cms_appconfig import StoriesConfig
         config = StoriesConfig.__new__(StoriesConfig)
         config.template_style = template_style
         return config
 
     def test_get_template_style_returns_set_value(self):
-        config = self._make_config(template_style="bootstrap_5")
-        self.assertEqual(config.get_template_style(), "bootstrap_5")
+        config = self._make_config(template_style="djangocms_stories_bootstrap_5")
+        self.assertEqual(config.get_template_style(), "djangocms_stories_bootstrap_5")
 
     def test_get_template_style_falls_back_when_empty(self):
         config = self._make_config(template_style="")
@@ -49,7 +48,7 @@ class TestStoriesConfigTemplateStyle(TestCase):
 
         config = self._make_config(template_style="")
         custom_styles = (
-            ("Bootstrap 5", "bootstrap_5"),
+            ("Bootstrap 5", "djangocms_stories_bootstrap_5"),
             ("Default", "djangocms_stories"),
         )
         with patch("djangocms_stories.cms_appconfig.get_template_style_choices", return_value=custom_styles):
