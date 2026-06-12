@@ -1,3 +1,5 @@
+import os
+
 from cms.app_base import CMSApp
 from cms.apphook_pool import apphook_pool
 from django.core.exceptions import ObjectDoesNotExist
@@ -56,5 +58,15 @@ class StoriesApp(CMSApp):
         except AttributeError:  # pragma: no cover
             return reverse(f"admin:{self.app_config._meta.app_label}_{self.app_config._meta.module_name}_add")
 
+
+    def get_root_template(self, page=None, **kwargs):
+        if page:
+            from djangocms_stories.views import PostListView
+
+            config = self.get_config(page.application_namespace)
+            template_path = (config and config.template_prefix) or "djangocms_stories"
+            return os.path.join(template_path, PostListView.base_template_name)
+
+        return None
 
 # BlogApp.setup()
