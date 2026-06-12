@@ -2,6 +2,13 @@
 Changelog
 =========
 
+0.9.2 (2026-06-12)
+------------------
+
+* feat: Declare root template to django CMS 5.1 by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/102
+* fix: Avoid posts with date_published set to fall behind all without by @MacLake in https://github.com/django-cms/djangocms-stories/pull/101
+
+
 0.9.1 (2026-05-14)
 ------------------
 
