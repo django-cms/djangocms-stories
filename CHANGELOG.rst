@@ -2,6 +2,11 @@
 Changelog
 =========
 
+0.9.1 (2026-05-14)
+------------------
+
+* fix: Prefetch detection used wrong attribute by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/103
+
 0.9.0 (2026-05-01)
 ------------------
 
