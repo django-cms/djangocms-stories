@@ -23,6 +23,7 @@ from django.urls import Resolver404, path, resolve
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
+from sortedm2m.fields import SortedManyToManyField
 
 from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
 from .models import PostCategory, StoriesConfig, Post, PostContent
@@ -42,6 +43,20 @@ class SortedAutocompleteSelectMultiple(AutocompleteSelectMultiple):
         for _group_name, subgroup, _index in groups:
             subgroup.sort(key=lambda opt: order.get(str(opt["value"]), len(order)))
         return groups
+
+
+class SortedManyToManyAutocompleteMixin:
+    """Render ``SortedManyToManyField``s listed in ``autocomplete_fields`` with an
+    order-preserving autocomplete widget instead of the unsorted default."""
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if (
+            "widget" not in kwargs
+            and isinstance(db_field, SortedManyToManyField)
+            and db_field.name in self.get_autocomplete_fields(request)
+        ):
+            kwargs["widget"] = SortedAutocompleteSelectMultiple(db_field, self.admin_site, using=kwargs.get("using"))
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
 def register_extension(klass):
@@ -342,6 +357,7 @@ class CategoryAdmin(FrontendEditableAdminMixin, TranslatableAdmin):
 
 @admin.register(Post)
 class PostAdmin(
+    SortedManyToManyAutocompleteMixin,
     FrontendEditableAdminMixin,
     ModelAppHookConfig,
     GrouperModelAdmin,
@@ -460,7 +476,7 @@ class PostAdmin(
         """Returns True if user can change content_obj"""
         if hasattr(super(), "can_change_content"):
             return super().can_change_content(request, content_obj)
-        
+
         if content_obj and is_versioning_enabled():
             version = content_obj.versions.first()
             return version and version.check_modify.as_bool(request.user)
@@ -697,14 +713,13 @@ class PostAdmin(
                 qs = qs.exclude(pk=resolved.kwargs["object_id"])
 
             kwargs["queryset"] = qs
-            kwargs["widget"] = SortedAutocompleteSelectMultiple(db_field, self.admin_site, using=kwargs.get("using"))
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
     def get_search_results(self, request, queryset, search_term):
         queryset, may_have_duplicates = super().get_search_results(request, queryset, search_term)
         if request.GET.get("field_name") == "related":
-            referer = request.META.get("HTTP_REFERER", "")
+            referer = request.headers.get("referer", "")
             if referer:
                 try:
                     object_id = resolve(urlparse(referer).path).kwargs.get("object_id")
