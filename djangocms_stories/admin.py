@@ -35,7 +35,23 @@ admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
 
 
 class SortedAutocompleteSelectMultiple(AutocompleteSelectMultiple):
-    """Preserve the order of ``value`` when rendering selected choices."""
+    """Autocomplete widget that preserves the order of a ``SortedManyToManyField``.
+
+    The order of ``value`` is preserved when rendering selected choices, and the
+    ``sorted-autocomplete`` class together with the bundled JS makes the selected
+    choices drag-and-drop sortable.
+    """
+
+    class Media:
+        js = (
+            "djangocms_stories/js/Sortable.min.js",
+            "djangocms_stories/js/sorted-autocomplete.js",
+        )
+
+    def build_attrs(self, base_attrs, extra_attrs=None):
+        attrs = super().build_attrs(base_attrs, extra_attrs=extra_attrs)
+        attrs["class"] = f"{attrs.get('class', '')} sorted-autocomplete".strip()
+        return attrs
 
     def optgroups(self, name, value, attr=None):
         groups = super().optgroups(name, value, attr)
@@ -386,12 +402,6 @@ class PostAdmin(
         "enable_comments",
         "disable_comments",
     ]
-
-    class Media:
-        js = (
-            "djangocms_stories/js/Sortable.min.js",
-            "djangocms_stories/js/related-sortable.js",
-        )
 
     _fieldsets = [
         (
