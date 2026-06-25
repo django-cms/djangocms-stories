@@ -1,118 +1,113 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
 # Translators:
-# Bashar Al-Abdulhadi, 2016
-# Bashar Al-Abdulhadi, 2014
+# Fabian Braun <fsbraun@gmx.de>, 2026
+# Anas Tina, 2026
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: djangocms-blog\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-08 06:51+0200\n"
-"PO-Revision-Date: 2014-03-29 15:29+0000\n"
-"Last-Translator: Bashar Al-Abdulhadi, 2016\n"
-"Language-Team: Arabic (http://app.transifex.com/nephila/djangocms-blog/"
-"language/ar/)\n"
-"Language: ar\n"
+"PO-Revision-Date: 2026-02-02 20:41+0000\n"
+"Last-Translator: Anas Tina, 2026\n"
+"Language-Team: Arabic (https://app.transifex.com/divio/teams/58664/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Generator: Lokalize 1.5\n"
 
 #: admin.py:97
 msgid "site"
-msgstr ""
+msgstr "الموقع"
 
 #: admin.py:121
 msgid "Select app config"
-msgstr ""
+msgstr "اختر إعداد التطبيق"
 
 #: admin.py:122
 msgid "Select the app config for the new object"
-msgstr ""
+msgstr "اختر نوع المنشورات للمنشور الجديد"
 
 #: admin.py:233
-#, fuzzy, python-format
-#| msgid "Add post"
+#, python-format
 msgid "Add %s"
-msgstr "إضافة موضوع"
+msgstr "أضف %s"
 
 #: admin.py:333 admin.py:404
 msgid "Info"
-msgstr ""
+msgstr "معلومات"
 
 #: admin.py:343 admin.py:411
 msgid "Images"
-msgstr ""
+msgstr "الصور"
 
 #: admin.py:415
 msgid "SEO"
-msgstr ""
+msgstr "تحسين محركات البحث"
 
 #: admin.py:455
 msgid "Empty"
-msgstr ""
+msgstr "فارغ"
 
 #: admin.py:470
 msgid "Enable comments for selection"
-msgstr ""
+msgstr "فعّل التعليقات للعناصر المحددة"
 
 #: admin.py:484
 msgid "Disable comments for selection "
-msgstr ""
+msgstr "عطّل التعليقات للعناصر المحددة"
 
 #: admin.py:704
 msgid "Generic"
-msgstr ""
+msgstr "عام"
 
 #: admin.py:713
 msgid "Layout"
-msgstr ""
+msgstr "التخطيط"
 
 #: admin.py:726
 msgid "Notifications"
-msgstr ""
+msgstr "الإشعارات"
 
 #: admin.py:730
 msgid "Sitemap"
-msgstr ""
+msgstr "خريطة الموقع"
 
 #: admin.py:739
 msgid "Meta"
-msgstr ""
+msgstr "البيانات التعريفية"
 
 #: admin.py:750 admin.py:762 admin.py:773
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
+"يمكنك إدخال نصوص عادية، أو أسماء واصفات أو دوال من النموذج البرمجي للمنشور"
 
 #: apps.py:8 cms_apps.py:14
-#, fuzzy
-#| msgid "Categories"
 msgid "Stories"
-msgstr "الأقسام"
+msgstr "المنشورات"
 
 #: cms_appconfig.py:82
-#, fuzzy
-#| msgid "blog config"
 msgid "stories config"
-msgstr "إعدادات المدونة"
+msgstr "إعداد المنشورات"
 
 #: cms_appconfig.py:83
-#, fuzzy
-#| msgid "blog configs"
 msgid "stories configs"
-msgstr "إعدادات المدونة"
+msgstr "إعدادات المنشورات"
 
 #: cms_appconfig.py:86
 msgid "type"
-msgstr ""
+msgstr "النوع"
 
 #: cms_appconfig.py:90
 msgid "instance namespace"
-msgstr ""
+msgstr "أدخل اسم مميز للتطبيق"
 
 #: cms_appconfig.py:96
 msgid "application title"
@@ -124,582 +119,576 @@ msgstr "اسم الكائن"
 
 #: cms_appconfig.py:107
 msgid "default size of full images"
-msgstr ""
+msgstr "الحجم الافتراضي للصور بحجمهاالكامل"
 
 #: cms_appconfig.py:108
 msgid ""
 "If left empty the image size will have to be set for every newly created "
 "post."
-msgstr ""
+msgstr "إذا تُرك هذا الحقل فارغاً، فسيتعين تحديد حجم الصورة لكل منشور جديد."
 
 #: cms_appconfig.py:117
 msgid "default size of thumbnail images"
-msgstr ""
+msgstr "الحجم الافتراضي للصور المصغّرة"
 
 #: cms_appconfig.py:118
 msgid ""
 "If left empty the thumbnail image size will have to be set for every newly "
 "created post."
 msgstr ""
+"إذا تُرك هذا الحقل فارغاً، فسيتعين تحديد حجم الصورة المصغّرة لكل منشور جديد."
 
 #: cms_appconfig.py:123
 msgid "Permalink structure"
-msgstr ""
+msgstr "حدد بنية الرابط الدائم"
 
 #: cms_appconfig.py:128
 msgid "Use placeholder and plugins for article body"
-msgstr ""
+msgstr "استخدم موضع محتوى وإضافات لجسم المنشور"
 
 #: cms_appconfig.py:132
 msgid "Use abstract field"
-msgstr ""
+msgstr "استخدم حقل ملخص المنشور"
 
 #: cms_appconfig.py:135
 msgid "Enable related posts"
-msgstr ""
+msgstr "فعّل المنشورات ذات الصلة"
 
 #: cms_appconfig.py:138
 msgid "No"
-msgstr ""
+msgstr "لا"
 
 #: cms_appconfig.py:139
 msgid "Yes, from this stories config"
-msgstr ""
+msgstr "نعم، من إعداد المنشورات هذه"
 
 #: cms_appconfig.py:140
 msgid "Yes, from this site"
-msgstr ""
+msgstr "نعم، من هذا الموقع"
 
 #: cms_appconfig.py:145
 msgid "Set author by default"
-msgstr "ضبطها من قبل الكاتب"
+msgstr "عيّن كاتب المنشور افتراضياً"
 
 #: cms_appconfig.py:149
 msgid "Paginate size"
-msgstr "عدد تعدد الصفحات"
+msgstr "حجم الصفحة عند التقسيم إلى صفحات"
 
 #: cms_appconfig.py:151
 msgid "When paginating list views, how many articles per page?"
-msgstr ""
+msgstr "عند العرض في صفحات، كم منشوراً يُعرض في كل صفحة؟"
 
 #: cms_appconfig.py:158
 msgid "Template prefix"
-msgstr ""
+msgstr "بادئة القالب"
 
 #: cms_appconfig.py:159
 msgid "Alternative directory to load the stories templates from"
-msgstr ""
+msgstr "دليل بديل لتحميل قوالب المنشورات منه"
 
 #: cms_appconfig.py:164
 msgid "Menu structure"
-msgstr ""
+msgstr "بنية القائمة"
 
 #: cms_appconfig.py:165
 msgid "Structure of the django CMS menu"
-msgstr ""
+msgstr "بنية قائمة نظام إدارة المحتوى ديجانغو"
 
 #: cms_appconfig.py:169
 msgid "Show empty categories in menu"
-msgstr ""
+msgstr "أظهر التصنيفات الفارغة في القائمة"
 
 #: cms_appconfig.py:170
 msgid "Show categories with no post attached in the menu"
-msgstr ""
+msgstr "أظهر التصنيفات التي لا ترتبط بها أي منشورات في القائمة"
 
 #: cms_appconfig.py:176
 msgid "Sitemap changefreq"
-msgstr ""
+msgstr "مدى تكرار التغيير في خريطة الموقع"
 
 #: cms_appconfig.py:177
 msgid "Changefreq attribute for sitemap items"
-msgstr ""
+msgstr "اختر ما يميز مدى تكرار التغيير لعناصر خريطة الموقع"
 
 #: cms_appconfig.py:183
 msgid "Sitemap priority"
-msgstr ""
+msgstr "أولوية خريطة الموقع"
 
 #: cms_appconfig.py:184
 msgid "Priority attribute for sitemap items"
-msgstr ""
+msgstr "اختر ما يميز الأولوية لعناصر خريطة الموقع"
 
 #: cms_appconfig.py:190
 msgid "Object type"
-msgstr ""
+msgstr "نوع المنشور"
 
 #: cms_appconfig.py:195
 msgid "Facebook type"
-msgstr ""
+msgstr "نوع المنشور تبعاً لفيسبوك"
 
 #: cms_appconfig.py:199
 msgid "Facebook application ID"
-msgstr ""
+msgstr "معرّف تطبيق الفيسبوك"
 
 #: cms_appconfig.py:201
 msgid "Facebook profile ID"
-msgstr ""
+msgstr "معرّف ملف الفيسبوك الشخصي"
 
 #: cms_appconfig.py:203
 msgid "Facebook page URL"
-msgstr ""
+msgstr "رابط صفحة الفيسبوك"
 
 #: cms_appconfig.py:205
 msgid "Facebook author URL"
-msgstr ""
+msgstr "رابط كاتب المنشور على الفيسبوك"
 
 #: cms_appconfig.py:207
 msgid "Facebook author"
-msgstr ""
+msgstr "اسم كاتب المنشور على الفيسبوك"
 
 #: cms_appconfig.py:211
 msgid "Twitter type"
-msgstr ""
+msgstr "نوع المنشور تبعاً لتويتر"
 
 #: cms_appconfig.py:215
 msgid "Twitter site handle"
-msgstr ""
+msgstr "معرّف الموقع على تويتر"
 
 #: cms_appconfig.py:217
 msgid "Twitter author handle"
-msgstr ""
+msgstr "معرّف كاتب المنشور على تويتر"
 
 #: cms_appconfig.py:221
 msgid "Schema.org type"
-msgstr ""
+msgstr "نوع المنشور تبعاً لـ Schema.org"
 
 #: cms_appconfig.py:225
 msgid "Schema.org author name"
-msgstr ""
+msgstr "اسم كاتب المنشور في Schema.org"
 
 #: cms_appconfig.py:228
 msgid "Send notifications on post publish"
-msgstr ""
+msgstr "إرسال إشعارات عند نشر المنشور"
 
 #: cms_appconfig.py:230
 msgid "Emits a desktop notification -if enabled- when publishing a new post"
-msgstr ""
+msgstr "يصدر إشعاراً على سطح المكتب -إذا كان مفعّلًا- عند نشر منشور جديد"
 
 #: cms_appconfig.py:234
 msgid "Send notifications on post update"
-msgstr ""
+msgstr "إرسال إشعارات عند تحديث المنشور"
 
 #: cms_appconfig.py:236
-msgid "Emits a desktop notification -if enabled- when editing a published post"
-msgstr ""
+msgid ""
+"Emits a desktop notification -if enabled- when editing a published post"
+msgstr "ارسال إشعار على سطح المكتب -إذا كان مفعّلاً- عند تعديل منشور سبق نشره"
 
 #: cms_appconfig.py:240
 msgid "untitled"
-msgstr "غير معنون"
+msgstr "بلا عنوان"
 
 #: cms_config.py:55
 #, python-brace-format
 msgid "New {0}"
-msgstr ""
+msgstr "{0} جديد"
 
 #: cms_config.py:60
 #, python-brace-format
 msgid "Create a new {0} in {1}"
-msgstr ""
+msgstr "أنشئ {0} جديداً في {1}"
 
 #: cms_menus.py:24
 msgid "Post category menu"
-msgstr ""
+msgstr "قائمة تصنيفات المنشورات"
 
 #: cms_toolbars.py:38
 msgid "View on site"
-msgstr ""
+msgstr "اعرض في الموقع"
 
 #: cms_toolbars.py:45
 msgid "Preview"
-msgstr ""
+msgstr "معاينة"
 
 #: cms_toolbars.py:67
 msgid "View Published"
-msgstr ""
+msgstr "اعرض النسخة المنشورة"
 
 #: cms_toolbars.py:111
 #, python-format
 msgid "%(object_name)s properties"
-msgstr ""
+msgstr "خصائص %(object_name)s"
 
 #: cms_toolbars.py:122
 msgid "All entries"
-msgstr ""
+msgstr "كل المُدخلات"
 
 #: cms_toolbars.py:131
-#, fuzzy, python-format
-#| msgid "object name"
+#, python-format
 msgid "New %(object_name)s"
-msgstr "اسم الكائن"
+msgstr "%(object_name)s جديد"
 
 #: cms_toolbars.py:138
 msgid "Edit Configuration"
-msgstr ""
+msgstr "عدّل الإعدادات"
 
 #: cms_wizards.py:24 models.py:108 models.py:308 models.py:640
 msgid "app. config"
-msgstr ""
+msgstr "إعداد التطبيق"
 
 #: cms_wizards.py:93
 msgid "Selected story not available any more. Close wizard."
-msgstr ""
+msgstr "لم يعد المنشور المحدد متاح. أغلق النافذة."
 
 #: feeds.py:38
 #, python-format
 msgid "Blog articles on %(site_name)s"
-msgstr "مواضيع المدونة على %(site_name)s"
+msgstr "المنشورات على %(site_name)s"
 
 #: forms.py:97
 msgid "App Config"
-msgstr ""
+msgstr "إعداد التطبيق"
 
 #: forms.py:99
 msgid "Select the app config to apply to the new post."
-msgstr ""
+msgstr "اختر نوع المنشورات المطلوب تطبيقها على المنشور الجديد."
 
 #: models.py:100
 msgid "parent"
-msgstr ""
+msgstr "الأصل"
 
 #: models.py:102
 msgid "created at"
-msgstr ""
+msgstr "تاريخ الإنشاء"
 
 #: models.py:103
 msgid "modified at"
-msgstr ""
+msgstr "تاريخ التعديل"
 
 #: models.py:109 models.py:309 models.py:641
-msgid "When selecting a value, the form is reloaded to get the updated default"
+msgid ""
+"When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
+"عند اختيار قيمة، يُعاد تحميل النموذج للحصول على القيمة الافتراضية المحدّثة"
 
 #: models.py:111
 msgid "priority"
-msgstr ""
+msgstr "الأولوية"
 
 #: models.py:113 models.py:271
 msgid "main image"
-msgstr ""
+msgstr "الصورة الرئيسية"
 
 #: models.py:121 models.py:279
 msgid "main image thumbnail"
-msgstr ""
+msgstr "الصورة المصغّرة للصورة الرئيسية"
 
 #: models.py:129 models.py:287
 msgid "main image full"
-msgstr ""
+msgstr "الصورة الرئيسية الكاملة"
 
 #: models.py:137
 msgid "name"
-msgstr ""
+msgstr "الاسم"
 
 #: models.py:139 models.py:555
 msgid "slug"
-msgstr ""
+msgstr "المعرّف في الرابط"
 
 #: models.py:145
 msgid "category meta description"
-msgstr ""
+msgstr "الوصف التعريفي للتصنيف"
 
 #: models.py:147 models.py:562
 msgid "abstract"
-msgstr ""
+msgstr "الملخص"
 
 #: models.py:172
 msgid "post category"
-msgstr ""
+msgstr "تصنيف المنشور"
 
 #: models.py:173
-#, fuzzy
-#| msgid "Categories"
 msgid "post categories"
-msgstr "الأقسام"
+msgstr "تصنيفات المنشورات"
 
 #: models.py:222
 msgid "PostCategory (no translation)"
-msgstr ""
+msgstr "تصنيف المنشور (بلا ترجمة)"
 
 #: models.py:254
 msgid "author"
-msgstr ""
+msgstr "كاتب المنشور"
 
 #: models.py:261
 msgid "created"
-msgstr ""
+msgstr "أُنشئ"
 
 #: models.py:262
 msgid "last modified"
-msgstr ""
+msgstr "آخر تعديل"
 
 #: models.py:263
 msgid "published since"
-msgstr ""
+msgstr "منشور ابتداءً من"
 
 #: models.py:264
 msgid "published until"
-msgstr ""
+msgstr "منشور حتى"
 
 #: models.py:265
 msgid "featured date"
-msgstr ""
+msgstr "تاريخ العرض كمنشور مميز"
 
 #: models.py:266
 msgid "include in RSS feed"
-msgstr ""
+msgstr "أدرج في موجز RSS"
 
 #: models.py:268
 msgid "category"
-msgstr ""
+msgstr "التصنيف"
 
 #: models.py:294
 msgid "enable comments on post"
-msgstr ""
+msgstr "فعّل التعليقات على المنشور"
 
 #: models.py:298
 msgid "Site(s)"
-msgstr ""
+msgstr "الموقع/المواقع"
 
 #: models.py:301
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in "
-"all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in"
+" all the configured sites."
 msgstr ""
+"اختر المواقع التي سيظهر فيها المنشور. إذا لم تحدد أي موقع، فسيكون ظاهراً في "
+"كل المواقع المضبوطة."
 
 #: models.py:315
 msgid ""
 "Type a tag and hit tab, or start typing and select from autocomplete list."
 msgstr ""
+"اكتب وسماً واضغط Tab، أو ابدأ الكتابة واختر من قائمة الإكمال التلقائي."
 
 #: models.py:318
 msgid "Related Posts"
-msgstr ""
+msgstr "المنشورات ذات الصلة"
 
 #: models.py:352
-#, fuzzy
-#| msgid "Add post"
 msgid "post"
-msgstr "إضافة موضوع"
+msgstr "منشور"
 
 #: models.py:353
-#, fuzzy
-#| msgid "Add post"
 msgid "posts"
-msgstr "إضافة موضوع"
+msgstr "منشورات"
 
 #: models.py:363
 msgid "Post (no translation)"
-msgstr ""
+msgstr "منشور (بلا ترجمة)"
 
 #: models.py:461
-#, fuzzy
-#| msgid "untitled"
 msgid "No title"
-msgstr "غير معنون"
+msgstr "بلا عنوان"
 
 #: models.py:544
 msgid "post content"
-msgstr ""
+msgstr "محتوى المنشور"
 
 #: models.py:545
 msgid "post contents"
-msgstr ""
+msgstr "محتويات المنشور"
 
 #: models.py:551
 msgid "language"
-msgstr ""
+msgstr "اللغة"
 
 #: models.py:553
 msgid "title"
-msgstr ""
+msgstr "العنوان"
 
 #: models.py:561
 msgid "subtitle"
-msgstr ""
+msgstr "العنوان الفرعي"
 
 #: models.py:563
 msgid "post meta description"
-msgstr ""
+msgstr "الوصف التعريفي للمنشور"
 
 #: models.py:564
 msgid "post meta keywords"
-msgstr ""
+msgstr "الكلمات المفتاحية التعريفية للمنشور"
 
 #: models.py:566
 msgid "post meta title"
-msgstr ""
+msgstr "العنوان التعريفي للمنشور"
 
 #: models.py:567
 msgid "used in title tag and social sharing"
-msgstr ""
+msgstr "يُستخدم في وسم العنوان والمشاركة على شبكات التواصل الاجتماعي"
 
 #: models.py:572
 msgid "text"
-msgstr ""
+msgstr "النص"
 
 #: models.py:632
-#, fuzzy
-#| msgid "untitled"
 msgid "Untitled"
-msgstr "غير معنون"
+msgstr "بلا عنوان"
 
 #: models.py:644
 msgid "current site"
-msgstr ""
+msgstr "الموقع الحالي"
 
 #: models.py:644
 msgid "Select items from the current site only"
-msgstr ""
+msgstr "اختر العناصر من الموقع الحالي فقط"
 
 #: models.py:648
 msgid "Plugin layout"
-msgstr ""
+msgstr "تخطيط الإضافة"
 
 #: models.py:649
 msgid "Select plugin layout to load for this instance"
-msgstr ""
+msgstr "اختر تخطيط الإضافة المطلوب تحميله لهذه النسخة"
 
 #: models.py:689 models.py:730
 msgid "entries"
-msgstr ""
+msgstr "المُدخلات"
 
 #: models.py:691
 msgid "The number of latests entries to be displayed."
-msgstr ""
+msgstr "عدد أحدث المُدخلات المطلوب عرضها."
 
 #: models.py:694
 msgid "filter by tag"
-msgstr ""
+msgstr "رشّح حسب الوسم"
 
 #: models.py:696
 msgid "Show only the entries tagged with chosen tags."
-msgstr ""
+msgstr "أظهر فقط المُدخلات الموسومة بالوسوم المختارة."
 
 #: models.py:702
 msgid "filter by category"
-msgstr ""
+msgstr "رشّح حسب التصنيف"
 
 #: models.py:703
 msgid "Show only the posts of the chosen categories."
-msgstr ""
+msgstr "أظهر فقط منشورات التصنيفات المختارة."
 
 #: models.py:707
 #, python-format
 msgid "%s latest posts by tag"
-msgstr ""
+msgstr "%s من أحدث المنشورات حسب الوسم"
 
 #: models.py:727
 msgid "authors"
-msgstr ""
+msgstr "الكاتبون"
 
 #: models.py:732
 msgid "The number of author entries to be displayed."
-msgstr ""
+msgstr "عدد مُدخلات الكاتب المطلوب عرضها."
 
 #: models.py:736
 #, python-format
 msgid "%s latest entries by author"
-msgstr ""
+msgstr "%s من أحدث المُدخلات حسب الكاتب"
 
 #: models.py:756 models.py:759
 msgid "Featured posts"
-msgstr ""
+msgstr "المنشورات المميزة"
 
 #: models.py:776
 msgid "generic blog plugin"
-msgstr ""
+msgstr "إضافة عمومية للمدونة"
 
 #: settings.py:27
 msgid "Full date"
-msgstr ""
+msgstr "التاريخ الكامل"
 
 #: settings.py:28
 msgid "Year /  Month"
-msgstr ""
+msgstr "السنة / الشهر"
 
 #: settings.py:29 templates/djangocms_stories/post_list.html:14
 msgid "Category"
-msgstr ""
+msgstr "التصنيف"
 
 #: settings.py:30
 msgid "Just slug"
-msgstr ""
+msgstr "المعرّف في الرابط فقط"
 
 #: settings.py:60
 msgid "Categories and posts"
-msgstr ""
+msgstr "النصنيفات والمنشورات"
 
 #: settings.py:61
 msgid "Categories only"
-msgstr ""
+msgstr "النصنيفات فقط"
 
 #: settings.py:62
 msgid "Posts only"
-msgstr ""
+msgstr "المنشورات فقط"
 
 #: settings.py:63
 msgid "None"
-msgstr ""
+msgstr "لا شيء"
 
 #: settings.py:72
 msgid "always"
-msgstr ""
+msgstr "دائماً"
 
 #: settings.py:73
 msgid "hourly"
-msgstr ""
+msgstr "كل ساعة"
 
 #: settings.py:74
 msgid "daily"
-msgstr ""
+msgstr "يومياً"
 
 #: settings.py:75
 msgid "weekly"
-msgstr ""
+msgstr "أسبوعياً"
 
 #: settings.py:76
 msgid "monthly"
-msgstr ""
+msgstr "شهرياً"
 
 #: settings.py:77
 msgid "yearly"
-msgstr ""
+msgstr "سنوياً"
 
 #: settings.py:78
 msgid "never"
-msgstr ""
+msgstr "أبداً"
 
 #: settings.py:378
-#, fuzzy
-#| msgid "Latest Blog Articles"
 msgid "Article"
-msgstr "آخر مواضيع المدونة"
+msgstr "منشور"
 
 #: settings.py:399 settings.py:406 settings.py:493
 msgid "Blog"
-msgstr "المدونة"
+msgstr "مدونة"
 
 #: settings.py:500
 msgid "Latest Blog Articles"
-msgstr "آخر مواضيع المدونة"
+msgstr "أحدث منشورات المدونة"
 
 #: settings.py:507
 msgid "Latest Blog Articles - Cache"
-msgstr ""
+msgstr "أحدث منشورات المدونة - الذاكرة المؤقتة"
 
 #: settings.py:514
 msgid "Author Blog Articles"
-msgstr "ناشر مواضيع المدونة"
+msgstr "منشورات الكاتب في المدونة"
 
 #: settings.py:521
 msgid "Author Blog Articles List"
-msgstr ""
+msgstr "قائمة بمنشورات الكاتب في المدونة"
 
 #: settings.py:528 templates/djangocms_stories/plugins/tags.html:5
 msgid "Tags"
-msgstr "علامات"
+msgstr "الوسوم"
 
 #: settings.py:535 templates/djangocms_stories/plugins/categories.html:3
 msgid "Categories"
-msgstr "الأقسام"
+msgstr "التصنيفات"
 
 #: settings.py:542 templates/djangocms_stories/plugins/archive.html:3
 #: templates/djangocms_stories/post_list.html:12
@@ -708,33 +697,31 @@ msgstr "الأرشيف"
 
 #: settings.py:549
 msgid "Featured Posts"
-msgstr ""
+msgstr "المنشورات المميزة"
 
 #: settings.py:556
 msgid "Featured Posts - Cache"
-msgstr ""
+msgstr "المنشورات المميزة - الذاكرة المؤقتة"
 
 #: settings.py:591
 msgid "Default template"
-msgstr ""
+msgstr "القالب الافتراضي"
 
 #: templates/admin/djangocms_stories/post/change_list.html:4
 msgid "Language"
-msgstr ""
+msgstr "اللغة"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
 msgid "Home"
-msgstr ""
+msgstr "الرئيسية"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
-#, fuzzy
-#| msgid "Latest Blog Articles"
 msgid "Blog articles"
-msgstr "آخر مواضيع المدونة"
+msgstr "منشورات المدونة"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
 msgid "Versions"
-msgstr ""
+msgstr "الإصدارات"
 
 #: templates/djangocms_stories/category_list.html:11
 #: templates/djangocms_stories/plugins/archive.html:26
@@ -743,36 +730,36 @@ msgstr ""
 #: templates/djangocms_stories/plugins/tags.html:17
 #: templates/djangocms_stories/post_list.html:26
 msgid "No article found."
-msgstr ""
+msgstr "لم يُعثر على أي منشور."
 
 #: templates/djangocms_stories/category_list.html:14
 #: templates/djangocms_stories/post_list.html:29
 msgid "Back"
-msgstr ""
+msgstr "ارجع للخلف"
 
 #: templates/djangocms_stories/category_list.html:19
 #: templates/djangocms_stories/post_list.html:34
 msgid "previous"
-msgstr ""
+msgstr "السابق"
 
 #: templates/djangocms_stories/category_list.html:22
 #: templates/djangocms_stories/post_list.html:37
 msgid "Page"
-msgstr ""
+msgstr "صفحة"
 
 #: templates/djangocms_stories/category_list.html:22
 #: templates/djangocms_stories/post_list.html:37
 msgid "of"
-msgstr ""
+msgstr "من"
 
 #: templates/djangocms_stories/category_list.html:25
 #: templates/djangocms_stories/post_list.html:40
 msgid "next"
-msgstr ""
+msgstr "التالي"
 
 #: templates/djangocms_stories/includes/blog_item.html:36
 msgid "read more"
-msgstr ""
+msgstr "اقرأ المزيد"
 
 #: templates/djangocms_stories/plugins/archive.html:17
 #: templates/djangocms_stories/plugins/authors.html:10
@@ -781,53 +768,38 @@ msgstr ""
 #, python-format
 msgid "1 article"
 msgid_plural "%(articles)s articles"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لا منشورات"
+msgstr[1] "منشور واحد"
+msgstr[2] "منشوران"
+msgstr[3] "%(articles)s منشورات"
+msgstr[4] "%(articles)s منشورات"
+msgstr[5] "%(articles)s منشورات"
 
 #: templates/djangocms_stories/plugins/archive.html:18
 #: templates/djangocms_stories/plugins/authors.html:11
 #: templates/djangocms_stories/plugins/categories.html:11
 #: templates/djangocms_stories/plugins/tags.html:13
 msgid "0 articles"
-msgstr ""
+msgstr "لا منشور"
 
 #: templates/djangocms_stories/plugins/authors.html:3
 #: templates/djangocms_stories/plugins/authors_posts.html:3
 msgid "Authors"
-msgstr ""
+msgstr "الكاتبون"
 
 #: templates/djangocms_stories/plugins/authors.html:15
 msgid "No author found."
-msgstr ""
+msgstr "لم يُعثر على أي كاتب."
 
 #: templates/djangocms_stories/plugins/authors_posts.html:7
 #: templates/djangocms_stories/post_list.html:11
 msgid "Articles by"
-msgstr ""
+msgstr "منشورات بقلم"
 
 #: templates/djangocms_stories/plugins/categories.html:15
 msgid "No categories found."
-msgstr ""
+msgstr "لم يُعثر على أي تصنيفات."
 
 #: templates/djangocms_stories/post_list.html:13
 msgid "Tag"
-msgstr ""
-
-#~ msgid "django CMS Blog"
-#~ msgstr "مدونة نظام ادارة المحتوى لجانغو"
-
-#~ msgid "Post published by default"
-#~ msgstr "نشر التدوينة تلقائيا"
-
-#~ msgid "Set author"
-#~ msgstr "ضبط الكاتب"
-
-#~ msgid "Post list"
-#~ msgstr "قائمة المواضيع"
-
-#~ msgid "Edit Post"
-#~ msgstr "التعديل على موضوع"
+msgstr "وسم"
