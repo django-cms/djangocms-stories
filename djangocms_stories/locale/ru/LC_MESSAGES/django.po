@@ -11,131 +11,124 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djangocms-blog\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-08 06:51+0200\n"
+"POT-Creation-Date: 2026-06-25 22:34+0200\n"
 "PO-Revision-Date: 2014-03-29 15:29+0000\n"
 "Last-Translator: Rustam Mirzaev <mirus@2x2.pw>, 2016-2018\n"
-"Language-Team: Russian (http://app.transifex.com/nephila/djangocms-blog/"
-"language/ru/)\n"
+"Language-Team: Russian (http://app.transifex.com/nephila/djangocms-blog/language/ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:97
+#: admin.py:94
 msgid "site"
 msgstr "сайт"
 
-#: admin.py:121
-#, fuzzy
+#: admin.py:118
 #| msgid "app. config"
 msgid "Select app config"
-msgstr "настройки приложения"
+msgstr "Выберите настройки приложения"
 
-#: admin.py:122
+#: admin.py:119
 msgid "Select the app config for the new object"
-msgstr ""
+msgstr "Выберите настройки приложения для нового объекта"
 
-#: admin.py:233
-#, fuzzy, python-format
+#: admin.py:236
+#, python-format
 #| msgid "Add post"
 msgid "Add %s"
-msgstr "Добавить статью"
+msgstr "Добавить %s"
 
-#: admin.py:333 admin.py:404
+#: admin.py:322 admin.py:399
 msgid "Info"
 msgstr "Информация"
 
-#: admin.py:343 admin.py:411
+#: admin.py:329
+#| msgid "Images"
+msgid "Image"
+msgstr "Изображение"
+
+#: admin.py:406
 msgid "Images"
 msgstr "Изображения"
 
-#: admin.py:415
+#: admin.py:410
 msgid "SEO"
 msgstr "СЕО"
 
-#: admin.py:455
+#: admin.py:449
 msgid "Empty"
-msgstr ""
+msgstr "Пусто"
 
-#: admin.py:470
+#: admin.py:469
 msgid "Enable comments for selection"
 msgstr "Включить коментарии к выделенному"
 
-#: admin.py:484
+#: admin.py:483
 msgid "Disable comments for selection "
 msgstr "Выключить коментарии к выделенному"
 
-#: admin.py:704
+#: admin.py:761
 msgid "Generic"
 msgstr "Общий"
 
-#: admin.py:713
+#: admin.py:770
 msgid "Layout"
 msgstr "Макет"
 
-#: admin.py:726
-msgid "Notifications"
-msgstr "Уведомления"
-
-#: admin.py:730
+#: admin.py:787
 msgid "Sitemap"
 msgstr "Карта сайта"
 
-#: admin.py:739
+#: admin.py:796
 msgid "Meta"
 msgstr "Мета"
 
-#: admin.py:750 admin.py:762 admin.py:773
+#: admin.py:807 admin.py:819 admin.py:830
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
 "Вы можете использовать простую строку, атрибут модели статьи или имена "
 "методов"
 
-#: apps.py:8 cms_apps.py:14
-#, fuzzy
+#: apps.py:8 cms_apps.py:16
 #| msgid "Categories"
 msgid "Stories"
-msgstr "Категории"
+msgstr "Истории"
 
-#: cms_appconfig.py:82
-#, fuzzy
+#: cms_appconfig.py:85
 #| msgid "blog config"
 msgid "stories config"
-msgstr "настройка блога"
-
-#: cms_appconfig.py:83
-#, fuzzy
-#| msgid "blog configs"
-msgid "stories configs"
-msgstr "настройки блога"
+msgstr "конфигурация Историй"
 
 #: cms_appconfig.py:86
+#| msgid "blog configs"
+msgid "stories configs"
+msgstr "конфигурации Историй"
+
+#: cms_appconfig.py:89
 msgid "type"
-msgstr ""
+msgstr "тип"
 
-#: cms_appconfig.py:90
+#: cms_appconfig.py:93
 msgid "instance namespace"
-msgstr ""
+msgstr "пространство имён экземпляра"
 
-#: cms_appconfig.py:96
+#: cms_appconfig.py:99
 msgid "application title"
 msgstr "название приложения"
 
-#: cms_appconfig.py:97
+#: cms_appconfig.py:100
 msgid "object name"
 msgstr "название объекта"
 
-#: cms_appconfig.py:107
-#, fuzzy
+#: cms_appconfig.py:110
 #| msgid "Default size of full images"
 msgid "default size of full images"
-msgstr "Размер изображения по умолчанию"
+msgstr "размер полных изображений по умолчанию"
 
-#: cms_appconfig.py:108
+#: cms_appconfig.py:111
 msgid ""
 "If left empty the image size will have to be set for every newly created "
 "post."
@@ -143,13 +136,12 @@ msgstr ""
 "Если слева пусто, то размер изображения будет применен к каждому "
 "новосозданному изображению"
 
-#: cms_appconfig.py:117
-#, fuzzy
+#: cms_appconfig.py:120
 #| msgid "Default size of thumbnail images"
 msgid "default size of thumbnail images"
-msgstr "Размер изображения заглушки по умолчанию"
+msgstr "размер изображений-миниатюр по умолчанию"
 
-#: cms_appconfig.py:118
+#: cms_appconfig.py:121
 msgid ""
 "If left empty the thumbnail image size will have to be set for every newly "
 "created post."
@@ -157,222 +149,218 @@ msgstr ""
 "Если слева пусто, то этот размер изображения заглушки будет применен к "
 "каждому новосозданному изображению"
 
-#: cms_appconfig.py:123
+#: cms_appconfig.py:126
 msgid "Permalink structure"
 msgstr "Строение постоянной ссылки"
 
-#: cms_appconfig.py:128
+#: cms_appconfig.py:130
 msgid "Use placeholder and plugins for article body"
 msgstr "Используйте местозаполнитель и плагины для тела статьи"
 
-#: cms_appconfig.py:132
+#: cms_appconfig.py:134
 msgid "Use abstract field"
 msgstr "Используйте поле краткого описания"
 
-#: cms_appconfig.py:135
+#: cms_appconfig.py:137
 msgid "Enable related posts"
 msgstr "Включить связанные публикации"
 
-#: cms_appconfig.py:138
-#, fuzzy
+#: cms_appconfig.py:140
 #| msgid "None"
 msgid "No"
-msgstr "Ничего"
+msgstr "Нет"
 
-#: cms_appconfig.py:139
+#: cms_appconfig.py:141
 msgid "Yes, from this stories config"
-msgstr ""
+msgstr "Да, из этой конфигурации Историй"
 
-#: cms_appconfig.py:140
+#: cms_appconfig.py:142
 msgid "Yes, from this site"
-msgstr ""
+msgstr "Да, с этого сайта"
 
-#: cms_appconfig.py:145
+#: cms_appconfig.py:147
 msgid "Set author by default"
 msgstr "Указать автора по умолчанию"
 
-#: cms_appconfig.py:149
+#: cms_appconfig.py:151
 msgid "Paginate size"
 msgstr "Разбить на части"
 
-#: cms_appconfig.py:151
+#: cms_appconfig.py:153
 msgid "When paginating list views, how many articles per page?"
 msgstr ""
 "Сколько статей на страницу вы бы хотели использовать при разбиении её на "
 "части."
 
-#: cms_appconfig.py:158
+#: cms_appconfig.py:160
 msgid "Template prefix"
 msgstr "Префикс шаблона"
 
-#: cms_appconfig.py:159
-#, fuzzy
+#: cms_appconfig.py:161
 #| msgid "Alternative directory to load the blog templates from"
 msgid "Alternative directory to load the stories templates from"
-msgstr "Альтернативная директория загрузки шаблонов блога"
+msgstr "Альтернативная директория для загрузки шаблонов Историй"
 
-#: cms_appconfig.py:164
+#: cms_appconfig.py:166
 msgid "Menu structure"
 msgstr "Структура меню"
 
-#: cms_appconfig.py:165
+#: cms_appconfig.py:167
 msgid "Structure of the django CMS menu"
 msgstr "Структура меню django CMS "
 
-#: cms_appconfig.py:169
+#: cms_appconfig.py:171
 msgid "Show empty categories in menu"
 msgstr "Показывать пустые категории в меню"
 
-#: cms_appconfig.py:170
+#: cms_appconfig.py:172
 msgid "Show categories with no post attached in the menu"
 msgstr "Показывать категории без статей в меню"
 
-#: cms_appconfig.py:176
+#: cms_appconfig.py:178
 msgid "Sitemap changefreq"
 msgstr "Частота обновления карты сайта"
 
-#: cms_appconfig.py:177
+#: cms_appconfig.py:179
 msgid "Changefreq attribute for sitemap items"
 msgstr "Атрибут частоты изменения объектов карты сайта"
 
-#: cms_appconfig.py:183
+#: cms_appconfig.py:185
 msgid "Sitemap priority"
 msgstr "Приоритет"
 
-#: cms_appconfig.py:184
+#: cms_appconfig.py:186
 msgid "Priority attribute for sitemap items"
 msgstr "Приоритет атребута для объектов карты сайта"
 
-#: cms_appconfig.py:190
+#: cms_appconfig.py:192
 msgid "Object type"
 msgstr "Тип объекта"
 
-#: cms_appconfig.py:195
+#: cms_appconfig.py:197
 msgid "Facebook type"
 msgstr "тип в Facebook"
 
-#: cms_appconfig.py:199
+#: cms_appconfig.py:201
 msgid "Facebook application ID"
 msgstr "ID приложения на Facebook"
 
-#: cms_appconfig.py:201
+#: cms_appconfig.py:203
 msgid "Facebook profile ID"
 msgstr "ID профиля на Facebook"
 
-#: cms_appconfig.py:203
+#: cms_appconfig.py:205
 msgid "Facebook page URL"
 msgstr "URL страницы на Facebook"
 
-#: cms_appconfig.py:205
+#: cms_appconfig.py:207
 msgid "Facebook author URL"
 msgstr "URL автора на Facebook "
 
-#: cms_appconfig.py:207
+#: cms_appconfig.py:209
 msgid "Facebook author"
 msgstr "автор на Facebook "
 
-#: cms_appconfig.py:211
+#: cms_appconfig.py:213
 msgid "Twitter type"
 msgstr "тип на Twitter"
 
-#: cms_appconfig.py:215
+#: cms_appconfig.py:217
 msgid "Twitter site handle"
 msgstr "дескриптор сайта на Twitter"
 
-#: cms_appconfig.py:217
+#: cms_appconfig.py:219
 msgid "Twitter author handle"
 msgstr "дескриптор автора на Twitter"
 
-#: cms_appconfig.py:221
+#: cms_appconfig.py:223
 msgid "Schema.org type"
-msgstr ""
+msgstr "тип Schema.org"
 
-#: cms_appconfig.py:225
+#: cms_appconfig.py:227
 msgid "Schema.org author name"
-msgstr ""
+msgstr "имя автора Schema.org"
 
-#: cms_appconfig.py:228
+#: cms_appconfig.py:230
 msgid "Send notifications on post publish"
 msgstr "Отправлять уведомления после публикации статьи"
 
-#: cms_appconfig.py:230
+#: cms_appconfig.py:232
 msgid "Emits a desktop notification -if enabled- when publishing a new post"
 msgstr ""
 "Уведомлять сигналами на рабочем столе, если включено, при публикации новой "
 "записи"
 
-#: cms_appconfig.py:234
+#: cms_appconfig.py:236
 msgid "Send notifications on post update"
 msgstr "Отправлять уведомления после публикации"
 
-#: cms_appconfig.py:236
-msgid "Emits a desktop notification -if enabled- when editing a published post"
+#: cms_appconfig.py:238
+msgid ""
+"Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
 "Уведомлять сигналами на рабочем столе, если включено, при редактировании "
 "опубликованной записи"
 
-#: cms_appconfig.py:240
+#: cms_appconfig.py:242
 msgid "untitled"
 msgstr "безымянный"
 
-#: cms_config.py:55
+#: cms_config.py:62
 #, python-brace-format
 msgid "New {0}"
 msgstr "Новых {0}"
 
-#: cms_config.py:60
+#: cms_config.py:67
 #, python-brace-format
 msgid "Create a new {0} in {1}"
 msgstr "Создать новых {0} из {1}"
 
-#: cms_menus.py:24
-#, fuzzy
+#: cms_menus.py:25
 #| msgid "blog category"
 msgid "Post category menu"
-msgstr "категория блога"
+msgstr "Меню категорий статей"
 
 #: cms_toolbars.py:38
 msgid "View on site"
-msgstr ""
+msgstr "Посмотреть на сайте"
 
 #: cms_toolbars.py:45
 msgid "Preview"
-msgstr ""
+msgstr "Предпросмотр"
 
 #: cms_toolbars.py:67
 msgid "View Published"
-msgstr ""
+msgstr "Просмотр опубликованного"
 
 #: cms_toolbars.py:111
 #, python-format
 msgid "%(object_name)s properties"
-msgstr ""
+msgstr "Свойства %(object_name)s"
 
 #: cms_toolbars.py:122
-#, fuzzy
 #| msgid "liveblog entries"
 msgid "All entries"
-msgstr "записи в транслируемом блоге"
+msgstr "Все записи"
 
 #: cms_toolbars.py:131
-#, fuzzy, python-format
+#, python-format
 #| msgid "object name"
 msgid "New %(object_name)s"
-msgstr "название объекта"
+msgstr "Новый %(object_name)s"
 
 #: cms_toolbars.py:138
-#, fuzzy
 #| msgid "Edit configuration"
 msgid "Edit Configuration"
-msgstr "Редактировать настройки"
+msgstr "Редактировать конфигурацию"
 
-#: cms_wizards.py:24 models.py:108 models.py:308 models.py:640
+#: cms_wizards.py:23 models.py:124 models.py:371 models.py:809
 msgid "app. config"
 msgstr "настройки приложения"
 
-#: cms_wizards.py:93
+#: cms_wizards.py:92
 msgid "Selected story not available any more. Close wizard."
-msgstr ""
+msgstr "Выбранная история больше недоступна. Закройте мастер."
 
 #: feeds.py:38
 #, python-format
@@ -380,289 +368,277 @@ msgid "Blog articles on %(site_name)s"
 msgstr "Статьи блога с сайта: %(site_name)s"
 
 #: forms.py:97
-#, fuzzy
 #| msgid "app. config"
 msgid "App Config"
-msgstr "настройки приложения"
+msgstr "Настройки приложения"
 
 #: forms.py:99
 msgid "Select the app config to apply to the new post."
-msgstr ""
+msgstr "Выберите настройки приложения для применения к новой статье."
 
-#: models.py:100
+#: models.py:116
 msgid "parent"
 msgstr "предок"
 
-#: models.py:102
+#: models.py:118
 msgid "created at"
 msgstr "время создания"
 
-#: models.py:103
+#: models.py:119
 msgid "modified at"
 msgstr "время изменения"
 
-#: models.py:109 models.py:309 models.py:641
-msgid "When selecting a value, the form is reloaded to get the updated default"
+#: models.py:125 models.py:372 models.py:810
+msgid ""
+"When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
+"При выборе значения форма перезагружается для получения обновлённого "
+"значения по умолчанию"
 
-#: models.py:111
-#, fuzzy
+#: models.py:127
 #| msgid "Sitemap priority"
 msgid "priority"
-msgstr "Приоритет"
+msgstr "приоритет"
 
-#: models.py:113 models.py:271
+#: models.py:129 models.py:324
 msgid "main image"
 msgstr "главная страница"
 
-#: models.py:121 models.py:279
+#: models.py:137 models.py:334
 msgid "main image thumbnail"
 msgstr "уменьшенная копия главного изображения"
 
-#: models.py:129 models.py:287
+#: models.py:145 models.py:344
 msgid "main image full"
 msgstr "Полноразмерное изображение"
 
-#: models.py:137
+#: models.py:153
 msgid "name"
 msgstr "название"
 
-#: models.py:139 models.py:555
+#: models.py:155 models.py:622
 msgid "slug"
 msgstr "ЧПУ"
 
-#: models.py:145
+#: models.py:161
 msgid "category meta description"
 msgstr "категория мета описания"
 
-#: models.py:147 models.py:562
+#: models.py:163 models.py:633
 msgid "abstract"
 msgstr "Краткое описание"
 
-#: models.py:172
-#, fuzzy
+#: models.py:191
 #| msgid "blog category"
 msgid "post category"
-msgstr "категория блога"
+msgstr "категория статей"
 
-#: models.py:173
-#, fuzzy
+#: models.py:192
 #| msgid "blog categories"
 msgid "post categories"
-msgstr "категории блога"
+msgstr "категории статей"
 
-#: models.py:222
+#: models.py:251
 msgid "PostCategory (no translation)"
-msgstr ""
+msgstr "Категория статьи (без перевода)"
 
-#: models.py:254
+#: models.py:286
 msgid "author"
 msgstr "автор"
 
-#: models.py:261
+#: models.py:294
 msgid "created"
 msgstr "создан(о)"
 
-#: models.py:262
+#: models.py:297
 msgid "last modified"
 msgstr "последние изменения"
 
-#: models.py:263
+#: models.py:301
 msgid "published since"
 msgstr "опубликовано"
 
-#: models.py:264
+#: models.py:306
 msgid "published until"
 msgstr "опубликовано до"
 
-#: models.py:265
+#: models.py:312
 msgid "featured date"
 msgstr "избранная дата"
 
-#: models.py:266
+#: models.py:315
 msgid "include in RSS feed"
-msgstr ""
+msgstr "включить в RSS-ленту"
 
-#: models.py:268
+#: models.py:319
 msgid "category"
 msgstr "категория"
 
-#: models.py:294
+#: models.py:353
 msgid "enable comments on post"
 msgstr "Разрешить комментарии к статье"
 
-#: models.py:298
+#: models.py:359
 msgid "Site(s)"
 msgstr "Сайт(ы)"
 
-#: models.py:301
+#: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in "
-"all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in"
+" all the configured sites."
 msgstr ""
 "Выберите сайты на которых будет опубликована статья. Если сайты не выбраны, "
 "статья будет опубликована на всех сайтах сразу."
 
-#: models.py:315
+#: models.py:379
 msgid ""
 "Type a tag and hit tab, or start typing and select from autocomplete list."
 msgstr ""
+"Введите метку и нажмите Tab, или начните вводить и выберите из списка "
+"автозаполнения."
 
-#: models.py:318
+#: models.py:385
 msgid "Related Posts"
 msgstr "Связанные Публикации"
 
-#: models.py:352
-#, fuzzy
+#: models.py:394
 #| msgid "Add post"
 msgid "post"
-msgstr "Добавить статью"
+msgstr "статья"
 
-#: models.py:353
-#, fuzzy
+#: models.py:395
 #| msgid "Add post"
 msgid "posts"
-msgstr "Добавить статью"
+msgstr "статьи"
 
-#: models.py:363
+#: models.py:406
 msgid "Post (no translation)"
-msgstr ""
+msgstr "Статья (без перевода)"
 
-#: models.py:461
-#, fuzzy
+#: models.py:517 models.py:752
 #| msgid "title"
 msgid "No title"
-msgstr "Заголовок"
+msgstr "Без заголовка"
 
-#: models.py:544
-#, fuzzy
+#: models.py:605
 #| msgid "post date"
 msgid "post content"
-msgstr "дата публикации"
+msgstr "содержимое статьи"
 
-#: models.py:545
-#, fuzzy
+#: models.py:606
 #| msgid "post date"
 msgid "post contents"
-msgstr "дата публикации"
+msgstr "содержимое статей"
 
-#: models.py:551
+#: models.py:614
 msgid "language"
-msgstr ""
+msgstr "язык"
 
-#: models.py:553
+#: models.py:618
 msgid "title"
 msgstr "Заголовок"
 
-#: models.py:561
+#: models.py:630
 msgid "subtitle"
-msgstr ""
+msgstr "подзаголовок"
 
-#: models.py:563
+#: models.py:636
 msgid "post meta description"
 msgstr "мета-описание статьи"
 
-#: models.py:564
+#: models.py:639
 msgid "post meta keywords"
 msgstr "ключевые слова к статье"
 
-#: models.py:566
+#: models.py:643
 msgid "post meta title"
 msgstr "мета-заголовок к статье"
 
-#: models.py:567
+#: models.py:644
 msgid "used in title tag and social sharing"
 msgstr "используется в метках и обмене в социальных сетях"
 
-#: models.py:572
+#: models.py:651
 msgid "text"
 msgstr "текст"
 
-#: models.py:632
-#, fuzzy
+#: models.py:801
 #| msgid "untitled"
 msgid "Untitled"
-msgstr "безымянный"
+msgstr "Без названия"
 
-#: models.py:644
+#: models.py:813
 msgid "current site"
 msgstr "текущий сайт"
 
-#: models.py:644
+#: models.py:813
 msgid "Select items from the current site only"
 msgstr "Выбрать записи только из текущего сайта"
 
-#: models.py:648
-#, fuzzy
+#: models.py:817
 #| msgid "Plugin template"
 msgid "Plugin layout"
-msgstr "Шаблон плагина"
+msgstr "Макет плагина"
 
-#: models.py:649
-#, fuzzy
+#: models.py:818
 #| msgid "Select plugin template to load for this instance"
 msgid "Select plugin layout to load for this instance"
-msgstr "Выберите шаблон плагина для загрузки к данному экземпляру объекта"
+msgstr "Выберите макет плагина для загрузки для этого экземпляра"
 
-#: models.py:689 models.py:730
-#, fuzzy
+#: models.py:862 models.py:903
 #| msgid "liveblog entries"
 msgid "entries"
-msgstr "записи в транслируемом блоге"
+msgstr "записи"
 
-#: models.py:691
-#, fuzzy
+#: models.py:864
 #| msgid "The number of latests articles to be displayed."
 msgid "The number of latests entries to be displayed."
-msgstr "Количество последних статей, которые будут показаны."
+msgstr "Количество последних записей для отображения."
 
-#: models.py:694
+#: models.py:867
 msgid "filter by tag"
 msgstr "фильтровать по тегам"
 
-#: models.py:696
-#, fuzzy
+#: models.py:869
 #| msgid "Show only the blog articles tagged with chosen tags."
 msgid "Show only the entries tagged with chosen tags."
-msgstr "Показывать статьи только с выбранными метками."
+msgstr "Показывать только записи, помеченные выбранными метками."
 
-#: models.py:702
+#: models.py:875
 msgid "filter by category"
 msgstr "фильтровать по категориям"
 
-#: models.py:703
-#, fuzzy
+#: models.py:876
 #| msgid "Show only the blog articles tagged with chosen categories."
 msgid "Show only the posts of the chosen categories."
-msgstr "Показывать статьи только из выбранных категорий."
+msgstr "Показывать только статьи из выбранных категорий."
 
-#: models.py:707
-#, fuzzy, python-format
+#: models.py:880
+#, python-format
 #| msgid "%s latest articles by tag"
 msgid "%s latest posts by tag"
-msgstr "%s последних статей по тегам"
+msgstr "%s последних статей по метке"
 
-#: models.py:727
+#: models.py:900
 msgid "authors"
 msgstr "авторы"
 
-#: models.py:732
-#, fuzzy
+#: models.py:905
 #| msgid "The number of author articles to be displayed."
 msgid "The number of author entries to be displayed."
-msgstr "Количество статей автора, которые будут показаны."
+msgstr "Количество записей автора для отображения."
 
-#: models.py:736
-#, fuzzy, python-format
+#: models.py:909
+#, python-format
 #| msgid "%s latest articles by author"
 msgid "%s latest entries by author"
-msgstr "%s последних статей по авторам"
+msgstr "%s последних записей по автору"
 
-#: models.py:756 models.py:759
+#: models.py:929 models.py:932
 msgid "Featured posts"
-msgstr ""
+msgstr "Избранные статьи"
 
-#: models.py:776
+#: models.py:954
 msgid "generic blog plugin"
 msgstr "генерируемый плагин блога"
 
@@ -682,118 +658,125 @@ msgstr "Категория"
 msgid "Just slug"
 msgstr "ЧПУ"
 
-#: settings.py:60
+#: settings.py:49
 msgid "Categories and posts"
 msgstr "Категории и статьи"
 
-#: settings.py:61
+#: settings.py:50
 msgid "Categories only"
 msgstr "Только категории"
 
-#: settings.py:62
+#: settings.py:51
 msgid "Posts only"
 msgstr "Только статьи"
 
-#: settings.py:63
+#: settings.py:52
 msgid "None"
 msgstr "Ничего"
 
-#: settings.py:72
+#: settings.py:56
 msgid "always"
 msgstr "всегда"
 
-#: settings.py:73
+#: settings.py:57
 msgid "hourly"
 msgstr "ежечасно"
 
-#: settings.py:74
+#: settings.py:58
 msgid "daily"
 msgstr "ежедневно"
 
-#: settings.py:75
+#: settings.py:59
 msgid "weekly"
 msgstr "еженедельно"
 
-#: settings.py:76
+#: settings.py:60
 msgid "monthly"
 msgstr "ежемесячно"
 
-#: settings.py:77
+#: settings.py:61
 msgid "yearly"
 msgstr "ежегодно"
 
-#: settings.py:78
+#: settings.py:62
 msgid "never"
 msgstr "никогда"
 
-#: settings.py:378
-#, fuzzy
+#: settings.py:357
 #| msgid "articles"
 msgid "Article"
-msgstr "статьи"
+msgstr "Статья"
 
-#: settings.py:399 settings.py:406 settings.py:493
+#: settings.py:378 settings.py:385
 msgid "Blog"
 msgstr "Блог"
 
-#: settings.py:500
+#: settings.py:472
+#| msgid "Add post"
+msgid "Posts"
+msgstr "Статьи"
+
+#: settings.py:479
 msgid "Latest Blog Articles"
 msgstr "Последние статьи блога"
 
-#: settings.py:507
+#: settings.py:486
 msgid "Latest Blog Articles - Cache"
 msgstr "Последние статьи блога - Кэш"
 
-#: settings.py:514
+#: settings.py:493
 msgid "Author Blog Articles"
 msgstr "Автор статей блога"
 
-#: settings.py:521
+#: settings.py:500
 msgid "Author Blog Articles List"
-msgstr ""
+msgstr "Список статей блога по автору"
 
-#: settings.py:528 templates/djangocms_stories/plugins/tags.html:5
+#: settings.py:507 templates/djangocms_stories/plugins/tags.html:5
 msgid "Tags"
 msgstr "Метки"
 
-#: settings.py:535 templates/djangocms_stories/plugins/categories.html:3
+#: settings.py:514 templates/djangocms_stories/plugins/categories.html:3
 msgid "Categories"
 msgstr "Категории"
 
-#: settings.py:542 templates/djangocms_stories/plugins/archive.html:3
+#: settings.py:521 templates/djangocms_stories/plugins/archive.html:3
 #: templates/djangocms_stories/post_list.html:12
 msgid "Archive"
 msgstr "Архив"
 
-#: settings.py:549
+#: settings.py:528
 msgid "Featured Posts"
-msgstr ""
+msgstr "Избранные статьи"
 
-#: settings.py:556
+#: settings.py:535
 msgid "Featured Posts - Cache"
-msgstr ""
+msgstr "Избранные статьи — кэш"
 
-#: settings.py:591
+#: settings.py:570
 msgid "Default template"
 msgstr "Шаблон по умолчанию"
 
+#: tag_autosuggest.py:62
+msgid "Type a tag and hit enter"
+msgstr "Введите метку и нажмите Enter"
+
 #: templates/admin/djangocms_stories/post/change_list.html:4
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
 msgid "Home"
-msgstr ""
+msgstr "Главная"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
-#, fuzzy
 #| msgid "blog articles"
 msgid "Blog articles"
-msgstr "статьи блога"
+msgstr "Статьи блога"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
 msgid "Versions"
-msgstr ""
+msgstr "Версии"
 
 #: templates/djangocms_stories/category_list.html:11
 #: templates/djangocms_stories/plugins/archive.html:26
@@ -829,12 +812,11 @@ msgstr "из"
 msgid "next"
 msgstr "следующая"
 
-#: templates/djangocms_stories/includes/blog_item.html:36
+#: templates/djangocms_stories/includes/post_item.html:38
 msgid "read more"
 msgstr "читать далее"
 
 #: templates/djangocms_stories/plugins/archive.html:17
-#: templates/djangocms_stories/plugins/authors.html:10
 #: templates/djangocms_stories/plugins/categories.html:10
 #: templates/djangocms_stories/plugins/tags.html:12
 #, python-format
@@ -857,9 +839,20 @@ msgstr "0 статей"
 msgid "Authors"
 msgstr "Авторы"
 
+#: templates/djangocms_stories/plugins/authors.html:10
+#, python-format
+#| msgid "1 article"
+#| msgid_plural "%(articles)s articles"
+msgid "(1 article)"
+msgid_plural "(%(articles)s articles)"
+msgstr[0] "%(articles)s статья"
+msgstr[1] "%(articles)s статьи"
+msgstr[2] "%(articles)s статей"
+msgstr[3] "%(articles)s статей"
+
 #: templates/djangocms_stories/plugins/authors.html:15
 msgid "No author found."
-msgstr ""
+msgstr "Автор не найден."
 
 #: templates/djangocms_stories/plugins/authors_posts.html:7
 #: templates/djangocms_stories/post_list.html:11
@@ -873,6 +866,9 @@ msgstr "Не найдено ни одной категории."
 #: templates/djangocms_stories/post_list.html:13
 msgid "Tag"
 msgstr "Метка"
+
+#~ msgid "Notifications"
+#~ msgstr "Уведомления"
 
 #~ msgid "Publish selection"
 #~ msgstr "Опубликовать выделенное"
