@@ -27,12 +27,12 @@ from filer.models import ThumbnailOption
 from menus.menu_pool import menu_pool
 from parler.models import TranslatableModel, TranslatedFields
 from sortedm2m.fields import SortedManyToManyField
-from taggit_autosuggest.managers import TaggableManager
 
 from .cms_appconfig import StoriesConfig
 from .fields import slugify
 from .managers import AdminManager, GenericDateTaggedManager, SiteManager
 from .settings import STORIES_PLUGIN_TEMPLATE_FOLDERS as DEFAULT_TEMPLATE_FOLDERS, get_setting
+from .tag_autosuggest import TaggableManager
 
 if apps.is_installed("meta"):
     from meta.models import ModelMeta

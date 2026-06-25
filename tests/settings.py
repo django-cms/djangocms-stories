@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     "djangocms_text",
     "djangocms_stories",
     "taggit",
-    "taggit_autosuggest",
     "djangocms_video",
     "sortedm2m",
 ]
