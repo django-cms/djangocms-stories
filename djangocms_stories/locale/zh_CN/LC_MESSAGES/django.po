@@ -1,0 +1,797 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: djangocms-stories\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-25 23:05+0200\n"
+"PO-Revision-Date: 2026-06-25 23:05+0200\n"
+"Last-Translator: Fabian Braun <fabian@django-cms.org>\n"
+"Language-Team: Simplified Chinese\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: admin.py:94
+msgid "site"
+msgstr "站点"
+
+#: admin.py:118
+msgid "Select app config"
+msgstr "选择应用配置"
+
+#: admin.py:119
+msgid "Select the app config for the new object"
+msgstr "为新对象选择应用配置"
+
+#: admin.py:236
+#, python-format
+msgid "Add %s"
+msgstr "添加 %s"
+
+#: admin.py:322 admin.py:399
+msgid "Info"
+msgstr "信息"
+
+#: admin.py:329
+msgid "Image"
+msgstr "图片"
+
+#: admin.py:406
+msgid "Images"
+msgstr "图片"
+
+#: admin.py:410
+msgid "SEO"
+msgstr "SEO"
+
+#: admin.py:449
+msgid "Empty"
+msgstr "清空"
+
+#: admin.py:469
+msgid "Enable comments for selection"
+msgstr "为所选启用评论"
+
+#: admin.py:483
+msgid "Disable comments for selection "
+msgstr "为所选禁用评论 "
+
+#: admin.py:761
+msgid "Generic"
+msgstr "普通的"
+
+#: admin.py:770
+msgid "Layout"
+msgstr "布局"
+
+#: admin.py:787
+msgid "Sitemap"
+msgstr "站点地图"
+
+#: admin.py:796
+msgid "Meta"
+msgstr "元数据"
+
+#: admin.py:807 admin.py:819 admin.py:830
+msgid "You can provide plain strings, Post model attribute or method names"
+msgstr "您可以提供纯字符串、文章模型属性或方法名"
+
+#: apps.py:8 cms_apps.py:16
+msgid "Stories"
+msgstr "Stories"
+
+#: cms_appconfig.py:85
+msgid "stories config"
+msgstr "stories 配置"
+
+#: cms_appconfig.py:86
+msgid "stories configs"
+msgstr "stories 配置"
+
+#: cms_appconfig.py:89
+msgid "type"
+msgstr "类型"
+
+#: cms_appconfig.py:93
+msgid "instance namespace"
+msgstr "实例命名空间"
+
+#: cms_appconfig.py:99
+msgid "application title"
+msgstr "应用标题"
+
+#: cms_appconfig.py:100
+msgid "object name"
+msgstr "对象名称"
+
+#: cms_appconfig.py:110
+msgid "default size of full images"
+msgstr "完整图片的默认尺寸"
+
+#: cms_appconfig.py:111
+msgid ""
+"If left empty the image size will have to be set for every newly created "
+"post."
+msgstr "如果留空，则必须为每个新创建的文章设置图片尺寸。"
+
+#: cms_appconfig.py:120
+msgid "default size of thumbnail images"
+msgstr "缩略图的默认尺寸"
+
+#: cms_appconfig.py:121
+msgid ""
+"If left empty the thumbnail image size will have to be set for every newly "
+"created post."
+msgstr "如果留空，则必须为每个新创建的文章设置缩略图尺寸。"
+
+#: cms_appconfig.py:126
+msgid "Permalink structure"
+msgstr "固定链接结构"
+
+#: cms_appconfig.py:130
+msgid "Use placeholder and plugins for article body"
+msgstr "使用占位符和插件作为文章正文"
+
+#: cms_appconfig.py:134
+msgid "Use abstract field"
+msgstr "使用摘要字段"
+
+#: cms_appconfig.py:137
+msgid "Enable related posts"
+msgstr "启用相关文章"
+
+#: cms_appconfig.py:140
+msgid "No"
+msgstr "否"
+
+#: cms_appconfig.py:141
+msgid "Yes, from this stories config"
+msgstr "是，来自此 stories 配置"
+
+#: cms_appconfig.py:142
+msgid "Yes, from this site"
+msgstr "是，来自此站点"
+
+#: cms_appconfig.py:147
+msgid "Set author by default"
+msgstr "默认设置作者"
+
+#: cms_appconfig.py:151
+msgid "Paginate size"
+msgstr "分页大小"
+
+#: cms_appconfig.py:153
+msgid "When paginating list views, how many articles per page?"
+msgstr "在分页列表视图中，每页显示多少篇文章？"
+
+#: cms_appconfig.py:160
+msgid "Template prefix"
+msgstr "模板前缀"
+
+#: cms_appconfig.py:161
+msgid "Alternative directory to load the stories templates from"
+msgstr "加载 stories 模板的备用目录"
+
+#: cms_appconfig.py:166
+msgid "Menu structure"
+msgstr "菜单结构"
+
+#: cms_appconfig.py:167
+msgid "Structure of the django CMS menu"
+msgstr "django CMS 菜单的结构"
+
+#: cms_appconfig.py:171
+msgid "Show empty categories in menu"
+msgstr "在菜单中显示空分类"
+
+#: cms_appconfig.py:172
+msgid "Show categories with no post attached in the menu"
+msgstr "在菜单中显示没有关联文章的分类"
+
+#: cms_appconfig.py:178
+msgid "Sitemap changefreq"
+msgstr "站点地图变更频率"
+
+#: cms_appconfig.py:179
+msgid "Changefreq attribute for sitemap items"
+msgstr "站点地图项的变更频率属性"
+
+#: cms_appconfig.py:185
+msgid "Sitemap priority"
+msgstr "站点地图优先级"
+
+#: cms_appconfig.py:186
+msgid "Priority attribute for sitemap items"
+msgstr "站点地图项的优先级属性"
+
+#: cms_appconfig.py:192
+msgid "Object type"
+msgstr "对象类型"
+
+#: cms_appconfig.py:197
+msgid "Facebook type"
+msgstr "Facebook 类型"
+
+#: cms_appconfig.py:201
+msgid "Facebook application ID"
+msgstr "Facebook 应用 ID"
+
+#: cms_appconfig.py:203
+msgid "Facebook profile ID"
+msgstr "Facebook 个人资料 ID"
+
+#: cms_appconfig.py:205
+msgid "Facebook page URL"
+msgstr "Facebook 页面 URL"
+
+#: cms_appconfig.py:207
+msgid "Facebook author URL"
+msgstr "Facebook 作者 URL"
+
+#: cms_appconfig.py:209
+msgid "Facebook author"
+msgstr "Facebook 作者"
+
+#: cms_appconfig.py:213
+msgid "Twitter type"
+msgstr "Twitter 类型"
+
+#: cms_appconfig.py:217
+msgid "Twitter site handle"
+msgstr "Twitter 站点账号"
+
+#: cms_appconfig.py:219
+msgid "Twitter author handle"
+msgstr "Twitter 作者账号"
+
+#: cms_appconfig.py:223
+msgid "Schema.org type"
+msgstr "Schema.org 类型"
+
+#: cms_appconfig.py:227
+msgid "Schema.org author name"
+msgstr "Schema.org 作者名称"
+
+#: cms_appconfig.py:230
+msgid "Send notifications on post publish"
+msgstr "发布文章时发送通知"
+
+#: cms_appconfig.py:232
+msgid "Emits a desktop notification -if enabled- when publishing a new post"
+msgstr "发布新文章时发出桌面通知（如果启用）"
+
+#: cms_appconfig.py:236
+msgid "Send notifications on post update"
+msgstr "更新文章时发送通知"
+
+#: cms_appconfig.py:238
+msgid ""
+"Emits a desktop notification -if enabled- when editing a published post"
+msgstr "编辑已发布文章时发出桌面通知（如果启用）"
+
+#: cms_appconfig.py:242
+msgid "untitled"
+msgstr "无标题"
+
+#: cms_config.py:62
+#, python-brace-format
+msgid "New {0}"
+msgstr "新建 {0}"
+
+#: cms_config.py:67
+#, python-brace-format
+msgid "Create a new {0} in {1}"
+msgstr "在 {1} 中新建 {0}"
+
+#: cms_menus.py:25
+msgid "Post category menu"
+msgstr "文章分类菜单"
+
+#: cms_toolbars.py:38
+msgid "View on site"
+msgstr "查看结果"
+
+#: cms_toolbars.py:45
+msgid "Preview"
+msgstr "预览"
+
+#: cms_toolbars.py:67
+msgid "View Published"
+msgstr "查看已发布"
+
+#: cms_toolbars.py:111
+#, python-format
+msgid "%(object_name)s properties"
+msgstr "%(object_name)s 属性"
+
+#: cms_toolbars.py:122
+msgid "All entries"
+msgstr "所有条目"
+
+#: cms_toolbars.py:131
+#, python-format
+msgid "New %(object_name)s"
+msgstr "新建 %(object_name)s"
+
+#: cms_toolbars.py:138
+msgid "Edit Configuration"
+msgstr "编辑配置"
+
+#: cms_wizards.py:23 models.py:124 models.py:371 models.py:809
+msgid "app. config"
+msgstr "应用配置"
+
+#: cms_wizards.py:92
+msgid "Selected story not available any more. Close wizard."
+msgstr "所选 story 不再可用。关闭向导。"
+
+#: feeds.py:38
+#, python-format
+msgid "Blog articles on %(site_name)s"
+msgstr "%(site_name)s 上的博客文章"
+
+#: forms.py:97
+msgid "App Config"
+msgstr "应用配置"
+
+#: forms.py:99
+msgid "Select the app config to apply to the new post."
+msgstr "选择要应用于新文章的应用配置。"
+
+#: models.py:116
+msgid "parent"
+msgstr "父级"
+
+#: models.py:118
+msgid "created at"
+msgstr "创建于"
+
+#: models.py:119
+msgid "modified at"
+msgstr "修改于"
+
+#: models.py:125 models.py:372 models.py:810
+msgid ""
+"When selecting a value, the form is reloaded to get the updated default"
+msgstr "选择值时，表单将重新加载以获取更新后的默认值"
+
+#: models.py:127
+msgid "priority"
+msgstr "优先级"
+
+#: models.py:129 models.py:324
+msgid "main image"
+msgstr "主图片"
+
+#: models.py:137 models.py:334
+msgid "main image thumbnail"
+msgstr "主图片缩略图"
+
+#: models.py:145 models.py:344
+msgid "main image full"
+msgstr "主图片完整尺寸"
+
+#: models.py:153
+msgid "name"
+msgstr "名称"
+
+#: models.py:155 models.py:622
+msgid "slug"
+msgstr "缩略名"
+
+#: models.py:161
+msgid "category meta description"
+msgstr "分类元描述"
+
+#: models.py:163 models.py:633
+msgid "abstract"
+msgstr "摘要"
+
+#: models.py:191
+msgid "post category"
+msgstr "文章分类"
+
+#: models.py:192
+msgid "post categories"
+msgstr "文章分类"
+
+#: models.py:251
+msgid "PostCategory (no translation)"
+msgstr "PostCategory（无翻译）"
+
+#: models.py:286
+msgid "author"
+msgstr "作者"
+
+#: models.py:294
+msgid "created"
+msgstr "创建"
+
+#: models.py:297
+msgid "last modified"
+msgstr "最后修改"
+
+#: models.py:301
+msgid "published since"
+msgstr "发布起始"
+
+#: models.py:306
+msgid "published until"
+msgstr "发布截止"
+
+#: models.py:312
+msgid "featured date"
+msgstr "特色日期"
+
+#: models.py:315
+msgid "include in RSS feed"
+msgstr "包含在 RSS 订阅中"
+
+#: models.py:319
+msgid "category"
+msgstr "分类"
+
+#: models.py:353
+msgid "enable comments on post"
+msgstr "在文章上启用评论"
+
+#: models.py:359
+msgid "Site(s)"
+msgstr "站点"
+
+#: models.py:362
+msgid ""
+"Select sites in which to show the post. If none is set it will be visible in"
+" all the configured sites."
+msgstr "选择要显示该文章的站点。如果未设置，它将在所有已配置的站点中可见。"
+
+#: models.py:379
+msgid ""
+"Type a tag and hit tab, or start typing and select from autocomplete list."
+msgstr "输入标签并按 Tab 键，或开始输入并从自动完成列表中选择。"
+
+#: models.py:385
+msgid "Related Posts"
+msgstr "相关文章"
+
+#: models.py:394
+msgid "post"
+msgstr "文章"
+
+#: models.py:395
+msgid "posts"
+msgstr "文章"
+
+#: models.py:406
+msgid "Post (no translation)"
+msgstr "文章（无翻译）"
+
+#: models.py:517 models.py:752
+msgid "No title"
+msgstr "无标题"
+
+#: models.py:605
+msgid "post content"
+msgstr "文章内容"
+
+#: models.py:606
+msgid "post contents"
+msgstr "文章内容"
+
+#: models.py:614
+msgid "language"
+msgstr "语言"
+
+#: models.py:618
+msgid "title"
+msgstr "标题"
+
+#: models.py:630
+msgid "subtitle"
+msgstr "副标题"
+
+#: models.py:636
+msgid "post meta description"
+msgstr "文章元描述"
+
+#: models.py:639
+msgid "post meta keywords"
+msgstr "文章元关键词"
+
+#: models.py:643
+msgid "post meta title"
+msgstr "文章元标题"
+
+#: models.py:644
+msgid "used in title tag and social sharing"
+msgstr "用于标题标签和社交分享"
+
+#: models.py:651
+msgid "text"
+msgstr "文本"
+
+#: models.py:801
+msgid "Untitled"
+msgstr "无标题"
+
+#: models.py:813
+msgid "current site"
+msgstr "当前站点"
+
+#: models.py:813
+msgid "Select items from the current site only"
+msgstr "仅从当前站点选择项目"
+
+#: models.py:817
+msgid "Plugin layout"
+msgstr "插件布局"
+
+#: models.py:818
+msgid "Select plugin layout to load for this instance"
+msgstr "选择要为此实例加载的插件布局"
+
+#: models.py:862 models.py:903
+msgid "entries"
+msgstr "条目"
+
+#: models.py:864
+msgid "The number of latests entries to be displayed."
+msgstr "要显示的最新条目数量。"
+
+#: models.py:867
+msgid "filter by tag"
+msgstr "按标签筛选"
+
+#: models.py:869
+msgid "Show only the entries tagged with chosen tags."
+msgstr "仅显示带有所选标签的条目。"
+
+#: models.py:875
+msgid "filter by category"
+msgstr "按分类筛选"
+
+#: models.py:876
+msgid "Show only the posts of the chosen categories."
+msgstr "仅显示所选分类的文章。"
+
+#: models.py:880
+#, python-format
+msgid "%s latest posts by tag"
+msgstr "按标签排列的 %s 篇最新文章"
+
+#: models.py:900
+msgid "authors"
+msgstr "作者"
+
+#: models.py:905
+msgid "The number of author entries to be displayed."
+msgstr "要显示的作者条目数量。"
+
+#: models.py:909
+#, python-format
+msgid "%s latest entries by author"
+msgstr "按作者排列的 %s 篇最新条目"
+
+#: models.py:929 models.py:932
+msgid "Featured posts"
+msgstr "特色文章"
+
+#: models.py:954
+msgid "generic blog plugin"
+msgstr "通用博客插件"
+
+#: settings.py:27
+msgid "Full date"
+msgstr "完整日期"
+
+#: settings.py:28
+msgid "Year /  Month"
+msgstr "年 / 月"
+
+#: settings.py:29 templates/djangocms_stories/post_list.html:14
+msgid "Category"
+msgstr "分类"
+
+#: settings.py:30
+msgid "Just slug"
+msgstr "仅缩略名"
+
+#: settings.py:49
+msgid "Categories and posts"
+msgstr "分类和文章"
+
+#: settings.py:50
+msgid "Categories only"
+msgstr "仅分类"
+
+#: settings.py:51
+msgid "Posts only"
+msgstr "仅文章"
+
+#: settings.py:52
+msgid "None"
+msgstr "无"
+
+#: settings.py:56
+msgid "always"
+msgstr "总是"
+
+#: settings.py:57
+msgid "hourly"
+msgstr "每小时"
+
+#: settings.py:58
+msgid "daily"
+msgstr "每天"
+
+#: settings.py:59
+msgid "weekly"
+msgstr "每周"
+
+#: settings.py:60
+msgid "monthly"
+msgstr "每月"
+
+#: settings.py:61
+msgid "yearly"
+msgstr "每年"
+
+#: settings.py:62
+msgid "never"
+msgstr "从不"
+
+#: settings.py:357
+msgid "Article"
+msgstr "文章"
+
+#: settings.py:378 settings.py:385
+msgid "Blog"
+msgstr "博客"
+
+#: settings.py:472
+msgid "Posts"
+msgstr "文章"
+
+#: settings.py:479
+msgid "Latest Blog Articles"
+msgstr "最新博客文章"
+
+#: settings.py:486
+msgid "Latest Blog Articles - Cache"
+msgstr "最新博客文章 - 缓存"
+
+#: settings.py:493
+msgid "Author Blog Articles"
+msgstr "作者博客文章"
+
+#: settings.py:500
+msgid "Author Blog Articles List"
+msgstr "作者博客文章列表"
+
+#: settings.py:507 templates/djangocms_stories/plugins/tags.html:5
+msgid "Tags"
+msgstr "标签"
+
+#: settings.py:514 templates/djangocms_stories/plugins/categories.html:3
+msgid "Categories"
+msgstr "分类"
+
+#: settings.py:521 templates/djangocms_stories/plugins/archive.html:3
+#: templates/djangocms_stories/post_list.html:12
+msgid "Archive"
+msgstr "归档"
+
+#: settings.py:528
+msgid "Featured Posts"
+msgstr "特色文章"
+
+#: settings.py:535
+msgid "Featured Posts - Cache"
+msgstr "特色文章 - 缓存"
+
+#: settings.py:570
+msgid "Default template"
+msgstr "默认模板"
+
+#: templates/admin/djangocms_stories/post/change_list.html:4
+msgid "Language"
+msgstr "语言"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
+msgid "Home"
+msgstr "首页"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
+msgid "Blog articles"
+msgstr "博客文章"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
+msgid "Versions"
+msgstr "版本"
+
+#: templates/djangocms_stories/category_list.html:11
+#: templates/djangocms_stories/plugins/archive.html:26
+#: templates/djangocms_stories/plugins/authors_posts.html:12
+#: templates/djangocms_stories/plugins/latest_entries.html:7
+#: templates/djangocms_stories/plugins/tags.html:17
+#: templates/djangocms_stories/post_list.html:26
+msgid "No article found."
+msgstr "未找到文章。"
+
+#: templates/djangocms_stories/category_list.html:14
+#: templates/djangocms_stories/post_list.html:29
+msgid "Back"
+msgstr "返回"
+
+#: templates/djangocms_stories/category_list.html:19
+#: templates/djangocms_stories/post_list.html:34
+msgid "previous"
+msgstr "上一页"
+
+#: templates/djangocms_stories/category_list.html:22
+#: templates/djangocms_stories/post_list.html:37
+msgid "Page"
+msgstr "页"
+
+#: templates/djangocms_stories/category_list.html:22
+#: templates/djangocms_stories/post_list.html:37
+msgid "of"
+msgstr "/"
+
+#: templates/djangocms_stories/category_list.html:25
+#: templates/djangocms_stories/post_list.html:40
+msgid "next"
+msgstr "下一页"
+
+#: templates/djangocms_stories/includes/post_item.html:38
+msgid "read more"
+msgstr "阅读更多"
+
+#: templates/djangocms_stories/plugins/archive.html:17
+#: templates/djangocms_stories/plugins/categories.html:10
+#: templates/djangocms_stories/plugins/tags.html:12
+#, python-format
+msgid "1 article"
+msgid_plural "%(articles)s articles"
+msgstr[0] "%(articles)s 篇文章"
+
+#: templates/djangocms_stories/plugins/archive.html:18
+#: templates/djangocms_stories/plugins/authors.html:11
+#: templates/djangocms_stories/plugins/categories.html:11
+#: templates/djangocms_stories/plugins/tags.html:13
+msgid "0 articles"
+msgstr "0 篇文章"
+
+#: templates/djangocms_stories/plugins/authors.html:3
+#: templates/djangocms_stories/plugins/authors_posts.html:3
+msgid "Authors"
+msgstr "作者"
+
+#: templates/djangocms_stories/plugins/authors.html:10
+#, python-format
+msgid "(1 article)"
+msgid_plural "(%(articles)s articles)"
+msgstr[0] "（%(articles)s 篇文章）"
+
+#: templates/djangocms_stories/plugins/authors.html:15
+msgid "No author found."
+msgstr "未找到作者。"
+
+#: templates/djangocms_stories/plugins/authors_posts.html:7
+#: templates/djangocms_stories/post_list.html:11
+msgid "Articles by"
+msgstr "作者："
+
+#: templates/djangocms_stories/plugins/categories.html:15
+msgid "No categories found."
+msgstr "未找到分类。"
+
+#: templates/djangocms_stories/post_list.html:13
+msgid "Tag"
+msgstr "标签"
