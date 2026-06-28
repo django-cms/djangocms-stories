@@ -7,7 +7,7 @@ Changelog
 
 * feat: Add sorted autocomplete to related posts plugin by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/107
 * feat: Replace autosuggest by autocomplete select2 widget by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/108
-* feat: Add Chinese locales by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/109
+* feat: Add new locales by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/109
 
 0.9.2 (2026-06-12)
 ------------------
