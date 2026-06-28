@@ -1,44 +1,39 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-# Translators:
-# Iacopo Spalletti, 2014
-# yakky <i.spalletti@nephila.it>, 2014-2020
-# Leonardo Cavallucci, 2023
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: djangocms-blog\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-28 10:29+0200\n"
-"PO-Revision-Date: 2014-03-29 15:29+0000\n"
-"Last-Translator: Leonardo Cavallucci, 2023\n"
-"Language-Team: Italian (http://app.transifex.com/nephila/djangocms-blog/"
-"language/it/)\n"
-"Language: it\n"
+"PO-Revision-Date: 2014-03-05 18:09+0100\n"
+"Last-Translator: Fabian Braun <fabian@django-cms.org>\n"
+"Language-Team: Indonesian\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
-"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: admin.py:125
 msgid "site"
-msgstr "Sito"
+msgstr "situs"
 
 #: admin.py:149
 msgid "Select app config"
-msgstr "Seleziona configurazione app"
+msgstr "Pilih konfigurasi aplikasi"
 
 #: admin.py:150
 msgid "Select the app config for the new object"
-msgstr "Seleziona la configurazione app per il nuovo oggetto"
+msgstr "Pilih konfigurasi aplikasi untuk objek baru"
 
 #: admin.py:267
 #, python-format
 msgid "Add %s"
-msgstr "Aggiungi %s"
+msgstr "Tambah %s"
 
 #: admin.py:353 admin.py:425
 msgid "Info"
@@ -46,11 +41,11 @@ msgstr "Info"
 
 #: admin.py:360
 msgid "Image"
-msgstr "Immagine"
+msgstr "Gambar"
 
 #: admin.py:432
 msgid "Images"
-msgstr "Immagini"
+msgstr "Gambar"
 
 #: admin.py:436
 msgid "SEO"
@@ -58,23 +53,23 @@ msgstr "SEO"
 
 #: admin.py:475
 msgid "Empty"
-msgstr "Vuoto"
+msgstr "Kosong"
 
 #: admin.py:495
 msgid "Enable comments for selection"
-msgstr "Abilita i commenti per gli articoli selezionati"
+msgstr "Aktifkan komentar untuk seleksi"
 
 #: admin.py:509
 msgid "Disable comments for selection "
-msgstr "Disabilita i commenti per gli articoli selezionati"
+msgstr "Nonaktifkan komentar untuk seleksi "
 
 #: admin.py:786
 msgid "Generic"
-msgstr "Generale"
+msgstr "Umum"
 
 #: admin.py:795
 msgid "Layout"
-msgstr "Layout"
+msgstr "Tata letak"
 
 #: admin.py:812
 msgid "Sitemap"
@@ -86,313 +81,314 @@ msgstr "Meta"
 
 #: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
-msgstr "Puoi inserire stringhe, attributi o metodi del model Post"
+msgstr "Anda dapat memberikan string biasa, atribut model Post, atau nama metode"
 
 #: apps.py:8 cms_apps.py:16
 msgid "Stories"
-msgstr "Storie"
+msgstr "Stories"
 
 #: cms_appconfig.py:85
 msgid "stories config"
-msgstr "configurazione storie"
+msgstr "konfigurasi stories"
 
 #: cms_appconfig.py:86
 msgid "stories configs"
-msgstr "configurazioni storie"
+msgstr "konfigurasi stories"
 
 #: cms_appconfig.py:89
 msgid "type"
-msgstr "tipo"
+msgstr "tipe"
 
 #: cms_appconfig.py:93
 msgid "instance namespace"
-msgstr "namespace istanza"
+msgstr "namespace instance"
 
 #: cms_appconfig.py:99
 msgid "application title"
-msgstr "Titolo applicazione"
+msgstr "judul aplikasi"
 
 #: cms_appconfig.py:100
 msgid "object name"
-msgstr "Nome oggetto"
+msgstr "nama objek"
 
 #: cms_appconfig.py:110
 msgid "default size of full images"
-msgstr "dimensione predefinita delle immagini complete"
+msgstr "ukuran bawaan gambar penuh"
 
 #: cms_appconfig.py:111
 msgid ""
 "If left empty the image size will have to be set for every newly created "
 "post."
 msgstr ""
-"Se vuoto, la dimensione dell'immagine principale dovrà essere impostata per "
-"ogni nuovo articolo."
+"Jika dibiarkan kosong, ukuran gambar harus diatur untuk setiap post yang "
+"baru dibuat."
 
 #: cms_appconfig.py:120
 msgid "default size of thumbnail images"
-msgstr "dimensione predefinita delle miniature"
+msgstr "ukuran bawaan gambar thumbnail"
 
 #: cms_appconfig.py:121
 msgid ""
 "If left empty the thumbnail image size will have to be set for every newly "
 "created post."
 msgstr ""
-"Se vuoto, la dimensione dell'immagine ridotta dovrà essere impostata per "
-"ogni nuovo articolo."
+"Jika dibiarkan kosong, ukuran gambar thumbnail harus diatur untuk setiap "
+"post yang baru dibuat."
 
 #: cms_appconfig.py:126
 msgid "Permalink structure"
-msgstr "Struttura permalink"
+msgstr "Struktur permalink"
 
 #: cms_appconfig.py:130
 msgid "Use placeholder and plugins for article body"
-msgstr "Usa placeholder e plugin per il contenuto"
+msgstr "Gunakan placeholder dan plugin untuk isi artikel"
 
 #: cms_appconfig.py:134
 msgid "Use abstract field"
-msgstr "Usa campo abstract"
+msgstr "Gunakan kolom abstrak"
 
 #: cms_appconfig.py:137
 msgid "Enable related posts"
-msgstr "Abilita articoli collegati"
+msgstr "Aktifkan post terkait"
 
 #: cms_appconfig.py:140
 msgid "No"
-msgstr "No"
+msgstr "Tidak"
 
 #: cms_appconfig.py:141
 msgid "Yes, from this stories config"
-msgstr "Sì, da questa configurazione storie"
+msgstr "Ya, dari konfigurasi stories ini"
 
 #: cms_appconfig.py:142
 msgid "Yes, from this site"
-msgstr "Sì, da questo sito"
+msgstr "Ya, dari situs ini"
 
 #: cms_appconfig.py:147
 msgid "Set author by default"
-msgstr "Imposta autore di default"
+msgstr "Atur penulis secara bawaan"
 
 #: cms_appconfig.py:151
 msgid "Paginate size"
-msgstr "Dimensione paginazione"
+msgstr "Ukuran paginasi"
 
 #: cms_appconfig.py:153
 msgid "When paginating list views, how many articles per page?"
-msgstr "Se la lista è paginata, quanti articoli visualizzati per pagina?"
+msgstr "Saat memaginasi tampilan daftar, berapa banyak artikel per halaman?"
 
 #: cms_appconfig.py:160
 msgid "Template prefix"
-msgstr "Prefisso template"
+msgstr "Prefiks template"
 
 #: cms_appconfig.py:161
 msgid "Alternative directory to load the stories templates from"
-msgstr "Directory alternativa da cui caricare i template delle storie"
+msgstr "Direktori alternatif untuk memuat template stories"
 
 #: cms_appconfig.py:166
 msgid "Menu structure"
-msgstr "Struttura del menu"
+msgstr "Struktur menu"
 
 #: cms_appconfig.py:167
 msgid "Structure of the django CMS menu"
-msgstr "Struttura del menu django CMS"
+msgstr "Struktur menu django CMS"
 
 #: cms_appconfig.py:171
 msgid "Show empty categories in menu"
-msgstr "Mostra categorie vuote nel menù"
+msgstr "Tampilkan kategori kosong di menu"
 
 #: cms_appconfig.py:172
 msgid "Show categories with no post attached in the menu"
-msgstr "Mostra categorie senza post nel menù"
+msgstr "Tampilkan kategori tanpa post terlampir di menu"
 
 #: cms_appconfig.py:178
 msgid "Sitemap changefreq"
-msgstr "Frequenza aggiornamento Sitemap"
+msgstr "Changefreq sitemap"
 
 #: cms_appconfig.py:179
 msgid "Changefreq attribute for sitemap items"
-msgstr "Attributo Changefreq per gli oggetti della sitemap"
+msgstr "Atribut changefreq untuk item sitemap"
 
 #: cms_appconfig.py:185
 msgid "Sitemap priority"
-msgstr "Priorità sitemap"
+msgstr "Prioritas sitemap"
 
 #: cms_appconfig.py:186
 msgid "Priority attribute for sitemap items"
-msgstr "Attributo priorità per gli oggetti nella sitemap"
+msgstr "Atribut prioritas untuk item sitemap"
 
 #: cms_appconfig.py:192
 msgid "Object type"
-msgstr "Tipo oggetto"
+msgstr "Tipe objek"
 
 #: cms_appconfig.py:197
 msgid "Facebook type"
-msgstr "Tipo oggetto Facebook"
+msgstr "Tipe Facebook"
 
 #: cms_appconfig.py:201
 msgid "Facebook application ID"
-msgstr "ID Applicazione Facebook"
+msgstr "ID aplikasi Facebook"
 
 #: cms_appconfig.py:203
 msgid "Facebook profile ID"
-msgstr "ID Profilo Facebook"
+msgstr "ID profil Facebook"
 
 #: cms_appconfig.py:205
 msgid "Facebook page URL"
-msgstr "URL Pagina Facebook"
+msgstr "URL halaman Facebook"
 
 #: cms_appconfig.py:207
 msgid "Facebook author URL"
-msgstr "URL Autore Facebook"
+msgstr "URL penulis Facebook"
 
 #: cms_appconfig.py:209
 msgid "Facebook author"
-msgstr "Autore Facebook"
+msgstr "Penulis Facebook"
 
 #: cms_appconfig.py:213
 msgid "Twitter type"
-msgstr "Tipo oggetto Twitter"
+msgstr "Tipe Twitter"
 
 #: cms_appconfig.py:217
 msgid "Twitter site handle"
-msgstr "Nome Twitter del sito"
+msgstr "Handle situs Twitter"
 
 #: cms_appconfig.py:219
 msgid "Twitter author handle"
-msgstr "Nome Twitter autore"
+msgstr "Handle penulis Twitter"
 
 #: cms_appconfig.py:223
 msgid "Schema.org type"
-msgstr "Tipo Schema.org"
+msgstr "Tipe Schema.org"
 
 #: cms_appconfig.py:227
 msgid "Schema.org author name"
-msgstr "Nome autore Schema.org"
+msgstr "Nama penulis Schema.org"
 
 #: cms_appconfig.py:230
 msgid "Send notifications on post publish"
-msgstr "Invia notifiche alla pubblicazione dell'articolo"
+msgstr "Kirim notifikasi saat post dipublikasikan"
 
 #: cms_appconfig.py:232
 msgid "Emits a desktop notification -if enabled- when publishing a new post"
 msgstr ""
-"Invia notifiche desktop -se abilitate- quando viene pubblicato un articolo"
+"Memunculkan notifikasi desktop -jika diaktifkan- saat mempublikasikan post "
+"baru"
 
 #: cms_appconfig.py:236
 msgid "Send notifications on post update"
-msgstr "Invia notifiche all'aggiornamento dell'articolo"
+msgstr "Kirim notifikasi saat post diperbarui"
 
 #: cms_appconfig.py:238
 msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
-"Invia notifiche desktop -se abilitate- quando viene aggiornato un articolo"
+"Memunculkan notifikasi desktop -jika diaktifkan- saat menyunting post yang "
+"telah dipublikasikan"
 
 #: cms_appconfig.py:242
 msgid "untitled"
-msgstr "Senza titolo"
+msgstr "tanpa judul"
 
 #: cms_config.py:62
 #, python-brace-format
 msgid "New {0}"
-msgstr "Nuovo {0}"
+msgstr "{0} baru"
 
 #: cms_config.py:67
 #, python-brace-format
 msgid "Create a new {0} in {1}"
-msgstr "Crea un nuovo {0} in {1}"
+msgstr "Buat {0} baru di {1}"
 
 #: cms_menus.py:25
 msgid "Post category menu"
-msgstr "Menu categorie degli articoli"
+msgstr "Menu kategori post"
 
 #: cms_toolbars.py:38
 msgid "View on site"
-msgstr "Visualizza sul sito"
+msgstr "Lihat di situs"
 
 #: cms_toolbars.py:45
 msgid "Preview"
-msgstr "Anteprima"
+msgstr "Pratinjau"
 
 #: cms_toolbars.py:67
 msgid "View Published"
-msgstr "Visualizza pubblicato"
+msgstr "Lihat yang Dipublikasikan"
 
 #: cms_toolbars.py:111
 #, python-format
 msgid "%(object_name)s properties"
-msgstr "Proprietà di %(object_name)s"
+msgstr "Properti %(object_name)s"
 
 #: cms_toolbars.py:122
 msgid "All entries"
-msgstr "Tutti gli articoli"
+msgstr "Semua entri"
 
 #: cms_toolbars.py:131
 #, python-format
 msgid "New %(object_name)s"
-msgstr "Nuovo %(object_name)s"
+msgstr "%(object_name)s baru"
 
 #: cms_toolbars.py:138
 msgid "Edit Configuration"
-msgstr "Modifica configurazione"
+msgstr "Sunting Konfigurasi"
 
 #: cms_wizards.py:23 models.py:124 models.py:371 models.py:809
 msgid "app. config"
-msgstr "config. app."
+msgstr "konfig. aplikasi"
 
 #: cms_wizards.py:92
 msgid "Selected story not available any more. Close wizard."
-msgstr ""
-"La storia selezionata non è più disponibile. Chiudi la procedura guidata."
+msgstr "Story yang dipilih tidak tersedia lagi. Tutup wizard."
 
 #: feeds.py:38
 #, python-format
 msgid "Blog articles on %(site_name)s"
-msgstr "Articoli del blog su %(site_name)s"
+msgstr "Artikel Blog di %(site_name)s"
 
 #: forms.py:97
 msgid "App Config"
-msgstr "Configurazione app"
+msgstr "Konfigurasi Aplikasi"
 
 #: forms.py:99
 msgid "Select the app config to apply to the new post."
-msgstr "Seleziona la configurazione app da applicare al nuovo articolo."
+msgstr "Pilih konfigurasi aplikasi untuk diterapkan pada post baru."
 
 #: models.py:116
 msgid "parent"
-msgstr "superiore"
+msgstr "induk"
 
 #: models.py:118
 msgid "created at"
-msgstr "creato il"
+msgstr "dibuat pada"
 
 #: models.py:119
 msgid "modified at"
-msgstr "modificato il"
+msgstr "diubah pada"
 
 #: models.py:125 models.py:372 models.py:810
 msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
-"Quando selezioni un valore, il modulo viene ricaricato per ottenere il "
-"valore predefinito aggiornato"
+"Saat memilih nilai, formulir dimuat ulang untuk mendapatkan nilai bawaan "
+"yang diperbarui"
 
 #: models.py:127
 msgid "priority"
-msgstr "priorità"
+msgstr "prioritas"
 
 #: models.py:129 models.py:324
 msgid "main image"
-msgstr "immagine principale"
+msgstr "gambar utama"
 
 #: models.py:137 models.py:334
 msgid "main image thumbnail"
-msgstr "dimensioni miniatura immagine"
+msgstr "thumbnail gambar utama"
 
 #: models.py:145 models.py:344
 msgid "main image full"
-msgstr "dimensioni immagine"
+msgstr "gambar utama penuh"
 
 #: models.py:153
 msgid "name"
-msgstr "nome"
+msgstr "nama"
 
 #: models.py:155 models.py:622
 msgid "slug"
@@ -400,273 +396,272 @@ msgstr "slug"
 
 #: models.py:161
 msgid "category meta description"
-msgstr "metatag descrizione"
+msgstr "meta deskripsi kategori"
 
 #: models.py:163 models.py:633
 msgid "abstract"
-msgstr "abstract"
+msgstr "abstrak"
 
 #: models.py:191
 msgid "post category"
-msgstr "categoria articolo"
+msgstr "kategori post"
 
 #: models.py:192
 msgid "post categories"
-msgstr "categorie articoli"
+msgstr "kategori post"
 
 #: models.py:251
 msgid "PostCategory (no translation)"
-msgstr "Categoria articolo (nessuna traduzione)"
+msgstr "PostCategory (tanpa terjemahan)"
 
 #: models.py:286
 msgid "author"
-msgstr "autore"
+msgstr "penulis"
 
 #: models.py:294
 msgid "created"
-msgstr "creato"
+msgstr "dibuat"
 
 #: models.py:297
 msgid "last modified"
-msgstr "ultima modifica"
+msgstr "terakhir diubah"
 
 #: models.py:301
 msgid "published since"
-msgstr "Pubblicato il"
+msgstr "dipublikasikan sejak"
 
 #: models.py:306
 msgid "published until"
-msgstr "fino al"
+msgstr "dipublikasikan hingga"
 
 #: models.py:312
 msgid "featured date"
-msgstr "Data visualizzata"
+msgstr "tanggal unggulan"
 
 #: models.py:315
 msgid "include in RSS feed"
-msgstr "includi nel feed RSS"
+msgstr "sertakan dalam feed RSS"
 
 #: models.py:319
 msgid "category"
-msgstr "categoria"
+msgstr "kategori"
 
 #: models.py:353
 msgid "enable comments on post"
-msgstr "abilita commenti sull'articolo"
+msgstr "aktifkan komentar pada post"
 
 #: models.py:359
 msgid "Site(s)"
-msgstr "Sito/i"
+msgstr "Situs"
 
 #: models.py:362
 msgid ""
 "Select sites in which to show the post. If none is set it will be visible in "
 "all the configured sites."
 msgstr ""
-"Seleziona i siti in cui deve apparire l'articolo. Se non è selezionato "
-"nessun sito, l'articolo comparirà in tutti i siti configurati."
+"Pilih situs tempat menampilkan post. Jika tidak ada yang diatur, post akan "
+"terlihat di semua situs yang dikonfigurasi."
 
 #: models.py:379
 msgid ""
 "Type a tag and hit tab, or start typing and select from autocomplete list."
 msgstr ""
-"Scrivi un tag e premi il task tab, o comincia a scrivere e seleziona il tag "
-"dalla lista che comparirà"
+"Ketik tag lalu tekan tab, atau mulai mengetik dan pilih dari daftar "
+"pelengkapan otomatis."
 
 #: models.py:385
 msgid "Related Posts"
-msgstr "Articoli collegati"
+msgstr "Post Terkait"
 
 #: models.py:394
 msgid "post"
-msgstr "articolo"
+msgstr "post"
 
 #: models.py:395
 msgid "posts"
-msgstr "articoli"
+msgstr "post"
 
 #: models.py:406
 msgid "Post (no translation)"
-msgstr "Articolo (nessuna translation)"
+msgstr "Post (tanpa terjemahan)"
 
 #: models.py:517 models.py:752
 msgid "No title"
-msgstr "Nessun titolo"
+msgstr "Tanpa judul"
 
 #: models.py:605
 msgid "post content"
-msgstr "contenuto articolo"
+msgstr "konten post"
 
 #: models.py:606
 msgid "post contents"
-msgstr "contenuti articolo"
+msgstr "konten post"
 
 #: models.py:614
 msgid "language"
-msgstr "lingua"
+msgstr "bahasa"
 
 #: models.py:618
 msgid "title"
-msgstr "titolo"
+msgstr "judul"
 
 #: models.py:630
 msgid "subtitle"
-msgstr "sottotitolo"
+msgstr "subjudul"
 
 #: models.py:636
 msgid "post meta description"
-msgstr "metatag descrizione"
+msgstr "meta deskripsi post"
 
 #: models.py:639
 msgid "post meta keywords"
-msgstr "metatag keyword"
+msgstr "meta kata kunci post"
 
 #: models.py:643
 msgid "post meta title"
-msgstr "metatag titolo"
+msgstr "meta judul post"
 
 #: models.py:644
 msgid "used in title tag and social sharing"
-msgstr ""
-"Usato nel tag title e nei titoli per le condivisioni sui social network"
+msgstr "digunakan pada tag judul dan berbagi di media sosial"
 
 #: models.py:651
 msgid "text"
-msgstr "testo"
+msgstr "teks"
 
 #: models.py:801
 msgid "Untitled"
-msgstr "Senza titolo"
+msgstr "Tanpa judul"
 
 #: models.py:813
 msgid "current site"
-msgstr "Sito corrente"
+msgstr "situs saat ini"
 
 #: models.py:813
 msgid "Select items from the current site only"
-msgstr "Seleziona gli elementi per il solo sito corrente"
+msgstr "Pilih item hanya dari situs saat ini"
 
 #: models.py:817
 msgid "Plugin layout"
-msgstr "Layout del plugin"
+msgstr "Tata letak plugin"
 
 #: models.py:818
 msgid "Select plugin layout to load for this instance"
-msgstr "Seleziona il layout del plugin da caricare per questa istanza"
+msgstr "Pilih tata letak plugin untuk dimuat pada instance ini"
 
 #: models.py:862 models.py:903
 msgid "entries"
-msgstr "articoli"
+msgstr "entri"
 
 #: models.py:864
 msgid "The number of latests entries to be displayed."
-msgstr "Il numero di articoli da mostrare."
+msgstr "Jumlah entri terbaru yang akan ditampilkan."
 
 #: models.py:867
 msgid "filter by tag"
-msgstr "filtra per tag"
+msgstr "filter berdasarkan tag"
 
 #: models.py:869
 msgid "Show only the entries tagged with chosen tags."
-msgstr "Mostra solo gli articoli marcati con i tag selezionati."
+msgstr "Hanya tampilkan entri yang ditandai dengan tag yang dipilih."
 
 #: models.py:875
 msgid "filter by category"
-msgstr "filtra per categoria"
+msgstr "filter berdasarkan kategori"
 
 #: models.py:876
 msgid "Show only the posts of the chosen categories."
-msgstr "Mostra solo gli articoli delle categorie selezionate."
+msgstr "Hanya tampilkan post dari kategori yang dipilih."
 
 #: models.py:880
 #, python-format
 msgid "%s latest posts by tag"
-msgstr "ultimi %s articoli per tag"
+msgstr "%s post terbaru berdasarkan tag"
 
 #: models.py:900
 msgid "authors"
-msgstr "autori"
+msgstr "penulis"
 
 #: models.py:905
 msgid "The number of author entries to be displayed."
-msgstr "Il numero di articoli per autore da mostrare."
+msgstr "Jumlah entri penulis yang akan ditampilkan."
 
 #: models.py:909
 #, python-format
 msgid "%s latest entries by author"
-msgstr "ultimi %s articoli per autore"
+msgstr "%s entri terbaru berdasarkan penulis"
 
 #: models.py:929 models.py:932
 msgid "Featured posts"
-msgstr "Articoli in evidenza"
+msgstr "Post unggulan"
 
 #: models.py:954
 msgid "generic blog plugin"
-msgstr "plugin blog"
+msgstr "plugin blog umum"
 
 #: settings.py:27
 msgid "Full date"
-msgstr "Data completa"
+msgstr "Tanggal lengkap"
 
 #: settings.py:28
 msgid "Year /  Month"
-msgstr "Anno / Mese"
+msgstr "Tahun /  Bulan"
 
 #: settings.py:29 templates/djangocms_stories/post_list.html:14
 msgid "Category"
-msgstr "Categoria"
+msgstr "Kategori"
 
 #: settings.py:30
 msgid "Just slug"
-msgstr "Solo slug"
+msgstr "Hanya slug"
 
 #: settings.py:49
 msgid "Categories and posts"
-msgstr "Categorie e articoli"
+msgstr "Kategori dan post"
 
 #: settings.py:50
 msgid "Categories only"
-msgstr "Solo categorie"
+msgstr "Hanya kategori"
 
 #: settings.py:51
 msgid "Posts only"
-msgstr "Solo articoli"
+msgstr "Hanya post"
 
 #: settings.py:52
 msgid "None"
-msgstr "Niente"
+msgstr "Tidak ada"
 
 #: settings.py:56
 msgid "always"
-msgstr "sempre"
+msgstr "selalu"
 
 #: settings.py:57
 msgid "hourly"
-msgstr "ogni ora"
+msgstr "setiap jam"
 
 #: settings.py:58
 msgid "daily"
-msgstr "ogni giorno"
+msgstr "setiap hari"
 
 #: settings.py:59
 msgid "weekly"
-msgstr "ogni settimana"
+msgstr "setiap minggu"
 
 #: settings.py:60
 msgid "monthly"
-msgstr "ogni mese"
+msgstr "setiap bulan"
 
 #: settings.py:61
 msgid "yearly"
-msgstr "ogni anno"
+msgstr "setiap tahun"
 
 #: settings.py:62
 msgid "never"
-msgstr "mai"
+msgstr "tidak pernah"
 
 #: settings.py:357
 msgid "Article"
-msgstr "Articolo"
+msgstr "Artikel"
 
 #: settings.py:378 settings.py:385
 msgid "Blog"
@@ -674,23 +669,23 @@ msgstr "Blog"
 
 #: settings.py:472
 msgid "Posts"
-msgstr "Articoli"
+msgstr "Post"
 
 #: settings.py:479
 msgid "Latest Blog Articles"
-msgstr "Ultimi articoli"
+msgstr "Artikel Blog Terbaru"
 
 #: settings.py:486
 msgid "Latest Blog Articles - Cache"
-msgstr "Ultimi articoli del blog - in cache"
+msgstr "Artikel Blog Terbaru - Cache"
 
 #: settings.py:493
 msgid "Author Blog Articles"
-msgstr "Articoli per autore"
+msgstr "Artikel Blog Penulis"
 
 #: settings.py:500
 msgid "Author Blog Articles List"
-msgstr "Lista autori articoli"
+msgstr "Daftar Artikel Blog Penulis"
 
 #: settings.py:507 templates/djangocms_stories/plugins/tags.html:5
 msgid "Tags"
@@ -698,44 +693,44 @@ msgstr "Tag"
 
 #: settings.py:514 templates/djangocms_stories/plugins/categories.html:3
 msgid "Categories"
-msgstr "Categorie"
+msgstr "Kategori"
 
 #: settings.py:521 templates/djangocms_stories/plugins/archive.html:3
 #: templates/djangocms_stories/post_list.html:12
 msgid "Archive"
-msgstr "Archivio"
+msgstr "Arsip"
 
 #: settings.py:528
 msgid "Featured Posts"
-msgstr "Articoli in evidenza"
+msgstr "Post Unggulan"
 
 #: settings.py:535
 msgid "Featured Posts - Cache"
-msgstr "Articoli in evidenza - Cache"
+msgstr "Post Unggulan - Cache"
 
 #: settings.py:570
 msgid "Default template"
-msgstr "Template standard"
+msgstr "Template bawaan"
 
 #: tag_autosuggest.py:62
 msgid "Type a tag and hit enter"
-msgstr "Scrivi un tag e premi invio"
+msgstr "Ketik tag lalu tekan enter"
 
 #: templates/admin/djangocms_stories/post/change_list.html:4
 msgid "Language"
-msgstr "Lingua"
+msgstr "Bahasa"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
 msgid "Home"
-msgstr "Home"
+msgstr "Beranda"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
 msgid "Blog articles"
-msgstr "Articoli del blog"
+msgstr "Artikel blog"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
 msgid "Versions"
-msgstr "Versioni"
+msgstr "Versi"
 
 #: templates/djangocms_stories/category_list.html:11
 #: templates/djangocms_stories/plugins/archive.html:26
@@ -744,36 +739,36 @@ msgstr "Versioni"
 #: templates/djangocms_stories/plugins/tags.html:17
 #: templates/djangocms_stories/post_list.html:26
 msgid "No article found."
-msgstr "Nessun articolo trovato."
+msgstr "Tidak ada artikel yang ditemukan."
 
 #: templates/djangocms_stories/category_list.html:14
 #: templates/djangocms_stories/post_list.html:29
 msgid "Back"
-msgstr "Indietro"
+msgstr "Kembali"
 
 #: templates/djangocms_stories/category_list.html:19
 #: templates/djangocms_stories/post_list.html:34
 msgid "previous"
-msgstr "precedente"
+msgstr "sebelumnya"
 
 #: templates/djangocms_stories/category_list.html:22
 #: templates/djangocms_stories/post_list.html:37
 msgid "Page"
-msgstr "Pagina"
+msgstr "Halaman"
 
 #: templates/djangocms_stories/category_list.html:22
 #: templates/djangocms_stories/post_list.html:37
 msgid "of"
-msgstr "di"
+msgstr "dari"
 
 #: templates/djangocms_stories/category_list.html:25
 #: templates/djangocms_stories/post_list.html:40
 msgid "next"
-msgstr "successivo"
+msgstr "berikutnya"
 
 #: templates/djangocms_stories/includes/post_item.html:38
 msgid "read more"
-msgstr "leggi"
+msgstr "baca selengkapnya"
 
 #: templates/djangocms_stories/plugins/archive.html:17
 #: templates/djangocms_stories/plugins/categories.html:10
@@ -781,122 +776,39 @@ msgstr "leggi"
 #, python-format
 msgid "1 article"
 msgid_plural "%(articles)s articles"
-msgstr[0] "1 articolo"
-msgstr[1] "%(articles)s articoli"
-msgstr[2] "%(articles)s articoli"
+msgstr[0] "%(articles)s artikel"
 
 #: templates/djangocms_stories/plugins/archive.html:18
 #: templates/djangocms_stories/plugins/authors.html:11
 #: templates/djangocms_stories/plugins/categories.html:11
 #: templates/djangocms_stories/plugins/tags.html:13
 msgid "0 articles"
-msgstr "0 articoli"
+msgstr "0 artikel"
 
 #: templates/djangocms_stories/plugins/authors.html:3
 #: templates/djangocms_stories/plugins/authors_posts.html:3
 msgid "Authors"
-msgstr "Autori"
+msgstr "Penulis"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
-msgstr[0] "1 articolo"
-msgstr[1] "%(articles)s articoli"
-msgstr[2] "%(articles)s articoli"
+msgstr[0] "(%(articles)s artikel)"
 
 #: templates/djangocms_stories/plugins/authors.html:15
 msgid "No author found."
-msgstr "Nessun autore trovato"
+msgstr "Tidak ada penulis yang ditemukan."
 
 #: templates/djangocms_stories/plugins/authors_posts.html:7
 #: templates/djangocms_stories/post_list.html:11
 msgid "Articles by"
-msgstr "Articoli di"
+msgstr "Artikel oleh"
 
 #: templates/djangocms_stories/plugins/categories.html:15
 msgid "No categories found."
-msgstr "Nessuna categoria trovata."
+msgstr "Tidak ada kategori yang ditemukan."
 
 #: templates/djangocms_stories/post_list.html:13
 msgid "Tag"
 msgstr "Tag"
-
-#~ msgid "Notifications"
-#~ msgstr "Notifiche"
-
-#~ msgid "Publish selection"
-#~ msgstr "Pubblica gli articoli selezionati"
-
-#~ msgid "Unpublish selection"
-#~ msgstr "Spubblica gli articoli selezionati"
-
-#~ msgid "Enable liveblog for selection"
-#~ msgstr "Abilita il liveblog per gli articoli selezionati"
-
-#~ msgid "Disable liveblog for selection "
-#~ msgstr "Disabilita il liveblog per gli articoli selezionati"
-
-#~ msgid "django CMS Blog"
-#~ msgstr "django CMS Blog"
-
-#~ msgid "Post published by default"
-#~ msgstr "Articoli pubblicati di default"
-
-#~ msgid "Set author"
-#~ msgstr "Imposta autore"
-
-#~ msgid "Blog menu"
-#~ msgstr "Menu del blog"
-
-#~ msgid "Post list"
-#~ msgstr "Lista degli articoli"
-
-#~ msgid "Category list"
-#~ msgstr "Lista categorie"
-
-#~ msgid "Tag list"
-#~ msgstr "Lista tag"
-
-#~ msgid "Edit Post"
-#~ msgstr "Modifica articolo"
-
-#, python-brace-format
-#~ msgid "Publish {0} now"
-#~ msgstr "Pubblica {0}"
-
-#~ msgid "Slug"
-#~ msgstr "Slug"
-
-#~ msgid "Leave empty for automatic slug, or override as required."
-#~ msgstr "Lascia vuoto per generare lo slug automaticamente"
-
-#~ msgid "Liveblog"
-#~ msgstr "Liveblog"
-
-#~ msgid "Liveblog item"
-#~ msgstr "Elemento liveblog"
-
-#~ msgid "publish liveblog entry"
-#~ msgstr "Pubblica elemento liveblog"
-
-#~ msgid "liveblog entry"
-#~ msgstr "Elemento liveblog"
-
-#~ msgid "image"
-#~ msgstr "Immagine"
-
-#~ msgid "thumbnail size"
-#~ msgstr "Dimensione miniatura"
-
-#~ msgid "publish"
-#~ msgstr "pubblica"
-
-#~ msgid "enable liveblog on post"
-#~ msgstr "Attiva liveblog sul post"
-
-#~ msgid "blog article"
-#~ msgstr "articolo del blog"
-
-#~ msgid "by"
-#~ msgstr "di"

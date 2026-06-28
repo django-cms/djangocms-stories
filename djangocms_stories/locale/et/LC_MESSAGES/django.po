@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djangocms-blog\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 22:34+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2014-03-29 15:29+0000\n"
 "Last-Translator: Rivo Zängov <eraser@eraser.ee>, 2018\n"
-"Language-Team: Estonian (http://app.transifex.com/nephila/djangocms-blog/language/et/)\n"
+"Language-Team: Estonian (http://app.transifex.com/nephila/djangocms-blog/"
+"language/et/)\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,88 +20,81 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr "sait"
 
-#: admin.py:118
-#| msgid "app. config"
+#: admin.py:149
 msgid "Select app config"
 msgstr "Vali rakenduse seaded"
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr "Vali uue objekti rakenduse seaded"
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
-#| msgid "Add post"
 msgid "Add %s"
 msgstr "Lisa %s"
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr "Info"
 
-#: admin.py:329
-#| msgid "Images"
+#: admin.py:360
 msgid "Image"
 msgstr "Pilt"
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr "Pildid"
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr "SEO"
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr "Tühi"
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr "Luba valikul kommentaarid"
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr "Keela valikul kommentaarid "
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr "Üldine"
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr "Paigutus"
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr "Sisukaart"
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr "META"
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
-"Saate sisestada tavalisi sõnesid, Post-mudeli atribuute või meetodite "
-"nimesid"
+"Saate sisestada tavalisi sõnesid, Post-mudeli atribuute või meetodite nimesid"
 
 #: apps.py:8 cms_apps.py:16
-#| msgid "Categories"
 msgid "Stories"
 msgstr "Lood"
 
 #: cms_appconfig.py:85
-#| msgid "blog config"
 msgid "stories config"
 msgstr "lugude seadistus"
 
 #: cms_appconfig.py:86
-#| msgid "blog configs"
 msgid "stories configs"
 msgstr "lugude seadistused"
 
@@ -140,8 +134,7 @@ msgid ""
 "If left empty the thumbnail image size will have to be set for every newly "
 "created post."
 msgstr ""
-"Kui jätta tühjaks, tuleb pisipildi suurus määrata iga uue postituse "
-"loomisel."
+"Kui jätta tühjaks, tuleb pisipildi suurus määrata iga uue postituse loomisel."
 
 #: cms_appconfig.py:126
 msgid "Permalink structure"
@@ -160,7 +153,6 @@ msgid "Enable related posts"
 msgstr "Luba seotud postitused"
 
 #: cms_appconfig.py:140
-#| msgid "None"
 msgid "No"
 msgstr "Ei"
 
@@ -285,8 +277,7 @@ msgid "Send notifications on post update"
 msgstr "Saada teavitused postituse uuendamisel"
 
 #: cms_appconfig.py:238
-msgid ""
-"Emits a desktop notification -if enabled- when editing a published post"
+msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr "Saadab töölaua teavituse (kui lubatud) avaldatud postituse muutmisel"
 
 #: cms_appconfig.py:242
@@ -304,7 +295,6 @@ msgid "Create a new {0} in {1}"
 msgstr "Loo uus {0} {1}-s"
 
 #: cms_menus.py:25
-#| msgid "blog category"
 msgid "Post category menu"
 msgstr "Postituse kategooria menüü"
 
@@ -331,12 +321,10 @@ msgstr "Kõik kirjed"
 
 #: cms_toolbars.py:131
 #, python-format
-#| msgid "object name"
 msgid "New %(object_name)s"
 msgstr "Uus %(object_name)s"
 
 #: cms_toolbars.py:138
-#| msgid "Edit configuration"
 msgid "Edit Configuration"
 msgstr "Muuda seadistust"
 
@@ -354,7 +342,6 @@ msgid "Blog articles on %(site_name)s"
 msgstr "Blogi artiklid saidil %(site_name)s"
 
 #: forms.py:97
-#| msgid "app. config"
 msgid "App Config"
 msgstr "Rakenduse seaded"
 
@@ -375,8 +362,7 @@ msgid "modified at"
 msgstr "muudetud"
 
 #: models.py:125 models.py:372 models.py:810
-msgid ""
-"When selecting a value, the form is reloaded to get the updated default"
+msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
 "Väärtuse valimisel laaditakse vorm uuesti, et saada ajakohastatud "
 "vaikeväärtus"
@@ -414,12 +400,10 @@ msgid "abstract"
 msgstr "abstraktne"
 
 #: models.py:191
-#| msgid "blog category"
 msgid "post category"
 msgstr "postituse kategooria"
 
 #: models.py:192
-#| msgid "blog categories"
 msgid "post categories"
 msgstr "postituse kategooriad"
 
@@ -469,8 +453,8 @@ msgstr "Sait (Saidid)"
 
 #: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in"
-" all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
 msgstr ""
 "Vali saidid, millel postitust näidata. Kui ühtegi pole määratud, on see "
 "nähtav kõigil seadistatud saitidel."
@@ -487,12 +471,10 @@ msgid "Related Posts"
 msgstr "Seotud postitused"
 
 #: models.py:394
-#| msgid "Add post"
 msgid "post"
 msgstr "postitus"
 
 #: models.py:395
-#| msgid "Add post"
 msgid "posts"
 msgstr "postitused"
 
@@ -501,17 +483,14 @@ msgid "Post (no translation)"
 msgstr "Post (tõlketa)"
 
 #: models.py:517 models.py:752
-#| msgid "title"
 msgid "No title"
 msgstr "Pealkiri puudub"
 
 #: models.py:605
-#| msgid "post date"
 msgid "post content"
 msgstr "postituse sisu"
 
 #: models.py:606
-#| msgid "post date"
 msgid "post contents"
 msgstr "postituse sisud"
 
@@ -548,7 +527,6 @@ msgid "text"
 msgstr "tekst"
 
 #: models.py:801
-#| msgid "untitled"
 msgid "Untitled"
 msgstr "Pealkirjata"
 
@@ -561,7 +539,6 @@ msgid "Select items from the current site only"
 msgstr "Vali ainult praeguse saidi üksused"
 
 #: models.py:817
-#| msgid "Plugin template"
 msgid "Plugin layout"
 msgstr "Plugina paigutus"
 
@@ -680,7 +657,6 @@ msgid "never"
 msgstr "mitte kunagi"
 
 #: settings.py:357
-#| msgid "articles"
 msgid "Article"
 msgstr "Artikkel"
 
@@ -689,7 +665,6 @@ msgid "Blog"
 msgstr "Blogi"
 
 #: settings.py:472
-#| msgid "Add post"
 msgid "Posts"
 msgstr "Postitused"
 
@@ -747,7 +722,6 @@ msgid "Home"
 msgstr "Avaleht"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
-#| msgid "blog articles"
 msgid "Blog articles"
 msgstr "Blogi artiklid"
 
@@ -816,8 +790,6 @@ msgstr "Autorid"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
-#| msgid "1 article"
-#| msgid_plural "%(articles)s articles"
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
 msgstr[0] "(1 artikkel)"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djangocms-stories\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 23:05+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2026-06-25 23:05+0200\n"
 "Last-Translator: Fabian Braun <fabian@django-cms.org>\n"
 "Language-Team: Traditional Chinese\n"
@@ -17,68 +17,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr "網站"
 
-#: admin.py:118
+#: admin.py:149
 msgid "Select app config"
 msgstr "選擇應用程式設定"
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr "為新物件選擇應用程式設定"
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
 msgid "Add %s"
 msgstr "新增 %s"
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr "資訊"
 
-#: admin.py:329
+#: admin.py:360
 msgid "Image"
 msgstr "圖片"
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr "圖片"
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr "SEO"
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr "清空"
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr "為所選啟用留言"
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr "為所選停用留言 "
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr "泛用"
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr "版面配置"
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr "網站地圖"
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr "Meta"
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr "您可以提供純文字字串、文章模型屬性或方法名稱"
 
@@ -271,8 +271,7 @@ msgid "Send notifications on post update"
 msgstr "更新文章時傳送通知"
 
 #: cms_appconfig.py:238
-msgid ""
-"Emits a desktop notification -if enabled- when editing a published post"
+msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr "編輯已發佈文章時發出桌面通知（若已啟用）"
 
 #: cms_appconfig.py:242
@@ -357,8 +356,7 @@ msgid "modified at"
 msgstr "修改於"
 
 #: models.py:125 models.py:372 models.py:810
-msgid ""
-"When selecting a value, the form is reloaded to get the updated default"
+msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr "選擇數值時，表單將重新載入以取得更新後的預設值"
 
 #: models.py:127
@@ -447,8 +445,8 @@ msgstr "網站"
 
 #: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in"
-" all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
 msgstr "選擇要顯示該文章的網站。若未設定，它將在所有已設定的網站中顯示。"
 
 #: models.py:379
@@ -698,6 +696,10 @@ msgstr "精選文章 - 快取"
 #: settings.py:570
 msgid "Default template"
 msgstr "預設範本"
+
+#: tag_autosuggest.py:62
+msgid "Type a tag and hit enter"
+msgstr "輸入標籤後按 Enter 鍵"
 
 #: templates/admin/djangocms_stories/post/change_list.html:4
 msgid "Language"

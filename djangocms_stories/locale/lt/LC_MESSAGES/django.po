@@ -8,99 +8,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djangocms-blog\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 22:34+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2014-03-29 15:29+0000\n"
 "Last-Translator: Matas Dailyda <matas@dailyda.com>, 2015-2018\n"
-"Language-Team: Lithuanian (http://app.transifex.com/nephila/djangocms-blog/language/lt/)\n"
+"Language-Team: Lithuanian (http://app.transifex.com/nephila/djangocms-blog/"
+"language/lt/)\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr "tinklalapis"
 
-#: admin.py:118
-#| msgid "app. config"
+#: admin.py:149
 msgid "Select app config"
 msgstr "Pasirinkite aplikacijos konfigūraciją"
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr "Pasirinkite naujo objekto aplikacijos konfigūraciją"
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
-#| msgid "Add post"
 msgid "Add %s"
 msgstr "Pridėti %s"
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr "Informacija"
 
-#: admin.py:329
-#| msgid "Images"
+#: admin.py:360
 msgid "Image"
 msgstr "Paveikslėlis"
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr "Paveikslėliai"
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr "SEO"
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr "Tuščia"
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr "Įgalinti komentarus pasirinktai daliai"
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr "Išjungti komentarus pasirinktai daliai"
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr "Bendras"
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr "Išdėstymas"
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr "Tinklalapio žemėlapis"
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr "Meta"
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
 "Galite pateikti paprasto teksto eilutes, įrašo modelio atributą arba metodo "
 "pavadinimus "
 
 #: apps.py:8 cms_apps.py:16
-#| msgid "Categories"
 msgid "Stories"
 msgstr "Istorijos"
 
 #: cms_appconfig.py:85
-#| msgid "blog config"
 msgid "stories config"
 msgstr "istorijų konfigūracija"
 
 #: cms_appconfig.py:86
-#| msgid "blog configs"
 msgid "stories configs"
 msgstr "istorijų konfigūracijos"
 
@@ -121,7 +118,6 @@ msgid "object name"
 msgstr "objekto pavadinimas"
 
 #: cms_appconfig.py:110
-#| msgid "Default size of full images"
 msgid "default size of full images"
 msgstr "numatytasis pilnų paveikslėlių dydis"
 
@@ -134,7 +130,6 @@ msgstr ""
 "naujai kuriamam straipsniui."
 
 #: cms_appconfig.py:120
-#| msgid "Default size of thumbnail images"
 msgid "default size of thumbnail images"
 msgstr "numatytasis piktogramų dydis"
 
@@ -163,7 +158,6 @@ msgid "Enable related posts"
 msgstr "Įgalinti susijusius straipsnius"
 
 #: cms_appconfig.py:140
-#| msgid "None"
 msgid "No"
 msgstr "Ne"
 
@@ -192,7 +186,6 @@ msgid "Template prefix"
 msgstr "Šablono priešdėlis"
 
 #: cms_appconfig.py:161
-#| msgid "Alternative directory to load the blog templates from"
 msgid "Alternative directory to load the stories templates from"
 msgstr "Alternatyvus katalogas, iš kurio užkraunami istorijų šablonai"
 
@@ -291,8 +284,7 @@ msgid "Send notifications on post update"
 msgstr "Atnaujinus straipsnį siųsti pranešimus"
 
 #: cms_appconfig.py:238
-msgid ""
-"Emits a desktop notification -if enabled- when editing a published post"
+msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
 "Išsiunčia darbalaukio pranešima -jei įgalinta- kai redaguojamas publikuotas "
 "straipsnis"
@@ -312,7 +304,6 @@ msgid "Create a new {0} in {1}"
 msgstr "Kurti naują {0} viduje {1}"
 
 #: cms_menus.py:25
-#| msgid "blog category"
 msgid "Post category menu"
 msgstr "Straipsnių kategorijų meniu"
 
@@ -334,18 +325,15 @@ msgid "%(object_name)s properties"
 msgstr "%(object_name)s savybės"
 
 #: cms_toolbars.py:122
-#| msgid "liveblog entries"
 msgid "All entries"
 msgstr "Visi įrašai"
 
 #: cms_toolbars.py:131
 #, python-format
-#| msgid "object name"
 msgid "New %(object_name)s"
 msgstr "Naujas %(object_name)s"
 
 #: cms_toolbars.py:138
-#| msgid "Edit configuration"
 msgid "Edit Configuration"
 msgstr "Redaguoti konfigūraciją"
 
@@ -363,7 +351,6 @@ msgid "Blog articles on %(site_name)s"
 msgstr "Tinklaraščio straipsniai %(site_name)s"
 
 #: forms.py:97
-#| msgid "app. config"
 msgid "App Config"
 msgstr "Aplikacijos konfigūracija"
 
@@ -385,14 +372,12 @@ msgid "modified at"
 msgstr "redaguota"
 
 #: models.py:125 models.py:372 models.py:810
-msgid ""
-"When selecting a value, the form is reloaded to get the updated default"
+msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
 "Pasirinkus reikšmę, forma įkeliama iš naujo, kad būtų gauta atnaujinta "
 "numatytoji reikšmė"
 
 #: models.py:127
-#| msgid "Sitemap priority"
 msgid "priority"
 msgstr "prioritetas"
 
@@ -425,12 +410,10 @@ msgid "abstract"
 msgstr "santrauka"
 
 #: models.py:191
-#| msgid "blog category"
 msgid "post category"
 msgstr "straipsnio kategorija"
 
 #: models.py:192
-#| msgid "blog categories"
 msgid "post categories"
 msgstr "straipsnių kategorijos"
 
@@ -480,11 +463,11 @@ msgstr "Tinklalapis(iai)"
 
 #: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in"
-" all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
 msgstr ""
-"Pasirinkite puslapius kuriuose bus rodomas straipsnis. Jei nepasirinktas nei"
-" vienas puslapis, straipsnis bus rodomas visuose puslapiuose."
+"Pasirinkite puslapius kuriuose bus rodomas straipsnis. Jei nepasirinktas nei "
+"vienas puslapis, straipsnis bus rodomas visuose puslapiuose."
 
 #: models.py:379
 msgid ""
@@ -498,12 +481,10 @@ msgid "Related Posts"
 msgstr "Susiję straipsniai"
 
 #: models.py:394
-#| msgid "Add post"
 msgid "post"
 msgstr "straipsnis"
 
 #: models.py:395
-#| msgid "Add post"
 msgid "posts"
 msgstr "straipsniai"
 
@@ -512,17 +493,14 @@ msgid "Post (no translation)"
 msgstr "Straipsnis (nėra vertimo)"
 
 #: models.py:517 models.py:752
-#| msgid "title"
 msgid "No title"
 msgstr "Nėra pavadinimo"
 
 #: models.py:605
-#| msgid "post date"
 msgid "post content"
 msgstr "straipsnio turinys"
 
 #: models.py:606
-#| msgid "post date"
 msgid "post contents"
 msgstr "straipsnių turiniai"
 
@@ -559,7 +537,6 @@ msgid "text"
 msgstr "tekstas"
 
 #: models.py:801
-#| msgid "untitled"
 msgid "Untitled"
 msgstr "Be pavadinimo"
 
@@ -572,22 +549,18 @@ msgid "Select items from the current site only"
 msgstr "Pasirinkti objektus tik iš dabartinio tinklalapio"
 
 #: models.py:817
-#| msgid "Plugin template"
 msgid "Plugin layout"
 msgstr "Įskiepio šablonas"
 
 #: models.py:818
-#| msgid "Select plugin template to load for this instance"
 msgid "Select plugin layout to load for this instance"
 msgstr "Pasirinkite įskiepio šabloną, kuris bus įkeltas šiam egzemplioriui"
 
 #: models.py:862 models.py:903
-#| msgid "liveblog entries"
 msgid "entries"
 msgstr "įrašai"
 
 #: models.py:864
-#| msgid "The number of latests articles to be displayed."
 msgid "The number of latests entries to be displayed."
 msgstr "Rodomų naujausių įrašų skaičius."
 
@@ -596,7 +569,6 @@ msgid "filter by tag"
 msgstr "filtruoti pagal žymeną"
 
 #: models.py:869
-#| msgid "Show only the blog articles tagged with chosen tags."
 msgid "Show only the entries tagged with chosen tags."
 msgstr "Rodyti tik įrašus, pažymėtus pasirinktomis žymenomis."
 
@@ -605,13 +577,11 @@ msgid "filter by category"
 msgstr "filtruoti pagal kategoriją"
 
 #: models.py:876
-#| msgid "Show only the blog articles tagged with chosen categories."
 msgid "Show only the posts of the chosen categories."
 msgstr "Rodyti tik pasirinktų kategorijų straipsnius."
 
 #: models.py:880
 #, python-format
-#| msgid "%s latest articles by tag"
 msgid "%s latest posts by tag"
 msgstr "%s paskutiniai straipsniai pagal žymeną"
 
@@ -620,13 +590,11 @@ msgid "authors"
 msgstr "autoriai"
 
 #: models.py:905
-#| msgid "The number of author articles to be displayed."
 msgid "The number of author entries to be displayed."
 msgstr "Rodomų autoriaus įrašų skaičius."
 
 #: models.py:909
 #, python-format
-#| msgid "%s latest articles by author"
 msgid "%s latest entries by author"
 msgstr "%s paskutiniai įrašai pagal autorių"
 
@@ -699,7 +667,6 @@ msgid "never"
 msgstr "niekada"
 
 #: settings.py:357
-#| msgid "articles"
 msgid "Article"
 msgstr "Straipsnis"
 
@@ -708,7 +675,6 @@ msgid "Blog"
 msgstr "Tinklaraštis"
 
 #: settings.py:472
-#| msgid "Add post"
 msgid "Posts"
 msgstr "Straipsniai"
 
@@ -766,7 +732,6 @@ msgid "Home"
 msgstr "Pradžia"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
-#| msgid "blog articles"
 msgid "Blog articles"
 msgstr "Tinklaraščio straipsniai"
 
@@ -837,8 +802,6 @@ msgstr "Autoriai"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
-#| msgid "1 article"
-#| msgid_plural "%(articles)s articles"
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
 msgstr[0] "%(articles)s straipsnis"

@@ -11,99 +11,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djangocms-blog\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 22:34+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2014-03-29 15:29+0000\n"
 "Last-Translator: Rustam Mirzaev <mirus@2x2.pw>, 2016-2018\n"
-"Language-Team: Russian (http://app.transifex.com/nephila/djangocms-blog/language/ru/)\n"
+"Language-Team: Russian (http://app.transifex.com/nephila/djangocms-blog/"
+"language/ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr "сайт"
 
-#: admin.py:118
-#| msgid "app. config"
+#: admin.py:149
 msgid "Select app config"
 msgstr "Выберите настройки приложения"
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr "Выберите настройки приложения для нового объекта"
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
-#| msgid "Add post"
 msgid "Add %s"
 msgstr "Добавить %s"
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr "Информация"
 
-#: admin.py:329
-#| msgid "Images"
+#: admin.py:360
 msgid "Image"
 msgstr "Изображение"
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr "Изображения"
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr "СЕО"
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr "Пусто"
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr "Включить коментарии к выделенному"
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr "Выключить коментарии к выделенному"
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr "Общий"
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr "Макет"
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr "Карта сайта"
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr "Мета"
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
 "Вы можете использовать простую строку, атрибут модели статьи или имена "
 "методов"
 
 #: apps.py:8 cms_apps.py:16
-#| msgid "Categories"
 msgid "Stories"
 msgstr "Истории"
 
 #: cms_appconfig.py:85
-#| msgid "blog config"
 msgid "stories config"
 msgstr "конфигурация Историй"
 
 #: cms_appconfig.py:86
-#| msgid "blog configs"
 msgid "stories configs"
 msgstr "конфигурации Историй"
 
@@ -124,7 +121,6 @@ msgid "object name"
 msgstr "название объекта"
 
 #: cms_appconfig.py:110
-#| msgid "Default size of full images"
 msgid "default size of full images"
 msgstr "размер полных изображений по умолчанию"
 
@@ -137,7 +133,6 @@ msgstr ""
 "новосозданному изображению"
 
 #: cms_appconfig.py:120
-#| msgid "Default size of thumbnail images"
 msgid "default size of thumbnail images"
 msgstr "размер изображений-миниатюр по умолчанию"
 
@@ -166,7 +161,6 @@ msgid "Enable related posts"
 msgstr "Включить связанные публикации"
 
 #: cms_appconfig.py:140
-#| msgid "None"
 msgid "No"
 msgstr "Нет"
 
@@ -197,7 +191,6 @@ msgid "Template prefix"
 msgstr "Префикс шаблона"
 
 #: cms_appconfig.py:161
-#| msgid "Alternative directory to load the blog templates from"
 msgid "Alternative directory to load the stories templates from"
 msgstr "Альтернативная директория для загрузки шаблонов Историй"
 
@@ -296,8 +289,7 @@ msgid "Send notifications on post update"
 msgstr "Отправлять уведомления после публикации"
 
 #: cms_appconfig.py:238
-msgid ""
-"Emits a desktop notification -if enabled- when editing a published post"
+msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
 "Уведомлять сигналами на рабочем столе, если включено, при редактировании "
 "опубликованной записи"
@@ -317,7 +309,6 @@ msgid "Create a new {0} in {1}"
 msgstr "Создать новых {0} из {1}"
 
 #: cms_menus.py:25
-#| msgid "blog category"
 msgid "Post category menu"
 msgstr "Меню категорий статей"
 
@@ -339,18 +330,15 @@ msgid "%(object_name)s properties"
 msgstr "Свойства %(object_name)s"
 
 #: cms_toolbars.py:122
-#| msgid "liveblog entries"
 msgid "All entries"
 msgstr "Все записи"
 
 #: cms_toolbars.py:131
 #, python-format
-#| msgid "object name"
 msgid "New %(object_name)s"
 msgstr "Новый %(object_name)s"
 
 #: cms_toolbars.py:138
-#| msgid "Edit configuration"
 msgid "Edit Configuration"
 msgstr "Редактировать конфигурацию"
 
@@ -368,7 +356,6 @@ msgid "Blog articles on %(site_name)s"
 msgstr "Статьи блога с сайта: %(site_name)s"
 
 #: forms.py:97
-#| msgid "app. config"
 msgid "App Config"
 msgstr "Настройки приложения"
 
@@ -389,14 +376,12 @@ msgid "modified at"
 msgstr "время изменения"
 
 #: models.py:125 models.py:372 models.py:810
-msgid ""
-"When selecting a value, the form is reloaded to get the updated default"
+msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
 "При выборе значения форма перезагружается для получения обновлённого "
 "значения по умолчанию"
 
 #: models.py:127
-#| msgid "Sitemap priority"
 msgid "priority"
 msgstr "приоритет"
 
@@ -429,12 +414,10 @@ msgid "abstract"
 msgstr "Краткое описание"
 
 #: models.py:191
-#| msgid "blog category"
 msgid "post category"
 msgstr "категория статей"
 
 #: models.py:192
-#| msgid "blog categories"
 msgid "post categories"
 msgstr "категории статей"
 
@@ -484,8 +467,8 @@ msgstr "Сайт(ы)"
 
 #: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in"
-" all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
 msgstr ""
 "Выберите сайты на которых будет опубликована статья. Если сайты не выбраны, "
 "статья будет опубликована на всех сайтах сразу."
@@ -502,12 +485,10 @@ msgid "Related Posts"
 msgstr "Связанные Публикации"
 
 #: models.py:394
-#| msgid "Add post"
 msgid "post"
 msgstr "статья"
 
 #: models.py:395
-#| msgid "Add post"
 msgid "posts"
 msgstr "статьи"
 
@@ -516,17 +497,14 @@ msgid "Post (no translation)"
 msgstr "Статья (без перевода)"
 
 #: models.py:517 models.py:752
-#| msgid "title"
 msgid "No title"
 msgstr "Без заголовка"
 
 #: models.py:605
-#| msgid "post date"
 msgid "post content"
 msgstr "содержимое статьи"
 
 #: models.py:606
-#| msgid "post date"
 msgid "post contents"
 msgstr "содержимое статей"
 
@@ -563,7 +541,6 @@ msgid "text"
 msgstr "текст"
 
 #: models.py:801
-#| msgid "untitled"
 msgid "Untitled"
 msgstr "Без названия"
 
@@ -576,22 +553,18 @@ msgid "Select items from the current site only"
 msgstr "Выбрать записи только из текущего сайта"
 
 #: models.py:817
-#| msgid "Plugin template"
 msgid "Plugin layout"
 msgstr "Макет плагина"
 
 #: models.py:818
-#| msgid "Select plugin template to load for this instance"
 msgid "Select plugin layout to load for this instance"
 msgstr "Выберите макет плагина для загрузки для этого экземпляра"
 
 #: models.py:862 models.py:903
-#| msgid "liveblog entries"
 msgid "entries"
 msgstr "записи"
 
 #: models.py:864
-#| msgid "The number of latests articles to be displayed."
 msgid "The number of latests entries to be displayed."
 msgstr "Количество последних записей для отображения."
 
@@ -600,7 +573,6 @@ msgid "filter by tag"
 msgstr "фильтровать по тегам"
 
 #: models.py:869
-#| msgid "Show only the blog articles tagged with chosen tags."
 msgid "Show only the entries tagged with chosen tags."
 msgstr "Показывать только записи, помеченные выбранными метками."
 
@@ -609,13 +581,11 @@ msgid "filter by category"
 msgstr "фильтровать по категориям"
 
 #: models.py:876
-#| msgid "Show only the blog articles tagged with chosen categories."
 msgid "Show only the posts of the chosen categories."
 msgstr "Показывать только статьи из выбранных категорий."
 
 #: models.py:880
 #, python-format
-#| msgid "%s latest articles by tag"
 msgid "%s latest posts by tag"
 msgstr "%s последних статей по метке"
 
@@ -624,13 +594,11 @@ msgid "authors"
 msgstr "авторы"
 
 #: models.py:905
-#| msgid "The number of author articles to be displayed."
 msgid "The number of author entries to be displayed."
 msgstr "Количество записей автора для отображения."
 
 #: models.py:909
 #, python-format
-#| msgid "%s latest articles by author"
 msgid "%s latest entries by author"
 msgstr "%s последних записей по автору"
 
@@ -703,7 +671,6 @@ msgid "never"
 msgstr "никогда"
 
 #: settings.py:357
-#| msgid "articles"
 msgid "Article"
 msgstr "Статья"
 
@@ -712,7 +679,6 @@ msgid "Blog"
 msgstr "Блог"
 
 #: settings.py:472
-#| msgid "Add post"
 msgid "Posts"
 msgstr "Статьи"
 
@@ -770,7 +736,6 @@ msgid "Home"
 msgstr "Главная"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
-#| msgid "blog articles"
 msgid "Blog articles"
 msgstr "Статьи блога"
 
@@ -841,8 +806,6 @@ msgstr "Авторы"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
-#| msgid "1 article"
-#| msgid_plural "%(articles)s articles"
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
 msgstr[0] "%(articles)s статья"

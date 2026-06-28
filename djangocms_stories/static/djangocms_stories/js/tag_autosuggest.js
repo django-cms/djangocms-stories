@@ -52,10 +52,16 @@
         $el.select2(options);
     }
 
-    function init($) {
-        $(".djangocms-stories-tag-autosuggest").each(function () {
-            initOne($, this);
-        });
+    function init($, root) {
+        // Skip the hidden inline empty-form template (its fields carry the
+        // "__prefix__" placeholder); initialising it would clone a broken
+        // Select2 into every newly added row.
+        $(root || document)
+            .find(".djangocms-stories-tag-autosuggest")
+            .not("[name*=__prefix__]")
+            .each(function () {
+                initOne($, this);
+            });
     }
 
     var $ = (window.django && window.django.jQuery) || window.jQuery;
@@ -64,5 +70,12 @@
     }
     $(function () {
         init($);
+
+        // Django's admin dispatches "formset:added" (a native DOM event since
+        // Django 4.1) whenever a new inline row is inserted. Upgrade any tag
+        // field in the freshly added row, e.g. for inline admins.
+        document.addEventListener("formset:added", function (event) {
+            init($, event.target);
+        });
     });
 })();

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 22:34+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2014-03-05 18:09+0100\n"
 "Last-Translator: Iacopo Spalletti\n"
 "Language-Team: Italian <i.spalletti@nephila.it>\n"
@@ -19,68 +19,68 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr ""
 
-#: admin.py:118
+#: admin.py:149
 msgid "Select app config"
 msgstr ""
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr ""
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
 msgid "Add %s"
 msgstr ""
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr ""
 
-#: admin.py:329
+#: admin.py:360
 msgid "Image"
 msgstr ""
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr ""
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr ""
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr ""
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr ""
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr ""
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr ""
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr ""
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr ""
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr ""
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
 
