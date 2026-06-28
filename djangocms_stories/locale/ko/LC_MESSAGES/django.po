@@ -1,0 +1,805 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
+"PO-Revision-Date: 2014-03-05 18:09+0100\n"
+"Last-Translator: Fabian Braun <fabian@django-cms.org>\n"
+"Language-Team: Korean\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: admin.py:125
+msgid "site"
+msgstr "사이트"
+
+#: admin.py:149
+msgid "Select app config"
+msgstr "앱 설정 선택"
+
+#: admin.py:150
+msgid "Select the app config for the new object"
+msgstr "새 객체에 적용할 앱 설정을 선택하세요"
+
+#: admin.py:267
+#, python-format
+msgid "Add %s"
+msgstr "%s 추가"
+
+#: admin.py:353 admin.py:425
+msgid "Info"
+msgstr "정보"
+
+#: admin.py:360
+msgid "Image"
+msgstr "이미지"
+
+#: admin.py:432
+msgid "Images"
+msgstr "이미지"
+
+#: admin.py:436
+msgid "SEO"
+msgstr "SEO"
+
+#: admin.py:475
+msgid "Empty"
+msgstr "비어 있음"
+
+#: admin.py:495
+msgid "Enable comments for selection"
+msgstr "선택 항목에 댓글 활성화"
+
+#: admin.py:509
+msgid "Disable comments for selection "
+msgstr "선택 항목에 댓글 비활성화 "
+
+#: admin.py:786
+msgid "Generic"
+msgstr "일반"
+
+#: admin.py:795
+msgid "Layout"
+msgstr "레이아웃"
+
+#: admin.py:812
+msgid "Sitemap"
+msgstr "사이트맵"
+
+#: admin.py:821
+msgid "Meta"
+msgstr "메타"
+
+#: admin.py:832 admin.py:844 admin.py:855
+msgid "You can provide plain strings, Post model attribute or method names"
+msgstr "일반 문자열, Post 모델 속성 또는 메서드 이름을 입력할 수 있습니다"
+
+#: apps.py:8 cms_apps.py:16
+msgid "Stories"
+msgstr "Stories"
+
+#: cms_appconfig.py:85
+msgid "stories config"
+msgstr "stories 설정"
+
+#: cms_appconfig.py:86
+msgid "stories configs"
+msgstr "stories 설정"
+
+#: cms_appconfig.py:89
+msgid "type"
+msgstr "유형"
+
+#: cms_appconfig.py:93
+msgid "instance namespace"
+msgstr "인스턴스 네임스페이스"
+
+#: cms_appconfig.py:99
+msgid "application title"
+msgstr "애플리케이션 제목"
+
+#: cms_appconfig.py:100
+msgid "object name"
+msgstr "객체 이름"
+
+#: cms_appconfig.py:110
+msgid "default size of full images"
+msgstr "전체 이미지의 기본 크기"
+
+#: cms_appconfig.py:111
+msgid ""
+"If left empty the image size will have to be set for every newly created "
+"post."
+msgstr ""
+"비워 두면 새로 생성되는 게시물마다 이미지 크기를 설정해야 합니다."
+
+#: cms_appconfig.py:120
+msgid "default size of thumbnail images"
+msgstr "썸네일 이미지의 기본 크기"
+
+#: cms_appconfig.py:121
+msgid ""
+"If left empty the thumbnail image size will have to be set for every newly "
+"created post."
+msgstr ""
+"비워 두면 새로 생성되는 게시물마다 썸네일 이미지 크기를 설정해야 합니다."
+
+#: cms_appconfig.py:126
+msgid "Permalink structure"
+msgstr "고유 링크 구조"
+
+#: cms_appconfig.py:130
+msgid "Use placeholder and plugins for article body"
+msgstr "기사 본문에 플레이스홀더와 플러그인 사용"
+
+#: cms_appconfig.py:134
+msgid "Use abstract field"
+msgstr "요약 필드 사용"
+
+#: cms_appconfig.py:137
+msgid "Enable related posts"
+msgstr "관련 게시물 활성화"
+
+#: cms_appconfig.py:140
+msgid "No"
+msgstr "아니요"
+
+#: cms_appconfig.py:141
+msgid "Yes, from this stories config"
+msgstr "예, 이 stories 설정에서"
+
+#: cms_appconfig.py:142
+msgid "Yes, from this site"
+msgstr "예, 이 사이트에서"
+
+#: cms_appconfig.py:147
+msgid "Set author by default"
+msgstr "기본적으로 작성자 설정"
+
+#: cms_appconfig.py:151
+msgid "Paginate size"
+msgstr "페이지 크기"
+
+#: cms_appconfig.py:153
+msgid "When paginating list views, how many articles per page?"
+msgstr "목록 보기를 페이지로 나눌 때 페이지당 기사 수는 몇 개입니까?"
+
+#: cms_appconfig.py:160
+msgid "Template prefix"
+msgstr "템플릿 접두사"
+
+#: cms_appconfig.py:161
+msgid "Alternative directory to load the stories templates from"
+msgstr "stories 템플릿을 불러올 대체 디렉터리"
+
+#: cms_appconfig.py:166
+msgid "Menu structure"
+msgstr "메뉴 구조"
+
+#: cms_appconfig.py:167
+msgid "Structure of the django CMS menu"
+msgstr "django CMS 메뉴의 구조"
+
+#: cms_appconfig.py:171
+msgid "Show empty categories in menu"
+msgstr "메뉴에 빈 카테고리 표시"
+
+#: cms_appconfig.py:172
+msgid "Show categories with no post attached in the menu"
+msgstr "게시물이 없는 카테고리를 메뉴에 표시"
+
+#: cms_appconfig.py:178
+msgid "Sitemap changefreq"
+msgstr "사이트맵 변경 빈도"
+
+#: cms_appconfig.py:179
+msgid "Changefreq attribute for sitemap items"
+msgstr "사이트맵 항목의 변경 빈도 속성"
+
+#: cms_appconfig.py:185
+msgid "Sitemap priority"
+msgstr "사이트맵 우선순위"
+
+#: cms_appconfig.py:186
+msgid "Priority attribute for sitemap items"
+msgstr "사이트맵 항목의 우선순위 속성"
+
+#: cms_appconfig.py:192
+msgid "Object type"
+msgstr "객체 유형"
+
+#: cms_appconfig.py:197
+msgid "Facebook type"
+msgstr "Facebook 유형"
+
+#: cms_appconfig.py:201
+msgid "Facebook application ID"
+msgstr "Facebook 애플리케이션 ID"
+
+#: cms_appconfig.py:203
+msgid "Facebook profile ID"
+msgstr "Facebook 프로필 ID"
+
+#: cms_appconfig.py:205
+msgid "Facebook page URL"
+msgstr "Facebook 페이지 URL"
+
+#: cms_appconfig.py:207
+msgid "Facebook author URL"
+msgstr "Facebook 작성자 URL"
+
+#: cms_appconfig.py:209
+msgid "Facebook author"
+msgstr "Facebook 작성자"
+
+#: cms_appconfig.py:213
+msgid "Twitter type"
+msgstr "Twitter 유형"
+
+#: cms_appconfig.py:217
+msgid "Twitter site handle"
+msgstr "Twitter 사이트 핸들"
+
+#: cms_appconfig.py:219
+msgid "Twitter author handle"
+msgstr "Twitter 작성자 핸들"
+
+#: cms_appconfig.py:223
+msgid "Schema.org type"
+msgstr "Schema.org 유형"
+
+#: cms_appconfig.py:227
+msgid "Schema.org author name"
+msgstr "Schema.org 작성자 이름"
+
+#: cms_appconfig.py:230
+msgid "Send notifications on post publish"
+msgstr "게시물 게시 시 알림 전송"
+
+#: cms_appconfig.py:232
+msgid "Emits a desktop notification -if enabled- when publishing a new post"
+msgstr "새 게시물을 게시할 때 데스크톱 알림을 표시합니다(활성화된 경우)"
+
+#: cms_appconfig.py:236
+msgid "Send notifications on post update"
+msgstr "게시물 업데이트 시 알림 전송"
+
+#: cms_appconfig.py:238
+msgid "Emits a desktop notification -if enabled- when editing a published post"
+msgstr "게시된 게시물을 편집할 때 데스크톱 알림을 표시합니다(활성화된 경우)"
+
+#: cms_appconfig.py:242
+msgid "untitled"
+msgstr "제목 없음"
+
+#: cms_config.py:62
+#, python-brace-format
+msgid "New {0}"
+msgstr "새 {0}"
+
+#: cms_config.py:67
+#, python-brace-format
+msgid "Create a new {0} in {1}"
+msgstr "{1}에 새 {0} 만들기"
+
+#: cms_menus.py:25
+msgid "Post category menu"
+msgstr "게시물 카테고리 메뉴"
+
+#: cms_toolbars.py:38
+msgid "View on site"
+msgstr "사이트에서 보기"
+
+#: cms_toolbars.py:45
+msgid "Preview"
+msgstr "미리보기"
+
+#: cms_toolbars.py:67
+msgid "View Published"
+msgstr "게시된 항목 보기"
+
+#: cms_toolbars.py:111
+#, python-format
+msgid "%(object_name)s properties"
+msgstr "%(object_name)s 속성"
+
+#: cms_toolbars.py:122
+msgid "All entries"
+msgstr "모든 항목"
+
+#: cms_toolbars.py:131
+#, python-format
+msgid "New %(object_name)s"
+msgstr "새 %(object_name)s"
+
+#: cms_toolbars.py:138
+msgid "Edit Configuration"
+msgstr "설정 편집"
+
+#: cms_wizards.py:23 models.py:124 models.py:371 models.py:809
+msgid "app. config"
+msgstr "앱 설정"
+
+#: cms_wizards.py:92
+msgid "Selected story not available any more. Close wizard."
+msgstr "선택한 story를 더 이상 사용할 수 없습니다. 마법사를 닫으세요."
+
+#: feeds.py:38
+#, python-format
+msgid "Blog articles on %(site_name)s"
+msgstr "%(site_name)s의 블로그 기사"
+
+#: forms.py:97
+msgid "App Config"
+msgstr "앱 설정"
+
+#: forms.py:99
+msgid "Select the app config to apply to the new post."
+msgstr "새 게시물에 적용할 앱 설정을 선택하세요."
+
+#: models.py:116
+msgid "parent"
+msgstr "상위"
+
+#: models.py:118
+msgid "created at"
+msgstr "생성일"
+
+#: models.py:119
+msgid "modified at"
+msgstr "수정일"
+
+#: models.py:125 models.py:372 models.py:810
+msgid "When selecting a value, the form is reloaded to get the updated default"
+msgstr "값을 선택하면 업데이트된 기본값을 가져오기 위해 양식이 다시 로드됩니다"
+
+#: models.py:127
+msgid "priority"
+msgstr "우선순위"
+
+#: models.py:129 models.py:324
+msgid "main image"
+msgstr "대표 이미지"
+
+#: models.py:137 models.py:334
+msgid "main image thumbnail"
+msgstr "대표 이미지 썸네일"
+
+#: models.py:145 models.py:344
+msgid "main image full"
+msgstr "대표 이미지 전체"
+
+#: models.py:153
+msgid "name"
+msgstr "이름"
+
+#: models.py:155 models.py:622
+msgid "slug"
+msgstr "슬러그"
+
+#: models.py:161
+msgid "category meta description"
+msgstr "카테고리 메타 설명"
+
+#: models.py:163 models.py:633
+msgid "abstract"
+msgstr "요약"
+
+#: models.py:191
+msgid "post category"
+msgstr "게시물 카테고리"
+
+#: models.py:192
+msgid "post categories"
+msgstr "게시물 카테고리"
+
+#: models.py:251
+msgid "PostCategory (no translation)"
+msgstr "PostCategory (번역 없음)"
+
+#: models.py:286
+msgid "author"
+msgstr "작성자"
+
+#: models.py:294
+msgid "created"
+msgstr "생성됨"
+
+#: models.py:297
+msgid "last modified"
+msgstr "마지막 수정"
+
+#: models.py:301
+msgid "published since"
+msgstr "게시 시작"
+
+#: models.py:306
+msgid "published until"
+msgstr "게시 종료"
+
+#: models.py:312
+msgid "featured date"
+msgstr "추천 날짜"
+
+#: models.py:315
+msgid "include in RSS feed"
+msgstr "RSS 피드에 포함"
+
+#: models.py:319
+msgid "category"
+msgstr "카테고리"
+
+#: models.py:353
+msgid "enable comments on post"
+msgstr "게시물에 댓글 활성화"
+
+#: models.py:359
+msgid "Site(s)"
+msgstr "사이트"
+
+#: models.py:362
+msgid ""
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
+msgstr ""
+"게시물을 표시할 사이트를 선택하세요. 아무것도 설정하지 않으면 구성된 모든 "
+"사이트에 표시됩니다."
+
+#: models.py:379
+msgid ""
+"Type a tag and hit tab, or start typing and select from autocomplete list."
+msgstr ""
+"태그를 입력하고 탭을 누르거나, 입력을 시작한 후 자동 완성 목록에서 선택하세요."
+
+#: models.py:385
+msgid "Related Posts"
+msgstr "관련 게시물"
+
+#: models.py:394
+msgid "post"
+msgstr "게시물"
+
+#: models.py:395
+msgid "posts"
+msgstr "게시물"
+
+#: models.py:406
+msgid "Post (no translation)"
+msgstr "Post (번역 없음)"
+
+#: models.py:517 models.py:752
+msgid "No title"
+msgstr "제목 없음"
+
+#: models.py:605
+msgid "post content"
+msgstr "게시물 콘텐츠"
+
+#: models.py:606
+msgid "post contents"
+msgstr "게시물 콘텐츠"
+
+#: models.py:614
+msgid "language"
+msgstr "언어"
+
+#: models.py:618
+msgid "title"
+msgstr "제목"
+
+#: models.py:630
+msgid "subtitle"
+msgstr "부제목"
+
+#: models.py:636
+msgid "post meta description"
+msgstr "게시물 메타 설명"
+
+#: models.py:639
+msgid "post meta keywords"
+msgstr "게시물 메타 키워드"
+
+#: models.py:643
+msgid "post meta title"
+msgstr "게시물 메타 제목"
+
+#: models.py:644
+msgid "used in title tag and social sharing"
+msgstr "제목 태그와 소셜 공유에 사용됩니다"
+
+#: models.py:651
+msgid "text"
+msgstr "텍스트"
+
+#: models.py:801
+msgid "Untitled"
+msgstr "제목 없음"
+
+#: models.py:813
+msgid "current site"
+msgstr "현재 사이트"
+
+#: models.py:813
+msgid "Select items from the current site only"
+msgstr "현재 사이트의 항목만 선택"
+
+#: models.py:817
+msgid "Plugin layout"
+msgstr "플러그인 레이아웃"
+
+#: models.py:818
+msgid "Select plugin layout to load for this instance"
+msgstr "이 인스턴스에 불러올 플러그인 레이아웃을 선택하세요"
+
+#: models.py:862 models.py:903
+msgid "entries"
+msgstr "항목"
+
+#: models.py:864
+msgid "The number of latests entries to be displayed."
+msgstr "표시할 최신 항목의 수입니다."
+
+#: models.py:867
+msgid "filter by tag"
+msgstr "태그로 필터링"
+
+#: models.py:869
+msgid "Show only the entries tagged with chosen tags."
+msgstr "선택한 태그가 지정된 항목만 표시합니다."
+
+#: models.py:875
+msgid "filter by category"
+msgstr "카테고리로 필터링"
+
+#: models.py:876
+msgid "Show only the posts of the chosen categories."
+msgstr "선택한 카테고리의 게시물만 표시합니다."
+
+#: models.py:880
+#, python-format
+msgid "%s latest posts by tag"
+msgstr "태그별 최신 게시물 %s개"
+
+#: models.py:900
+msgid "authors"
+msgstr "작성자"
+
+#: models.py:905
+msgid "The number of author entries to be displayed."
+msgstr "표시할 작성자 항목의 수입니다."
+
+#: models.py:909
+#, python-format
+msgid "%s latest entries by author"
+msgstr "작성자별 최신 항목 %s개"
+
+#: models.py:929 models.py:932
+msgid "Featured posts"
+msgstr "추천 게시물"
+
+#: models.py:954
+msgid "generic blog plugin"
+msgstr "일반 블로그 플러그인"
+
+#: settings.py:27
+msgid "Full date"
+msgstr "전체 날짜"
+
+#: settings.py:28
+msgid "Year /  Month"
+msgstr "연도 / 월"
+
+#: settings.py:29 templates/djangocms_stories/post_list.html:14
+msgid "Category"
+msgstr "카테고리"
+
+#: settings.py:30
+msgid "Just slug"
+msgstr "슬러그만"
+
+#: settings.py:49
+msgid "Categories and posts"
+msgstr "카테고리 및 게시물"
+
+#: settings.py:50
+msgid "Categories only"
+msgstr "카테고리만"
+
+#: settings.py:51
+msgid "Posts only"
+msgstr "게시물만"
+
+#: settings.py:52
+msgid "None"
+msgstr "없음"
+
+#: settings.py:56
+msgid "always"
+msgstr "항상"
+
+#: settings.py:57
+msgid "hourly"
+msgstr "매시간"
+
+#: settings.py:58
+msgid "daily"
+msgstr "매일"
+
+#: settings.py:59
+msgid "weekly"
+msgstr "매주"
+
+#: settings.py:60
+msgid "monthly"
+msgstr "매월"
+
+#: settings.py:61
+msgid "yearly"
+msgstr "매년"
+
+#: settings.py:62
+msgid "never"
+msgstr "안 함"
+
+#: settings.py:357
+msgid "Article"
+msgstr "기사"
+
+#: settings.py:378 settings.py:385
+msgid "Blog"
+msgstr "Blog"
+
+#: settings.py:472
+msgid "Posts"
+msgstr "게시물"
+
+#: settings.py:479
+msgid "Latest Blog Articles"
+msgstr "최신 블로그 기사"
+
+#: settings.py:486
+msgid "Latest Blog Articles - Cache"
+msgstr "최신 블로그 기사 - 캐시"
+
+#: settings.py:493
+msgid "Author Blog Articles"
+msgstr "작성자 블로그 기사"
+
+#: settings.py:500
+msgid "Author Blog Articles List"
+msgstr "작성자 블로그 기사 목록"
+
+#: settings.py:507 templates/djangocms_stories/plugins/tags.html:5
+msgid "Tags"
+msgstr "태그"
+
+#: settings.py:514 templates/djangocms_stories/plugins/categories.html:3
+msgid "Categories"
+msgstr "카테고리"
+
+#: settings.py:521 templates/djangocms_stories/plugins/archive.html:3
+#: templates/djangocms_stories/post_list.html:12
+msgid "Archive"
+msgstr "아카이브"
+
+#: settings.py:528
+msgid "Featured Posts"
+msgstr "추천 게시물"
+
+#: settings.py:535
+msgid "Featured Posts - Cache"
+msgstr "추천 게시물 - 캐시"
+
+#: settings.py:570
+msgid "Default template"
+msgstr "기본 템플릿"
+
+#: tag_autosuggest.py:62
+msgid "Type a tag and hit enter"
+msgstr "태그를 입력하고 엔터를 누르세요"
+
+#: templates/admin/djangocms_stories/post/change_list.html:4
+msgid "Language"
+msgstr "언어"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
+msgid "Home"
+msgstr "홈"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
+msgid "Blog articles"
+msgstr "블로그 기사"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
+msgid "Versions"
+msgstr "버전"
+
+#: templates/djangocms_stories/category_list.html:11
+#: templates/djangocms_stories/plugins/archive.html:26
+#: templates/djangocms_stories/plugins/authors_posts.html:12
+#: templates/djangocms_stories/plugins/latest_entries.html:7
+#: templates/djangocms_stories/plugins/tags.html:17
+#: templates/djangocms_stories/post_list.html:26
+msgid "No article found."
+msgstr "기사를 찾을 수 없습니다."
+
+#: templates/djangocms_stories/category_list.html:14
+#: templates/djangocms_stories/post_list.html:29
+msgid "Back"
+msgstr "뒤로"
+
+#: templates/djangocms_stories/category_list.html:19
+#: templates/djangocms_stories/post_list.html:34
+msgid "previous"
+msgstr "이전"
+
+#: templates/djangocms_stories/category_list.html:22
+#: templates/djangocms_stories/post_list.html:37
+msgid "Page"
+msgstr "페이지"
+
+#: templates/djangocms_stories/category_list.html:22
+#: templates/djangocms_stories/post_list.html:37
+msgid "of"
+msgstr "/"
+
+#: templates/djangocms_stories/category_list.html:25
+#: templates/djangocms_stories/post_list.html:40
+msgid "next"
+msgstr "다음"
+
+#: templates/djangocms_stories/includes/post_item.html:38
+msgid "read more"
+msgstr "더 읽기"
+
+#: templates/djangocms_stories/plugins/archive.html:17
+#: templates/djangocms_stories/plugins/categories.html:10
+#: templates/djangocms_stories/plugins/tags.html:12
+#, python-format
+msgid "1 article"
+msgid_plural "%(articles)s articles"
+msgstr[0] "기사 %(articles)s개"
+
+#: templates/djangocms_stories/plugins/archive.html:18
+#: templates/djangocms_stories/plugins/authors.html:11
+#: templates/djangocms_stories/plugins/categories.html:11
+#: templates/djangocms_stories/plugins/tags.html:13
+msgid "0 articles"
+msgstr "기사 0개"
+
+#: templates/djangocms_stories/plugins/authors.html:3
+#: templates/djangocms_stories/plugins/authors_posts.html:3
+msgid "Authors"
+msgstr "작성자"
+
+#: templates/djangocms_stories/plugins/authors.html:10
+#, python-format
+msgid "(1 article)"
+msgid_plural "(%(articles)s articles)"
+msgstr[0] "(기사 %(articles)s개)"
+
+#: templates/djangocms_stories/plugins/authors.html:15
+msgid "No author found."
+msgstr "작성자를 찾을 수 없습니다."
+
+#: templates/djangocms_stories/plugins/authors_posts.html:7
+#: templates/djangocms_stories/post_list.html:11
+msgid "Articles by"
+msgstr "작성자별 기사"
+
+#: templates/djangocms_stories/plugins/categories.html:15
+msgid "No categories found."
+msgstr "카테고리를 찾을 수 없습니다."
+
+#: templates/djangocms_stories/post_list.html:13
+msgid "Tag"
+msgstr "태그"
