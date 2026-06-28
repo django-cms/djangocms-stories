@@ -18,7 +18,6 @@ INSTALLED_APPS = [
     "djangocms_stories",
     "parler",
     "taggit",
-    "taggit_autosuggest",
     "sortedm2m",
     "meta",
     "filer",

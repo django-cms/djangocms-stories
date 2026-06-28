@@ -85,11 +85,8 @@ django-sortedm2m==4.0.0
     # via djangocms-stories
 django-taggit==6.1.0
     # via
-    #   django-taggit-autosuggest
     #   django-taggit-templatetags
     #   djangocms-stories
-django-taggit-autosuggest==0.4.2
-    # via djangocms-stories
 django-taggit-templatetags==0.2.5
     # via djangocms-stories
 django-templatetag-sugar==1.0

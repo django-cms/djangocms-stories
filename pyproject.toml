@@ -38,7 +38,6 @@ dependencies = [
   "django-parler>=2",
   "django-sortedm2m",
   "django-taggit>=1",
-  "django-taggit-autosuggest",
   "django-taggit-templatetags",
   "djangocms-text",
   "easy-thumbnails>=2.4.1",

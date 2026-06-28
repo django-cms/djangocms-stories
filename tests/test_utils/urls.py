@@ -17,7 +17,7 @@ admin.autodiscover()
 urlpatterns = [
     path("media/<str:path>", serve, {"document_root": settings.MEDIA_ROOT, "show_indexes": True}),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
-    path("taggit_autosuggest/", include("taggit_autosuggest.urls")),
+    path("", include("djangocms_stories.tag_autosuggest")),
     path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap, "blog": StoriesSitemap}}),
 ]
 
@@ -29,6 +29,5 @@ if "server" not in sys.argv:
     )
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
-    path("taggit_autosuggest/", include("taggit_autosuggest.urls")),
     path("", include("cms.urls")),
 )
