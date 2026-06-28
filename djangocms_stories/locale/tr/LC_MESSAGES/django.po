@@ -9,10 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djangocms-blog\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 22:34+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2014-03-29 15:29+0000\n"
 "Last-Translator: Rustam Mirzaev <mirus@2x2.pw>, 2016,2018\n"
-"Language-Team: Turkish (http://app.transifex.com/nephila/djangocms-blog/language/tr/)\n"
+"Language-Team: Turkish (http://app.transifex.com/nephila/djangocms-blog/"
+"language/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,85 +21,81 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr "web sitesi"
 
-#: admin.py:118
+#: admin.py:149
 msgid "Select app config"
 msgstr "Uygulama yapılandırmasını seç"
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr "Yeni nesne için uygulama yapılandırmasını seçin"
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
-#| msgid "Add post"
 msgid "Add %s"
 msgstr "%s ekle"
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr "Bilgi"
 
-#: admin.py:329
+#: admin.py:360
 msgid "Image"
 msgstr "Görsel"
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr "Görseller"
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr "SEO"
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr "Boş"
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr "Seçim için yorumları etkinleştir"
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr "Seçim için yorumları devre dışı bırak "
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr "Genel"
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr "Düzen"
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr "Site haritası"
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr "Meta"
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
 "Düz dizgiler, makale modeli özniteliği veya metod adları sağlayabilirsiniz."
 
 #: apps.py:8 cms_apps.py:16
-#| msgid "Categories"
 msgid "Stories"
 msgstr "Hikayeler"
 
 #: cms_appconfig.py:85
-#| msgid "blog config"
 msgid "stories config"
 msgstr "hikaye yapılandırması"
 
 #: cms_appconfig.py:86
-#| msgid "blog configs"
 msgid "stories configs"
 msgstr "hikaye yapılandırmaları"
 
@@ -159,7 +156,6 @@ msgid "Enable related posts"
 msgstr "İlgili makaleleri etkinleştir"
 
 #: cms_appconfig.py:140
-#| msgid "None"
 msgid "No"
 msgstr "Hayır"
 
@@ -278,16 +274,14 @@ msgstr "Makale yayınlandığında bildirim gönder"
 #: cms_appconfig.py:232
 msgid "Emits a desktop notification -if enabled- when publishing a new post"
 msgstr ""
-"Etkinleştirilmişse, yeni bir makale yayınlanırken masaüstü bildirimi "
-"gönderir"
+"Etkinleştirilmişse, yeni bir makale yayınlanırken masaüstü bildirimi gönderir"
 
 #: cms_appconfig.py:236
 msgid "Send notifications on post update"
 msgstr "Makale güncellendiğinde bildirim gönder"
 
 #: cms_appconfig.py:238
-msgid ""
-"Emits a desktop notification -if enabled- when editing a published post"
+msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
 "Etkinleştirilmişse, yayınlanmış bir makale düzenlenirken masaüstü bildirimi "
 "gönderir"
@@ -307,7 +301,6 @@ msgid "Create a new {0} in {1}"
 msgstr "{1} içinde yeni bir {0} oluştur"
 
 #: cms_menus.py:25
-#| msgid "blog category"
 msgid "Post category menu"
 msgstr "Makale kategorisi menüsü"
 
@@ -334,7 +327,6 @@ msgstr "Tüm girdiler"
 
 #: cms_toolbars.py:131
 #, python-format
-#| msgid "object name"
 msgid "New %(object_name)s"
 msgstr "Yeni %(object_name)s"
 
@@ -376,8 +368,7 @@ msgid "modified at"
 msgstr "düzenleme tarihi"
 
 #: models.py:125 models.py:372 models.py:810
-msgid ""
-"When selecting a value, the form is reloaded to get the updated default"
+msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
 "Bir değer seçildiğinde, güncellenmiş varsayılanı almak için form yeniden "
 "yüklenir"
@@ -415,12 +406,10 @@ msgid "abstract"
 msgstr "özet"
 
 #: models.py:191
-#| msgid "blog category"
 msgid "post category"
 msgstr "makale kategorisi"
 
 #: models.py:192
-#| msgid "blog categories"
 msgid "post categories"
 msgstr "makale kategorileri"
 
@@ -470,8 +459,8 @@ msgstr "Web site(ler)"
 
 #: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in"
-" all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
 msgstr ""
 "Yayınlamak istediğiniz web siteleri seçiniz. Eğer herhangi seçim yapılmaz "
 "ise, yayında olan tüm web sitelerde görünecektir."
@@ -480,20 +469,18 @@ msgstr ""
 msgid ""
 "Type a tag and hit tab, or start typing and select from autocomplete list."
 msgstr ""
-"Bir etiket yazıp sekme tuşuna basın veya yazmaya başlayıp otomatik tamamlama"
-" listesinden seçin."
+"Bir etiket yazıp sekme tuşuna basın veya yazmaya başlayıp otomatik tamamlama "
+"listesinden seçin."
 
 #: models.py:385
 msgid "Related Posts"
 msgstr "İlgili Makaleler"
 
 #: models.py:394
-#| msgid "Add post"
 msgid "post"
 msgstr "makale"
 
 #: models.py:395
-#| msgid "Add post"
 msgid "posts"
 msgstr "makaleler"
 
@@ -502,7 +489,6 @@ msgid "Post (no translation)"
 msgstr "Makale (çeviri yok)"
 
 #: models.py:517 models.py:752
-#| msgid "untitled"
 msgid "No title"
 msgstr "Başlık yok"
 
@@ -547,7 +533,6 @@ msgid "text"
 msgstr "metin"
 
 #: models.py:801
-#| msgid "untitled"
 msgid "Untitled"
 msgstr "İsimsiz"
 
@@ -572,7 +557,6 @@ msgid "entries"
 msgstr "girdiler"
 
 #: models.py:864
-#| msgid "The number of latests articles to be displayed."
 msgid "The number of latests entries to be displayed."
 msgstr "Görüntülenecek olan en son girdi sayısı."
 
@@ -581,7 +565,6 @@ msgid "filter by tag"
 msgstr "etikete göre filtrele"
 
 #: models.py:869
-#| msgid "Show only the blog articles tagged with chosen tags."
 msgid "Show only the entries tagged with chosen tags."
 msgstr "Yalnızca seçili etiketlerle işaretlenmiş girdileri göster."
 
@@ -590,7 +573,6 @@ msgid "filter by category"
 msgstr "kategoriye göre filtrele"
 
 #: models.py:876
-#| msgid "Show only the blog articles tagged with chosen categories."
 msgid "Show only the posts of the chosen categories."
 msgstr "Yalnızca seçili kategorilerdeki makaleleri göster."
 
@@ -604,7 +586,6 @@ msgid "authors"
 msgstr "yazarlar"
 
 #: models.py:905
-#| msgid "The number of author articles to be displayed."
 msgid "The number of author entries to be displayed."
 msgstr "Görüntülenecek olan yazar girdisi sayısı."
 
@@ -682,7 +663,6 @@ msgid "never"
 msgstr "asla"
 
 #: settings.py:357
-#| msgid "Articles by"
 msgid "Article"
 msgstr "Makale"
 
@@ -691,7 +671,6 @@ msgid "Blog"
 msgstr "Blog"
 
 #: settings.py:472
-#| msgid "Add post"
 msgid "Posts"
 msgstr "Makaleler"
 
@@ -749,7 +728,6 @@ msgid "Home"
 msgstr "Ana sayfa"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
-#| msgid "blog articles"
 msgid "Blog articles"
 msgstr "Blog makaleleri"
 
@@ -818,8 +796,6 @@ msgstr "Yazarlar"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
-#| msgid "1 article"
-#| msgid_plural "%(articles)s articles"
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
 msgstr[0] "(1 makale)"

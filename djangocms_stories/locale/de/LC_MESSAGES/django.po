@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 22:34+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2026-02-02 20:41+0000\n"
 "Last-Translator: Fabian Braun <fsbraun@gmx.de>, 2026\n"
 "Language-Team: German (https://app.transifex.com/divio/teams/58664/de/)\n"
@@ -22,69 +22,68 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr "Web-Site"
 
-#: admin.py:118
+#: admin.py:149
 msgid "Select app config"
 msgstr "App-Einstellung auswählen"
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr "App-Einstellung für das neue Objekt auswählen"
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
 msgid "Add %s"
 msgstr "%s hinzufügen"
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr "Informationen"
 
-#: admin.py:329
-#| msgid "Images"
+#: admin.py:360
 msgid "Image"
 msgstr "Beitragsbild"
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr "Beitragsbild"
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr "SEO"
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr "Leer"
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr "Kommentare für Auswahl aktivieren"
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr "Kommentare für Auswahl deaktivieren"
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr "Generisch"
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr "Layout"
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr "Sitemap"
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr "Meta-Informationen"
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr "Strings und Post-Attribute oder -Methoden erlaubt"
 
@@ -285,8 +284,7 @@ msgid "Send notifications on post update"
 msgstr "Mitteilung bei Aktualisierungen senden"
 
 #: cms_appconfig.py:238
-msgid ""
-"Emits a desktop notification -if enabled- when editing a published post"
+msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
 "Wenn aktiviert: Desktop-Mitteilung senden, wenn Beiträge aktualisiert werden"
 
@@ -372,8 +370,7 @@ msgid "modified at"
 msgstr "bearbeitet am"
 
 #: models.py:125 models.py:372 models.py:810
-msgid ""
-"When selecting a value, the form is reloaded to get the updated default"
+msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
 "Beim Auswählen eines Wertes wird das Formular neu geladen, um die "
 "aktualisierten Standardwerte zu erhalten"
@@ -464,8 +461,8 @@ msgstr "Web-Site(s)"
 
 #: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in"
-" all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
 msgstr ""
 "Wähle Web-Sites aus, auf welchen der Post angezeigt wird. Ohne Auswahl "
 "sichtbar auf allen konfigurierten Seiten."
@@ -474,8 +471,8 @@ msgstr ""
 msgid ""
 "Type a tag and hit tab, or start typing and select from autocomplete list."
 msgstr ""
-"Schlagwort eintippen und Tabulator drücken oder Anfang eintippen und aus der"
-" Vorschlagsliste auswählen."
+"Schlagwort eintippen und Tabulator drücken oder Anfang eintippen und aus der "
+"Vorschlagsliste auswählen."
 
 #: models.py:385
 msgid "Related Posts"
@@ -677,7 +674,6 @@ msgid "Blog"
 msgstr "Blog"
 
 #: settings.py:472
-#| msgid "posts"
 msgid "Posts"
 msgstr "Beiträge"
 
@@ -803,8 +799,6 @@ msgstr "Autoren"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
-#| msgid "1 article"
-#| msgid_plural "%(articles)s articles"
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
 msgstr[0] "(1 Beitrag)"

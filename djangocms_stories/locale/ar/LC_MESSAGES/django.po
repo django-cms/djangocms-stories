@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 22:34+0200\n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
 "PO-Revision-Date: 2026-02-02 20:41+0000\n"
 "Last-Translator: Anas Tina, 2026\n"
 "Language-Team: Arabic (https://app.transifex.com/divio/teams/58664/ar/)\n"
@@ -20,72 +20,72 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: admin.py:94
+#: admin.py:125
 msgid "site"
 msgstr "الموقع"
 
-#: admin.py:118
+#: admin.py:149
 msgid "Select app config"
 msgstr "اختر إعداد التطبيق"
 
-#: admin.py:119
+#: admin.py:150
 msgid "Select the app config for the new object"
 msgstr "اختر نوع المنشورات للمنشور الجديد"
 
-#: admin.py:236
+#: admin.py:267
 #, python-format
 msgid "Add %s"
 msgstr "أضف %s"
 
-#: admin.py:322 admin.py:399
+#: admin.py:353 admin.py:425
 msgid "Info"
 msgstr "معلومات"
 
-#: admin.py:329
-#| msgid "Images"
+#: admin.py:360
 msgid "Image"
 msgstr "الصورة"
 
-#: admin.py:406
+#: admin.py:432
 msgid "Images"
 msgstr "الصور"
 
-#: admin.py:410
+#: admin.py:436
 msgid "SEO"
 msgstr "تحسين محركات البحث"
 
-#: admin.py:449
+#: admin.py:475
 msgid "Empty"
 msgstr "فارغ"
 
-#: admin.py:469
+#: admin.py:495
 msgid "Enable comments for selection"
 msgstr "فعّل التعليقات للعناصر المحددة"
 
-#: admin.py:483
+#: admin.py:509
 msgid "Disable comments for selection "
 msgstr "عطّل التعليقات للعناصر المحددة"
 
-#: admin.py:761
+#: admin.py:786
 msgid "Generic"
 msgstr "عام"
 
-#: admin.py:770
+#: admin.py:795
 msgid "Layout"
 msgstr "التخطيط"
 
-#: admin.py:787
+#: admin.py:812
 msgid "Sitemap"
 msgstr "خريطة الموقع"
 
-#: admin.py:796
+#: admin.py:821
 msgid "Meta"
 msgstr "البيانات التعريفية"
 
-#: admin.py:807 admin.py:819 admin.py:830
+#: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
 msgstr ""
 "يمكنك إدخال نصوص عادية، أو أسماء واصفات أو دوال من النموذج البرمجي للمنشور"
@@ -280,8 +280,7 @@ msgid "Send notifications on post update"
 msgstr "إرسال إشعارات عند تحديث المنشور"
 
 #: cms_appconfig.py:238
-msgid ""
-"Emits a desktop notification -if enabled- when editing a published post"
+msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr "ارسال إشعار على سطح المكتب -إذا كان مفعّلاً- عند تعديل منشور سبق نشره"
 
 #: cms_appconfig.py:242
@@ -366,8 +365,7 @@ msgid "modified at"
 msgstr "تاريخ التعديل"
 
 #: models.py:125 models.py:372 models.py:810
-msgid ""
-"When selecting a value, the form is reloaded to get the updated default"
+msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
 "عند اختيار قيمة، يُعاد تحميل النموذج للحصول على القيمة الافتراضية المحدّثة"
 
@@ -457,8 +455,8 @@ msgstr "الموقع/المواقع"
 
 #: models.py:362
 msgid ""
-"Select sites in which to show the post. If none is set it will be visible in"
-" all the configured sites."
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
 msgstr ""
 "اختر المواقع التي سيظهر فيها المنشور. إذا لم تحدد أي موقع، فسيكون ظاهراً في "
 "كل المواقع المضبوطة."
@@ -466,8 +464,7 @@ msgstr ""
 #: models.py:379
 msgid ""
 "Type a tag and hit tab, or start typing and select from autocomplete list."
-msgstr ""
-"اكتب وسماً واضغط Tab، أو ابدأ الكتابة واختر من قائمة الإكمال التلقائي."
+msgstr "اكتب وسماً واضغط Tab، أو ابدأ الكتابة واختر من قائمة الإكمال التلقائي."
 
 #: models.py:385
 msgid "Related Posts"
@@ -668,7 +665,6 @@ msgid "Blog"
 msgstr "مدونة"
 
 #: settings.py:472
-#| msgid "posts"
 msgid "Posts"
 msgstr "منشورات"
 
@@ -798,8 +794,6 @@ msgstr "الكاتبون"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
-#| msgid "1 article"
-#| msgid_plural "%(articles)s articles"
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
 msgstr[0] "(لا منشورات)"

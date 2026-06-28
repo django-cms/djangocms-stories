@@ -1,56 +1,51 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-# Translators:
-# Iacopo Spalletti, 2014
-# yakky <i.spalletti@nephila.it>, 2014-2020
-# Leonardo Cavallucci, 2023
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: djangocms-blog\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-28 10:29+0200\n"
-"PO-Revision-Date: 2014-03-29 15:29+0000\n"
-"Last-Translator: Leonardo Cavallucci, 2023\n"
-"Language-Team: Italian (http://app.transifex.com/nephila/djangocms-blog/"
-"language/it/)\n"
-"Language: it\n"
+"PO-Revision-Date: 2014-03-05 18:09+0100\n"
+"Last-Translator: Fabian Braun <fabian@django-cms.org>\n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
-"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: admin.py:125
 msgid "site"
-msgstr "Sito"
+msgstr "trang web"
 
 #: admin.py:149
 msgid "Select app config"
-msgstr "Seleziona configurazione app"
+msgstr "Chọn cấu hình ứng dụng"
 
 #: admin.py:150
 msgid "Select the app config for the new object"
-msgstr "Seleziona la configurazione app per il nuovo oggetto"
+msgstr "Chọn cấu hình ứng dụng cho đối tượng mới"
 
 #: admin.py:267
 #, python-format
 msgid "Add %s"
-msgstr "Aggiungi %s"
+msgstr "Thêm %s"
 
 #: admin.py:353 admin.py:425
 msgid "Info"
-msgstr "Info"
+msgstr "Thông tin"
 
 #: admin.py:360
 msgid "Image"
-msgstr "Immagine"
+msgstr "Hình ảnh"
 
 #: admin.py:432
 msgid "Images"
-msgstr "Immagini"
+msgstr "Hình ảnh"
 
 #: admin.py:436
 msgid "SEO"
@@ -58,23 +53,23 @@ msgstr "SEO"
 
 #: admin.py:475
 msgid "Empty"
-msgstr "Vuoto"
+msgstr "Trống"
 
 #: admin.py:495
 msgid "Enable comments for selection"
-msgstr "Abilita i commenti per gli articoli selezionati"
+msgstr "Bật bình luận cho mục đã chọn"
 
 #: admin.py:509
 msgid "Disable comments for selection "
-msgstr "Disabilita i commenti per gli articoli selezionati"
+msgstr "Tắt bình luận cho mục đã chọn "
 
 #: admin.py:786
 msgid "Generic"
-msgstr "Generale"
+msgstr "Chung"
 
 #: admin.py:795
 msgid "Layout"
-msgstr "Layout"
+msgstr "Bố cục"
 
 #: admin.py:812
 msgid "Sitemap"
@@ -86,313 +81,315 @@ msgstr "Meta"
 
 #: admin.py:832 admin.py:844 admin.py:855
 msgid "You can provide plain strings, Post model attribute or method names"
-msgstr "Puoi inserire stringhe, attributi o metodi del model Post"
+msgstr ""
+"Bạn có thể cung cấp chuỗi văn bản thuần, thuộc tính của mô hình Post hoặc tên "
+"phương thức"
 
 #: apps.py:8 cms_apps.py:16
 msgid "Stories"
-msgstr "Storie"
+msgstr "Stories"
 
 #: cms_appconfig.py:85
 msgid "stories config"
-msgstr "configurazione storie"
+msgstr "cấu hình stories"
 
 #: cms_appconfig.py:86
 msgid "stories configs"
-msgstr "configurazioni storie"
+msgstr "các cấu hình stories"
 
 #: cms_appconfig.py:89
 msgid "type"
-msgstr "tipo"
+msgstr "loại"
 
 #: cms_appconfig.py:93
 msgid "instance namespace"
-msgstr "namespace istanza"
+msgstr "namespace của thực thể"
 
 #: cms_appconfig.py:99
 msgid "application title"
-msgstr "Titolo applicazione"
+msgstr "tiêu đề ứng dụng"
 
 #: cms_appconfig.py:100
 msgid "object name"
-msgstr "Nome oggetto"
+msgstr "tên đối tượng"
 
 #: cms_appconfig.py:110
 msgid "default size of full images"
-msgstr "dimensione predefinita delle immagini complete"
+msgstr "kích thước mặc định của hình ảnh đầy đủ"
 
 #: cms_appconfig.py:111
 msgid ""
 "If left empty the image size will have to be set for every newly created "
 "post."
 msgstr ""
-"Se vuoto, la dimensione dell'immagine principale dovrà essere impostata per "
-"ogni nuovo articolo."
+"Nếu để trống, kích thước hình ảnh sẽ phải được đặt cho mỗi bài viết mới được "
+"tạo."
 
 #: cms_appconfig.py:120
 msgid "default size of thumbnail images"
-msgstr "dimensione predefinita delle miniature"
+msgstr "kích thước mặc định của hình thu nhỏ"
 
 #: cms_appconfig.py:121
 msgid ""
 "If left empty the thumbnail image size will have to be set for every newly "
 "created post."
 msgstr ""
-"Se vuoto, la dimensione dell'immagine ridotta dovrà essere impostata per "
-"ogni nuovo articolo."
+"Nếu để trống, kích thước hình thu nhỏ sẽ phải được đặt cho mỗi bài viết mới "
+"được tạo."
 
 #: cms_appconfig.py:126
 msgid "Permalink structure"
-msgstr "Struttura permalink"
+msgstr "Cấu trúc liên kết cố định"
 
 #: cms_appconfig.py:130
 msgid "Use placeholder and plugins for article body"
-msgstr "Usa placeholder e plugin per il contenuto"
+msgstr "Sử dụng placeholder và plugin cho nội dung bài viết"
 
 #: cms_appconfig.py:134
 msgid "Use abstract field"
-msgstr "Usa campo abstract"
+msgstr "Sử dụng trường tóm tắt"
 
 #: cms_appconfig.py:137
 msgid "Enable related posts"
-msgstr "Abilita articoli collegati"
+msgstr "Bật bài viết liên quan"
 
 #: cms_appconfig.py:140
 msgid "No"
-msgstr "No"
+msgstr "Không"
 
 #: cms_appconfig.py:141
 msgid "Yes, from this stories config"
-msgstr "Sì, da questa configurazione storie"
+msgstr "Có, từ cấu hình stories này"
 
 #: cms_appconfig.py:142
 msgid "Yes, from this site"
-msgstr "Sì, da questo sito"
+msgstr "Có, từ trang web này"
 
 #: cms_appconfig.py:147
 msgid "Set author by default"
-msgstr "Imposta autore di default"
+msgstr "Đặt tác giả theo mặc định"
 
 #: cms_appconfig.py:151
 msgid "Paginate size"
-msgstr "Dimensione paginazione"
+msgstr "Kích thước phân trang"
 
 #: cms_appconfig.py:153
 msgid "When paginating list views, how many articles per page?"
-msgstr "Se la lista è paginata, quanti articoli visualizzati per pagina?"
+msgstr "Khi phân trang danh sách, bao nhiêu bài viết trên mỗi trang?"
 
 #: cms_appconfig.py:160
 msgid "Template prefix"
-msgstr "Prefisso template"
+msgstr "Tiền tố mẫu"
 
 #: cms_appconfig.py:161
 msgid "Alternative directory to load the stories templates from"
-msgstr "Directory alternativa da cui caricare i template delle storie"
+msgstr "Thư mục thay thế để tải các mẫu stories"
 
 #: cms_appconfig.py:166
 msgid "Menu structure"
-msgstr "Struttura del menu"
+msgstr "Cấu trúc menu"
 
 #: cms_appconfig.py:167
 msgid "Structure of the django CMS menu"
-msgstr "Struttura del menu django CMS"
+msgstr "Cấu trúc của menu django CMS"
 
 #: cms_appconfig.py:171
 msgid "Show empty categories in menu"
-msgstr "Mostra categorie vuote nel menù"
+msgstr "Hiển thị các danh mục trống trong menu"
 
 #: cms_appconfig.py:172
 msgid "Show categories with no post attached in the menu"
-msgstr "Mostra categorie senza post nel menù"
+msgstr "Hiển thị các danh mục không có bài viết nào trong menu"
 
 #: cms_appconfig.py:178
 msgid "Sitemap changefreq"
-msgstr "Frequenza aggiornamento Sitemap"
+msgstr "Tần suất thay đổi Sitemap"
 
 #: cms_appconfig.py:179
 msgid "Changefreq attribute for sitemap items"
-msgstr "Attributo Changefreq per gli oggetti della sitemap"
+msgstr "Thuộc tính tần suất thay đổi cho các mục sitemap"
 
 #: cms_appconfig.py:185
 msgid "Sitemap priority"
-msgstr "Priorità sitemap"
+msgstr "Mức ưu tiên Sitemap"
 
 #: cms_appconfig.py:186
 msgid "Priority attribute for sitemap items"
-msgstr "Attributo priorità per gli oggetti nella sitemap"
+msgstr "Thuộc tính mức ưu tiên cho các mục sitemap"
 
 #: cms_appconfig.py:192
 msgid "Object type"
-msgstr "Tipo oggetto"
+msgstr "Loại đối tượng"
 
 #: cms_appconfig.py:197
 msgid "Facebook type"
-msgstr "Tipo oggetto Facebook"
+msgstr "Loại Facebook"
 
 #: cms_appconfig.py:201
 msgid "Facebook application ID"
-msgstr "ID Applicazione Facebook"
+msgstr "ID ứng dụng Facebook"
 
 #: cms_appconfig.py:203
 msgid "Facebook profile ID"
-msgstr "ID Profilo Facebook"
+msgstr "ID hồ sơ Facebook"
 
 #: cms_appconfig.py:205
 msgid "Facebook page URL"
-msgstr "URL Pagina Facebook"
+msgstr "URL trang Facebook"
 
 #: cms_appconfig.py:207
 msgid "Facebook author URL"
-msgstr "URL Autore Facebook"
+msgstr "URL tác giả Facebook"
 
 #: cms_appconfig.py:209
 msgid "Facebook author"
-msgstr "Autore Facebook"
+msgstr "Tác giả Facebook"
 
 #: cms_appconfig.py:213
 msgid "Twitter type"
-msgstr "Tipo oggetto Twitter"
+msgstr "Loại Twitter"
 
 #: cms_appconfig.py:217
 msgid "Twitter site handle"
-msgstr "Nome Twitter del sito"
+msgstr "Tên Twitter của trang web"
 
 #: cms_appconfig.py:219
 msgid "Twitter author handle"
-msgstr "Nome Twitter autore"
+msgstr "Tên Twitter của tác giả"
 
 #: cms_appconfig.py:223
 msgid "Schema.org type"
-msgstr "Tipo Schema.org"
+msgstr "Loại Schema.org"
 
 #: cms_appconfig.py:227
 msgid "Schema.org author name"
-msgstr "Nome autore Schema.org"
+msgstr "Tên tác giả Schema.org"
 
 #: cms_appconfig.py:230
 msgid "Send notifications on post publish"
-msgstr "Invia notifiche alla pubblicazione dell'articolo"
+msgstr "Gửi thông báo khi xuất bản bài viết"
 
 #: cms_appconfig.py:232
 msgid "Emits a desktop notification -if enabled- when publishing a new post"
 msgstr ""
-"Invia notifiche desktop -se abilitate- quando viene pubblicato un articolo"
+"Phát ra thông báo trên màn hình -nếu được bật- khi xuất bản một bài viết mới"
 
 #: cms_appconfig.py:236
 msgid "Send notifications on post update"
-msgstr "Invia notifiche all'aggiornamento dell'articolo"
+msgstr "Gửi thông báo khi cập nhật bài viết"
 
 #: cms_appconfig.py:238
 msgid "Emits a desktop notification -if enabled- when editing a published post"
 msgstr ""
-"Invia notifiche desktop -se abilitate- quando viene aggiornato un articolo"
+"Phát ra thông báo trên màn hình -nếu được bật- khi chỉnh sửa một bài viết đã "
+"xuất bản"
 
 #: cms_appconfig.py:242
 msgid "untitled"
-msgstr "Senza titolo"
+msgstr "không có tiêu đề"
 
 #: cms_config.py:62
 #, python-brace-format
 msgid "New {0}"
-msgstr "Nuovo {0}"
+msgstr "{0} mới"
 
 #: cms_config.py:67
 #, python-brace-format
 msgid "Create a new {0} in {1}"
-msgstr "Crea un nuovo {0} in {1}"
+msgstr "Tạo {0} mới trong {1}"
 
 #: cms_menus.py:25
 msgid "Post category menu"
-msgstr "Menu categorie degli articoli"
+msgstr "Menu danh mục bài viết"
 
 #: cms_toolbars.py:38
 msgid "View on site"
-msgstr "Visualizza sul sito"
+msgstr "Xem trên trang web"
 
 #: cms_toolbars.py:45
 msgid "Preview"
-msgstr "Anteprima"
+msgstr "Xem trước"
 
 #: cms_toolbars.py:67
 msgid "View Published"
-msgstr "Visualizza pubblicato"
+msgstr "Xem bản đã xuất bản"
 
 #: cms_toolbars.py:111
 #, python-format
 msgid "%(object_name)s properties"
-msgstr "Proprietà di %(object_name)s"
+msgstr "Thuộc tính của %(object_name)s"
 
 #: cms_toolbars.py:122
 msgid "All entries"
-msgstr "Tutti gli articoli"
+msgstr "Tất cả các mục"
 
 #: cms_toolbars.py:131
 #, python-format
 msgid "New %(object_name)s"
-msgstr "Nuovo %(object_name)s"
+msgstr "%(object_name)s mới"
 
 #: cms_toolbars.py:138
 msgid "Edit Configuration"
-msgstr "Modifica configurazione"
+msgstr "Chỉnh sửa cấu hình"
 
 #: cms_wizards.py:23 models.py:124 models.py:371 models.py:809
 msgid "app. config"
-msgstr "config. app."
+msgstr "cấu hình ứng dụng"
 
 #: cms_wizards.py:92
 msgid "Selected story not available any more. Close wizard."
-msgstr ""
-"La storia selezionata non è più disponibile. Chiudi la procedura guidata."
+msgstr "Story đã chọn không còn khả dụng. Đóng trình hướng dẫn."
 
 #: feeds.py:38
 #, python-format
 msgid "Blog articles on %(site_name)s"
-msgstr "Articoli del blog su %(site_name)s"
+msgstr "Các bài viết Blog trên %(site_name)s"
 
 #: forms.py:97
 msgid "App Config"
-msgstr "Configurazione app"
+msgstr "Cấu hình ứng dụng"
 
 #: forms.py:99
 msgid "Select the app config to apply to the new post."
-msgstr "Seleziona la configurazione app da applicare al nuovo articolo."
+msgstr "Chọn cấu hình ứng dụng để áp dụng cho bài viết mới."
 
 #: models.py:116
 msgid "parent"
-msgstr "superiore"
+msgstr "mục cha"
 
 #: models.py:118
 msgid "created at"
-msgstr "creato il"
+msgstr "tạo lúc"
 
 #: models.py:119
 msgid "modified at"
-msgstr "modificato il"
+msgstr "sửa đổi lúc"
 
 #: models.py:125 models.py:372 models.py:810
 msgid "When selecting a value, the form is reloaded to get the updated default"
 msgstr ""
-"Quando selezioni un valore, il modulo viene ricaricato per ottenere il "
-"valore predefinito aggiornato"
+"Khi chọn một giá trị, biểu mẫu sẽ được tải lại để lấy giá trị mặc định đã cập "
+"nhật"
 
 #: models.py:127
 msgid "priority"
-msgstr "priorità"
+msgstr "mức ưu tiên"
 
 #: models.py:129 models.py:324
 msgid "main image"
-msgstr "immagine principale"
+msgstr "hình ảnh chính"
 
 #: models.py:137 models.py:334
 msgid "main image thumbnail"
-msgstr "dimensioni miniatura immagine"
+msgstr "hình thu nhỏ của hình ảnh chính"
 
 #: models.py:145 models.py:344
 msgid "main image full"
-msgstr "dimensioni immagine"
+msgstr "hình ảnh chính đầy đủ"
 
 #: models.py:153
 msgid "name"
-msgstr "nome"
+msgstr "tên"
 
 #: models.py:155 models.py:622
 msgid "slug"
@@ -400,273 +397,272 @@ msgstr "slug"
 
 #: models.py:161
 msgid "category meta description"
-msgstr "metatag descrizione"
+msgstr "mô tả meta của danh mục"
 
 #: models.py:163 models.py:633
 msgid "abstract"
-msgstr "abstract"
+msgstr "tóm tắt"
 
 #: models.py:191
 msgid "post category"
-msgstr "categoria articolo"
+msgstr "danh mục bài viết"
 
 #: models.py:192
 msgid "post categories"
-msgstr "categorie articoli"
+msgstr "các danh mục bài viết"
 
 #: models.py:251
 msgid "PostCategory (no translation)"
-msgstr "Categoria articolo (nessuna traduzione)"
+msgstr "PostCategory (không có bản dịch)"
 
 #: models.py:286
 msgid "author"
-msgstr "autore"
+msgstr "tác giả"
 
 #: models.py:294
 msgid "created"
-msgstr "creato"
+msgstr "đã tạo"
 
 #: models.py:297
 msgid "last modified"
-msgstr "ultima modifica"
+msgstr "sửa đổi lần cuối"
 
 #: models.py:301
 msgid "published since"
-msgstr "Pubblicato il"
+msgstr "xuất bản từ"
 
 #: models.py:306
 msgid "published until"
-msgstr "fino al"
+msgstr "xuất bản đến"
 
 #: models.py:312
 msgid "featured date"
-msgstr "Data visualizzata"
+msgstr "ngày nổi bật"
 
 #: models.py:315
 msgid "include in RSS feed"
-msgstr "includi nel feed RSS"
+msgstr "bao gồm trong nguồn cấp RSS"
 
 #: models.py:319
 msgid "category"
-msgstr "categoria"
+msgstr "danh mục"
 
 #: models.py:353
 msgid "enable comments on post"
-msgstr "abilita commenti sull'articolo"
+msgstr "bật bình luận trên bài viết"
 
 #: models.py:359
 msgid "Site(s)"
-msgstr "Sito/i"
+msgstr "Trang web"
 
 #: models.py:362
 msgid ""
 "Select sites in which to show the post. If none is set it will be visible in "
 "all the configured sites."
 msgstr ""
-"Seleziona i siti in cui deve apparire l'articolo. Se non è selezionato "
-"nessun sito, l'articolo comparirà in tutti i siti configurati."
+"Chọn các trang web để hiển thị bài viết. Nếu không đặt trang nào, bài viết sẽ "
+"hiển thị trên tất cả các trang web đã cấu hình."
 
 #: models.py:379
 msgid ""
 "Type a tag and hit tab, or start typing and select from autocomplete list."
 msgstr ""
-"Scrivi un tag e premi il task tab, o comincia a scrivere e seleziona il tag "
-"dalla lista che comparirà"
+"Nhập một thẻ và nhấn tab, hoặc bắt đầu nhập và chọn từ danh sách tự động hoàn "
+"thành."
 
 #: models.py:385
 msgid "Related Posts"
-msgstr "Articoli collegati"
+msgstr "Bài viết liên quan"
 
 #: models.py:394
 msgid "post"
-msgstr "articolo"
+msgstr "bài viết"
 
 #: models.py:395
 msgid "posts"
-msgstr "articoli"
+msgstr "các bài viết"
 
 #: models.py:406
 msgid "Post (no translation)"
-msgstr "Articolo (nessuna translation)"
+msgstr "Post (không có bản dịch)"
 
 #: models.py:517 models.py:752
 msgid "No title"
-msgstr "Nessun titolo"
+msgstr "Không có tiêu đề"
 
 #: models.py:605
 msgid "post content"
-msgstr "contenuto articolo"
+msgstr "nội dung bài viết"
 
 #: models.py:606
 msgid "post contents"
-msgstr "contenuti articolo"
+msgstr "các nội dung bài viết"
 
 #: models.py:614
 msgid "language"
-msgstr "lingua"
+msgstr "ngôn ngữ"
 
 #: models.py:618
 msgid "title"
-msgstr "titolo"
+msgstr "tiêu đề"
 
 #: models.py:630
 msgid "subtitle"
-msgstr "sottotitolo"
+msgstr "tiêu đề phụ"
 
 #: models.py:636
 msgid "post meta description"
-msgstr "metatag descrizione"
+msgstr "mô tả meta của bài viết"
 
 #: models.py:639
 msgid "post meta keywords"
-msgstr "metatag keyword"
+msgstr "từ khóa meta của bài viết"
 
 #: models.py:643
 msgid "post meta title"
-msgstr "metatag titolo"
+msgstr "tiêu đề meta của bài viết"
 
 #: models.py:644
 msgid "used in title tag and social sharing"
-msgstr ""
-"Usato nel tag title e nei titoli per le condivisioni sui social network"
+msgstr "được sử dụng trong thẻ tiêu đề và chia sẻ mạng xã hội"
 
 #: models.py:651
 msgid "text"
-msgstr "testo"
+msgstr "văn bản"
 
 #: models.py:801
 msgid "Untitled"
-msgstr "Senza titolo"
+msgstr "Không có tiêu đề"
 
 #: models.py:813
 msgid "current site"
-msgstr "Sito corrente"
+msgstr "trang web hiện tại"
 
 #: models.py:813
 msgid "Select items from the current site only"
-msgstr "Seleziona gli elementi per il solo sito corrente"
+msgstr "Chỉ chọn các mục từ trang web hiện tại"
 
 #: models.py:817
 msgid "Plugin layout"
-msgstr "Layout del plugin"
+msgstr "Bố cục plugin"
 
 #: models.py:818
 msgid "Select plugin layout to load for this instance"
-msgstr "Seleziona il layout del plugin da caricare per questa istanza"
+msgstr "Chọn bố cục plugin để tải cho thực thể này"
 
 #: models.py:862 models.py:903
 msgid "entries"
-msgstr "articoli"
+msgstr "các mục"
 
 #: models.py:864
 msgid "The number of latests entries to be displayed."
-msgstr "Il numero di articoli da mostrare."
+msgstr "Số lượng mục mới nhất sẽ được hiển thị."
 
 #: models.py:867
 msgid "filter by tag"
-msgstr "filtra per tag"
+msgstr "lọc theo thẻ"
 
 #: models.py:869
 msgid "Show only the entries tagged with chosen tags."
-msgstr "Mostra solo gli articoli marcati con i tag selezionati."
+msgstr "Chỉ hiển thị các mục được gắn các thẻ đã chọn."
 
 #: models.py:875
 msgid "filter by category"
-msgstr "filtra per categoria"
+msgstr "lọc theo danh mục"
 
 #: models.py:876
 msgid "Show only the posts of the chosen categories."
-msgstr "Mostra solo gli articoli delle categorie selezionate."
+msgstr "Chỉ hiển thị các bài viết thuộc các danh mục đã chọn."
 
 #: models.py:880
 #, python-format
 msgid "%s latest posts by tag"
-msgstr "ultimi %s articoli per tag"
+msgstr "%s bài viết mới nhất theo thẻ"
 
 #: models.py:900
 msgid "authors"
-msgstr "autori"
+msgstr "các tác giả"
 
 #: models.py:905
 msgid "The number of author entries to be displayed."
-msgstr "Il numero di articoli per autore da mostrare."
+msgstr "Số lượng mục tác giả sẽ được hiển thị."
 
 #: models.py:909
 #, python-format
 msgid "%s latest entries by author"
-msgstr "ultimi %s articoli per autore"
+msgstr "%s mục mới nhất theo tác giả"
 
 #: models.py:929 models.py:932
 msgid "Featured posts"
-msgstr "Articoli in evidenza"
+msgstr "Bài viết nổi bật"
 
 #: models.py:954
 msgid "generic blog plugin"
-msgstr "plugin blog"
+msgstr "plugin blog chung"
 
 #: settings.py:27
 msgid "Full date"
-msgstr "Data completa"
+msgstr "Ngày đầy đủ"
 
 #: settings.py:28
 msgid "Year /  Month"
-msgstr "Anno / Mese"
+msgstr "Năm /  Tháng"
 
 #: settings.py:29 templates/djangocms_stories/post_list.html:14
 msgid "Category"
-msgstr "Categoria"
+msgstr "Danh mục"
 
 #: settings.py:30
 msgid "Just slug"
-msgstr "Solo slug"
+msgstr "Chỉ slug"
 
 #: settings.py:49
 msgid "Categories and posts"
-msgstr "Categorie e articoli"
+msgstr "Các danh mục và bài viết"
 
 #: settings.py:50
 msgid "Categories only"
-msgstr "Solo categorie"
+msgstr "Chỉ các danh mục"
 
 #: settings.py:51
 msgid "Posts only"
-msgstr "Solo articoli"
+msgstr "Chỉ các bài viết"
 
 #: settings.py:52
 msgid "None"
-msgstr "Niente"
+msgstr "Không có"
 
 #: settings.py:56
 msgid "always"
-msgstr "sempre"
+msgstr "luôn luôn"
 
 #: settings.py:57
 msgid "hourly"
-msgstr "ogni ora"
+msgstr "hàng giờ"
 
 #: settings.py:58
 msgid "daily"
-msgstr "ogni giorno"
+msgstr "hàng ngày"
 
 #: settings.py:59
 msgid "weekly"
-msgstr "ogni settimana"
+msgstr "hàng tuần"
 
 #: settings.py:60
 msgid "monthly"
-msgstr "ogni mese"
+msgstr "hàng tháng"
 
 #: settings.py:61
 msgid "yearly"
-msgstr "ogni anno"
+msgstr "hàng năm"
 
 #: settings.py:62
 msgid "never"
-msgstr "mai"
+msgstr "không bao giờ"
 
 #: settings.py:357
 msgid "Article"
-msgstr "Articolo"
+msgstr "Bài viết"
 
 #: settings.py:378 settings.py:385
 msgid "Blog"
@@ -674,68 +670,68 @@ msgstr "Blog"
 
 #: settings.py:472
 msgid "Posts"
-msgstr "Articoli"
+msgstr "Các bài viết"
 
 #: settings.py:479
 msgid "Latest Blog Articles"
-msgstr "Ultimi articoli"
+msgstr "Bài viết Blog mới nhất"
 
 #: settings.py:486
 msgid "Latest Blog Articles - Cache"
-msgstr "Ultimi articoli del blog - in cache"
+msgstr "Bài viết Blog mới nhất - Bộ nhớ đệm"
 
 #: settings.py:493
 msgid "Author Blog Articles"
-msgstr "Articoli per autore"
+msgstr "Bài viết Blog theo tác giả"
 
 #: settings.py:500
 msgid "Author Blog Articles List"
-msgstr "Lista autori articoli"
+msgstr "Danh sách bài viết Blog theo tác giả"
 
 #: settings.py:507 templates/djangocms_stories/plugins/tags.html:5
 msgid "Tags"
-msgstr "Tag"
+msgstr "Thẻ"
 
 #: settings.py:514 templates/djangocms_stories/plugins/categories.html:3
 msgid "Categories"
-msgstr "Categorie"
+msgstr "Các danh mục"
 
 #: settings.py:521 templates/djangocms_stories/plugins/archive.html:3
 #: templates/djangocms_stories/post_list.html:12
 msgid "Archive"
-msgstr "Archivio"
+msgstr "Lưu trữ"
 
 #: settings.py:528
 msgid "Featured Posts"
-msgstr "Articoli in evidenza"
+msgstr "Bài viết nổi bật"
 
 #: settings.py:535
 msgid "Featured Posts - Cache"
-msgstr "Articoli in evidenza - Cache"
+msgstr "Bài viết nổi bật - Bộ nhớ đệm"
 
 #: settings.py:570
 msgid "Default template"
-msgstr "Template standard"
+msgstr "Mẫu mặc định"
 
 #: tag_autosuggest.py:62
 msgid "Type a tag and hit enter"
-msgstr "Scrivi un tag e premi invio"
+msgstr "Nhập thẻ và nhấn Enter"
 
 #: templates/admin/djangocms_stories/post/change_list.html:4
 msgid "Language"
-msgstr "Lingua"
+msgstr "Ngôn ngữ"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
 msgid "Home"
-msgstr "Home"
+msgstr "Trang chủ"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
 msgid "Blog articles"
-msgstr "Articoli del blog"
+msgstr "Các bài viết Blog"
 
 #: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
 msgid "Versions"
-msgstr "Versioni"
+msgstr "Các phiên bản"
 
 #: templates/djangocms_stories/category_list.html:11
 #: templates/djangocms_stories/plugins/archive.html:26
@@ -744,36 +740,36 @@ msgstr "Versioni"
 #: templates/djangocms_stories/plugins/tags.html:17
 #: templates/djangocms_stories/post_list.html:26
 msgid "No article found."
-msgstr "Nessun articolo trovato."
+msgstr "Không tìm thấy bài viết nào."
 
 #: templates/djangocms_stories/category_list.html:14
 #: templates/djangocms_stories/post_list.html:29
 msgid "Back"
-msgstr "Indietro"
+msgstr "Quay lại"
 
 #: templates/djangocms_stories/category_list.html:19
 #: templates/djangocms_stories/post_list.html:34
 msgid "previous"
-msgstr "precedente"
+msgstr "trước"
 
 #: templates/djangocms_stories/category_list.html:22
 #: templates/djangocms_stories/post_list.html:37
 msgid "Page"
-msgstr "Pagina"
+msgstr "Trang"
 
 #: templates/djangocms_stories/category_list.html:22
 #: templates/djangocms_stories/post_list.html:37
 msgid "of"
-msgstr "di"
+msgstr "trên"
 
 #: templates/djangocms_stories/category_list.html:25
 #: templates/djangocms_stories/post_list.html:40
 msgid "next"
-msgstr "successivo"
+msgstr "tiếp theo"
 
 #: templates/djangocms_stories/includes/post_item.html:38
 msgid "read more"
-msgstr "leggi"
+msgstr "đọc thêm"
 
 #: templates/djangocms_stories/plugins/archive.html:17
 #: templates/djangocms_stories/plugins/categories.html:10
@@ -781,122 +777,39 @@ msgstr "leggi"
 #, python-format
 msgid "1 article"
 msgid_plural "%(articles)s articles"
-msgstr[0] "1 articolo"
-msgstr[1] "%(articles)s articoli"
-msgstr[2] "%(articles)s articoli"
+msgstr[0] "%(articles)s bài viết"
 
 #: templates/djangocms_stories/plugins/archive.html:18
 #: templates/djangocms_stories/plugins/authors.html:11
 #: templates/djangocms_stories/plugins/categories.html:11
 #: templates/djangocms_stories/plugins/tags.html:13
 msgid "0 articles"
-msgstr "0 articoli"
+msgstr "0 bài viết"
 
 #: templates/djangocms_stories/plugins/authors.html:3
 #: templates/djangocms_stories/plugins/authors_posts.html:3
 msgid "Authors"
-msgstr "Autori"
+msgstr "Các tác giả"
 
 #: templates/djangocms_stories/plugins/authors.html:10
 #, python-format
 msgid "(1 article)"
 msgid_plural "(%(articles)s articles)"
-msgstr[0] "1 articolo"
-msgstr[1] "%(articles)s articoli"
-msgstr[2] "%(articles)s articoli"
+msgstr[0] "(%(articles)s bài viết)"
 
 #: templates/djangocms_stories/plugins/authors.html:15
 msgid "No author found."
-msgstr "Nessun autore trovato"
+msgstr "Không tìm thấy tác giả nào."
 
 #: templates/djangocms_stories/plugins/authors_posts.html:7
 #: templates/djangocms_stories/post_list.html:11
 msgid "Articles by"
-msgstr "Articoli di"
+msgstr "Bài viết bởi"
 
 #: templates/djangocms_stories/plugins/categories.html:15
 msgid "No categories found."
-msgstr "Nessuna categoria trovata."
+msgstr "Không tìm thấy danh mục nào."
 
 #: templates/djangocms_stories/post_list.html:13
 msgid "Tag"
-msgstr "Tag"
-
-#~ msgid "Notifications"
-#~ msgstr "Notifiche"
-
-#~ msgid "Publish selection"
-#~ msgstr "Pubblica gli articoli selezionati"
-
-#~ msgid "Unpublish selection"
-#~ msgstr "Spubblica gli articoli selezionati"
-
-#~ msgid "Enable liveblog for selection"
-#~ msgstr "Abilita il liveblog per gli articoli selezionati"
-
-#~ msgid "Disable liveblog for selection "
-#~ msgstr "Disabilita il liveblog per gli articoli selezionati"
-
-#~ msgid "django CMS Blog"
-#~ msgstr "django CMS Blog"
-
-#~ msgid "Post published by default"
-#~ msgstr "Articoli pubblicati di default"
-
-#~ msgid "Set author"
-#~ msgstr "Imposta autore"
-
-#~ msgid "Blog menu"
-#~ msgstr "Menu del blog"
-
-#~ msgid "Post list"
-#~ msgstr "Lista degli articoli"
-
-#~ msgid "Category list"
-#~ msgstr "Lista categorie"
-
-#~ msgid "Tag list"
-#~ msgstr "Lista tag"
-
-#~ msgid "Edit Post"
-#~ msgstr "Modifica articolo"
-
-#, python-brace-format
-#~ msgid "Publish {0} now"
-#~ msgstr "Pubblica {0}"
-
-#~ msgid "Slug"
-#~ msgstr "Slug"
-
-#~ msgid "Leave empty for automatic slug, or override as required."
-#~ msgstr "Lascia vuoto per generare lo slug automaticamente"
-
-#~ msgid "Liveblog"
-#~ msgstr "Liveblog"
-
-#~ msgid "Liveblog item"
-#~ msgstr "Elemento liveblog"
-
-#~ msgid "publish liveblog entry"
-#~ msgstr "Pubblica elemento liveblog"
-
-#~ msgid "liveblog entry"
-#~ msgstr "Elemento liveblog"
-
-#~ msgid "image"
-#~ msgstr "Immagine"
-
-#~ msgid "thumbnail size"
-#~ msgstr "Dimensione miniatura"
-
-#~ msgid "publish"
-#~ msgstr "pubblica"
-
-#~ msgid "enable liveblog on post"
-#~ msgstr "Attiva liveblog sul post"
-
-#~ msgid "blog article"
-#~ msgstr "articolo del blog"
-
-#~ msgid "by"
-#~ msgstr "di"
+msgstr "Thẻ"
