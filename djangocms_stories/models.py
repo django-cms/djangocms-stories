@@ -501,9 +501,9 @@ class Post(models.Model):
                     return ""
             if "<slug:category>" in urlconf or "<str:category>" in urlconf:
                 category = self.categories.first()
-                kwargs["category"] = category.safe_translation_getter("slug", language_code=lang, any_language=True)  # NOQA
-                if kwargs["category"] is None:
+                if category is None:
                     return ""
+                kwargs["category"] = category.safe_translation_getter("slug", language_code=lang, any_language=True) 
             try:
                 return reverse(
                     "%s:post-detail" % self.app_config.namespace, kwargs=kwargs, current_app=self.app_config.namespace

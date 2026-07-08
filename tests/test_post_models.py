@@ -78,6 +78,28 @@ def test_post_content_compatibility_stubs(db, default_config):
 
 
 @pytest.mark.django_db
+def test_get_absolute_url_missing_category(db, simple_wo_placeholder):
+    """
+    A category-based permalink config with a post that has no category assigned
+    must not raise (e.g. AttributeError / NoReverseMatch) but return "".
+    """
+    from djangocms_stories.models import Post, PostContent
+
+    # simple_wo_placeholder uses the ``category`` permalink: "<str:category>/<str:slug>/"
+    post = Post.objects.using(db).create(app_config=simple_wo_placeholder)
+    post_content = PostContent.objects.using(db).create(
+        post=post,
+        language="en",
+        title="No category post",
+        slug="no-category-post",
+    )
+
+    assert post.categories.count() == 0
+    assert post.get_absolute_url() == ""
+    assert post_content.get_absolute_url() == ""
+
+
+@pytest.mark.django_db
 def test_date_property(db):
     """Test the date property of the Post model: Corresponds to date_published if present."""
     from .factories import PostFactory
