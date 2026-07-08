@@ -457,6 +457,8 @@ class Post(KnockerModel, models.Model):
             if "<str:slug>" in urlconf or "<slug:slug>" in urlconf:
                 kwargs["slug"] = self.safe_translation_getter("slug", language_code=lang, any_language=True)  # NOQA
             if "<slug:category>" in urlconf or "<str:category>" in urlconf:
+                if category is None:
+                    return ""
                 kwargs["category"] = category.safe_translation_getter("slug", language_code=lang, any_language=True)  # NOQA
             try:
                 return reverse(
