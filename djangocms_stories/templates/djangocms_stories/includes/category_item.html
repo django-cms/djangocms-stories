@@ -20,7 +20,9 @@
     <div class="category-post-list">
         {% for post in category.blog_posts.all %}
             <div class="category-post-item">
-                <a href="{{ post.get_absolute_url }}">{% render_model post "title" %}</a>
+                {% with post_url=post.get_absolute_url %}
+                    {% if post_url %}<a href="{{ post_url }}">{% render_model post "title" %}</a>{% else %}{% render_model post "title" %}{% endif %}
+                {% endwith %}
             </div>
         {% endfor %}
     </div>

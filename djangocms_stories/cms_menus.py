@@ -85,10 +85,12 @@ class PostCategoryMenu(CMSAttachMenu):
                 else:
                     postcontent_id = (f"{post_content.__class__.__name__}-{post_content.pk}",)
                 if postcontent_id:
-                    node = NavigationNode(
-                        post_content.title, post_content.get_absolute_url(language), postcontent_id, parent
-                    )
-                    nodes.append(node)
+                    url = post_content.get_absolute_url(language)
+                    if url:
+                        # get_absolute_url returns "" when the url cannot be
+                        # built (e.g. missing category/slug); skip those posts
+                        node = NavigationNode(post_content.title, url, postcontent_id, parent)
+                        nodes.append(node)
 
         if categories_menu:
             categories = PostCategory.objects

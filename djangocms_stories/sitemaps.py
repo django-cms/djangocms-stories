@@ -34,10 +34,15 @@ class StoriesSitemap(Sitemap):
                 # if a post is published but the associated app config is not
                 # then this post will not have a url
                 try:
-                    self.url_cache[postcontent] = postcontent.get_absolute_url()
+                    url = postcontent.get_absolute_url()
                 except NoReverseMatch:
                     # couldn't determine the url of the post so pass on it
                     continue
+                if not url:
+                    # get_absolute_url returns "" when the url cannot be built
+                    # (e.g. missing category/slug), so skip this post
+                    continue
+                self.url_cache[postcontent] = url
                 items.append(postcontent)
         return items
 
