@@ -11,6 +11,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.cache import cache
 from django.db import models
 from django.db.models import F, Q
+from django.db.models.functions import Coalesce
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.urls import NoReverseMatch, reverse
@@ -26,12 +27,12 @@ from filer.models import ThumbnailOption
 from menus.menu_pool import menu_pool
 from parler.models import TranslatableModel, TranslatedFields
 from sortedm2m.fields import SortedManyToManyField
-from taggit_autosuggest.managers import TaggableManager
 
 from .cms_appconfig import StoriesConfig
 from .fields import slugify
 from .managers import AdminManager, GenericDateTaggedManager, SiteManager
 from .settings import STORIES_PLUGIN_TEMPLATE_FOLDERS as DEFAULT_TEMPLATE_FOLDERS, get_setting
+from .tag_autosuggest import TaggableManager
 
 if apps.is_installed("meta"):
     from meta.models import ModelMeta
@@ -392,7 +393,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = _("post")
         verbose_name_plural = _("posts")
-        ordering = ("-date_published", "-date_created")
+        ordering = (Coalesce("date_published", "date_created").desc(), "-date_created")
         get_latest_by = "date_published"
 
     def __init__(self, *args, **kwargs):
@@ -603,8 +604,8 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
     class Meta:
         verbose_name = _("post content")
         verbose_name_plural = _("post contents")
-        ordering = ("-post__date_published", "-post__date_created")
-        get_latest_by = "date_published"
+        ordering = ("post",)
+        get_latest_by = "post"
 
     # Gruping fields
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

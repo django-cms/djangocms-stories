@@ -6,6 +6,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.db import models
 from django.template.loader import select_template
 
+from .admin import SortedManyToManyAutocompleteMixin
 from .forms import AuthorPostsForm, BlogPluginForm, LatestEntriesForm
 from .models import AuthorEntriesPlugin, PostCategory, FeaturedPostsPlugin, GenericBlogPlugin, LatestPostsPlugin, Post
 from .settings import get_setting
@@ -78,7 +79,7 @@ class BlogLatestEntriesPluginCached(BlogLatestEntriesPlugin):
 
 
 @plugin_pool.register_plugin
-class BlogFeaturedPostsPlugin(StoriesPlugin):
+class BlogFeaturedPostsPlugin(SortedManyToManyAutocompleteMixin, StoriesPlugin):
     """
     Return the selected posts which bypasses cache.
     """
@@ -89,6 +90,7 @@ class BlogFeaturedPostsPlugin(StoriesPlugin):
     cache = False
     base_render_template = "featured_posts.html"
     fields = ["app_config", "posts"]
+    autocomplete_fields = ["posts"]
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""

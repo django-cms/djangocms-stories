@@ -1,10 +1,16 @@
+import os
+from unittest.mock import Mock
+
+import pytest
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory
 from django.urls import resolve, reverse
 from django.utils import lorem_ipsum
 
+from djangocms_stories.cms_apps import StoriesApp
 from djangocms_stories.cms_appconfig import get_app_instance
+from djangocms_stories.views import PostListView
 
 from .utils import publish_if_necessary
 
@@ -73,3 +79,41 @@ def test_apphook(admin_client, simple_wo_placeholder, assert_html_in_response):
             post_content.abstract,
             response,
         )
+
+
+def test_get_root_template_without_page():
+    """Without a page argument the apphook returns None."""
+    assert StoriesApp().get_root_template() is None
+    assert StoriesApp().get_root_template(page=None) is None
+
+
+@pytest.mark.django_db
+def test_get_root_template_with_page_falls_back_to_default(simple_wo_placeholder):
+    """An empty template_prefix falls back to the 'djangocms_stories' folder."""
+    page = Mock(application_namespace=simple_wo_placeholder.namespace)
+
+    template = StoriesApp().get_root_template(page=page)
+
+    assert template == os.path.join("djangocms_stories", PostListView.base_template_name)
+
+
+@pytest.mark.django_db
+def test_get_root_template_uses_config_template_prefix(simple_wo_placeholder):
+    """A configured template_prefix is used as the template folder."""
+    simple_wo_placeholder.template_prefix = "custom/templates"
+    simple_wo_placeholder.save()
+    page = Mock(application_namespace=simple_wo_placeholder.namespace)
+
+    template = StoriesApp().get_root_template(page=page)
+
+    assert template == os.path.join("custom/templates", PostListView.base_template_name)
+
+
+@pytest.mark.django_db
+def test_get_root_template_with_unknown_namespace_falls_back_to_default():
+    """An unknown namespace yields no config and falls back to the default folder."""
+    page = Mock(application_namespace="does-not-exist")
+
+    template = StoriesApp().get_root_template(page=page)
+
+    assert template == os.path.join("djangocms_stories", PostListView.base_template_name)

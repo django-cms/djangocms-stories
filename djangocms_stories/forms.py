@@ -5,10 +5,10 @@ from django.utils.encoding import force_str
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, override
 from parler.forms import TranslatableModelForm
-from taggit_autosuggest.widgets import TagAutoSuggest
 
 from .models import PostCategory, StoriesConfig
 from .settings import get_setting
+from .tag_autosuggest import TagAutoSuggest
 
 User = get_user_model()
 
@@ -72,11 +72,11 @@ class BlogPluginForm(forms.ModelForm):
 
 
 class LatestEntriesForm(BlogPluginForm):
-    """Custom forms for BlogLatestEntriesPlugin to properly load taggit-autosuggest."""
+    """Custom form for BlogLatestEntriesPlugin to load the tag autosuggest widget."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["tags"].widget = TagAutoSuggest("taggit.Tag")
+        self.fields["tags"].widget = TagAutoSuggest()
 
     class Media:
         css = {"all": ("djangocms_stories/css/djangocms_stories_admin.css",)}

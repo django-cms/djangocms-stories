@@ -1,0 +1,810 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-28 10:29+0200\n"
+"PO-Revision-Date: 2014-03-05 18:09+0100\n"
+"Last-Translator: Fabian Braun <fabian@django-cms.org>\n"
+"Language-Team: Bengali\n"
+"Language: bn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:125
+msgid "site"
+msgstr "সাইট"
+
+#: admin.py:149
+msgid "Select app config"
+msgstr "অ্যাপ কনফিগ নির্বাচন করুন"
+
+#: admin.py:150
+msgid "Select the app config for the new object"
+msgstr "নতুন অবজেক্টের জন্য অ্যাপ কনফিগ নির্বাচন করুন"
+
+#: admin.py:267
+#, python-format
+msgid "Add %s"
+msgstr "%s যোগ করুন"
+
+#: admin.py:353 admin.py:425
+msgid "Info"
+msgstr "তথ্য"
+
+#: admin.py:360
+msgid "Image"
+msgstr "ছবি"
+
+#: admin.py:432
+msgid "Images"
+msgstr "ছবিসমূহ"
+
+#: admin.py:436
+msgid "SEO"
+msgstr "SEO"
+
+#: admin.py:475
+msgid "Empty"
+msgstr "খালি"
+
+#: admin.py:495
+msgid "Enable comments for selection"
+msgstr "নির্বাচনের জন্য মন্তব্য সক্রিয় করুন"
+
+#: admin.py:509
+msgid "Disable comments for selection "
+msgstr "নির্বাচনের জন্য মন্তব্য নিষ্ক্রিয় করুন "
+
+#: admin.py:786
+msgid "Generic"
+msgstr "সাধারণ"
+
+#: admin.py:795
+msgid "Layout"
+msgstr "লেআউট"
+
+#: admin.py:812
+msgid "Sitemap"
+msgstr "Sitemap"
+
+#: admin.py:821
+msgid "Meta"
+msgstr "মেটা"
+
+#: admin.py:832 admin.py:844 admin.py:855
+msgid "You can provide plain strings, Post model attribute or method names"
+msgstr "আপনি সাধারণ স্ট্রিং, পোস্ট মডেলের অ্যাট্রিবিউট বা মেথডের নাম দিতে পারেন"
+
+#: apps.py:8 cms_apps.py:16
+msgid "Stories"
+msgstr "স্টোরিসমূহ"
+
+#: cms_appconfig.py:85
+msgid "stories config"
+msgstr "স্টোরি কনফিগ"
+
+#: cms_appconfig.py:86
+msgid "stories configs"
+msgstr "স্টোরি কনফিগসমূহ"
+
+#: cms_appconfig.py:89
+msgid "type"
+msgstr "ধরন"
+
+#: cms_appconfig.py:93
+msgid "instance namespace"
+msgstr "ইনস্ট্যান্স নেমস্পেস"
+
+#: cms_appconfig.py:99
+msgid "application title"
+msgstr "অ্যাপ্লিকেশন শিরোনাম"
+
+#: cms_appconfig.py:100
+msgid "object name"
+msgstr "অবজেক্টের নাম"
+
+#: cms_appconfig.py:110
+msgid "default size of full images"
+msgstr "পূর্ণ ছবির ডিফল্ট আকার"
+
+#: cms_appconfig.py:111
+msgid ""
+"If left empty the image size will have to be set for every newly created "
+"post."
+msgstr ""
+"খালি রাখা হলে প্রতিটি নতুন তৈরি করা পোস্টের জন্য ছবির আকার নির্ধারণ করতে "
+"হবে।"
+
+#: cms_appconfig.py:120
+msgid "default size of thumbnail images"
+msgstr "থাম্বনেইল ছবির ডিফল্ট আকার"
+
+#: cms_appconfig.py:121
+msgid ""
+"If left empty the thumbnail image size will have to be set for every newly "
+"created post."
+msgstr ""
+"খালি রাখা হলে প্রতিটি নতুন তৈরি করা পোস্টের জন্য থাম্বনেইল ছবির আকার নির্ধারণ "
+"করতে হবে।"
+
+#: cms_appconfig.py:126
+msgid "Permalink structure"
+msgstr "পারমালিংক কাঠামো"
+
+#: cms_appconfig.py:130
+msgid "Use placeholder and plugins for article body"
+msgstr "নিবন্ধের মূল অংশের জন্য প্লেসহোল্ডার ও প্লাগইন ব্যবহার করুন"
+
+#: cms_appconfig.py:134
+msgid "Use abstract field"
+msgstr "অ্যাবস্ট্রাক্ট ফিল্ড ব্যবহার করুন"
+
+#: cms_appconfig.py:137
+msgid "Enable related posts"
+msgstr "সম্পর্কিত পোস্ট সক্রিয় করুন"
+
+#: cms_appconfig.py:140
+msgid "No"
+msgstr "না"
+
+#: cms_appconfig.py:141
+msgid "Yes, from this stories config"
+msgstr "হ্যাঁ, এই স্টোরি কনফিগ থেকে"
+
+#: cms_appconfig.py:142
+msgid "Yes, from this site"
+msgstr "হ্যাঁ, এই সাইট থেকে"
+
+#: cms_appconfig.py:147
+msgid "Set author by default"
+msgstr "ডিফল্টভাবে লেখক নির্ধারণ করুন"
+
+#: cms_appconfig.py:151
+msgid "Paginate size"
+msgstr "পেজিনেট আকার"
+
+#: cms_appconfig.py:153
+msgid "When paginating list views, how many articles per page?"
+msgstr "তালিকা ভিউ পেজিনেট করার সময়, প্রতি পৃষ্ঠায় কতগুলো নিবন্ধ?"
+
+#: cms_appconfig.py:160
+msgid "Template prefix"
+msgstr "টেমপ্লেট প্রিফিক্স"
+
+#: cms_appconfig.py:161
+msgid "Alternative directory to load the stories templates from"
+msgstr "স্টোরি টেমপ্লেট লোড করার জন্য বিকল্প ডিরেক্টরি"
+
+#: cms_appconfig.py:166
+msgid "Menu structure"
+msgstr "মেনু কাঠামো"
+
+#: cms_appconfig.py:167
+msgid "Structure of the django CMS menu"
+msgstr "django CMS মেনুর কাঠামো"
+
+#: cms_appconfig.py:171
+msgid "Show empty categories in menu"
+msgstr "মেনুতে খালি ক্যাটাগরিসমূহ দেখান"
+
+#: cms_appconfig.py:172
+msgid "Show categories with no post attached in the menu"
+msgstr "মেনুতে কোনো পোস্ট সংযুক্ত নেই এমন ক্যাটাগরিসমূহ দেখান"
+
+#: cms_appconfig.py:178
+msgid "Sitemap changefreq"
+msgstr "Sitemap changefreq"
+
+#: cms_appconfig.py:179
+msgid "Changefreq attribute for sitemap items"
+msgstr "sitemap আইটেমের জন্য changefreq অ্যাট্রিবিউট"
+
+#: cms_appconfig.py:185
+msgid "Sitemap priority"
+msgstr "Sitemap অগ্রাধিকার"
+
+#: cms_appconfig.py:186
+msgid "Priority attribute for sitemap items"
+msgstr "sitemap আইটেমের জন্য অগ্রাধিকার অ্যাট্রিবিউট"
+
+#: cms_appconfig.py:192
+msgid "Object type"
+msgstr "অবজেক্টের ধরন"
+
+#: cms_appconfig.py:197
+msgid "Facebook type"
+msgstr "Facebook ধরন"
+
+#: cms_appconfig.py:201
+msgid "Facebook application ID"
+msgstr "Facebook অ্যাপ্লিকেশন ID"
+
+#: cms_appconfig.py:203
+msgid "Facebook profile ID"
+msgstr "Facebook প্রোফাইল ID"
+
+#: cms_appconfig.py:205
+msgid "Facebook page URL"
+msgstr "Facebook পৃষ্ঠার URL"
+
+#: cms_appconfig.py:207
+msgid "Facebook author URL"
+msgstr "Facebook লেখকের URL"
+
+#: cms_appconfig.py:209
+msgid "Facebook author"
+msgstr "Facebook লেখক"
+
+#: cms_appconfig.py:213
+msgid "Twitter type"
+msgstr "Twitter ধরন"
+
+#: cms_appconfig.py:217
+msgid "Twitter site handle"
+msgstr "Twitter সাইট হ্যান্ডেল"
+
+#: cms_appconfig.py:219
+msgid "Twitter author handle"
+msgstr "Twitter লেখক হ্যান্ডেল"
+
+#: cms_appconfig.py:223
+msgid "Schema.org type"
+msgstr "Schema.org ধরন"
+
+#: cms_appconfig.py:227
+msgid "Schema.org author name"
+msgstr "Schema.org লেখকের নাম"
+
+#: cms_appconfig.py:230
+msgid "Send notifications on post publish"
+msgstr "পোস্ট প্রকাশের সময় বিজ্ঞপ্তি পাঠান"
+
+#: cms_appconfig.py:232
+msgid "Emits a desktop notification -if enabled- when publishing a new post"
+msgstr "নতুন পোস্ট প্রকাশের সময় -সক্রিয় থাকলে- একটি ডেস্কটপ বিজ্ঞপ্তি দেয়"
+
+#: cms_appconfig.py:236
+msgid "Send notifications on post update"
+msgstr "পোস্ট আপডেটের সময় বিজ্ঞপ্তি পাঠান"
+
+#: cms_appconfig.py:238
+msgid "Emits a desktop notification -if enabled- when editing a published post"
+msgstr "প্রকাশিত পোস্ট সম্পাদনার সময় -সক্রিয় থাকলে- একটি ডেস্কটপ বিজ্ঞপ্তি দেয়"
+
+#: cms_appconfig.py:242
+msgid "untitled"
+msgstr "শিরোনামহীন"
+
+#: cms_config.py:62
+#, python-brace-format
+msgid "New {0}"
+msgstr "নতুন {0}"
+
+#: cms_config.py:67
+#, python-brace-format
+msgid "Create a new {0} in {1}"
+msgstr "{1}-এ একটি নতুন {0} তৈরি করুন"
+
+#: cms_menus.py:25
+msgid "Post category menu"
+msgstr "পোস্ট ক্যাটাগরি মেনু"
+
+#: cms_toolbars.py:38
+msgid "View on site"
+msgstr "সাইটে দেখুন"
+
+#: cms_toolbars.py:45
+msgid "Preview"
+msgstr "প্রিভিউ"
+
+#: cms_toolbars.py:67
+msgid "View Published"
+msgstr "প্রকাশিত দেখুন"
+
+#: cms_toolbars.py:111
+#, python-format
+msgid "%(object_name)s properties"
+msgstr "%(object_name)s বৈশিষ্ট্যসমূহ"
+
+#: cms_toolbars.py:122
+msgid "All entries"
+msgstr "সব এন্ট্রি"
+
+#: cms_toolbars.py:131
+#, python-format
+msgid "New %(object_name)s"
+msgstr "নতুন %(object_name)s"
+
+#: cms_toolbars.py:138
+msgid "Edit Configuration"
+msgstr "কনফিগারেশন সম্পাদনা করুন"
+
+#: cms_wizards.py:23 models.py:124 models.py:371 models.py:809
+msgid "app. config"
+msgstr "অ্যাপ. কনফিগ"
+
+#: cms_wizards.py:92
+msgid "Selected story not available any more. Close wizard."
+msgstr "নির্বাচিত স্টোরি আর উপলব্ধ নেই। উইজার্ড বন্ধ করুন।"
+
+#: feeds.py:38
+#, python-format
+msgid "Blog articles on %(site_name)s"
+msgstr "%(site_name)s-এ Blog নিবন্ধসমূহ"
+
+#: forms.py:97
+msgid "App Config"
+msgstr "অ্যাপ কনফিগ"
+
+#: forms.py:99
+msgid "Select the app config to apply to the new post."
+msgstr "নতুন পোস্টে প্রয়োগ করার জন্য অ্যাপ কনফিগ নির্বাচন করুন।"
+
+#: models.py:116
+msgid "parent"
+msgstr "প্যারেন্ট"
+
+#: models.py:118
+msgid "created at"
+msgstr "তৈরির সময়"
+
+#: models.py:119
+msgid "modified at"
+msgstr "পরিবর্তনের সময়"
+
+#: models.py:125 models.py:372 models.py:810
+msgid "When selecting a value, the form is reloaded to get the updated default"
+msgstr "কোনো মান নির্বাচন করার সময়, আপডেট হওয়া ডিফল্ট পেতে ফর্মটি পুনরায় লোড হয়"
+
+#: models.py:127
+msgid "priority"
+msgstr "অগ্রাধিকার"
+
+#: models.py:129 models.py:324
+msgid "main image"
+msgstr "প্রধান ছবি"
+
+#: models.py:137 models.py:334
+msgid "main image thumbnail"
+msgstr "প্রধান ছবির থাম্বনেইল"
+
+#: models.py:145 models.py:344
+msgid "main image full"
+msgstr "প্রধান ছবি পূর্ণ"
+
+#: models.py:153
+msgid "name"
+msgstr "নাম"
+
+#: models.py:155 models.py:622
+msgid "slug"
+msgstr "স্লাগ"
+
+#: models.py:161
+msgid "category meta description"
+msgstr "ক্যাটাগরি মেটা বিবরণ"
+
+#: models.py:163 models.py:633
+msgid "abstract"
+msgstr "অ্যাবস্ট্রাক্ট"
+
+#: models.py:191
+msgid "post category"
+msgstr "পোস্ট ক্যাটাগরি"
+
+#: models.py:192
+msgid "post categories"
+msgstr "পোস্ট ক্যাটাগরিসমূহ"
+
+#: models.py:251
+msgid "PostCategory (no translation)"
+msgstr "PostCategory (কোনো অনুবাদ নেই)"
+
+#: models.py:286
+msgid "author"
+msgstr "লেখক"
+
+#: models.py:294
+msgid "created"
+msgstr "তৈরি হয়েছে"
+
+#: models.py:297
+msgid "last modified"
+msgstr "সর্বশেষ পরিবর্তিত"
+
+#: models.py:301
+msgid "published since"
+msgstr "প্রকাশিত হয়েছে যখন থেকে"
+
+#: models.py:306
+msgid "published until"
+msgstr "প্রকাশিত থাকবে যতক্ষণ"
+
+#: models.py:312
+msgid "featured date"
+msgstr "ফিচার্ড তারিখ"
+
+#: models.py:315
+msgid "include in RSS feed"
+msgstr "RSS ফিডে অন্তর্ভুক্ত করুন"
+
+#: models.py:319
+msgid "category"
+msgstr "ক্যাটাগরি"
+
+#: models.py:353
+msgid "enable comments on post"
+msgstr "পোস্টে মন্তব্য সক্রিয় করুন"
+
+#: models.py:359
+msgid "Site(s)"
+msgstr "সাইট(সমূহ)"
+
+#: models.py:362
+msgid ""
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
+msgstr ""
+"যে সাইটগুলোতে পোস্ট দেখাতে চান সেগুলো নির্বাচন করুন। কোনোটি নির্ধারণ না করলে এটি "
+"কনফিগার করা সব সাইটে দৃশ্যমান হবে।"
+
+#: models.py:379
+msgid ""
+"Type a tag and hit tab, or start typing and select from autocomplete list."
+msgstr ""
+"একটি ট্যাগ টাইপ করে ট্যাব চাপুন, অথবা টাইপ করা শুরু করে অটোকমপ্লিট তালিকা থেকে "
+"নির্বাচন করুন।"
+
+#: models.py:385
+msgid "Related Posts"
+msgstr "সম্পর্কিত পোস্টসমূহ"
+
+#: models.py:394
+msgid "post"
+msgstr "পোস্ট"
+
+#: models.py:395
+msgid "posts"
+msgstr "পোস্টসমূহ"
+
+#: models.py:406
+msgid "Post (no translation)"
+msgstr "Post (কোনো অনুবাদ নেই)"
+
+#: models.py:517 models.py:752
+msgid "No title"
+msgstr "কোনো শিরোনাম নেই"
+
+#: models.py:605
+msgid "post content"
+msgstr "পোস্ট কন্টেন্ট"
+
+#: models.py:606
+msgid "post contents"
+msgstr "পোস্ট কন্টেন্টসমূহ"
+
+#: models.py:614
+msgid "language"
+msgstr "ভাষা"
+
+#: models.py:618
+msgid "title"
+msgstr "শিরোনাম"
+
+#: models.py:630
+msgid "subtitle"
+msgstr "উপশিরোনাম"
+
+#: models.py:636
+msgid "post meta description"
+msgstr "পোস্ট মেটা বিবরণ"
+
+#: models.py:639
+msgid "post meta keywords"
+msgstr "পোস্ট মেটা কীওয়ার্ড"
+
+#: models.py:643
+msgid "post meta title"
+msgstr "পোস্ট মেটা শিরোনাম"
+
+#: models.py:644
+msgid "used in title tag and social sharing"
+msgstr "টাইটেল ট্যাগ এবং সোশ্যাল শেয়ারিংয়ে ব্যবহৃত হয়"
+
+#: models.py:651
+msgid "text"
+msgstr "টেক্সট"
+
+#: models.py:801
+msgid "Untitled"
+msgstr "শিরোনামহীন"
+
+#: models.py:813
+msgid "current site"
+msgstr "বর্তমান সাইট"
+
+#: models.py:813
+msgid "Select items from the current site only"
+msgstr "শুধুমাত্র বর্তমান সাইট থেকে আইটেম নির্বাচন করুন"
+
+#: models.py:817
+msgid "Plugin layout"
+msgstr "প্লাগইন লেআউট"
+
+#: models.py:818
+msgid "Select plugin layout to load for this instance"
+msgstr "এই ইনস্ট্যান্সের জন্য লোড করতে প্লাগইন লেআউট নির্বাচন করুন"
+
+#: models.py:862 models.py:903
+msgid "entries"
+msgstr "এন্ট্রিসমূহ"
+
+#: models.py:864
+msgid "The number of latests entries to be displayed."
+msgstr "প্রদর্শিত হওয়ার জন্য সর্বশেষ এন্ট্রির সংখ্যা।"
+
+#: models.py:867
+msgid "filter by tag"
+msgstr "ট্যাগ অনুযায়ী ফিল্টার করুন"
+
+#: models.py:869
+msgid "Show only the entries tagged with chosen tags."
+msgstr "শুধুমাত্র নির্বাচিত ট্যাগ দিয়ে ট্যাগ করা এন্ট্রিগুলো দেখান।"
+
+#: models.py:875
+msgid "filter by category"
+msgstr "ক্যাটাগরি অনুযায়ী ফিল্টার করুন"
+
+#: models.py:876
+msgid "Show only the posts of the chosen categories."
+msgstr "শুধুমাত্র নির্বাচিত ক্যাটাগরিসমূহের পোস্টগুলো দেখান।"
+
+#: models.py:880
+#, python-format
+msgid "%s latest posts by tag"
+msgstr "ট্যাগ অনুযায়ী %s সর্বশেষ পোস্ট"
+
+#: models.py:900
+msgid "authors"
+msgstr "লেখকগণ"
+
+#: models.py:905
+msgid "The number of author entries to be displayed."
+msgstr "প্রদর্শিত হওয়ার জন্য লেখক এন্ট্রির সংখ্যা।"
+
+#: models.py:909
+#, python-format
+msgid "%s latest entries by author"
+msgstr "লেখক অনুযায়ী %s সর্বশেষ এন্ট্রি"
+
+#: models.py:929 models.py:932
+msgid "Featured posts"
+msgstr "ফিচার্ড পোস্টসমূহ"
+
+#: models.py:954
+msgid "generic blog plugin"
+msgstr "সাধারণ blog প্লাগইন"
+
+#: settings.py:27
+msgid "Full date"
+msgstr "পূর্ণ তারিখ"
+
+#: settings.py:28
+msgid "Year /  Month"
+msgstr "বছর /  মাস"
+
+#: settings.py:29 templates/djangocms_stories/post_list.html:14
+msgid "Category"
+msgstr "ক্যাটাগরি"
+
+#: settings.py:30
+msgid "Just slug"
+msgstr "শুধু স্লাগ"
+
+#: settings.py:49
+msgid "Categories and posts"
+msgstr "ক্যাটাগরিসমূহ এবং পোস্টসমূহ"
+
+#: settings.py:50
+msgid "Categories only"
+msgstr "শুধুমাত্র ক্যাটাগরিসমূহ"
+
+#: settings.py:51
+msgid "Posts only"
+msgstr "শুধুমাত্র পোস্টসমূহ"
+
+#: settings.py:52
+msgid "None"
+msgstr "কোনোটিই নয়"
+
+#: settings.py:56
+msgid "always"
+msgstr "সর্বদা"
+
+#: settings.py:57
+msgid "hourly"
+msgstr "প্রতি ঘণ্টায়"
+
+#: settings.py:58
+msgid "daily"
+msgstr "প্রতিদিন"
+
+#: settings.py:59
+msgid "weekly"
+msgstr "প্রতি সপ্তাহে"
+
+#: settings.py:60
+msgid "monthly"
+msgstr "প্রতি মাসে"
+
+#: settings.py:61
+msgid "yearly"
+msgstr "প্রতি বছরে"
+
+#: settings.py:62
+msgid "never"
+msgstr "কখনো নয়"
+
+#: settings.py:357
+msgid "Article"
+msgstr "নিবন্ধ"
+
+#: settings.py:378 settings.py:385
+msgid "Blog"
+msgstr "Blog"
+
+#: settings.py:472
+msgid "Posts"
+msgstr "পোস্টসমূহ"
+
+#: settings.py:479
+msgid "Latest Blog Articles"
+msgstr "সর্বশেষ Blog নিবন্ধসমূহ"
+
+#: settings.py:486
+msgid "Latest Blog Articles - Cache"
+msgstr "সর্বশেষ Blog নিবন্ধসমূহ - ক্যাশ"
+
+#: settings.py:493
+msgid "Author Blog Articles"
+msgstr "লেখকের Blog নিবন্ধসমূহ"
+
+#: settings.py:500
+msgid "Author Blog Articles List"
+msgstr "লেখকের Blog নিবন্ধসমূহের তালিকা"
+
+#: settings.py:507 templates/djangocms_stories/plugins/tags.html:5
+msgid "Tags"
+msgstr "ট্যাগসমূহ"
+
+#: settings.py:514 templates/djangocms_stories/plugins/categories.html:3
+msgid "Categories"
+msgstr "ক্যাটাগরিসমূহ"
+
+#: settings.py:521 templates/djangocms_stories/plugins/archive.html:3
+#: templates/djangocms_stories/post_list.html:12
+msgid "Archive"
+msgstr "আর্কাইভ"
+
+#: settings.py:528
+msgid "Featured Posts"
+msgstr "ফিচার্ড পোস্টসমূহ"
+
+#: settings.py:535
+msgid "Featured Posts - Cache"
+msgstr "ফিচার্ড পোস্টসমূহ - ক্যাশ"
+
+#: settings.py:570
+msgid "Default template"
+msgstr "ডিফল্ট টেমপ্লেট"
+
+#: tag_autosuggest.py:62
+msgid "Type a tag and hit enter"
+msgstr "একটি ট্যাগ টাইপ করে এন্টার চাপুন"
+
+#: templates/admin/djangocms_stories/post/change_list.html:4
+msgid "Language"
+msgstr "ভাষা"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:3
+msgid "Home"
+msgstr "হোম"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:5
+msgid "Blog articles"
+msgstr "Blog নিবন্ধসমূহ"
+
+#: templates/admin/djangocms_versioning/djangocms_blog/postcontent/versioning_breadcrumbs.html:7
+msgid "Versions"
+msgstr "সংস্করণসমূহ"
+
+#: templates/djangocms_stories/category_list.html:11
+#: templates/djangocms_stories/plugins/archive.html:26
+#: templates/djangocms_stories/plugins/authors_posts.html:12
+#: templates/djangocms_stories/plugins/latest_entries.html:7
+#: templates/djangocms_stories/plugins/tags.html:17
+#: templates/djangocms_stories/post_list.html:26
+msgid "No article found."
+msgstr "কোনো নিবন্ধ পাওয়া যায়নি।"
+
+#: templates/djangocms_stories/category_list.html:14
+#: templates/djangocms_stories/post_list.html:29
+msgid "Back"
+msgstr "পেছনে"
+
+#: templates/djangocms_stories/category_list.html:19
+#: templates/djangocms_stories/post_list.html:34
+msgid "previous"
+msgstr "পূর্ববর্তী"
+
+#: templates/djangocms_stories/category_list.html:22
+#: templates/djangocms_stories/post_list.html:37
+msgid "Page"
+msgstr "পৃষ্ঠা"
+
+#: templates/djangocms_stories/category_list.html:22
+#: templates/djangocms_stories/post_list.html:37
+msgid "of"
+msgstr "এর"
+
+#: templates/djangocms_stories/category_list.html:25
+#: templates/djangocms_stories/post_list.html:40
+msgid "next"
+msgstr "পরবর্তী"
+
+#: templates/djangocms_stories/includes/post_item.html:38
+msgid "read more"
+msgstr "আরও পড়ুন"
+
+#: templates/djangocms_stories/plugins/archive.html:17
+#: templates/djangocms_stories/plugins/categories.html:10
+#: templates/djangocms_stories/plugins/tags.html:12
+#, python-format
+msgid "1 article"
+msgid_plural "%(articles)s articles"
+msgstr[0] "১টি নিবন্ধ"
+msgstr[1] "%(articles)s টি নিবন্ধ"
+
+#: templates/djangocms_stories/plugins/archive.html:18
+#: templates/djangocms_stories/plugins/authors.html:11
+#: templates/djangocms_stories/plugins/categories.html:11
+#: templates/djangocms_stories/plugins/tags.html:13
+msgid "0 articles"
+msgstr "০টি নিবন্ধ"
+
+#: templates/djangocms_stories/plugins/authors.html:3
+#: templates/djangocms_stories/plugins/authors_posts.html:3
+msgid "Authors"
+msgstr "লেখকগণ"
+
+#: templates/djangocms_stories/plugins/authors.html:10
+#, python-format
+msgid "(1 article)"
+msgid_plural "(%(articles)s articles)"
+msgstr[0] "(১টি নিবন্ধ)"
+msgstr[1] "(%(articles)s টি নিবন্ধ)"
+
+#: templates/djangocms_stories/plugins/authors.html:15
+msgid "No author found."
+msgstr "কোনো লেখক পাওয়া যায়নি।"
+
+#: templates/djangocms_stories/plugins/authors_posts.html:7
+#: templates/djangocms_stories/post_list.html:11
+msgid "Articles by"
+msgstr "নিবন্ধসমূহ লিখেছেন"
+
+#: templates/djangocms_stories/plugins/categories.html:15
+msgid "No categories found."
+msgstr "কোনো ক্যাটাগরি পাওয়া যায়নি।"
+
+#: templates/djangocms_stories/post_list.html:13
+msgid "Tag"
+msgstr "ট্যাগ"
