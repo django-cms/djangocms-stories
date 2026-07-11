@@ -48,18 +48,15 @@ Add ``djangocms_stories`` and ``djangocms_text`` to your ``INSTALLED_APPS`` in y
 
         # For now, but probably not needed in the future
         'taggit',
-        'taggit_autosuggest',
         'meta',
         # ...
     ]
 
-To use taggit's autosuggest feature, add their URLS in ``urls.py``:
+.. note::
 
-.. code-block:: python
-
-    urlpatterns += [path('taggit_autosuggest/', include('taggit_autosuggest.urls'))]
-
-
+    Since version 0.9.3, djangocms-stories no longer depends on
+    ``django-taggit-autosuggest``. When upgrading, remove ``taggit_autosuggest``
+    from ``INSTALLED_APPS`` unless your project requires it for another purpose.
 
 *****************************
 Migrating from djangocms-blog
