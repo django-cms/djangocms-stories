@@ -31,7 +31,7 @@ from .models import PostCategory, StoriesConfig, Post, PostContent
 from .settings import get_setting
 from .utils import is_versioning_enabled
 
-CMS_50_PLUS = cms_version >= "5"
+CMS_50_PLUS = int(cms_version.split(".")[0]) >= 5
 
 signal_dict = {}
 admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
