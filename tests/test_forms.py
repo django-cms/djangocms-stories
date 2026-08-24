@@ -70,7 +70,7 @@ def test_blog_plugin_form_init_without_template_folder_field():
 def test_latest_entries_form_init_sets_tag_widget(simple_wo_placeholder):
     """Test that LatestEntriesForm sets TagAutoSuggest widget for tags field"""
     from djangocms_stories.models import LatestPostsPlugin
-    from taggit_autosuggest.widgets import TagAutoSuggest
+    from djangocms_stories.tag_autosuggest import TagAutoSuggest
 
     with patch("djangocms_stories.forms.get_setting") as mock_get_setting:
         mock_get_setting.return_value = [("default", "Default")]

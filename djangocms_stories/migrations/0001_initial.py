@@ -2,13 +2,13 @@
 
 import django.db.models.deletion
 import djangocms_stories.models
+import djangocms_stories.tag_autosuggest
 import djangocms_text.fields
 import filer.fields.image
 import meta.models
 import parler.fields
 import parler.models
 import sortedm2m.fields
-import taggit_autosuggest.managers
 from django.conf import settings
 from django.db import migrations, models
 
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
                 ('main_image_thumbnail', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='djangocms_stories_post_thumbnail', to='filer.thumbnailoption', verbose_name='main image thumbnail')),
                 ('related', sortedm2m.fields.SortedManyToManyField(blank=True, help_text=None, to='djangocms_stories.post', verbose_name='Related Posts')),
                 ('sites', models.ManyToManyField(blank=True, help_text='Select sites in which to show the post. If none is set it will be visible in all the configured sites.', to='sites.site', verbose_name='Site(s)')),
-                ('tags', taggit_autosuggest.managers.TaggableManager(blank=True, help_text='Type a tag and hit tab, or start typing and select from autocomplete list.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags')),
+                ('tags', djangocms_stories.tag_autosuggest.TaggableManager(blank=True, help_text='Type a tag and hit tab, or start typing and select from autocomplete list.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags')),
                 ('categories', models.ManyToManyField(blank=True, related_name='posts', to='djangocms_stories.postcategory', verbose_name='category')),
             ],
             options={
@@ -156,7 +156,7 @@ class Migration(migrations.Migration):
                 ('current_site', models.BooleanField(default=True, help_text='Select items from the current site only', verbose_name='current site')),
                 ('template_folder', models.CharField(choices=[('plugins', 'Default template')], default='plugins', help_text='Select plugin layout to load for this instance', max_length=200, verbose_name='Plugin layout')),
                 ('latest_posts', models.IntegerField(default=5, help_text='The number of latests entries to be displayed.', verbose_name='entries')),
-                ('tags', taggit_autosuggest.managers.TaggableManager(blank=True, help_text='Show only the entries tagged with chosen tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='filter by tag')),
+                ('tags', djangocms_stories.tag_autosuggest.TaggableManager(blank=True, help_text='Show only the entries tagged with chosen tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='filter by tag')),
                 ('categories', models.ManyToManyField(blank=True, help_text='Show only the posts of the chosen categories.', to='djangocms_stories.postcategory', verbose_name='filter by category')),
                 ('app_config', models.ForeignKey(help_text='When selecting a value, the form is reloaded to get the updated default', null=True, on_delete=django.db.models.deletion.CASCADE, to='djangocms_stories.storiesconfig', verbose_name='app. config')),
             ],

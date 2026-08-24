@@ -31,6 +31,7 @@ jobs:
         python -m pip install --upgrade pip uv
         uv pip install --system -r ./tests/requirements/${{ matrix.requirements }}
         uv pip install --system aldryn-apphooks-config
+        uv pip install --system django-taggit-autosuggest
     - name: Create djangocms-blog setup
       run: |
         python tests/test_migrations/run_migration_tests.py --phase1

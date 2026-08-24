@@ -24,6 +24,7 @@ from django.urls import Resolver404, path, resolve
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
 from parler.admin import TranslatableAdmin
+from sortedm2m.fields import SortedManyToManyField
 
 from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
 from .models import Post, PostCategory, PostContent, StoriesConfig
@@ -35,7 +36,23 @@ admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
 
 
 class SortedAutocompleteSelectMultiple(AutocompleteSelectMultiple):
-    """Preserve the order of ``value`` when rendering selected choices."""
+    """Autocomplete widget that preserves the order of a ``SortedManyToManyField``.
+
+    The order of ``value`` is preserved when rendering selected choices, and the
+    ``sorted-autocomplete`` class together with the bundled JS makes the selected
+    choices drag-and-drop sortable.
+    """
+
+    class Media:
+        js = (
+            "djangocms_stories/js/Sortable.min.js",
+            "djangocms_stories/js/sorted-autocomplete.js",
+        )
+
+    def build_attrs(self, base_attrs, extra_attrs=None):
+        attrs = super().build_attrs(base_attrs, extra_attrs=extra_attrs)
+        attrs["class"] = f"{attrs.get('class', '')} sorted-autocomplete".strip()
+        return attrs
 
     def optgroups(self, name, value, attr=None):
         groups = super().optgroups(name, value, attr)
@@ -43,6 +60,20 @@ class SortedAutocompleteSelectMultiple(AutocompleteSelectMultiple):
         for _group_name, subgroup, _index in groups:
             subgroup.sort(key=lambda opt: order.get(str(opt["value"]), len(order)))
         return groups
+
+
+class SortedManyToManyAutocompleteMixin:
+    """Render ``SortedManyToManyField``s listed in ``autocomplete_fields`` with an
+    order-preserving autocomplete widget instead of the unsorted default."""
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if (
+            "widget" not in kwargs
+            and isinstance(db_field, SortedManyToManyField)
+            and db_field.name in self.get_autocomplete_fields(request)
+        ):
+            kwargs["widget"] = SortedAutocompleteSelectMultiple(db_field, self.admin_site, using=kwargs.get("using"))
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
 def register_extension(klass):
@@ -343,6 +374,7 @@ class CategoryAdmin(FrontendEditableAdminMixin, TranslatableAdmin):
 
 @admin.register(Post)
 class PostAdmin(
+    SortedManyToManyAutocompleteMixin,
     FrontendEditableAdminMixin,
     ModelAppHookConfig,
     GrouperModelAdmin,
@@ -371,12 +403,6 @@ class PostAdmin(
         "enable_comments",
         "disable_comments",
     ]
-
-    class Media:
-        js = (
-            "djangocms_stories/js/Sortable.min.js",
-            "djangocms_stories/js/related-sortable.js",
-        )
 
     _fieldsets = [
         (
@@ -658,7 +684,9 @@ class PostAdmin(
 
         prefetch_lookups = getattr(qs, "_prefetch_related_lookups", ())
         already_prefetched = any(
-            isinstance(p, models.Prefetch) and p.lookup == "postcontent_set" and p.to_attr == "_admin_prefetch_cache"
+            isinstance(p, models.Prefetch)
+            and p.prefetch_through == "postcontent_set"
+            and p.to_attr == "_admin_prefetch_cache"
             for p in prefetch_lookups
         )
         if not already_prefetched:
@@ -674,16 +702,16 @@ class PostAdmin(
     def get_content_obj(self, obj):
         if obj is None or isinstance(obj, self.content_model):
             return obj
-        if obj in self._content_obj_cache:
-            return self._content_obj_cache[obj]
+        if hasattr(obj, "_content_obj_cache"):
+            return obj._content_obj_cache
         if hasattr(obj, "_admin_prefetch_cache"):
             for content_obj in obj._admin_prefetch_cache:
                 if all(
                     getattr(content_obj, key, None) == value for key, value in self.current_content_filters.items()
                 ):
-                    self._content_obj_cache[obj] = content_obj
+                    obj._content_obj_cache = content_obj
                     return content_obj
-            self._content_obj_cache[obj] = None
+            obj._content_obj_cache = None
             return None
         return super().get_content_obj(obj)
 
@@ -707,14 +735,13 @@ class PostAdmin(
                 qs = qs.exclude(pk=resolved.kwargs["object_id"])
 
             kwargs["queryset"] = qs
-            kwargs["widget"] = SortedAutocompleteSelectMultiple(db_field, self.admin_site, using=kwargs.get("using"))
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
     def get_search_results(self, request, queryset, search_term):
         queryset, may_have_duplicates = super().get_search_results(request, queryset, search_term)
         if request.GET.get("field_name") == "related":
-            referer = request.META.get("HTTP_REFERER", "")
+            referer = request.headers.get("referer", "")
             if referer:
                 try:
                     object_id = resolve(urlparse(referer).path).kwargs.get("object_id")
