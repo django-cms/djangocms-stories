@@ -1,7 +1,6 @@
 import pytest
 from cms.toolbar.utils import get_object_preview_url
 from django.apps import apps
-from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils.lorem_ipsum import words
 
@@ -17,18 +16,10 @@ def page_content(admin_user):
         title="Test Page",
         template="base.html",
         language="en",
+        created_by=admin_user,
     )
     page_content = PageContent.admin_manager.get(page=page, language="en")
-    if apps.is_installed("djangocms_versioning"):
-        from djangocms_versioning.models import Version
-        from djangocms_versioning.constants import PUBLISHED
-
-        version, _ = Version.objects.get_or_create(
-            content_type=ContentType.objects.get_for_model(page_content),
-            object_id=page_content.pk,
-            created_by=admin_user,
-            state=PUBLISHED,
-        )
+    publish_if_necessary([page_content], admin_user)
     return page_content
 
 

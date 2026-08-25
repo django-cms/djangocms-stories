@@ -1,6 +1,7 @@
 from copy import deepcopy
 from urllib.parse import urlparse
 
+from cms import __version__ as cms_version
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from cms.admin.utils import GrouperModelAdmin
 from cms.models import ValidationError
@@ -29,6 +30,8 @@ from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
 from .models import PostCategory, StoriesConfig, Post, PostContent
 from .settings import get_setting
 from .utils import is_versioning_enabled
+
+CMS_50_PLUS = int(cms_version.split(".")[0]) >= 5
 
 signal_dict = {}
 admin_namespace = get_cms_setting("ADMIN_NAMESPACE")
@@ -396,6 +399,10 @@ class PostAdmin(
     readonly_fields = ("date_created", "date_modified")
     date_hierarchy = "date_published"
     autocomplete_fields = ["author", "related"]
+    if CMS_50_PLUS:
+        prepopulated_fields = {
+            "content__slug": ["content__title"],
+        }
     frontend_editable_fields = ("title", "abstract", "post_text")
     enhance_exclude = ("main_image", "tags")
     actions = [
