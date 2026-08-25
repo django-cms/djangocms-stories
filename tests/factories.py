@@ -1,6 +1,7 @@
 import uuid
-from datetime import timezone
+from datetime import timedelta, timezone
 
+from django.utils.timezone import now
 import factory
 from django.apps import apps
 from django.contrib.auth import get_user_model
@@ -67,8 +68,8 @@ class PostFactory(DjangoModelFactory):
         PostCategoryFactory,
         size=2,  # Adjust the number of categories as needed
     )
-    date_published = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
-    date_published_end = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
+    date_published = factory.LazyFunction(lambda: now() - timedelta(days=1))
+    date_published_end = None  # never expires by default.
     date_featured = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
 
 

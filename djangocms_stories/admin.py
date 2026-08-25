@@ -9,6 +9,7 @@ from cms.utils import get_language_from_request
 from cms.utils.conf import get_cms_setting
 from cms.utils.urlutils import admin_reverse
 from django import forms
+from django.apps import apps
 from django.contrib import admin, messages
 from django.contrib.admin import helpers
 from django.contrib.admin.options import IS_POPUP_VAR, TO_FIELD_VAR, InlineModelAdmin, get_content_type_for_model
@@ -27,7 +28,7 @@ from parler.admin import TranslatableAdmin
 from sortedm2m.fields import SortedManyToManyField
 
 from .forms import AppConfigForm, CategoryAdminForm, StoriesConfigForm
-from .models import PostCategory, StoriesConfig, Post, PostContent
+from .models import Post, PostCategory, PostContent, StoriesConfig
 from .settings import get_setting
 from .utils import is_versioning_enabled
 
@@ -628,6 +629,17 @@ class PostAdmin(
             config = obj.app_config
 
         fsets = deepcopy(self._fieldsets)
+
+        if apps.is_installed("djangocms_timed_publishing"):
+            self.date_hierarchy = None
+
+            time_published_fields = {"date_published", "date_published_end"}
+            for _, fieldset_options in fsets:
+                fields = fieldset_options.get("fields", [])
+                for i, field_entry in enumerate(fields):
+                    if isinstance(field_entry, list):
+                        fields[i] = [f for f in field_entry if f not in time_published_fields]
+
         related_posts = []
         abstract = bool(getattr(config, "use_abstract", get_setting("USE_ABSTRACT")))
         placeholder = bool(getattr(config, "use_placeholder", get_setting("USE_PLACEHOLDER")))
