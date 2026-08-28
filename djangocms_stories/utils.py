@@ -1,6 +1,8 @@
 import inspect
 from django.apps import apps
 from django.conf import settings
+from .cms_appconfig import DEFAULT_TEMPLATE_STYLES, DEFAULT_TEMPLATE_STYLE
+
 
 
 _versioning_enabled = None if "djangocms_versioning" in settings.INSTALLED_APPS else False
@@ -31,3 +33,19 @@ def site_compatibility_decorator(func):
     if len(sig.parameters) >= 1:
         return func
     return lambda request: func()
+
+
+
+def get_template(template_name, app_config=None):
+    """
+    Resolves a template path based on the apphook config's template style.
+    How to use it:
+        template = get_template("post_list.html", app_config=config)
+    """
+    if app_config and hasattr(app_config, 'get_template_style'):
+        style = app_config.get_template_style()
+    else:
+        style = DEFAULT_TEMPLATE_STYLES[0][1] if DEFAULT_TEMPLATE_STYLES else DEFAULT_TEMPLATE_STYLE
+
+
+    return f"{style}/{template_name}"
