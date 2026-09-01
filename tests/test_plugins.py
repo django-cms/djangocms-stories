@@ -72,6 +72,48 @@ def test_blog_latest_entries_plugin(
 
 
 @pytest.mark.django_db
+def test_blog_latest_entries_plugin_featured_first(placeholder, admin_user, simple_w_placeholder):
+    """The latest entries plugin lists featured posts first, unless it opts out."""
+    import datetime
+
+    from cms import api
+    from django.test import RequestFactory
+    from django.utils.timezone import now
+
+    from .factories import PostContentFactory
+
+    older, newer = (
+        PostContentFactory(
+            language="en",
+            post__app_config=simple_w_placeholder,
+            post__date_published=now() - datetime.timedelta(days=days),
+            post__date_featured=None,
+        )
+        for days in (20, 10)
+    )
+    publish_if_necessary([older, newer], admin_user)
+    older.post.date_featured = now() - datetime.timedelta(days=1)
+    older.post.save()
+
+    plugin = api.add_plugin(
+        placeholder,
+        "BlogLatestEntriesPlugin",
+        "en",
+        app_config=simple_w_placeholder,
+    )
+    instance = plugin.get_plugin_instance()[0]
+    request = RequestFactory().get("/")
+
+    assert instance.featured_first is True
+    assert list(instance.get_post_contents(request)) == [older, newer]
+
+    instance.featured_first = False
+    instance.save()
+
+    assert list(instance.get_post_contents(request)) == [newer, older]
+
+
+@pytest.mark.django_db
 def test_blog_featured_posts_plugin(placeholder, admin_client, simple_w_placeholder, assert_html_in_response):
     import random
 
@@ -273,7 +315,7 @@ def test_blog_archive_plugin(placeholder, admin_client, simple_w_placeholder, as
     post = post_content.post
     response = admin_client.get(url)
 
-    assert_html_in_response(f'<a href="/en/blog/{post.date_featured.year}/{post.date_featured.month}/">', response)
+    assert_html_in_response(f'<a href="/en/blog/{post.date.year}/{post.date.month}/">', response)
     assert_html_in_response("<span>( 1 article )</span>", response)
 
 

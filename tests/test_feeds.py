@@ -141,6 +141,35 @@ def test_latest_entries_feed_items(page_with_menu):
 
 
 @pytest.mark.django_db
+def test_latest_entries_feed_ignores_featured(page_with_menu):
+    """Featuring a post must not pin it to the top of the feed: feeds stay chronological."""
+
+    app_config = StoriesConfig.objects.get(namespace=page_with_menu.application_namespace)
+    factory = RequestFactory()
+    request = factory.get("/feed/")
+    request.path = f"/{app_config.namespace}/feed/"
+
+    posts = list(Post.objects.filter(app_config=app_config))
+    oldest = min(posts, key=lambda post: post.date)
+    oldest.date_featured = timezone.now() - timedelta(days=1)
+    oldest.save()
+
+    # The featured post is first in the regular post order ...
+    assert Post.objects.filter(app_config=app_config).first() == oldest
+
+    with patch("djangocms_stories.feeds.get_app_instance") as mock_get_app:
+        mock_get_app.return_value = (app_config.namespace, app_config)
+        feed = LatestEntriesFeed()
+        feed(request)
+
+        items = list(feed.items())
+
+    # ... but not in the feed
+    assert items[-1] == oldest
+    assert [item.date for item in items] == sorted((item.date for item in items), reverse=True)
+
+
+@pytest.mark.django_db
 def test_latest_entries_feed_items_respects_limit(page_with_menu):
     """Test that feed items respects FEED_LATEST_ITEMS setting"""
 

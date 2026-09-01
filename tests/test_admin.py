@@ -215,6 +215,37 @@ def test_postadmin_bulk_disable_comments(admin_client, default_config, assert_ht
         assert post.enable_comments is False
 
 
+def test_postadmin_bulk_feature(admin_client, default_config, assert_html_in_response):
+    # Create some posts which are not featured
+    from .factories import PostFactory
+
+    posts = PostFactory.create_batch(4, date_featured=None, app_config=default_config)
+    for post in posts:
+        assert not post.featured()
+
+    url = reverse("admin:djangocms_stories_post_changelist")
+    data = {
+        "action": "feature",
+        "_selected_action": [post.pk for post in posts],
+    }
+    response = admin_client.post(url, data, follow=True)
+    assert_html_in_response('<ul class="messagelist"><li class="info">4 entries featured.</li></ul>', response)
+    for post in posts:
+        post.refresh_from_db()
+        assert post.featured()
+
+    # ... and remove them from the featured posts again
+    data["action"] = "unfeature"
+    response = admin_client.post(url, data, follow=True)
+    assert_html_in_response(
+        '<ul class="messagelist"><li class="info">4 entries removed from featured.</li></ul>', response
+    )
+    for post in posts:
+        post.refresh_from_db()
+        assert post.date_featured is None
+        assert not post.featured()
+
+
 def test_post_change_admin(admin_client, default_config, assert_html_in_response):
     from .factories import PostFactory
 
@@ -240,8 +271,10 @@ def test_post_change_admin(admin_client, default_config, assert_html_in_response
     )
 
     # Both post and post content fields are present
-    if DJANGO_VERSION >= (6,1):
-        assert_html_in_response('<legend class="inline" for="id_author">Author:</legend>', response)  # Post author field
+    if DJANGO_VERSION >= (6, 1):
+        assert_html_in_response(
+            '<legend class="inline" for="id_author">Author:</legend>', response
+        )  # Post author field
     else:
         assert_html_in_response('<label class="inline" for="id_author">Author:</label>', response)  # Post author field
     assert_html_in_response(

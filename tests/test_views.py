@@ -96,8 +96,37 @@ def test_post_list_view(admin_client, admin_user, default_config):
     # Check that the post_content appears in the list
     for post_content in post_contents:
         absolute_url = post_content.get_absolute_url()
-        assert f'<article id="post-{post_content.slug}" class="post-item">' in content
+        assert f'<article id="post-{post_content.slug}" class="post-item' in content
         assert f'<h3><a href="{absolute_url}">{post_content.title}</a></h3>' in content
+
+
+@pytest.mark.django_db
+def test_post_list_view_features_posts_first(admin_client, admin_user, default_config):
+    """Featured posts head the post list, archives stay strictly chronological."""
+    import datetime
+
+    from .factories import PostContentFactory
+
+    older, newer = (
+        PostContentFactory(
+            language="en",
+            post__app_config=default_config,
+            post__date_published=now() - datetime.timedelta(days=days),
+            post__date_featured=None,
+        )
+        for days in (20, 10)
+    )
+    publish_if_necessary([older, newer], admin_user)
+    older.post.date_featured = now() - datetime.timedelta(days=1)
+    older.post.save()
+
+    content = admin_client.get(reverse("djangocms_stories:posts-latest")).content.decode("utf-8")
+    assert content.index(f'id="post-{older.slug}"') < content.index(f'id="post-{newer.slug}"')
+    assert f'<article id="post-{older.slug}" class="post-item post-item-featured">' in content
+
+    archive_url = reverse("djangocms_stories:posts-archive", kwargs={"year": now().year})
+    content = admin_client.get(archive_url).content.decode("utf-8")
+    assert content.index(f'id="post-{newer.slug}"') < content.index(f'id="post-{older.slug}"')
 
 
 @pytest.mark.django_db
@@ -121,10 +150,10 @@ def test_post_archive_view(admin_client, admin_user, default_config):
     # Check that the post_content appears in the list
     for post_content in post_contents:
         if post_content.post.date_published.year != post_contents[0].post.date_published.year:
-            assert f'<article id="post-{post_content.slug}" class="post-item">' not in content
+            assert f'<article id="post-{post_content.slug}" class="post-item' not in content
             continue
         absolute_url = post_content.get_absolute_url()
-        assert f'<article id="post-{post_content.slug}" class="post-item">' in content
+        assert f'<article id="post-{post_content.slug}" class="post-item' in content
         assert f'<h3><a href="{absolute_url}">{post_content.title}</a></h3>' in content
 
 
@@ -177,10 +206,10 @@ def test_post_author_view(admin_client, admin_user, default_config, assert_html_
     # Check that the post_content appears in the list
     for post_content in post_contents:
         if post_content.post.author != author:
-            assert f'<article id="post-{post_content.slug}" class="post-item">' not in content
+            assert f'<article id="post-{post_content.slug}" class="post-item' not in content
             continue
         absolute_url = post_content.get_absolute_url()
-        assert f'<article id="post-{post_content.slug}" class="post-item">' in content
+        assert f'<article id="post-{post_content.slug}" class="post-item' in content
         assert f'<h3><a href="{absolute_url}">{post_content.title}</a></h3>' in content
 
 
@@ -208,7 +237,7 @@ def test_post_category_view(client, admin_user, default_config):
     # Check that the post_content appears in the list
     for post_content in post_contents:
         absolute_url = post_content.get_absolute_url()
-        assert f'<article id="post-{post_content.slug}" class="post-item">' in content
+        assert f'<article id="post-{post_content.slug}" class="post-item' in content
         assert f'<h3><a href="{absolute_url}">{post_content.title}</a></h3>' in content
     # meta:
     assert f'<meta property="og:title" content="{category.name}">' in content

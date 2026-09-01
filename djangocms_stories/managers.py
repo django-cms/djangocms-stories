@@ -5,10 +5,36 @@ from collections import Counter
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.db import models
+from django.db.models.functions import Coalesce, Now
 from django.db.models.manager import BaseManager
 from django.utils.timezone import now
 
 from cms.models.managers import WithUserMixin
+
+
+def post_ordering(prefix: str = "", featured_first: bool = True) -> tuple:
+    """Default ordering for posts: featured posts first, then by publication date.
+
+    A post is featured once its :attr:`~djangocms_stories.models.Post.date_featured` has been
+    reached; posts with an empty or future featured date are ordered by date only. Among featured
+    posts the most recently featured one comes first.
+
+    :param prefix: field prefix to order by a related post, e.g. ``"post__"`` for ``PostContent``
+    :param featured_first: if ``False`` the featured date is ignored and posts are ordered by date
+        only - used for feeds, archives and plugins which opt out of featuring
+    """
+    by_date = (
+        Coalesce(f"{prefix}date_published", f"{prefix}date_created").desc(),
+        models.F(f"{prefix}date_created").desc(),
+    )
+    if not featured_first:
+        return by_date
+    featured = models.Case(
+        models.When(**{f"{prefix}date_featured__lte": Now()}, then=models.F(f"{prefix}date_featured")),
+        default=None,
+        output_field=models.DateTimeField(),
+    ).desc(nulls_last=True)
+    return (featured, *by_date)
 
 
 class TaggedFilterItem:
@@ -119,8 +145,8 @@ class AdminManager(BaseManager.from_queryset(AdminSiteQuerySet)):
 
 class GenericDateTaggedManager(TaggedFilterItem, BaseManager.from_queryset(SiteQuerySet)):
     use_for_related_fields = True
-    start_date_field = "date_featured"
-    fallback_date_field = "date_modified"
+    start_date_field = "date_published"
+    fallback_date_field = "date_created"
 
     def on_site(self, site=None):
         return self.get_queryset().on_site(site)
