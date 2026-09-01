@@ -311,6 +311,34 @@ def test_tag_feed_get_object():
 
 
 @pytest.mark.django_db
+def test_tag_feed_ignores_featured(page_with_menu):
+    """Like the latest entries feed, the tag feed stays chronological."""
+
+    app_config = StoriesConfig.objects.get(namespace=page_with_menu.application_namespace)
+    factory = RequestFactory()
+    request = factory.get("/tag/python/feed/")
+    request.path = f"/{app_config.namespace}/tag/python/feed/"
+
+    posts = list(Post.objects.filter(app_config=app_config)[:3])
+    for post in posts:
+        post.tags.add("python")
+    oldest = min(posts, key=lambda post: post.date)
+    oldest.date_featured = timezone.now() - timedelta(days=1)
+    oldest.save()
+
+    with patch("djangocms_stories.feeds.get_app_instance") as mock_get_app:
+        mock_get_app.return_value = (app_config.namespace, app_config)
+
+        feed = TagFeed()
+        feed(request, "python")
+        items = list(feed.items(feed.get_object(request, "python")))
+
+    assert set(items) == set(posts)
+    assert items[-1] == oldest
+    assert [item.date for item in items] == sorted((item.date for item in items), reverse=True)
+
+
+@pytest.mark.django_db
 def test_tag_feed_items_filters_by_tag(page_with_menu):
     """Test that TagFeed items filters posts by tag"""
 

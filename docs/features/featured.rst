@@ -42,7 +42,8 @@ creation date if it has not been published yet.
 
     Up to djangocms-stories 0.9 the featured date replaced the publication date in date-based
     permalinks and in the archive month list. If your posts use date-based permalinks and have a
-    featured date set, their URLs change accordingly.
+    featured date set, their URLs change accordingly - back to the URLs they had in
+    djangocms-blog, which has always built them from the publication date.
 
 Featured posts vs. the featured posts plugin
 ============================================

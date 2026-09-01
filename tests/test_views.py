@@ -130,6 +130,67 @@ def test_post_list_view_features_posts_first(admin_client, admin_user, default_c
 
 
 @pytest.mark.django_db
+def test_post_archive_view_month_ignores_featured_date(admin_client, admin_user, default_config):
+    """Posts are filed under their publication month, no matter when they were featured."""
+    import datetime
+
+    from djangocms_stories.models import Post
+
+    from .factories import PostContentFactory
+
+    published = now() - datetime.timedelta(days=90)
+    featured_at = now() - datetime.timedelta(days=1)
+    assert (published.year, published.month) != (featured_at.year, featured_at.month)
+
+    featured, plain = (
+        PostContentFactory(
+            language="en",
+            post__app_config=default_config,
+            post__date_published=published - datetime.timedelta(days=days),
+            post__date_featured=None,
+        )
+        for days in (1, 0)
+    )
+    publish_if_necessary([featured, plain], admin_user)
+    featured.post.date_featured = featured_at
+    featured.post.save()
+
+    # The month the post is filed under is its publication month ...
+    months = [(month["date"].year, month["date"].month) for month in Post.objects.get_months()]
+    assert (published.year, published.month) in months
+    assert (featured_at.year, featured_at.month) not in months
+
+    # ... it is listed there, chronologically, not pulled to the top by being featured
+    url = reverse("djangocms_stories:posts-archive", kwargs={"year": published.year, "month": published.month})
+    content = admin_client.get(url).content.decode("utf-8")
+    assert content.index(f'id="post-{plain.slug}"') < content.index(f'id="post-{featured.slug}"')
+
+    # ... and not under the month it was featured in
+    url = reverse("djangocms_stories:posts-archive", kwargs={"year": featured_at.year, "month": featured_at.month})
+    content = admin_client.get(url).content.decode("utf-8")
+    assert f'id="post-{featured.slug}"' not in content
+
+
+@pytest.mark.django_db
+def test_post_archive_view_falls_back_to_date_created(admin_client, admin_user, default_config):
+    """Posts without a publication date are filed under their creation date."""
+    from .factories import PostContentFactory
+
+    post_content = PostContentFactory(
+        language="en",
+        post__app_config=default_config,
+        post__date_published=None,
+        post__date_featured=None,
+    )
+    publish_if_necessary([post_content], admin_user)
+    created = post_content.post.date_created
+
+    url = reverse("djangocms_stories:posts-archive", kwargs={"year": created.year, "month": created.month})
+    content = admin_client.get(url).content.decode("utf-8")
+    assert f'id="post-{post_content.slug}"' in content
+
+
+@pytest.mark.django_db
 def test_post_archive_view(admin_client, admin_user, default_config):
     """
     Test the PostListView returns a list of posts and renders expected content.

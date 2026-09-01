@@ -224,6 +224,11 @@ def test_postadmin_bulk_feature(admin_client, default_config, assert_html_in_res
         assert not post.featured()
 
     url = reverse("admin:djangocms_stories_post_changelist")
+    # The changelist has a featured column, showing all posts as not featured
+    content = admin_client.get(url).content.decode("utf-8")
+    assert "Featured" in content
+    assert content.count("icon-yes") == 0
+
     data = {
         "action": "feature",
         "_selected_action": [post.pk for post in posts],
@@ -233,6 +238,10 @@ def test_postadmin_bulk_feature(admin_client, default_config, assert_html_in_res
     for post in posts:
         post.refresh_from_db()
         assert post.featured()
+
+    # ... and now shows them as featured
+    content = admin_client.get(url).content.decode("utf-8")
+    assert content.count("icon-yes") == len(posts)
 
     # ... and remove them from the featured posts again
     data["action"] = "unfeature"
