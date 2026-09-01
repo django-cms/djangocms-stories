@@ -14,6 +14,7 @@ from django.utils.translation import get_language_from_request, gettext as _
 from lxml import etree
 
 from .cms_appconfig import get_app_instance
+from .managers import post_ordering
 from .models import Post
 from .settings import get_setting
 from .views import PostDetailView
@@ -38,9 +39,11 @@ class LatestEntriesFeed(Feed):
         return _("Blog articles on %(site_name)s") % {"site_name": Site.objects.get_current().name}
 
     def items(self, obj=None):
-        return Post.objects.prefetch_related("postcontent_set").filter(
-            app_config__namespace=self.namespace, include_in_rss=True
-        )[: self.feed_items_number][: self.feed_items_number]
+        return (
+            Post.objects.prefetch_related("postcontent_set")
+            .filter(app_config__namespace=self.namespace, include_in_rss=True)
+            .order_by(*post_ordering(featured_first=False))[: self.feed_items_number]
+        )
 
     def item_title(self, item):
         return mark_safe(item.safe_translation_getter("title"))
@@ -74,7 +77,9 @@ class TagFeed(LatestEntriesFeed):
         return tag  # pragma: no cover
 
     def items(self, obj=None):
-        return Post.objects.filter(tags__slug=obj)[: self.feed_items_number]
+        return Post.objects.filter(tags__slug=obj).order_by(*post_ordering(featured_first=False))[
+            : self.feed_items_number
+        ]
 
 
 class FBInstantFeed(Rss201rev2Feed):
