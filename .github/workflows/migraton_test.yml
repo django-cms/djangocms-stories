@@ -15,7 +15,7 @@ jobs:
         requirements: [
           'dj52_cms41.txt',
         ]
-        python-version: ['3.13']
+        python-version: ['3.13', '3.15']
         os: [
           ubuntu-latest,
         ]
