@@ -11,7 +11,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.cache import cache
 from django.db import models
 from django.db.models import F, Q
-from django.db.models.functions import Coalesce
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.urls import NoReverseMatch, reverse
@@ -30,7 +29,7 @@ from sortedm2m.fields import SortedManyToManyField
 
 from .cms_appconfig import StoriesConfig
 from .fields import slugify
-from .managers import AdminManager, GenericDateTaggedManager, SiteManager
+from .managers import AdminManager, GenericDateTaggedManager, SiteManager, post_ordering
 from .settings import STORIES_PLUGIN_TEMPLATE_FOLDERS as DEFAULT_TEMPLATE_FOLDERS, get_setting
 from .tag_autosuggest import TaggableManager
 
@@ -309,8 +308,19 @@ class Post(models.Model):
     empty. When working with django CMS versioning this field is set automatically when a PostContent instance 
     with a future publication date is published. Otherwise, it will need to be set manually."""
 
-    date_featured = models.DateTimeField(_("featured date"), null=True, blank=True)
-    """Optional date used to feature/sort content independently from publication date."""
+    date_featured = models.DateTimeField(
+        _("featured date"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "Featured posts are listed before other posts, most recently featured first. "
+            "Leave empty for regular order by date, or set a future date to feature the post from "
+            "that date on."
+        ),
+    )
+    """Optional date from which the post is featured. Posts whose featured date has been reached are
+    listed before all other posts (see :meth:`featured`). An empty or future featured date leaves the
+    post in the regular date order."""
 
     include_in_rss = models.BooleanField(_("include in RSS feed"), default=True)
     """Controls whether this post appears in generated RSS feeds."""
@@ -393,7 +403,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = _("post")
         verbose_name_plural = _("posts")
-        ordering = (Coalesce("date_published", "date_created").desc(), "-date_created")
+        ordering = post_ordering()
         get_latest_by = "date_published"
 
     def __init__(self, *args, **kwargs):
@@ -406,8 +416,9 @@ class Post(models.Model):
         default = gettext("Post (no translation)")
         return self.safe_translation_getter("title", any_language=True, default=default, show_draft_content=True)
 
-    @admin.display(boolean=True)
-    def featured(self):
+    @admin.display(boolean=True, description=_("featured"), ordering="date_featured")
+    def featured(self) -> bool:
+        """``True`` if the post is currently featured, i.e. its featured date has been reached."""
         if not self.date_featured:
             return False
         return bool(self.date_featured <= now())
@@ -474,8 +485,8 @@ class Post(models.Model):
 
     @property
     def date(self):
-        if self.date_featured:
-            return self.date_featured
+        """Date the post is filed under: its publication date, or its creation date if it has not
+        been published yet. Used for date-based permalinks and the archive views."""
         return self.date_published or self.date_created
 
     def get_available_languages(self):
@@ -503,7 +514,7 @@ class Post(models.Model):
                 category = self.categories.first()
                 if category is None:
                     return ""
-                kwargs["category"] = category.safe_translation_getter("slug", language_code=lang, any_language=True) 
+                kwargs["category"] = category.safe_translation_getter("slug", language_code=lang, any_language=True)
             try:
                 return reverse(
                     "%s:post-detail" % self.app_config.namespace, kwargs=kwargs, current_app=self.app_config.namespace
@@ -604,7 +615,7 @@ class PostContent(PostMetaMixin, ModelMeta, models.Model):
     class Meta:
         verbose_name = _("post content")
         verbose_name_plural = _("post contents")
-        ordering = ("post",)
+        ordering = post_ordering("post__")
         get_latest_by = "post"
 
     # Gruping fields
@@ -875,6 +886,14 @@ class LatestPostsPlugin(BasePostPlugin):
         verbose_name=_("filter by category"),
         help_text=_("Show only the posts of the chosen categories."),
     )
+    featured_first = models.BooleanField(
+        _("featured posts first"),
+        default=True,
+        help_text=_(
+            "List featured posts before recent ones. Careful: if you feature as many posts as this "
+            "plugin shows, no recent post will be displayed any more."
+        ),
+    )
 
     def __str__(self):
         return force_str(_("%s latest posts by tag") % self.latest_posts)
@@ -891,6 +910,8 @@ class LatestPostsPlugin(BasePostPlugin):
             post_contents = post_contents.filter(post__tags__in=list(self.tags.all()))
         if self.categories.exists():
             post_contents = post_contents.filter(post__categories__in=list(self.categories.all()))
+        if not self.featured_first:
+            post_contents = post_contents.order_by(*post_ordering("post__", featured_first=False))
         return self.optimize(post_contents.distinct())[: self.latest_posts]
 
 

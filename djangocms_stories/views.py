@@ -2,17 +2,19 @@ import os.path
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.db.models.functions import Coalesce
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.timezone import now
-from django.utils.translation import get_language, get_language_from_request
+from django.utils.translation import get_language
 from django.views.generic import DetailView, ListView
 from parler.views import TranslatableSlugMixin, ViewUrlMixin
 
 from cms.utils import get_current_site
 
 from .cms_appconfig import get_app_instance
+from .managers import post_ordering
 from .models import PostCategory, PostContent
 from .settings import get_setting
 from .utils import site_compatibility_decorator
@@ -173,17 +175,25 @@ class PostArchiveView(BaseConfigListViewMixin, ListView):
     context_object_name = "postcontent_list"
     base_template_name = "post_list.html"
     date_field = "date_published"
+    fallback_date_field = "date_created"
     allow_empty = True
     allow_future = True
     view_url_name = "djangocms_stories:posts-archive"
 
     def get_queryset(self):
-        qs = super().get_queryset()
+        """Archives are strictly chronological: featured posts are not pulled to the top. The date a
+        post is filed under matches :attr:`~djangocms_stories.models.Post.date` and the months listed
+        by :meth:`~djangocms_stories.managers.GenericDateTaggedManager.get_months`."""
+        qs = (
+            super()
+            .get_queryset()
+            .annotate(post_date=Coalesce(f"post__{self.date_field}", f"post__{self.fallback_date_field}"))
+        )
         if "month" in self.kwargs:
-            qs = qs.filter(**{"post__%s__month" % self.date_field: self.kwargs["month"]})
+            qs = qs.filter(post_date__month=self.kwargs["month"])
         if "year" in self.kwargs:
-            qs = qs.filter(**{"post__%s__year" % self.date_field: self.kwargs["year"]})
-        return self.optimize(qs)
+            qs = qs.filter(post_date__year=self.kwargs["year"])
+        return self.optimize(qs.order_by(*post_ordering("post__", featured_first=False)))
 
     def get_context_data(self, **kwargs):
         kwargs["month"] = int(self.kwargs.get("month")) if "month" in self.kwargs else None

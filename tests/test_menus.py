@@ -50,6 +50,43 @@ def test_menu_nodes(page_with_menu, many_posts):
         assert len(nodes) == len(many_posts) + 1 + 1  # +1 for the page and the category
 
 
+@pytest.mark.django_db
+def test_menu_lists_featured_posts_first(page_with_menu, admin_user, default_config):
+    """The menu picks up the featured-first post ordering."""
+    import datetime
+
+    from django.utils.timezone import now
+    from menus.menu_pool import menu_pool
+
+    from djangocms_stories.models import PostCategory
+
+    from tests.factories import PostContentFactory
+    from tests.utils import publish_if_necessary
+
+    category = PostCategory.objects.active_translations(slug="test-category").get()
+    older, newer = (
+        PostContentFactory(
+            language="en",
+            post__app_config=default_config,
+            post__date_published=now() - datetime.timedelta(days=days),
+            post__date_featured=None,
+        )
+        for days in (20, 10)
+    )
+    for post_content in (older, newer):
+        post_content.post.categories.add(category)
+    publish_if_necessary([older, newer], admin_user)
+    older.post.date_featured = now() - datetime.timedelta(days=1)
+    older.post.save()
+
+    request = RequestFactory().get(page_with_menu.get_absolute_url())
+    request.user = AnonymousUser()
+    menu_pool.clear(all=True)
+    titles = [node.title for node in menu_pool.get_renderer(request).get_nodes(request)]
+
+    assert titles.index(older.title) < titles.index(newer.title)
+
+
 def test_menu_configs(page_with_menu, default_config):
     from menus.menu_pool import menu_pool
 

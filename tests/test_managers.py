@@ -14,6 +14,7 @@ All tests use actual database queries with fixtures for realistic scenarios.
 import pytest
 from django.contrib.sites.models import Site
 from django.db import models
+from django.db.models.functions import Coalesce
 from taggit.models import Tag
 
 from djangocms_stories.models import Post, PostContent
@@ -234,7 +235,7 @@ class TestGenericDateTaggedManager:
         """Test get_months filters by current site"""
         # Ensure at least one date has two posts
         first = Post.objects.first()
-        first.date_featured = Post.objects.last().date_featured
+        first.date_published = Post.objects.last().date_published
         first.save()
 
         months = Post.objects.get_months()
@@ -242,9 +243,9 @@ class TestGenericDateTaggedManager:
         # Assert that each month in the result matches posts from the specified site
         for month in months:
             date, count = month["date"], month["count"]
-            posts_in_month = Post.objects.filter(
-                date_featured__month=date.month,
-                date_featured__year=date.year,
+            posts_in_month = Post.objects.annotate(archive_date=Coalesce("date_published", "date_created")).filter(
+                archive_date__month=date.month,
+                archive_date__year=date.year,
             )
             assert posts_in_month.count() == count
 
