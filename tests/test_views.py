@@ -1,1 +1,1 @@
-$(cat /tmp/djangocms-stories/tests/test_views.py)
+PLACEHOLDER_WILL_REPLACE
