@@ -846,7 +846,10 @@ class BasePostPlugin(CMSPlugin):
         ):
             post_contents = PostContent.admin_manager.latest_content()
         else:
-            post_contents = PostContent.objects.published()
+            post_contents = PostContent.objects.all()
+            if not apps.is_installed("djangocms_timed_publishing"):
+                # djangocms-timed-publishing handles the publication window itself
+                post_contents = post_contents.published()
         if self.app_config:
             post_contents = post_contents.filter(post__app_config=self.app_config)
         if self.current_site:
