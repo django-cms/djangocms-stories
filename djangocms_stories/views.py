@@ -1,7 +1,11 @@
 import os.path
 
+from cms.utils import get_current_site
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.db.models import Q
+from django.db.models.functions import Coalesce
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -10,13 +14,10 @@ from django.utils.translation import get_language, get_language_from_request
 from django.views.generic import DetailView, ListView
 from parler.views import TranslatableSlugMixin, ViewUrlMixin
 
-from cms.utils import get_current_site
-
 from .cms_appconfig import get_app_instance
 from .models import PostCategory, PostContent
 from .settings import get_setting
 from .utils import site_compatibility_decorator
-
 
 User = get_user_model()
 
@@ -118,15 +119,29 @@ class BaseConfigListViewMixin(StoriesConfigMixin):
 
     def get_queryset(self):
         language = get_language()
+        current_time = now()
+
         if hasattr(self.request, "toolbar") and (
             self.request.toolbar.edit_mode_active or self.request.toolbar.preview_mode_active
         ):
             queryset = self.model.admin_manager.latest_content()
         else:
             queryset = self.model.objects.all()
+
+            if not apps.is_installed("djangocms_timed_publishing"):
+                queryset = queryset.filter(
+                    Q(post__date_published__lte=current_time) | Q(post__date_published__isnull=True),
+                    Q(post__date_published_end__isnull=True) | Q(post__date_published_end__gt=current_time),
+                )
+
         queryset = queryset.filter(language=language, post__app_config__namespace=self.namespace)
+        queryset = queryset.annotate(sort_date=Coalesce("post__date_published", "post__date_created")).order_by(
+            "-sort_date"
+        )
+
         setattr(self.request, get_setting("CURRENT_NAMESPACE"), self.config)
         site = get_current_site(self.request)
+
         return self.optimize(queryset.on_site(site))
 
     def get_template_names(self):
