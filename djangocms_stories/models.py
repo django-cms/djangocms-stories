@@ -846,7 +846,7 @@ class BasePostPlugin(CMSPlugin):
         ):
             post_contents = PostContent.admin_manager.latest_content()
         else:
-            post_contents = PostContent.objects.all()
+            post_contents = PostContent.objects.published()
         if self.app_config:
             post_contents = post_contents.filter(post__app_config=self.app_config)
         if self.current_site:

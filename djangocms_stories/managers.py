@@ -88,6 +88,15 @@ class SiteQuerySet(models.QuerySet):
     def on_site(self, site: Site) -> SiteQuerySet:
         return self.filter(models.Q(post__sites__isnull=True) | models.Q(post__sites=site.pk))
 
+    def published(self) -> SiteQuerySet:
+        """Only content whose post is within its publication window
+        (``date_published`` / ``date_published_end``). Empty dates do not restrict."""
+        current = now()
+        return self.filter(
+            models.Q(post__date_published__isnull=True) | models.Q(post__date_published__lte=current),
+            models.Q(post__date_published_end__isnull=True) | models.Q(post__date_published_end__gt=current),
+        )
+
 
 class AdminSiteQuerySet(SiteQuerySet):
     def current_content(self, **kwargs):
