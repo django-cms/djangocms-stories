@@ -11,7 +11,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.cache import cache
 from django.db import models
 from django.db.models import F, Q
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 from django.urls import NoReverseMatch, reverse
 from django.utils import translation
@@ -984,6 +984,17 @@ def pre_delete_post(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Post)
 def post_save_post(sender, instance, **kwargs):
+    if getattr(instance, "_featured_date_changed", False):
+        menu_pool.clear(all=True)
     for language in instance.get_available_languages():
         key = instance.get_cache_key(language, "feed")
         cache.delete(key)
+
+
+@receiver(pre_save, sender=Post)
+def track_featured_date_change(sender, instance, raw=False, using=None, update_fields=None, **kwargs):
+    instance._featured_date_changed = False
+    if raw or instance._state.adding or (update_fields is not None and "date_featured" not in update_fields):
+        return
+    previous = sender._base_manager.using(using).filter(pk=instance.pk).values_list("date_featured", flat=True).first()
+    instance._featured_date_changed = previous != instance.date_featured

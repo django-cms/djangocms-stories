@@ -2,7 +2,10 @@ import logging
 
 from cms.apphook_pool import apphook_pool
 from cms.menu_bases import CMSAttachMenu
+from cms.utils.conf import get_cms_setting
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.cache import cache
+from django.utils.timezone import now
 from django.utils.translation import get_language_from_request, gettext_lazy as _
 from menus.base import Modifier, NavigationNode
 from menus.menu_pool import menu_pool
@@ -58,6 +61,7 @@ class PostCategoryMenu(CMSAttachMenu):
             return []
 
         used_categories = []
+        current = now()
         if posts_menu:
             site = get_current_site(request)
             if getattr(request, "toolbar", False) and request.toolbar.edit_mode_active:
@@ -90,6 +94,9 @@ class PostCategoryMenu(CMSAttachMenu):
                         # get_absolute_url returns "" when the url cannot be
                         # built (e.g. missing category/slug); skip those posts
                         node = NavigationNode(post_content.title, url, postcontent_id, parent)
+                        featured_at = post_content.post.date_featured
+                        if featured_at and featured_at > current:
+                            node.attr["stories_featured_at"] = featured_at
                         nodes.append(node)
 
         if categories_menu:
@@ -140,6 +147,15 @@ class PostCategoryNavModifier(Modifier):
         :param breadcrumb: flag for modifier stage
         :return: nodeslist
         """
+        if not post_cut:
+            featured_dates = [node.attr["stories_featured_at"] for node in nodes if "stories_featured_at" in node.attr]
+            if featured_dates:
+                # The renderer has cached the nodes before applying modifiers. Expire that
+                # entry before its next scheduled ordering change, including on cache hits.
+                remaining = max(0, int((min(featured_dates) - now()).total_seconds()))
+                menu_timeout = get_cms_setting("CACHE_DURATIONS")["menus"]
+                if menu_timeout is None or remaining < menu_timeout:
+                    cache.touch(self.renderer.cache_key, timeout=remaining)
         app = None
         config = None
         if getattr(request, "current_page", None) and request.current_page.application_urls:

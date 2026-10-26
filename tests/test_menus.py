@@ -51,8 +51,9 @@ def test_menu_nodes(page_with_menu, many_posts):
 
 
 @pytest.mark.django_db
-def test_menu_updates_after_bulk_featuring(page_with_menu, admin_user, admin_client, default_config):
-    """Feature and unfeature actions update an already cached public menu."""
+@pytest.mark.parametrize("bulk_action", [True, False])
+def test_menu_updates_after_featuring(page_with_menu, admin_user, admin_client, default_config, bulk_action):
+    """Bulk actions and direct saves update an already cached public menu."""
     import datetime
 
     from django.urls import reverse
@@ -89,10 +90,76 @@ def test_menu_updates_after_bulk_featuring(page_with_menu, admin_user, admin_cli
 
     url = reverse("admin:djangocms_stories_post_changelist")
     for action, first, second in (("feature", older, newer), ("unfeature", newer, older)):
-        response = admin_client.post(url, {"action": action, "_selected_action": [older.post_id]})
-        assert response.status_code == 302
+        if bulk_action:
+            response = admin_client.post(url, {"action": action, "_selected_action": [older.post_id]})
+            assert response.status_code == 302
+        else:
+            older.post.date_featured = now() if action == "feature" else None
+            older.post.save(update_fields=["date_featured"])
         titles = menu_titles()
         assert titles.index(first.title) < titles.index(second.title)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("menu_timeout", [3600, None])
+def test_menu_cache_expires_before_scheduled_featuring(
+    page_with_menu, admin_user, default_config, monkeypatch, settings, menu_timeout
+):
+    from datetime import timedelta
+    from unittest.mock import patch
+
+    from cms.utils.conf import get_cms_setting
+    from django.db.models import Value
+    from django.db.models.functions import Now
+    from django.utils.timezone import now
+    from menus.menu_pool import menu_pool
+
+    from djangocms_stories.models import PostCategory
+
+    from .factories import PostContentFactory
+    from .utils import publish_if_necessary
+
+    settings.CMS_CACHE_DURATIONS = {**get_cms_setting("CACHE_DURATIONS"), "menus": menu_timeout}
+    current = now()
+    category = PostCategory.objects.active_translations(slug="test-category").get()
+    older, newer = (
+        PostContentFactory(
+            language="en",
+            post__app_config=default_config,
+            post__date_published=current - timedelta(days=days),
+            post__date_featured=None,
+        )
+        for days in (20, 10)
+    )
+    for content in (older, newer):
+        content.post.categories.add(category)
+    publish_if_necessary([older, newer], admin_user)
+    older.post.date_featured = current + timedelta(minutes=1)
+    older.post.save()
+
+    monkeypatch.setattr("time.time", lambda: current.timestamp())
+    monkeypatch.setattr("djangocms_stories.cms_menus.now", lambda: current)
+    monkeypatch.setattr(
+        Now, "as_sqlite", lambda self, compiler, connection, **kwargs: compiler.compile(Value(current))
+    )
+
+    def menu_titles():
+        request = RequestFactory().get(page_with_menu.get_absolute_url())
+        request.user = AnonymousUser()
+        return [node.title for node in menu_pool.get_renderer(request).get_nodes()]
+
+    menu_pool.clear(all=True)
+    with patch.object(PostCategoryMenu, "get_nodes", autospec=True, side_effect=PostCategoryMenu.get_nodes) as build:
+        titles = menu_titles()
+        assert titles.index(newer.title) < titles.index(older.title)
+        builds = build.call_count
+        current += timedelta(seconds=30)
+        assert menu_titles() == titles
+        assert build.call_count == builds  # Keep using the cache before the scheduled date.
+        current += timedelta(seconds=31)
+        titles = menu_titles()
+        assert titles.index(older.title) < titles.index(newer.title)
+        assert build.call_count > builds
 
 
 def test_menu_configs(page_with_menu, default_config):
