@@ -107,24 +107,25 @@ def test_post_list_view_features_posts_first(admin_client, admin_user, default_c
 
     from .factories import PostContentFactory
 
+    published = datetime.datetime(2020, 1, 15, tzinfo=datetime.timezone.utc)
     older, newer = (
         PostContentFactory(
             language="en",
             post__app_config=default_config,
-            post__date_published=now() - datetime.timedelta(days=days),
+            post__date_published=published - datetime.timedelta(days=days),
             post__date_featured=None,
         )
-        for days in (20, 10)
+        for days in (2, 1)
     )
     publish_if_necessary([older, newer], admin_user)
-    older.post.date_featured = now() - datetime.timedelta(days=1)
+    older.post.date_featured = published
     older.post.save()
 
     content = admin_client.get(reverse("djangocms_stories:posts-latest")).content.decode("utf-8")
     assert content.index(f'id="post-{older.slug}"') < content.index(f'id="post-{newer.slug}"')
     assert f'<article id="post-{older.slug}" class="post-item post-item-featured">' in content
 
-    archive_url = reverse("djangocms_stories:posts-archive", kwargs={"year": now().year})
+    archive_url = reverse("djangocms_stories:posts-archive", kwargs={"year": published.year})
     content = admin_client.get(archive_url).content.decode("utf-8")
     assert content.index(f'id="post-{newer.slug}"') < content.index(f'id="post-{older.slug}"')
 
@@ -138,9 +139,8 @@ def test_post_archive_view_month_ignores_featured_date(admin_client, admin_user,
 
     from .factories import PostContentFactory
 
-    published = now() - datetime.timedelta(days=90)
-    featured_at = now() - datetime.timedelta(days=1)
-    assert (published.year, published.month) != (featured_at.year, featured_at.month)
+    published = datetime.datetime(2020, 1, 15, tzinfo=datetime.timezone.utc)
+    featured_at = datetime.datetime(2020, 2, 15, tzinfo=datetime.timezone.utc)
 
     featured, plain = (
         PostContentFactory(
