@@ -24,6 +24,7 @@ from django.urls import Resolver404, path, resolve
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
+from menus.menu_pool import menu_pool
 from parler.admin import TranslatableAdmin
 from sortedm2m.fields import SortedManyToManyField
 
@@ -524,6 +525,8 @@ class PostAdmin(
         queryset must not be empty (ensured by django CMS).
         """
         updates = queryset.update(date_featured=now())
+        if updates:
+            menu_pool.clear(all=True)
         messages.add_message(
             request,
             messages.INFO,
@@ -537,6 +540,8 @@ class PostAdmin(
         queryset must not be empty (ensured by django CMS).
         """
         updates = queryset.filter(date_featured__isnull=False).update(date_featured=None)
+        if updates:
+            menu_pool.clear(all=True)
         messages.add_message(
             request,
             messages.INFO,
@@ -907,8 +912,6 @@ class ConfigAdmin(TranslatableAdmin):
         Clear menu cache when changing menu structure
         """
         if "config.menu_structure" in form.changed_data:
-            from menus.menu_pool import menu_pool
-
             menu_pool.clear(all=True)
         """
         Reload urls when changing url config

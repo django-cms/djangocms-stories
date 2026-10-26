@@ -51,10 +51,11 @@ def test_menu_nodes(page_with_menu, many_posts):
 
 
 @pytest.mark.django_db
-def test_menu_lists_featured_posts_first(page_with_menu, admin_user, default_config):
-    """The menu picks up the featured-first post ordering."""
+def test_menu_updates_after_bulk_featuring(page_with_menu, admin_user, admin_client, default_config):
+    """Feature and unfeature actions update an already cached public menu."""
     import datetime
 
+    from django.urls import reverse
     from django.utils.timezone import now
     from menus.menu_pool import menu_pool
 
@@ -76,15 +77,22 @@ def test_menu_lists_featured_posts_first(page_with_menu, admin_user, default_con
     for post_content in (older, newer):
         post_content.post.categories.add(category)
     publish_if_necessary([older, newer], admin_user)
-    older.post.date_featured = now() - datetime.timedelta(days=1)
-    older.post.save()
 
-    request = RequestFactory().get(page_with_menu.get_absolute_url())
-    request.user = AnonymousUser()
+    def menu_titles():
+        request = RequestFactory().get(page_with_menu.get_absolute_url())
+        request.user = AnonymousUser()
+        return [node.title for node in menu_pool.get_renderer(request).get_nodes(request)]
+
     menu_pool.clear(all=True)
-    titles = [node.title for node in menu_pool.get_renderer(request).get_nodes(request)]
+    titles = menu_titles()
+    assert titles.index(newer.title) < titles.index(older.title)
 
-    assert titles.index(older.title) < titles.index(newer.title)
+    url = reverse("admin:djangocms_stories_post_changelist")
+    for action, first, second in (("feature", older, newer), ("unfeature", newer, older)):
+        response = admin_client.post(url, {"action": action, "_selected_action": [older.post_id]})
+        assert response.status_code == 302
+        titles = menu_titles()
+        assert titles.index(first.title) < titles.index(second.title)
 
 
 def test_menu_configs(page_with_menu, default_config):
