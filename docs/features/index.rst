@@ -8,6 +8,7 @@ Features
    home
    admin_customization
    extensions
+   featured
    media
    menu
    meta

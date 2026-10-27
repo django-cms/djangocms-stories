@@ -58,7 +58,7 @@ class BlogLatestEntriesPlugin(StoriesPlugin):
     filter_horizontal = ("categories",)
     cache = False
     base_render_template = "latest_entries.html"
-    fields = ["app_config", "latest_posts", "tags", "categories"]
+    fields = ["app_config", "latest_posts", "featured_first", "tags", "categories"]
 
     def render(self, context, instance, placeholder):
         """Render the plugin."""
