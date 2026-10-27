@@ -6,6 +6,11 @@ Model managers and querysets for efficient database operations.
 
 .. currentmodule:: djangocms_stories.managers
 
+Ordering
+========
+
+.. autofunction:: post_ordering
+
 Querysets
 =========
 

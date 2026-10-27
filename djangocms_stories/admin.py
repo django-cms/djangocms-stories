@@ -21,8 +21,10 @@ from django.db.models import signals
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import Resolver404, path, resolve
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _, ngettext as __
 from django.views.generic import RedirectView
+from menus.menu_pool import menu_pool
 from parler.admin import TranslatableAdmin
 from sortedm2m.fields import SortedManyToManyField
 
@@ -388,6 +390,7 @@ class PostAdmin(
         "title",
         "author",
         "app_config",
+        "featured",
     )
     list_display_links = ("title",)
     search_fields = (
@@ -408,6 +411,8 @@ class PostAdmin(
     actions = [
         "enable_comments",
         "disable_comments",
+        "feature",
+        "unfeature",
     ]
 
     _fieldsets = [
@@ -510,6 +515,37 @@ class PostAdmin(
             request,
             messages.INFO,
             __("Comments for %(updates)d entry enabled.", "Comments for %(updates)d entries enabled", updates)
+            % {"updates": updates},
+        )
+
+    @admin.action(description=_("Feature selection"))
+    def feature(self, request, queryset):
+        """
+        Bulk action to feature selected posts as of now.
+        queryset must not be empty (ensured by django CMS).
+        """
+        updates = queryset.update(date_featured=now())
+        if updates:
+            menu_pool.clear(all=True)
+        messages.add_message(
+            request,
+            messages.INFO,
+            __("%(updates)d entry featured.", "%(updates)d entries featured.", updates) % {"updates": updates},
+        )
+
+    @admin.action(description=_("Remove selection from featured"))
+    def unfeature(self, request, queryset):
+        """
+        Bulk action to remove selected posts from the featured posts.
+        queryset must not be empty (ensured by django CMS).
+        """
+        updates = queryset.filter(date_featured__isnull=False).update(date_featured=None)
+        if updates:
+            menu_pool.clear(all=True)
+        messages.add_message(
+            request,
+            messages.INFO,
+            __("%(updates)d entry removed from featured.", "%(updates)d entries removed from featured.", updates)
             % {"updates": updates},
         )
 
@@ -876,8 +912,6 @@ class ConfigAdmin(TranslatableAdmin):
         Clear menu cache when changing menu structure
         """
         if "config.menu_structure" in form.changed_data:
-            from menus.menu_pool import menu_pool
-
             menu_pool.clear(all=True)
         """
         Reload urls when changing url config

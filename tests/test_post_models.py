@@ -105,9 +105,14 @@ def test_date_property(db):
     from .factories import PostFactory
 
     post = PostFactory()
-    if post.date_published == post.date_featured:
-        post.date_published = None
-    assert post.date == post.date_featured
+    assert post.date == post.date_published
+
+    # The featured date does not affect the date a post is filed under
+    post.date_featured = now() - datetime.timedelta(days=1)
+    assert post.date == post.date_published
+
+    post.date_published = None
+    assert post.date == post.date_created
 
 
 @pytest.mark.django_db
@@ -185,6 +190,81 @@ def test_get_keywords(db):
         "are these key words",
         "or not",
     ]
+
+
+@pytest.mark.django_db
+def test_featured_posts_are_ordered_first(default_config):
+    """Posts whose featured date has been reached are listed before all other posts."""
+    from .factories import PostContentFactory
+    from djangocms_stories.models import Post
+
+    oldest, middle, newest = (
+        PostContentFactory(
+            post__app_config=default_config,
+            post__date_published=now() - datetime.timedelta(days=days),
+            post__date_featured=None,
+        ).post
+        for days in (30, 20, 10)
+    )
+
+    assert list(Post.objects.all()) == [newest, middle, oldest]
+
+    oldest.date_featured = now() - datetime.timedelta(days=1)
+    oldest.save()
+
+    assert list(Post.objects.all()) == [oldest, newest, middle]
+
+    # Among featured posts, the most recently featured one comes first
+    newest.date_featured = now()
+    newest.save()
+
+    assert list(Post.objects.all()) == [newest, oldest, middle]
+
+
+@pytest.mark.django_db
+def test_future_featured_date_does_not_feature(default_config):
+    """A featured date in the future schedules the featuring, it does not apply it yet."""
+    from .factories import PostContentFactory
+    from djangocms_stories.models import Post
+
+    older, newer = (
+        PostContentFactory(
+            post__app_config=default_config,
+            post__date_published=now() - datetime.timedelta(days=days),
+            post__date_featured=None,
+        ).post
+        for days in (20, 10)
+    )
+    older.date_featured = now() + datetime.timedelta(days=1)
+    older.save()
+
+    assert not older.featured()
+    assert list(Post.objects.all()) == [newer, older]
+
+
+@pytest.mark.django_db
+def test_post_content_ordering_follows_post(default_config, admin_user):
+    """Post contents are ordered like their posts: featured first, then by date."""
+    from .factories import PostContentFactory
+    from djangocms_stories.models import PostContent
+
+    older, newer = (
+        PostContentFactory(
+            language="en",
+            post__app_config=default_config,
+            post__date_published=now() - datetime.timedelta(days=days),
+            post__date_featured=None,
+        )
+        for days in (20, 10)
+    )
+    publish_if_necessary([older, newer], admin_user)
+
+    assert list(PostContent.objects.all()) == [newer, older]
+
+    older.post.date_featured = now() - datetime.timedelta(days=1)
+    older.post.save()
+
+    assert list(PostContent.objects.all()) == [older, newer]
 
 
 @pytest.mark.django_db
