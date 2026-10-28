@@ -75,7 +75,7 @@ django-formtools==2.5.1
     # via django-cms
 django-meta==2.5.0
     # via djangocms-stories
-django-parler==2.3
+django-parler==2.4
     # via djangocms-stories
 django-polymorphic==4.1.0
     # via django-filer
