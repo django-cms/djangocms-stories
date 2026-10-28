@@ -15,11 +15,9 @@ requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Framework :: Django",
-  "Framework :: Django :: 4.2",
-  "Framework :: Django :: 5.0",
-  "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
   "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
   "Framework :: Django CMS :: 4.1",
   "Framework :: Django CMS :: 5.0",
   "Framework :: Django CMS :: 5.1",
@@ -32,6 +30,7 @@ classifiers = [
 ]
 dynamic = [ "version" ]
 dependencies = [
+  "django>=5.2",
   "django-cms>=4.1",
   "django-filer>=2",
   "django-meta>=2",
