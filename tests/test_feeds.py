@@ -168,7 +168,6 @@ def test_latest_entries_feed_ignores_featured(page_with_menu):
     assert items[-1] == oldest
     assert [item.date for item in items] == sorted((item.date for item in items), reverse=True)
 
-
 @pytest.mark.django_db
 def test_latest_entries_feed_items_respects_limit(page_with_menu):
     """Test that feed items respects FEED_LATEST_ITEMS setting"""
