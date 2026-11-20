@@ -69,7 +69,7 @@ class PostFactory(DjangoModelFactory):
     )
     date_published = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
     date_published_end = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
-    date_featured = factory.Faker("date_time_this_decade", tzinfo=timezone.utc)
+    date_featured = None
 
 
 class PostContentFactory(DjangoModelFactory):
