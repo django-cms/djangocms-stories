@@ -311,12 +311,25 @@ def test_blog_archive_plugin(placeholder, admin_client, simple_w_placeholder, as
     assert_html_in_response("<p>TextPlugin works.</p>", response)
     assert_html_in_response("<p>No article found.</p>", response)
 
-    post_content = PostContentFactory(language="en", post__app_config=simple_w_placeholder)
-    post = post_content.post
+    
+    from datetime import datetime, timezone
+
+    post_content = PostContentFactory(
+        language="en",
+        post__app_config=simple_w_placeholder,
+        post__date_published=datetime(2026, 10, 1, 12, 0, tzinfo=timezone.utc),
+        post__date_featured=datetime(2026, 11, 4, 12, 0, tzinfo=timezone.utc),
+    )
+
     response = admin_client.get(url)
 
-    assert_html_in_response(f'<a href="/en/blog/{post.date.year}/{post.date.month}/">', response)
+    # The archive must use October, the publication month.
+    assert_html_in_response('<a href="/en/blog/2026/10/">', response)
     assert_html_in_response("<span>( 1 article )</span>", response)
+
+    # The featured month must not appear as an archive month.
+    assert b'/en/blog/2026/11/' not in response.content
+
 
 
 @pytest.mark.django_db
