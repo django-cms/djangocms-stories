@@ -34,7 +34,9 @@ class StoriesSitemap(Sitemap):
                 # if a post is published but the associated app config is not
                 # then this post will not have a url
                 try:
-                    url = postcontent.get_absolute_url()
+                    # Match PostContent language (see cms_menus); get_absolute_url()
+                    # alone follows the thread language and mislabels sitemap URLs.
+                    url = postcontent.get_absolute_url(language=lang)
                 except NoReverseMatch:
                     # couldn't determine the url of the post so pass on it
                     continue
