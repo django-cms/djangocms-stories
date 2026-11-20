@@ -24,11 +24,11 @@ from easy_thumbnails.files import get_thumbnailer
 from filer.fields.image import FilerImageField
 from filer.models import ThumbnailOption
 from menus.menu_pool import menu_pool
-from parler.models import TranslatableModel, TranslatedFields
+from parler.models import TranslatableModel
 from sortedm2m.fields import SortedManyToManyField
 
 from .cms_appconfig import StoriesConfig
-from .fields import slugify
+from .fields import TranslatedFields, slugify
 from .managers import AdminManager, GenericDateTaggedManager, SiteManager, post_ordering
 from .settings import STORIES_PLUGIN_TEMPLATE_FOLDERS as DEFAULT_TEMPLATE_FOLDERS, get_setting
 from .tag_autosuggest import TaggableManager

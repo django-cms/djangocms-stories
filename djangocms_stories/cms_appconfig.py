@@ -6,8 +6,9 @@ from django.http import HttpRequest
 from django.urls import Resolver404, resolve
 from django.utils.translation import get_language_from_request, gettext_lazy as _, override
 from filer.models import ThumbnailOption
-from parler.models import TranslatableModel, TranslatedFields
+from parler.models import TranslatableModel
 
+from .fields import TranslatedFields
 from .settings import MENU_TYPE_COMPLETE, get_setting
 
 config_defaults = {
