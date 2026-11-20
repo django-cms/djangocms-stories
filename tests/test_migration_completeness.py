@@ -5,8 +5,10 @@ from io import StringIO
 
 
 @pytest.mark.django_db
-def test_no_missing_migrations():
+def test_no_missing_migrations(settings):
     """Test that there are no missing migrations by running makemigrations --check."""
+    # The test suite runs with --nomigrations, which makes makemigrations refuse to run
+    settings.MIGRATION_MODULES = {}
     out = StringIO()
     try:
         call_command("makemigrations", "djangocms_stories", "--check", "--dry-run", stdout=out, stderr=out)
