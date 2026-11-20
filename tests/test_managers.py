@@ -264,6 +264,29 @@ class TestGenericDateTaggedManager:
             for i in range(len(months) - 1):
                 assert months[i]["date"] >= months[i + 1]["date"]
 
+    
+    def test_get_months_groups_by_publication_date(self, page_with_menu, default_config):
+        """Archive posts by publication date, not featured or creation date."""
+        from datetime import datetime, timezone
+
+        from tests.factories import PostFactory
+
+        post = PostFactory(
+            app_config=default_config,
+            date_published=datetime(2026, 10, 1, 12, 0, tzinfo=timezone.utc),
+            date_featured=datetime(2026, 11, 4, 12, 0, tzinfo=timezone.utc),
+        )
+
+        # Keep the test independent of any other posts.
+        queryset = Post.objects.filter(pk=post.pk)
+        months = Post.objects.get_months(queryset=queryset)
+
+        assert len(months) == 1
+        assert months[0]["date"].year == 2026
+        assert months[0]["date"].month == 10
+        assert months[0]["count"] == 1
+            
+
     def test_get_months_uses_fallback_date(self, page_with_menu, default_config):
         """Test get_months uses fallback date when start_date is None"""
         from tests.factories import PostFactory, PostContentFactory
