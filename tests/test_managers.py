@@ -285,7 +285,40 @@ class TestGenericDateTaggedManager:
         assert months[0]["date"].year == 2026
         assert months[0]["date"].month == 10
         assert months[0]["count"] == 1
-            
+
+    
+    def test_get_months_updates_when_publication_date_changes(
+        self, page_with_menu, default_config
+    ):
+        """Archive month follows publication date after a post is updated."""
+        from datetime import datetime, timezone
+
+        from tests.factories import PostFactory
+
+        post = PostFactory(
+            app_config=default_config,
+            date_published=datetime(2026, 10, 1, 12, 0, tzinfo=timezone.utc),
+            date_featured=datetime(2026, 11, 4, 12, 0, tzinfo=timezone.utc),
+        )
+
+        queryset = Post.objects.filter(pk=post.pk)
+
+        # Initially, the post belongs to October.
+        months_before = Post.objects.get_months(queryset=queryset)
+        assert [(m["date"].year, m["date"].month, m["count"]) for m in months_before] == [
+            (2026, 10, 1)
+        ]
+
+        # Change only the publication date.
+        post.date_published = datetime(2026, 9, 1, 12, 0, tzinfo=timezone.utc)
+        post.save(update_fields=["date_published"])
+
+        # The post should now belong to September, not October or November.
+        months_after = Post.objects.get_months(queryset=queryset)
+        assert [(m["date"].year, m["date"].month, m["count"]) for m in months_after] == [
+            (2026, 9, 1)
+        ]
+        
 
     def test_get_months_uses_fallback_date(self, page_with_menu, default_config):
         """Test get_months uses fallback date when start_date is None"""
