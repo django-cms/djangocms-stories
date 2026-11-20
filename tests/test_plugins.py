@@ -609,3 +609,76 @@ def test_stories_plugin_get_fields_repeated_calls(placeholder, simple_w_placehol
         assert "tags" in fields1
         assert "categories" in fields1
         assert "template_folder" in fields1
+
+
+@pytest.mark.django_db
+def test_plugins_hide_posts_outside_publication_window(placeholder, admin_user, simple_w_placeholder):
+    """Expired and scheduled posts must not be listed by plugins on the public site (#68)."""
+    from datetime import timedelta
+
+    from cms import api
+    from django.test import RequestFactory
+    from django.utils import translation
+    from django.utils.timezone import now
+
+    from djangocms_stories.models import Post
+
+    from .factories import PostContentFactory
+
+    live, expired, scheduled, undated = PostContentFactory.create_batch(
+        4, language="en", post__app_config=simple_w_placeholder
+    )
+    publish_if_necessary([live, expired, scheduled, undated], admin_user)
+
+    # Set the dates after publishing: publishing itself adjusts them, and .update() skips signals
+    current = now()
+    day = timedelta(days=1)
+    Post.objects.filter(pk=live.post.pk).update(date_published=current - day, date_published_end=current + day)
+    Post.objects.filter(pk=expired.post.pk).update(date_published=current - 2 * day, date_published_end=current - day)
+    Post.objects.filter(pk=scheduled.post.pk).update(date_published=current + day, date_published_end=None)
+    Post.objects.filter(pk=undated.post.pk).update(date_published=None, date_published_end=None)
+
+    latest = api.add_plugin(
+        placeholder, "BlogLatestEntriesPlugin", "en", app_config=simple_w_placeholder
+    ).get_plugin_instance()[0]
+    featured = api.add_plugin(
+        placeholder, "BlogFeaturedPostsPlugin", "en", app_config=simple_w_placeholder
+    ).get_plugin_instance()[0]
+    featured.posts.add(live.post, expired.post, scheduled.post, undated.post)
+
+    request = RequestFactory().get("/")  # no toolbar: a regular visitor, not edit/preview mode
+    with translation.override("en"):
+        assert set(latest.get_post_contents(request)) == {live, undated}
+        assert set(featured.get_posts(request)) == {live, undated}
+
+
+@pytest.mark.django_db
+def test_plugins_leave_publication_window_to_timed_publishing(
+    placeholder, admin_user, simple_w_placeholder, monkeypatch
+):
+    """With djangocms-timed-publishing installed, plugins do not filter by the post dates themselves."""
+    from datetime import timedelta
+
+    from cms import api
+    from django.test import RequestFactory
+    from django.utils import translation
+    from django.utils.timezone import now
+
+    from djangocms_stories.models import Post
+
+    from .factories import PostContentFactory
+
+    expired = PostContentFactory(language="en", post__app_config=simple_w_placeholder)
+    publish_if_necessary([expired], admin_user)
+    Post.objects.filter(pk=expired.post.pk).update(
+        date_published=now() - timedelta(days=2), date_published_end=now() - timedelta(days=1)
+    )
+
+    is_installed = apps.is_installed
+    monkeypatch.setattr(apps, "is_installed", lambda name: name == "djangocms_timed_publishing" or is_installed(name))
+
+    latest = api.add_plugin(
+        placeholder, "BlogLatestEntriesPlugin", "en", app_config=simple_w_placeholder
+    ).get_plugin_instance()[0]
+    with translation.override("en"):
+        assert list(latest.get_post_contents(RequestFactory().get("/"))) == [expired]
