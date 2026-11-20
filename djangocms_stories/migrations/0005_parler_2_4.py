@@ -25,10 +25,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='postcategorytranslation',
-            constraint=models.UniqueConstraint(fields=('language_code', 'master'), name='djangocms_stories_postcategory_translation_uniq_lang'),
+            constraint=models.UniqueConstraint(fields=('language_code', 'master'), name='djangocms_stories_postcate81fa'),
         ),
         migrations.AddConstraint(
             model_name='storiesconfigtranslation',
-            constraint=models.UniqueConstraint(fields=('language_code', 'master'), name='djangocms_stories_storiesconfig_translation_uniq_lang'),
+            constraint=models.UniqueConstraint(fields=('language_code', 'master'), name='djangocms_stories_storiesc6510'),
         ),
     ]

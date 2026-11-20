@@ -1,4 +1,5 @@
 import pytest
+from django.apps import apps
 from django.core.management import call_command
 from io import StringIO
 
@@ -14,3 +15,10 @@ def test_no_missing_migrations():
         result_returncode = e.code
     result_output = out.getvalue()
     assert result_returncode == 0, "There are missing migrations:\n" + result_output
+
+
+@pytest.mark.parametrize("model_name", ["PostCategoryTranslation", "StoriesConfigTranslation"])
+def test_translation_constraint_names_fit_database_limits(model_name):
+    model = apps.get_model("djangocms_stories", model_name)
+    assert model._meta.constraints
+    assert all(len(constraint.name) <= 30 for constraint in model._meta.constraints)
