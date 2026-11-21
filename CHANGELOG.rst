@@ -2,6 +2,22 @@
 Changelog
 =========
 
+0.9.4 (2026-11-21)
+------------------
+
+**Attention:** This release requires django-parler 2.4 or higher or missing migrations will be reported.
+
+* feat: Use featured date to pin featured posts by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/115
+* feat: Add django-parler 2.4 support by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/122
+* feat: Made slug a prepopulated field by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/113
+* fix: get_absolute_url crashed for posts with no category if category was in the path by @fsbraun in https://github.com/django-cms/djangocms-stories/pull/112
+* fix: sitemap print links in correct language by @corentinbettiol in https://github.com/django-cms/djangocms-stories/pull/124
+* test: cover archive grouping by publication date #116 by @jyoti-bhogal in https://github.com/django-cms/djangocms-stories/pull/126
+
+**New Contributor**
+* @jyoti-bhogal made their first contribution in https://github.com/django-cms/djangocms-stories/pull/126
+
+
 0.9.3 (2026-06-28)
 ------------------
 
